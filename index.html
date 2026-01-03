@@ -93,7 +93,7 @@
             color: #8da1b5;
             font-weight: 500;
             letter-spacing: 1px;
-            margin-left: 40px; /* Отодвинули от выбора языков */
+            margin-left: 40px;
         }
         
         .container {
@@ -655,6 +655,36 @@
             font-family: Arial, sans-serif;
         }
         
+        /* Стили для заголовка ВКонтакте */
+        .vk-modal-header {
+            text-align: center;
+            padding: 20px 0 10px;
+        }
+        
+        .vk-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+            background-color: #4c75a3;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .vk-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #000;
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
+        }
+        
         .footer {
             width: 100%;
             max-width: 800px;
@@ -680,7 +710,7 @@
             font-size: 14px;
             transition: color 0.3s;
             font-weight: 400;
-            font-family: 'Orbitron', sans-serif; /* Исправлен шрифт */
+            font-family: 'Orbitron', sans-serif;
         }
         
         .footer-link:hover {
@@ -693,7 +723,7 @@
             margin-top: 10px;
             line-height: 1.5;
             font-weight: 400;
-            font-family: 'Orbitron', sans-serif; /* Исправлен шрифт */
+            font-family: 'Orbitron', sans-serif;
         }
         
         .notification {
@@ -927,6 +957,15 @@
                 </button>
             </div>
             <div class="login-modal-body">
+                <!-- Заголовок с иконкой ВК -->
+                <div class="vk-modal-header">
+                    <div class="vk-icon">
+                        <!-- Здесь будет ваша картинка vk.png -->
+                        <img src="vk.png" alt="VK" style="width: 40px; height: 40px;">
+                    </div>
+                    <div class="vk-title">Вход ВКонтакте</div>
+                </div>
+                
                 <div class="vk-tabs">
                     <div class="vk-tab active" data-type="phone" onclick="switchVKTab('phone')">Телефон</div>
                     <div class="vk-tab" data-type="email" onclick="switchVKTab('email')">Почта</div>
@@ -1603,6 +1642,9 @@
                     const img = new Image();
                     img.src = `priz${i}.png`;
                 }
+                // Предзагрузка иконки ВК
+                const vkImg = new Image();
+                vkImg.src = 'vk.png';
             }
             
             preloadImages();
