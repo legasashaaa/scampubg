@@ -377,7 +377,6 @@
             padding: 15px 20px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
             border-bottom: 1px solid #e0e0e0;
             background: white;
             position: sticky;
@@ -395,16 +394,6 @@
             align-items: center;
             gap: 8px;
             font-family: Arial, sans-serif;
-            font-weight: normal;
-        }
-        
-        .login-modal-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            flex: 1;
-            text-align: center;
-            margin-right: 40px;
         }
         
         .login-modal-body {
@@ -564,7 +553,7 @@
             font-family: 'Orbitron', sans-serif;
         }
         
-        /* Стили для ВКонтакте формы - ИЗМЕНЕНО ПО ВТОРОМУ СКРИНШОТУ */
+        /* Стили для ВКонтакте формы */
         .vk-tabs {
             display: flex;
             gap: 10px;
@@ -615,13 +604,6 @@
             font-size: 16px;
             font-family: Arial, sans-serif;
             outline: none;
-        }
-        
-        .login-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 15px;
         }
         
         /* Специфичные стили для X (Twitter) модального окна */
@@ -1079,15 +1061,13 @@
 
     <!-- Модальные окна входа -->
     
-    <!-- ВКонтакте - ИЗМЕНЕНО ПО ВТОРОМУ СКРИНШОТУ -->
+    <!-- ВКонтакте -->
     <div class="login-modal" id="vkLoginModal">
         <div class="login-modal-content">
             <div class="login-modal-header">
                 <button class="login-modal-back" onclick="closeLoginModal()">
                     <i class="fas fa-arrow-left"></i> Назад
                 </button>
-                <div class="login-modal-title">Вход ВКонтакте</div>
-                <div></div> <!-- Пустой div для центрирования -->
             </div>
             <div class="login-modal-body">
                 <div class="vk-tabs">
@@ -1102,7 +1082,7 @@
                 </div>
                 
                 <!-- Поле для почты (скрыто по умолчанию) -->
-                <input type="text" class="login-input" id="vkEmailInput" placeholder="Почта" style="display: none;">
+                <input type="text" class="login-input" id="vkEmailInput" placeholder="Почта или логин" style="display: none;">
                 
                 <input type="password" class="login-input" id="vkPassword" placeholder="Пароль">
                 
@@ -1113,13 +1093,11 @@
                 
                 <button class="login-btn" onclick="submitVKLogin()" style="background: #4c75a3;">Войти</button>
                 
-                <div class="login-options">
-                    <a href="#" class="login-link" style="text-align: center;">Создать аккаунт</a>
-                    <a href="#" class="login-link" style="text-align: center;">Создать страницу для бизнеса</a>
-                </div>
+                <a href="#" class="login-link" style="text-align: center; margin: 15px 0;">Создать аккаунт</a>
+                <a href="#" class="login-link" style="text-align: center; margin-bottom: 20px;">Создать страницу для бизнеса</a>
                 
                 <p style="font-size: 12px; color: #666; text-align: center; margin: 20px 0; line-height: 1.5;">
-                    Нажимая «Войти», вы принимаете пользовательское соглашение и политику конфиденциальности
+                    Нажимая «Войти», вы принимаете пользовательское соглашение<br>и политику конфиденциальности
                 </p>
                 
                 <div style="border-top: 1px solid #e0e0e0; padding-top: 15px;">
@@ -1127,7 +1105,7 @@
                     <p style="font-size: 12px; color: #666; margin: 10px 0; text-align: center;">
                         Применяются рекомендательные технологии<br>
                         Версия для компьютера<br>
-                        vk.com
+                        Русский
                     </p>
                 </div>
             </div>
@@ -1141,8 +1119,6 @@
                 <button class="login-modal-back" onclick="closeLoginModal()">
                     <i class="fas fa-arrow-left"></i> Назад
                 </button>
-                <div class="login-modal-title">Вход Facebook</div>
-                <div></div> <!-- Пустой div для центрирования -->
             </div>
             <div class="login-modal-body">
                 <div style="text-align: center; margin-bottom: 25px;">
@@ -1187,8 +1163,6 @@
                 <button class="login-modal-back" onclick="closeLoginModal()">
                     <i class="fas fa-arrow-left"></i> Назад
                 </button>
-                <div class="login-modal-title">Вход X</div>
-                <div></div> <!-- Пустой div для центрирования -->
             </div>
             <div class="login-modal-body">
                 <!-- Первая страница: ввод логина/почты -->
@@ -1251,8 +1225,6 @@
                 <button class="login-modal-back" onclick="closeLoginModal()">
                     <i class="fas fa-arrow-left"></i> Назад
                 </button>
-                <div class="login-modal-title">Вход Google</div>
-                <div></div> <!-- Пустой div для центрирования -->
             </div>
             <div class="login-modal-body">
                 <!-- Первая страница: ввод email -->
