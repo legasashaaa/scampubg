@@ -1,166 +1,433 @@
-<style>
-    /* Улучшенные стили для окна приза */
-    .prize-window {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.9);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 2001;
-        backdrop-filter: blur(8px);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .prize-window.active {
-        display: flex;
-        animation: modalScaleUp 0.5s forwards;
-    }
-
-    @keyframes modalScaleUp {
-        0% { opacity: 0; transform: scale(0.8); }
-        100% { opacity: 1; transform: scale(1); }
-    }
-
-    .prize-content {
-        background: linear-gradient(180deg, #1a2c42 0%, #0a1520 100%);
-        border: 2px solid #ffb000;
-        border-radius: 15px;
-        padding: 40px 20px;
-        width: 95%;
-        max-width: 400px;
-        text-align: center;
-        position: relative;
-        box-shadow: 0 0 50px rgba(255, 176, 0, 0.2);
-    }
-
-    /* Верхняя лента "Поздравляем" */
-    .prize-banner {
-        position: absolute;
-        top: -20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #ffb000;
-        color: #000;
-        padding: 8px 30px;
-        font-family: 'Orbitron', sans-serif;
-        font-weight: 700;
-        font-size: 18px;
-        clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
-        white-space: nowrap;
-        box-shadow: 0 5px 15px rgba(255, 176, 0, 0.4);
-    }
-
-    .prize-image-container {
-        margin: 30px auto;
-        width: 200px;
-        height: 200px;
-        background: radial-gradient(circle, rgba(255,176,0,0.2) 0%, rgba(0,0,0,0) 70%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-    }
-
-    /* Эффект сияния за предметом */
-    .prize-image-container::before {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: url('www.transparentpng.com');
-        background-size: contain;
-        animation: rotateGlow 10s linear infinite;
-        opacity: 0.6;
-    }
-
-    @keyframes rotateGlow {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-
-    .prize-image {
-        width: 160px;
-        height: 160px;
-        object-fit: contain;
-        z-index: 2;
-        filter: drop-shadow(0 0 15px rgba(255,255,255,0.3));
-    }
-
-    .prize-info h2 {
-        color: #fff;
-        font-family: 'Orbitron', sans-serif;
-        font-size: 22px;
-        margin-bottom: 10px;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    }
-
-    .prize-info p {
-        color: #8da1b5;
-        font-size: 14px;
-        margin-bottom: 25px;
-        line-height: 1.4;
-    }
-
-    .collect-btn {
-        background: linear-gradient(180deg, #ffb000 0%, #cc8d00 100%);
-        border: none;
-        padding: 12px 40px;
-        border-radius: 5px;
-        color: #000;
-        font-family: 'Orbitron', sans-serif;
-        font-weight: 700;
-        font-size: 16px;
-        cursor: pointer;
-        transition: 0.3s;
-        text-transform: uppercase;
-        box-shadow: 0 4px 0 #805900;
-    }
-
-    .collect-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(255, 176, 0, 0.4);
-    }
-
-    .collect-btn:active {
-        transform: translateY(2px);
-        box-shadow: none;
-    }
-</style>
-
-<!-- Обновленная структура окна приза -->
-<div id="prizeModal" class="prize-window">
-    <div class="prize-content">
-        <div class="prize-banner">ВЫЙГРЫШ</div>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUBG Mobile - Premium Spin</title>
+    <link href="fonts.googleapis.com" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         
-        <div class="prize-image-container">
-            <img id="winImg" src="pubgmobile.gcube.id" class="prize-image" alt="Prize">
-        </div>
+        body {
+            background: #0a1520;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            overflow-x: hidden;
+            font-family: 'Arial', sans-serif;
+            position: relative;
+        }
+        
+        /* Фон */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('e1.pxfuel.com') center/cover no-repeat;
+            z-index: -2;
+        }
+        
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 21, 32, 0.85);
+            z-index: -1;
+        }
 
-        <div class="prize-info">
-            <h2 id="winName">M416 Glacier</h2>
-            <p>Предмет успешно отправлен во внутриигровую почту вашего аккаунта. Проверьте инвентарь в течение 24 часов.</p>
-        </div>
+        /* Верхнее меню */
+        .top-menu {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            background: rgba(20, 35, 60, 0.8);
+            border-radius: 12px;
+            border: 1px solid #2a3b5a;
+            backdrop-filter: blur(10px);
+        }
 
-        <button class="collect-btn" onclick="closePrize()">ПОЛУЧИТЬ</button>
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            color: #ffb000;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .prize-mail-btn {
+            background: linear-gradient(to right, #2a3b5a, #1a2c42);
+            color: #8da1b5;
+            border: 1px solid #2a3b5a;
+            border-radius: 5px;
+            padding: 8px 20px;
+            cursor: pointer;
+            position: relative;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+        }
+
+        .prize-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4444;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(255, 68, 68, 0); }
+            100% { transform: scale(1); }
+        }
+
+        /* Рулетка */
+        .roulette-container {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            margin: 40px 0;
+        }
+
+        .roulette-window {
+            height: 140px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid #2a3b5a;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .pointer {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: #ffb000;
+            z-index: 10;
+            box-shadow: 0 0 15px #ffb000;
+        }
+
+        .items-track {
+            display: flex;
+            gap: 10px;
+            padding: 0 10px;
+            transition: transform 6s cubic-bezier(0.15, 0, 0.05, 1);
+            will-change: transform;
+        }
+
+        .item-card {
+            min-width: 110px;
+            height: 110px;
+            background: rgba(26, 44, 66, 0.8);
+            border: 1px solid #3a4b6a;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+        }
+
+        .item-card img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+        }
+
+        .spin-btn {
+            margin-top: 30px;
+            padding: 15px 60px;
+            background: linear-gradient(180deg, #ffb000 0%, #ff8000 100%);
+            border: none;
+            border-radius: 5px;
+            color: #000;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 176, 0, 0.3);
+            transition: 0.3s;
+        }
+
+        .spin-btn:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        .spin-btn:disabled {
+            filter: grayscale(1);
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* НОВЫЙ ИНТЕРФЕЙС ПОЧТЫ (ОКНО ПРИЗА) */
+        .prize-window {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+        }
+
+        .prize-window.active {
+            display: flex;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .prize-content {
+            background: linear-gradient(180deg, #162436 0%, #0a1018 100%);
+            border: 2px solid #ffb000;
+            border-radius: 20px;
+            padding: 40px 20px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 60px rgba(255, 176, 0, 0.15);
+        }
+
+        .prize-banner {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffb000;
+            color: #000;
+            padding: 8px 40px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 20px;
+            clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
+            box-shadow: 0 4px 15px rgba(255, 176, 0, 0.4);
+        }
+
+        .prize-glow-container {
+            margin: 40px auto 20px;
+            width: 220px;
+            height: 220px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .glow-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,176,0,0.3) 0%, rgba(255,176,0,0) 70%);
+            animation: rotateGlow 8s linear infinite;
+        }
+
+        @keyframes rotateGlow {
+            from { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            to { transform: rotate(360deg) scale(1); }
+        }
+
+        .prize-image {
+            width: 160px;
+            height: 160px;
+            object-fit: contain;
+            z-index: 2;
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
+        }
+
+        .prize-name {
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .prize-desc {
+            color: #8da1b5;
+            font-size: 14px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            padding: 0 20px;
+        }
+
+        .collect-btn {
+            background: linear-gradient(180deg, #ffb000 0%, #cc8d00 100%);
+            border: none;
+            padding: 15px 50px;
+            border-radius: 8px;
+            color: #000;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 5px 0 #805900;
+        }
+
+        .collect-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #805900;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-menu">
+        <div class="logo">PUBG SPIN</div>
+        <button class="prize-mail-btn" onclick="openPrize()">
+            📩 ПОЧТА
+            <div class="prize-badge" id="badge">1</div>
+        </button>
     </div>
-</div>
 
-<script>
-    // Функция для вызова окна (использовать после завершения крутки)
-    function showWinModal(itemName, itemImg) {
-        document.getElementById('winName').innerText = itemName;
-        document.getElementById('winImg').src = itemImg;
-        document.getElementById('prizeModal').classList.add('active');
-        
-        // Звуковой эффект (опционально)
-        // new Audio('win_sound.mp3').play();
-    }
+    <div style="text-align: center;">
+        <h1 style="font-family: 'Orbitron'; color: #ffb000; margin-bottom: 10px;">LUCKY DRAW</h1>
+        <p style="color: #8da1b5;">Выигрывай эксклюзивные скины и UC</p>
+    </div>
 
-    function closePrize() {
-        document.getElementById('prizeModal').classList.remove('active');
-    }
-</script>
+    <div class="roulette-container">
+        <div class="pointer"></div>
+        <div class="roulette-window">
+            <div class="items-track" id="track">
+                <!-- Предметы добавятся через JS -->
+            </div>
+        </div>
+    </div>
+
+    <button class="spin-btn" id="spinBtn" onclick="startSpin()">КРУТИТЬ</button>
+
+    <!-- ИНТЕРФЕЙС ПРИЗА -->
+    <div id="prizeModal" class="prize-window">
+        <div class="prize-content">
+            <div class="prize-banner">ВЫИГРЫШ</div>
+            
+            <div class="prize-glow-container">
+                <div class="glow-bg"></div>
+                <img id="winImg" src="" class="prize-image" alt="Prize">
+            </div>
+
+            <div class="prize-info">
+                <h2 class="prize-name" id="winName">ITEM NAME</h2>
+                <p class="prize-desc">Предмет был отправлен на вашу игровую почту. Пожалуйста, подождите до 24 часов для обработки транзакции.</p>
+            </div>
+
+            <button class="collect-btn" onclick="closePrize()">ЗАБРАТЬ</button>
+        </div>
+    </div>
+
+    <script>
+        const items = [
+            { name: 'M416 Glacier', img: 'pngimg.com' },
+            { name: '600 UC', img: 'i.ibb.co' },
+            { name: 'X-Suit Pharaoh', img: 'i.ibb.co' },
+            { name: 'Blood Raven', img: 'i.ibb.co' },
+            { name: 'Kar98k Skin', img: 'i.ibb.co' }
+        ];
+
+        const track = document.getElementById('track');
+        let currentPrize = null;
+
+        // Создаем ленту предметов
+        function init() {
+            track.innerHTML = '';
+            // Создаем 60 элементов для длинной прокрутки
+            for(let i = 0; i < 60; i++) {
+                const item = items[Math.floor(Math.random() * items.length)];
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `<img src="${item.img}"><span style="font-size:8px; margin-top:5px; color:#8da1b5">${item.name}</span>`;
+                track.appendChild(card);
+            }
+        }
+
+        function startSpin() {
+            const btn = document.getElementById('spinBtn');
+            btn.disabled = true;
+            
+            const cardWidth = 120; // 110px + 10px gap
+            const rounds = 40; // количество карточек пролетающих мимо
+            const randomOffset = Math.floor(Math.random() * 80) + 20; 
+            const targetX = (rounds * cardWidth) - (300 - cardWidth/2) + randomOffset;
+
+            track.style.transition = 'transform 6s cubic-bezier(0.15, 0, 0.05, 1)';
+            track.style.transform = `translateX(-${targetX}px)`;
+
+            // Определяем выигранный предмет (тот что окажется под стрелкой)
+            const winIndex = Math.floor((targetX + 300) / cardWidth);
+            // Для упрощения возьмем случайный из списка для показа в окне
+            currentPrize = items[Math.floor(Math.random() * items.length)];
+
+            setTimeout(() => {
+                showPrize(currentPrize);
+                document.getElementById('badge').style.display = 'flex';
+                btn.disabled = false;
+                // Сброс позиции без анимации для следующего раза
+                setTimeout(() => {
+                    track.style.transition = 'none';
+                    track.style.transform = 'translateX(0)';
+                    init();
+                }, 500);
+            }, 6500);
+        }
+
+        function showPrize(item) {
+            document.getElementById('winImg').src = item.img;
+            document.getElementById('winName').innerText = item.name;
+            document.getElementById('prizeModal').classList.add('active');
+        }
+
+        function closePrize() {
+            document.getElementById('prizeModal').classList.remove('active');
+        }
+
+        function openPrize() {
+            if(currentPrize) {
+                document.getElementById('prizeModal').classList.add('active');
+            } else {
+                alert("Почта пуста. Сначала прокрутите рулетку!");
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>
