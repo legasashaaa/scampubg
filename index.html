@@ -3,106 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кнопка PUBG Mobile</title>
+    <title>PUBG MOBILE - Вход</title>
+    
+    <!-- Подключаем игровой шрифт Bebas Neue -->
+    <link href="fonts.googleapis.com" rel="stylesheet">
+    
     <style>
-        /* Центрируем кнопку на странице для демонстрации */
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #1a1a1a;
+        /* Базовые настройки страницы */
+        * {
+            box-sizing: border-box;
+            user-select: none; /* Запрет выделения текста как в игре */
+        }
+
+        body, html {
             margin: 0;
-        }
-
-        /* Основной стиль кнопки-ссылки */
-        .pubg-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 300px;
-            height: 85px;
-            text-decoration: none;
-            position: relative;
+            padding: 0;
+            height: 100%;
+            font-family: 'Bebas Neue', cursive;
+            background-color: #000;
             overflow: hidden;
-            /* Рамка в стиле PUBG */
-            border: 4px solid #f3ab18; 
-            border-radius: 5px;
-            /* Фоновое изображение PUBG */
-            background: url('img.vladtime.ru') center/cover no-repeat;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 0 20px rgba(243, 171, 24, 0.3), inset 0 0 20px rgba(0,0,0,0.5);
-            cursor: pointer;
+            color: white;
         }
 
-        /* Темная подложка поверх картинки, чтобы текст лучше читался */
-        .pubg-btn::before {
-            content: '';
+        /* Задний фон (Атмосферное изображение 2026 года) */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('w.forfun.com') center/cover no-repeat;
+            transform: scale(1.1); /* Небольшой зум для эффекта глубины */
+        }
+
+        /* Затемнение и градиент (как в оригинальном UI) */
+        .overlay {
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6));
-            transition: background 0.3s ease;
-            z-index: 1;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%),
+                        linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 40%);
+            z-index: 0;
         }
 
-        /* Текст кнопки */
-        .pubg-btn-text {
+        /* Главный контейнер */
+        .wrapper {
             position: relative;
-            z-index: 2;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Похож на игровой шрифт */
-            font-size: 28px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 3px 3px 5px rgba(0, 0, 0, 1);
-            font-style: italic;
+            z-index: 10;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 60px 20px;
         }
 
-        /* Эффекты при наведении */
-        .pubg-btn:hover {
-            transform: scale(1.08);
-            box-shadow: 0 0 35px rgba(243, 171, 24, 0.6);
-            border-color: #fff;
-        }
-
-        .pubg-btn:hover::before {
-            background: rgba(0, 0, 0, 0.1); /* Картинка становится ярче при наведении */
-        }
-
-        /* Эффект блика при наведении */
-        .pubg-btn::after {
-            content: "";
+        /* Номер версии в углу */
+        .version-tag {
             position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 20%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: rotate(30deg);
-            transition: all 0.5s;
-            z-index: 2;
+            top: 15px;
+            right: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            color: #f3ab18;
+            letter-spacing: 1px;
+            opacity: 0.8;
         }
 
-        .pubg-btn:hover::after {
-            left: 120%;
+        /* Логотип по центру */
+        .game-logo {
+            width: 260px;
+            max-width: 80%;
+            filter: drop-shadow(0 0 15px rgba(0,0,0,0.8));
+            animation: fadeInDown 1.2s ease-out;
+        }
+
+        /* Блок кнопок входа */
+        .login-section {
+            width: 100%;
+            max-width: 340px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        /* Общий стиль игровых кнопок */
+        .btn-auth {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 55px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 22px;
+            letter-spacing: 1.5px;
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Иконки внутри кнопок */
+        .btn-auth img {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+        }
+
+        /* Фирменные цвета */
+        .btn-facebook { background-color: #1877f2; }
+        .btn-twitter  { background-color: #1da1f2; }
+        .btn-google   { background-color: #4285f4; }
+        
+        /* Кнопка "More" (Прозрачная) */
+        .btn-more {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255,255,255,0.3);
+            font-size: 18px;
+            height: 45px;
         }
 
         /* Эффект при нажатии */
-        .pubg-btn:active {
-            transform: scale(0.95);
+        .btn-auth:active {
+            transform: scale(0.96);
+            filter: brightness(0.8);
+        }
+
+        /* Блик на кнопках */
+        .btn-auth::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-25deg);
+            transition: 0.5s;
+        }
+
+        .btn-auth:hover::after {
+            left: 150%;
+        }
+
+        /* Футер с копирайтами */
+        .footer {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 10px;
+            color: rgba(255,255,255,0.4);
+            line-height: 1.6;
+        }
+
+        .footer span {
+            color: rgba(255,255,255,0.6);
+            margin: 0 5px;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        /* Анимации появления */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Адаптация под мобилки */
+        @media (max-height: 600px) {
+            .game-logo { width: 180px; }
+            .wrapper { padding: 30px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Кнопка -->
-    <a href="URL_ВАШЕЙ_РУЛЕТКИ" class="pubg-btn">
-        <span class="pubg-btn-text">ИГРАТЬ</span>
-    </a>
+    <div class="background-container"></div>
+    <div class="overlay"></div>
+
+    <div class="wrapper">
+        <div class="version-tag">4.2.0.18234 (Global)</div>
+
+        <!-- Логотип -->
+        <img src="upload.wikimedia.org" alt="PUBG Logo" class="game-logo">
+
+        <!-- Секция входа -->
+        <div class="login-section">
+            <a href="#" class="btn-auth btn-google">
+                <img src="cdn-icons-png.flaticon.com" alt="">
+                GOOGLE PLAY
+            </a>
+            <a href="#" class="btn-auth btn-facebook">
+                <img src="cdn-icons-png.flaticon.com" alt="">
+                FACEBOOK
+            </a>
+            <a href="#" class="btn-auth btn-twitter">
+                <img src="cdn-icons-png.flaticon.com" alt="">
+                TWITTER
+            </a>
+            <a href="#" class="btn-auth btn-more">
+                MORE
+            </a>
+        </div>
+
+        <!-- Информация внизу -->
+        <div class="footer">
+            By logging in, you agree to our <span>Privacy Policy</span> and <span>User Agreement</span>.<br>
+            © 2026 KRAFTON, Inc. & Tencent Games. All rights reserved.
+        </div>
+    </div>
 
 </body>
 </html>
