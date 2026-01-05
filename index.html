@@ -27,25 +27,8 @@
             padding: 40px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            position: relative;
-        }
-
-        /* Анимированная рамка для призов */
-        .auth-container::before {
-            content: '';
-            position: absolute;
-            top: -2px; left: -2px; right: -2px; bottom: -2px;
-            border-radius: 10px;
-            background: linear-gradient(45deg, #4285f4, #ea4335, #fbbc05, #34a853);
-            background-size: 400%;
-            z-index: -1;
-            animation: prize-glow 5s linear infinite;
-        }
-
-        @keyframes prize-glow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            background-color: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         /* Логотип вверху слева */
