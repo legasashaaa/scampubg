@@ -27,13 +27,12 @@ body {
     width: 100%;
     max-width: 450px;
     padding: 40px;
-    border: 1px solid #dadce0;
-    border-radius: 8px;
     background: #fff;
 }
 
+/* GOOGLE G LOGO */
 .google-logo {
-    width: 92px;
+    width: 40px;
     display: block;
     margin-bottom: 24px;
 }
@@ -54,7 +53,8 @@ h1 {
     margin-bottom: 8px;
 }
 
-input {
+input[type="email"],
+input[type="password"] {
     width: 100%;
     padding: 14px;
     font-size: 16px;
@@ -109,7 +109,7 @@ input:focus {
     display: none;
 }
 
-/* ===== PASSWORD HEADER ===== */
+/* USER HEADER */
 .user-info {
     display: flex;
     align-items: center;
@@ -117,6 +117,7 @@ input:focus {
     margin-bottom: 24px;
 }
 
+/* GOOGLE-STYLE AVATAR */
 .avatar {
     width: 40px;
     height: 40px;
@@ -125,8 +126,12 @@ input:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 20px;
-    color: #5f6368;
+}
+
+.avatar svg {
+    width: 22px;
+    height: 22px;
+    fill: #5f6368;
 }
 
 .user-email {
@@ -134,11 +139,16 @@ input:focus {
     color: #5f6368;
 }
 
-/* ===== SHOW PASSWORD ===== */
+/* SHOW PASSWORD */
 .show-pass {
     margin-top: 12px;
     font-size: 14px;
     color: #5f6368;
+}
+
+.show-pass input {
+    transform: scale(0.85);
+    margin-right: 6px;
 }
 </style>
 </head>
@@ -147,8 +157,9 @@ input:focus {
 
 <div class="login-box">
 
+<!-- GOOGLE G ICON -->
 <img class="google-logo"
-src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg"
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
 alt="Google">
 
 <!-- EMAIL STEP -->
@@ -172,9 +183,13 @@ alt="Google">
 <div id="password-step">
     <h1>Здравствуйте</h1>
 
-    <!-- AVATAR + EMAIL -->
     <div class="user-info">
-        <div class="avatar">👤</div>
+        <div class="avatar">
+            <!-- GOOGLE-LIKE USER ICON -->
+            <svg viewBox="0 0 24 24">
+                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8V22h19.2v-2.8c0-3.2-6.4-4.8-9.6-4.8z"/>
+            </svg>
+        </div>
         <div class="user-email" id="userEmail"></div>
     </div>
 
