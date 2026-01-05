@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Вход – Google Аккаунт</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    color: #202124;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+}
+
+/* OFFICIAL GOOGLE G */
+.google-logo {
+    width: 40px;
+    margin-bottom: 24px;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0 0 8px;
+}
+
+.subtitle {
+    font-size: 16px;
+    margin-bottom: 24px;
+    color: #5f6368;
+}
+
+.input-group {
+    margin-bottom: 8px;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border: 2px solid #dadce0; /* фиксированная толщина */
+    border-radius: 4px;
+    outline: none;
+    transition: border-color .2s;
+}
+
+input:focus {
+    border-color: #1a73e8;
+}
+
+/* LINKS */
+.forgot-link {
+    display: inline-block;
+    margin: 24px 0 32px;
+    font-size: 14px;
+    color: #1a73e8;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.create-account {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a73e8;
+    text-decoration: none;
+}
+
+.btn-next {
+    background: #1a73e8;
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn-next:hover {
+    background: #1765cc;
+}
+
+#password-step {
+    display: none;
+}
+
+/* USER INFO */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+/* SMALL GOOGLE-LIKE AVATAR */
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e8eaed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar svg {
+    width: 18px;
+    height: 18px;
+    fill: #5f6368;
+}
+
+.user-email {
+    font-size: 14px;
+    color: #5f6368;
+}
+
+/* SHOW PASSWORD */
+.show-pass {
+    margin-top: 12px;
+    font-size: 14px;
+    color: #5f6368;
+}
+
+.show-pass input {
+    transform: scale(0.85);
+    margin-right: 6px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-box">
+
+<!-- OFFICIAL GOOGLE G SVG -->
+<img
+class="google-logo"
+src="https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_48dp.png"
+alt="Google">
+
+<!-- EMAIL STEP -->
+<div id="email-step">
+    <h1>Вход</h1>
+    <div class="subtitle">Используйте аккаунт Google</div>
+
+    <div class="input-group">
+        <input type="email" id="email" placeholder="Телефон или адрес эл. почты">
+    </div>
+
+    <a class="forgot-link" href="#">Забыли адрес электронной почты?</a>
+
+    <div class="buttons">
+        <a class="create-account" href="#">Создать аккаунт</a>
+        <button class="btn-next" onclick="nextStep()">Далее</button>
+    </div>
+</div>
+
+<!-- PASSWORD STEP -->
+<div id="password-step">
+    <h1>Здравствуйте</h1>
+
+    <div class="user-info">
+        <div class="avatar">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8V22h19.2v-2.8c0-3.2-6.4-4.8-9.6-4.8z"/>
+            </svg>
+        </div>
+        <div class="user-email" id="userEmail"></div>
+    </div>
+
+    <div class="input-group">
+        <input type="password" id="password" placeholder="Введите пароль">
+    </div>
+
+    <div class="show-pass">
+        <input type="checkbox" id="showPass">
+        <label for="showPass">Показать пароль</label>
+    </div>
+
+    <a class="forgot-link" href="#">Забыли пароль?</a>
+
+    <div class="buttons" style="justify-content:flex-end;">
+        <button class="btn-next" onclick="finish()">Далее</button>
+    </div>
+</div>
+
+</div>
+
+<script>
+function nextStep() {
+    const email = document.getElementById('email').value.trim();
+    if (!email) {
+        alert('Введите email');
+        return;
+    }
+
+    document.getElementById('userEmail').textContent = email;
+    document.getElementById('email-step').style.display = 'none';
+    document.getElementById('password-step').style.display = 'block';
+}
+
+document.getElementById('showPass').addEventListener('change', function () {
+    document.getElementById('password').type =
+        this.checked ? 'text' : 'password';
+});
+
+function finish() {
+    alert('Демо-версия. Авторизация не выполняется.');
+}
+</script>
+
+</body>
+</html>
