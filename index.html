@@ -27,13 +27,11 @@ body {
     width: 100%;
     max-width: 450px;
     padding: 40px;
-    background: #fff;
 }
 
-/* GOOGLE G LOGO */
+/* OFFICIAL GOOGLE G */
 .google-logo {
     width: 40px;
-    display: block;
     margin-bottom: 24px;
 }
 
@@ -58,16 +56,17 @@ input[type="password"] {
     width: 100%;
     padding: 14px;
     font-size: 16px;
-    border: 1px solid #dadce0;
+    border: 2px solid #dadce0; /* фиксированная толщина */
     border-radius: 4px;
     outline: none;
+    transition: border-color .2s;
 }
 
 input:focus {
-    border: 2px solid #1a73e8;
-    padding: 13px;
+    border-color: #1a73e8;
 }
 
+/* LINKS */
 .forgot-link {
     display: inline-block;
     margin: 24px 0 32px;
@@ -109,18 +108,18 @@ input:focus {
     display: none;
 }
 
-/* USER HEADER */
+/* USER INFO */
 .user-info {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     margin-bottom: 24px;
 }
 
-/* GOOGLE-STYLE AVATAR */
+/* SMALL GOOGLE-LIKE AVATAR */
 .avatar {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background: #e8eaed;
     display: flex;
@@ -129,8 +128,8 @@ input:focus {
 }
 
 .avatar svg {
-    width: 22px;
-    height: 22px;
+    width: 18px;
+    height: 18px;
     fill: #5f6368;
 }
 
@@ -157,9 +156,10 @@ input:focus {
 
 <div class="login-box">
 
-<!-- GOOGLE G ICON -->
-<img class="google-logo"
-src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+<!-- OFFICIAL GOOGLE G SVG -->
+<img
+class="google-logo"
+src="https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_48dp.png"
 alt="Google">
 
 <!-- EMAIL STEP -->
@@ -185,7 +185,6 @@ alt="Google">
 
     <div class="user-info">
         <div class="avatar">
-            <!-- GOOGLE-LIKE USER ICON -->
             <svg viewBox="0 0 24 24">
                 <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8V22h19.2v-2.8c0-3.2-6.4-4.8-9.6-4.8z"/>
             </svg>
