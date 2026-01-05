@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход — Google Аккаунты</title>
+    <style>
+        :root {
+            --google-blue: #1a73e8;
+            --google-text: #202124;
+            --google-gray: #5f6368;
+            --border-color: #dadce0;
+        }
+
+        body {
+            font-family: 'Roboto', arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #fff;
+        }
+
+        .auth-container {
+            width: 450px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* Логотип вверху слева */
+        .logo {
+            width: 75px;
+            display: block;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 400;
+            margin: 0 0 8px 0;
+            text-align: left;
+            color: var(--google-text);
+        }
+
+        .subtitle {
+            font-size: 16px;
+            margin-bottom: 24px;
+            text-align: left;
+            color: var(--google-text);
+        }
+
+        /* Поле ввода с текстом сверху */
+        .input-group {
+            position: relative;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .input-label {
+            position: absolute;
+            top: -10px;
+            left: 12px;
+            background: #fff;
+            padding: 0 4px;
+            font-size: 12px;
+            color: var(--google-blue);
+            z-index: 1;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid var(--google-blue);
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .guest-mode {
+            font-size: 14px;
+            color: var(--google-gray);
+            margin-top: 30px;
+            line-height: 1.4;
+        }
+
+        .guest-mode a {
+            color: var(--google-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .btn-text {
+            color: var(--google-blue);
+            font-weight: 500;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 14px;
+        }
+
+        .btn-blue {
+            background-color: var(--google-blue);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 4px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .lang-footer {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            font-size: 12px;
+            color: #000;
+        }
+
+        /* Стили для страницы пароля */
+        .show-pass {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            margin-top: 8px;
+            color: var(--google-text);
+        }
+
+        /* Контейнер для текста приветствия */
+        .welcome-container {
+            margin-top: 10px;
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="auth-container" id="step1">
+    <img src="Google.png" alt="Google" class="logo">
+    <h1>Вход</h1>
+    <p class="subtitle">Используйте аккаунт Google</p>
+    
+    <div class="input-group">
+        <span class="input-label">Телефон или адрес эл. почты</span>
+        <input type="text" id="emailInput">
+    </div>
+
+    <div class="guest-mode">
+        Работаете на чужом компьютере? Используйте режим «Частный доступ».<br>
+        <a href="#">Подробнее об использовании гостевого режима</a>
+    </div>
+
+    <div class="footer-buttons">
+        <button class="btn-text">Создать аккаунт</button>
+        <button class="btn-blue" onclick="nextStep()">Далее</button>
+    </div>
+    
+    <div class="lang-footer">Русский</div>
+</div>
+
+<!-- Страница пароля (скрыта по умолчанию) -->
+<div class="auth-container" id="step2" style="display:none;">
+    <img src="Google.png" alt="Google" class="logo">
+    
+    <div class="welcome-container">
+        <h1>Добро пожаловать!</h1>
+    </div>
+
+    <div class="input-group">
+        <span class="input-label">Введите пароль</span>
+        <input type="password">
+    </div>
+    
+    <div class="show-pass">
+        <input type="checkbox" id="show"> <label for="show">Показать пароль</label>
+    </div>
+
+    <br><br><br><br>
+
+    <div class="footer-buttons">
+        <button class="btn-text">Забыли пароль?</button>
+        <button class="btn-blue">Далее</button>
+    </div>
+    
+    <div class="lang-footer">Русский</div>
+</div>
+
+<script>
+    function nextStep() {
+        const email = document.getElementById('emailInput').value;
+        if(email) {
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+        }
+    }
+</script>
+
+</body>
+</html>
