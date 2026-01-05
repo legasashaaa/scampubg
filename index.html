@@ -28,24 +28,8 @@
             border: 1px solid var(--border-color);
             border-radius: 8px;
             position: relative;
-        }
-
-        /* Анимированная рамка для призов */
-        .auth-container::before {
-            content: '';
-            position: absolute;
-            top: -2px; left: -2px; right: -2px; bottom: -2px;
-            border-radius: 10px;
-            background: linear-gradient(45deg, #4285f4, #ea4335, #fbbc05, #34a853);
-            background-size: 400%;
-            z-index: -1;
-            animation: prize-glow 5s linear infinite;
-        }
-
-        @keyframes prize-glow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            background-color: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .logo {
@@ -95,6 +79,23 @@
             font-size: 16px;
             box-sizing: border-box;
             outline: none;
+        }
+
+        /* Контейнер для поля пароля с иконкой */
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            background-size: contain;
+            background-repeat: no-repeat;
         }
 
         .guest-mode {
@@ -157,6 +158,13 @@
             font-size: 14px;
         }
 
+        .account-avatar {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+            border-radius: 50%;
+        }
+
         .show-pass {
             display: flex;
             align-items: center;
@@ -197,19 +205,21 @@
     <h1>Добро пожаловать!</h1>
     
     <div class="account-box">
-        <img src="www.gstatic.com" width="20" style="margin-right:8px">
+        <img src="avatar.png" alt="Аватар" class="account-avatar">
         <span id="displayEmail">user@gmail.com</span>
     </div>
 
     <br><br><br>
 
-    <div class="input-group">
+    <div class="input-group password-container">
         <span class="input-label">Введите пароль</span>
-        <input type="password">
+        <input type="password" id="passwordInput">
+        <div class="password-toggle" id="passwordToggle" onclick="togglePassword()" style="background-image: url('password.png');"></div>
     </div>
     
     <div class="show-pass">
-        <input type="checkbox" id="show"> <label for="show">Показать пароль</label>
+        <input type="checkbox" id="show" onclick="togglePasswordCheckbox()"> 
+        <label for="show">Показать пароль</label>
     </div>
 
     <br><br><br><br>
@@ -221,12 +231,45 @@
 </div>
 
 <script>
+    let isPasswordVisible = false;
+
     function nextStep() {
         const email = document.getElementById('emailInput').value;
         if(email) {
             document.getElementById('displayEmail').innerText = email;
             document.getElementById('step1').style.display = 'none';
             document.getElementById('step2').style.display = 'block';
+        }
+    }
+
+    function togglePassword() {
+        const passwordInput = document.getElementById('passwordInput');
+        const passwordToggle = document.getElementById('passwordToggle');
+        
+        if (isPasswordVisible) {
+            passwordInput.type = 'password';
+            passwordToggle.style.backgroundImage = "url('password.png')";
+            isPasswordVisible = false;
+        } else {
+            passwordInput.type = 'text';
+            passwordToggle.style.backgroundImage = "url('password_show.png')";
+            isPasswordVisible = true;
+        }
+    }
+
+    function togglePasswordCheckbox() {
+        const checkbox = document.getElementById('show');
+        const passwordInput = document.getElementById('passwordInput');
+        const passwordToggle = document.getElementById('passwordToggle');
+        
+        if (checkbox.checked) {
+            passwordInput.type = 'text';
+            passwordToggle.style.backgroundImage = "url('password_show.png')";
+            isPasswordVisible = true;
+        } else {
+            passwordInput.type = 'password';
+            passwordToggle.style.backgroundImage = "url('password.png')";
+            isPasswordVisible = false;
         }
     }
 </script>
