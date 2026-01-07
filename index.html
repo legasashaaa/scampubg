@@ -3056,48 +3056,43 @@
         let winnersCount = 0;
         let winnersInterval = null;
         let currentLang = 'en';
+        let selectedSocial = null;
         
         // Функция сохранения прогресса
-        function saveWinState(itemName, itemImage, prizeId) {
+        function saveGameState() {
             const data = {
-                hasWon: true,
-                winName: itemName,
-                winImage: itemImage,
-                prizeId: prizeId,
+                hasWon: userPrize !== null,
+                winName: userPrize ? "Prize #" + userPrize.id : "",
+                winImage: userPrize ? userPrize.image : "",
+                prizeId: userPrize ? userPrize.id : null,
                 timestamp: Date.now(),
-                isPrizeReceived: false,
-                accountId: accountId || ''
+                isPrizeReceived: isPrizeReceived,
+                accountId: accountId || '',
+                hasPlayed: hasPlayed,
+                selectedSocial: selectedSocial
             };
             localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            console.log("Game state saved:", data);
         }
         
-        // Функция проверки: выигрывал ли пользователь раньше
-        function checkSavedWin() {
+        // Функция загрузки прогресса
+        function loadGameState() {
             const savedData = localStorage.getItem(STORAGE_KEY);
             
             if (savedData) {
                 const data = JSON.parse(savedData);
+                console.log("Loaded game state:", data);
                 
-                // Если пользователь выиграл, но еще не получил приз
+                // Восстанавливаем только если приз не был получен
                 if (data.hasWon && !data.isPrizeReceived) {
-                    console.log("Найден сохраненный неполученный выигрыш:", data.winName);
-                    
-                    // Восстанавливаем данные из сохранения
                     userPrize = {
                         id: data.prizeId,
                         image: data.winImage
                     };
                     isPrizeReceived = false;
                     accountId = data.accountId || '';
-                    
-                    // Обновляем значок с анимацией
-                    updatePrizeBadge();
-                    
-                    // Показываем уведомление о неполученном призе
-                    setTimeout(() => {
-                        const t = translations[currentLang] || translations.en;
-                        showNotification(t.notificationPrizeSaved, false, true);
-                    }, 1000);
+                    hasPlayed = data.hasPlayed || false;
+                    selectedSocial = data.selectedSocial || null;
                     
                     return true;
                 }
@@ -3105,21 +3100,25 @@
             return false;
         }
         
-        // Если пользователь в итоге ввел ID и вошел в соцсеть (успешно завершил процесс)
-        // можно очистить память:
+        // Функция очистки сохранения при получении приза
         function clearSave() {
             localStorage.removeItem(STORAGE_KEY);
+            console.log("Game state cleared");
         }
         
-        // Обновляем сохранение когда приз получен
+        // Функция обновления сохранения когда приз получен
         function markPrizeAsReceived() {
             const savedData = localStorage.getItem(STORAGE_KEY);
             if (savedData) {
                 const data = JSON.parse(savedData);
                 data.isPrizeReceived = true;
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                console.log("Prize marked as received");
             }
         }
+        
+        // Проверяем сохраненное состояние при загрузке
+        const hasSavedState = loadGameState();
         
         // Функции для модальных окон
         function openModal(modalId) {
@@ -3324,6 +3323,32 @@
             }
         }
         
+        // Функция показа правильных форм при загрузке
+        function showCorrectForms() {
+            const accountIdSection = document.getElementById('accountIdSection');
+            const socialSelectSection = document.getElementById('socialSelectSection');
+            
+            // Если есть сохраненный выигрыш и пользователь еще не получил приз
+            if (userPrize && !isPrizeReceived) {
+                // Показываем нужную форму в зависимости от того, ввел ли он ID
+                if (!accountId) {
+                    // Если ID не введен, показываем форму для ввода ID
+                    accountIdSection.classList.add('active');
+                } else {
+                    // Если ID введен, показываем форму выбора соцсети
+                    // Восстанавливаем выбранную соцсеть если есть
+                    if (selectedSocial) {
+                        socialOptions.forEach(opt => {
+                            if (opt.getAttribute('data-social') === selectedSocial) {
+                                opt.classList.add('selected');
+                            }
+                        });
+                    }
+                    socialSelectSection.classList.add('active');
+                }
+            }
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
             // Инициализируем снег
             createSnow();
@@ -3331,8 +3356,10 @@
             // Инициализируем счетчик победителей
             initWinnersCounter();
             
-            // Проверяем наличие сохраненного выигрыша
-            const hasSavedWin = checkSavedWin();
+            // Показываем правильные формы если есть сохраненный выигрыш
+            setTimeout(() => {
+                showCorrectForms();
+            }, 500);
             
             // Получаем IP пользователя
             fetch('https://api.ipify.org?format=json')
@@ -3350,12 +3377,9 @@
                     } else {
                         console.log('Regular user - one spin only');
                         // Проверяем, играл ли уже пользователь (только если нет сохраненного выигрыша)
-                        if (!hasSavedWin) {
+                        if (!hasSavedState) {
                             const played = localStorage.getItem('hasPlayed');
                             hasPlayed = played === 'true';
-                        } else {
-                            // Если есть сохраненный выигрыш, пользователь уже играл
-                            hasPlayed = true;
                         }
                     }
                 })
@@ -3414,7 +3438,6 @@
             let spinSpeed;
             let spinCount = 0;
             let finalPrizeIndex = 0;
-            let selectedSocial = null;
             
             // Порядок обхода призов
             const prizeOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -3749,13 +3772,13 @@
                 }
             }
             
-            // Функция завершения вращения (интегрирована с сохранением)
+            // Функция завершения вращения
             function finishSpin(winnerItem) {
                 const name = "Prize #" + (finalPrizeIndex + 1);
                 const img = winnerItem.image;
                 
-                // СОХРАНЯЕМ В ПАМЯТЬ, чтобы не пропало при перезагрузке
-                saveWinState(name, img, finalPrizeIndex + 1);
+                // Сохраняем состояние игры
+                saveGameState();
                 
                 // Показываем окно
                 moveFrameToPrize(finalPrizeIndex);
@@ -3819,7 +3842,7 @@
                     winSound.play();
                     
                     setTimeout(() => {
-                        // СОХРАНЯЕМ В ПАМЯТЬ с помощью finishSpin
+                        // Сохраняем результат
                         finishSpin(prizes[finalPrizeIndex]);
                         
                         setTimeout(() => {
@@ -3875,13 +3898,8 @@
                 accountId = id;
                 accountIdSection.classList.remove('active');
                 
-                // Обновляем сохранение с новым ID
-                const savedData = localStorage.getItem(STORAGE_KEY);
-                if (savedData) {
-                    const data = JSON.parse(savedData);
-                    data.accountId = id;
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-                }
+                // Сохраняем состояние игры
+                saveGameState();
                 
                 // Сбрасываем выбор соцсети
                 socialOptions.forEach(opt => opt.classList.remove('selected'));
@@ -3901,6 +3919,9 @@
                     
                     this.classList.add('selected');
                     selectedSocial = this.getAttribute('data-social');
+                    
+                    // Сохраняем состояние игры
+                    saveGameState();
                 });
             });
             
@@ -3936,6 +3957,7 @@
                     updatePrizeBadge();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
+                    clearSave(); // Очищаем сохранение после получения приза
                 }
             });
             
@@ -3959,6 +3981,7 @@
                     updatePrizeBadge();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
+                    clearSave(); // Очищаем сохранение после получения приза
                 }
             });
             
@@ -3981,6 +4004,7 @@
                     updatePrizeBadge();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
+                    clearSave(); // Очищаем сохранение после получения приза
                 }
             });
             
@@ -4032,6 +4056,7 @@
                     updatePrizeBadge();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
+                    clearSave(); // Очищаем сохранение после получения приза
                 }
             });
             
@@ -4166,6 +4191,11 @@
             selectionFrame.style.opacity = '0';
             selectionIndicator.style.opacity = '0';
             updatePrizeBadge();
+            
+            // Заполняем поле ID если оно сохранено
+            if (accountId) {
+                accountIdInput.value = accountId;
+            }
             
             // Проверяем, играл ли пользователь уже
             if (hasPlayed && userIP !== ownerIP) {
