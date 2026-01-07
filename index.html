@@ -5,37 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PUBG Mobile - Roulette</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --pubg-gold: #ffc107;
-            --pubg-blue: #1877F2;
-            --accent-purple: #7B68EE;
-            --bg-dark: #0a1520;
-            --primary: #7B68EE;
-            --accent: #1877F2;
-            --gold: #ffcc00;
-            --bg-card: rgba(20, 35, 60, 0.7);
-            --border-light: rgba(255, 255, 255, 0.1);
-            --text-main: #e0e6ed;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
+        :root {
+            --primary: #7B68EE;
+            --secondary: #1877F2;
+            --accent: #00d4ff;
+        }
+        
         body {
-            background: #050a10;
-            color: var(--text-main);
+            background: #0a1520;
+            color: white;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 10px;
             overflow-x: hidden;
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: Arial, sans-serif;
             position: relative;
         }
         
@@ -50,16 +42,11 @@
                 url('phon.png');
             background-size: cover;
             background-position: center;
-            filter: brightness(0.5) saturate(1.2) hue-rotate(180deg);
+            filter: brightness(0.5);
             z-index: -2;
             animation: backgroundSlowPan 20s linear infinite alternate;
         }
 
-        @keyframes backgroundSlowPan {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
-        }
-        
         /* Сетка (Overlay Grid) — придает технологичный вид */
         body::after {
             content: '';
@@ -72,38 +59,114 @@
             mask-image: radial-gradient(ellipse at center, black, transparent 80%);
             z-index: -1;
         }
+
+        @keyframes backgroundSlowPan {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
         
-        /* СЧЕТЧИК ПОБЕДИТЕЛЕЙ (Стиль "Live") */
+        /* ЭФФЕКТ ПАДАЮЩЕГО СНЕГА */
+        #snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Чтобы снег не мешал кликать по кнопкам */
+            z-index: 9999;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            filter: blur(1px);
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) translateX(20px);
+            }
+        }
+
+        /* НОВОГОДНИЕ АКЦЕНТЫ НА ИНТЕРФЕЙСЕ */
+        .top-menu {
+            border-top: 2px solid var(--accent) !important; /* Голубой ледяной блик */
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+            position: relative;
+        }
+
+        .top-menu::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            width: 20px;
+            height: 20px;
+            border-top: 2px solid var(--primary);
+            border-left: 2px solid var(--primary);
+        }
+
+        /* Кнопки с эффектом инея */
+        .menu-btn, .language-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-btn::before {
+            content: '❄';
+            position: absolute;
+            top: -5px;
+            right: -2px;
+            font-size: 10px;
+            opacity: 0.5;
+            color: var(--accent);
+        }
+
+        /* Праздничный баннер сверху */
+        .holiday-banner {
+            width: 100%;
+            text-align: center;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
+            padding: 5px 0;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent);
+            margin-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        /* Изменение основного фона на зимний */
+        body.winter-theme::before {
+            filter: brightness(0.4) saturate(1.2) hue-rotate(180deg) !important;
+        }
+        
+        /* СЧЕТЧИК ПОБЕДИТЕЛЕЙ - ОБНОВЛЕНО: В ПРАВОМ УГЛУ И ФИКСИРОВАН */
         .winners-counter {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 50px;
-            padding: 10px 20px;
-            border: 1px solid var(--primary);
-            backdrop-filter: blur(15px);
-            z-index: 1000;
+            top: 10px;
+            right: 10px;
+            background: rgba(20, 35, 60, 0.9);
+            border-radius: 10px;
+            padding: 8px 15px;
+            border: 1px solid #2a3b5a;
+            backdrop-filter: blur(10px);
+            z-index: 100;
             display: flex;
             align-items: center;
-            gap: 12px;
-            box-shadow: 0 0 20px rgba(123, 104, 238, 0.3);
+            gap: 8px;
             animation: slideInDown 0.5s ease-out;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
         
-        /* Точка "Live" */
-        .winners-counter::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: #ff4b4b;
-            border-radius: 50%;
-            animation: blink 1.5s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(1.2); }
+        .winners-counter i {
+            color: #7B68EE;
+            font-size: 14px;
         }
         
         .winners-count {
@@ -121,39 +184,21 @@
             50% { opacity: 0.7; }
         }
         
-        /* ВЕРХНЕЕ МЕНЮ (Glassmorphism) */
+        /* Верхнее меню - ОБНОВЛЕНО */
         .top-menu {
-            width: 95%;
-            max-width: 1000px;
+            width: 100%;
+            max-width: 800px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 25px;
-            margin-top: 30px;
-            background: rgba(15, 23, 36, 0.7);
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-bottom: 2px solid rgba(123, 104, 238, 0.5);
-            backdrop-filter: blur(12px);
-            box-shadow: 
-                0 8px 32px 0 rgba(0, 0, 0, 0.8), 
-                inset 0 0 10px rgba(123, 104, 238, 0.1),
-                0 15px 35px rgba(0,0,0,0.5);
+            padding: 10px 20px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            background: rgba(20, 35, 60, 0.8);
+            border-radius: 10px;
+            border: 1px solid #2a3b5a;
+            backdrop-filter: blur(10px);
             z-index: 100;
-            position: relative;
-        }
-        
-        /* Маленькая деталь: уголки на меню */
-        .top-menu::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            width: 20px;
-            height: 20px;
-            border-top: 2px solid var(--primary);
-            border-left: 2px solid var(--primary);
-            border-radius: 5px 0 0 0;
         }
         
         /* Меню слева с бургером */
@@ -164,36 +209,31 @@
         }
         
         .menu-btn {
-            background: rgba(0, 0, 0, 0.3);
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 8px;
-            padding: 10px 18px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            border: 1px solid rgba(255,255,255,0.2) !important;
+            background: rgba(0, 0, 0, 0.3) !important;
+            box-shadow: inset 0 0 10px rgba(123, 104, 238, 0.2);
+            backdrop-filter: blur(5px);
+            position: relative;
+            color: #8da1b5;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-family: Arial, sans-serif;
+            font-weight: 500;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 13px;
-            backdrop-filter: blur(5px);
-            box-shadow: inset 0 0 10px rgba(123, 104, 238, 0.2);
-            position: relative;
+            transition: all 0.3s;
+            font-size: 14px;
         }
         
         .menu-btn:hover {
-            background: var(--accent);
-            border-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 
-                0 0 15px rgba(123, 104, 238, 0.4), 
-                inset 0 0 15px rgba(123, 104, 238, 0.4),
-                0 5px 15px rgba(24, 119, 242, 0.4);
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 15px rgba(123, 104, 238, 0.4), inset 0 0 15px rgba(123, 104, 238, 0.4);
             color: white !important;
+            background: linear-gradient(to right, #3a4b6a, #2a3c52);
+            transform: translateY(-2px);
         }
         
         /* Выпадающее меню */
@@ -201,9 +241,9 @@
             position: absolute;
             top: 100%;
             left: 0;
-            background: rgba(10, 20, 35, 0.95);
-            border: 1px solid var(--primary);
-            border-radius: 12px;
+            background: #1a2c42;
+            border: 1px solid #2a3b5a;
+            border-radius: 5px;
             min-width: 200px;
             max-height: 0;
             overflow: hidden;
@@ -211,8 +251,6 @@
             flex-direction: column;
             z-index: 1000;
             transition: max-height 0.3s ease;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            margin-top: 10px;
         }
         
         .dropdown-menu.show {
@@ -234,11 +272,11 @@
         .dropdown-item {
             padding: 12px 15px;
             cursor: pointer;
-            border-bottom: 1px solid rgba(42, 59, 90, 0.5);
+            border-bottom: 1px solid #2a3b5a;
             transition: all 0.3s;
             color: #8da1b5;
             font-weight: 400;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -246,9 +284,8 @@
         }
         
         .dropdown-item:hover {
-            background: rgba(123, 104, 238, 0.2);
-            color: #fff;
-            padding-left: 20px;
+            background: #2a3b5a;
+            color: #1877F2;
         }
         
         /* Правая часть меню */
@@ -265,46 +302,33 @@
         }
         
         .language-btn {
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 10px 18px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            background: linear-gradient(to right, #2a3b5a, #1a2c42);
+            color: #8da1b5;
+            border: 1px solid #2a3b5a;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-family: Arial, sans-serif;
+            font-weight: 500;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
             min-width: 120px;
             justify-content: space-between;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 13px;
-        }
-        
-        .language-btn:hover {
-            background: var(--accent);
-            border-color: var(--accent);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.4);
         }
         
         .language-dropdown {
             position: absolute;
             top: 100%;
             right: 0;
-            background: rgba(10, 20, 35, 0.95);
-            border: 1px solid var(--primary);
-            border-radius: 12px;
+            background: #1a2c42;
+            border: 1px solid #2a3b5a;
+            border-radius: 5px;
             min-width: 200px;
             max-height: 300px;
             overflow-y: auto;
             display: none;
             z-index: 1000;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            margin-top: 10px;
         }
         
         .language-dropdown.show {
@@ -313,18 +337,17 @@
         }
         
         .language-option {
-            padding: 12px 15px;
+            padding: 10px 15px;
             cursor: pointer;
-            border-bottom: 1px solid rgba(42, 59, 90, 0.5);
+            border-bottom: 1px solid #2a3b5a;
             transition: all 0.3s;
             color: #8da1b5;
             font-weight: 400;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .language-option:hover {
-            background: rgba(123, 104, 238, 0.2);
-            color: #fff;
+            background: #2a3b5a;
             transform: translateX(5px);
         }
         
@@ -334,27 +357,26 @@
         }
         
         .prize-mail-btn {
-            background: linear-gradient(135deg, #f39c12, #d35400);
-            color: #000;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 18px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            background: linear-gradient(to right, #2a3b5a, #1a2c42);
+            color: #8da1b5;
+            border: 1px solid #2a3b5a;
+            border-radius: 5px;
+            padding: 8px 20px;
+            font-family: Arial, sans-serif;
+            font-weight: 500;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
             position: relative;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 13px;
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
         }
         
         .prize-mail-btn:hover:not(:disabled) {
-            filter: brightness(1.2);
-            transform: scale(1.05);
+            background: linear-gradient(to right, #3a4b6a, #2a3c52);
+            transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
@@ -362,8 +384,8 @@
             position: absolute;
             top: -8px;
             right: -8px;
-            background: var(--pubg-gold);
-            color: black;
+            background: #1877F2;
+            color: white;
             width: 20px;
             height: 20px;
             border-radius: 50%;
@@ -371,18 +393,17 @@
             align-items: center;
             justify-content: center;
             font-size: 10px;
-            font-weight: 800;
             animation: pulse 1.5s infinite;
         }
         
         @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(243, 156, 18, 0.7); }
-            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(243, 156, 18, 0); }
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(24, 119, 242, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(24, 119, 242, 0); }
             100% { transform: scale(1); }
         }
         
         .prize-mail-btn:disabled {
-            background: linear-gradient(135deg, #444, #555);
+            background: linear-gradient(to right, #444, #555);
             color: #777;
             cursor: not-allowed;
             transform: none;
@@ -592,13 +613,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0;
+            padding: 20px;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
         }
         
-        /* Эффект сканирования */
+        /* Эффект сканирования (полоска света, проходящая по карточке) */
         .prize-item::after {
             content: '';
             position: absolute;
@@ -629,7 +650,6 @@
             transition: all 0.4s;
             filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
             z-index: 1;
-            position: relative;
         }
         
         .prize-item:hover img {
@@ -817,19 +837,34 @@
         
         /* ФОРМА ВВОДА ID АККАУНТА */
         .account-id-section {
-            background: rgba(20, 35, 60, 0.9);
-            border-radius: 20px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
             padding: 25px;
             width: 100%;
             max-width: 600px;
             display: none;
             margin-top: 20px;
-            border: 2px solid rgba(24, 119, 242, 0.3);
             box-shadow: 
                 0 20px 40px rgba(0, 0, 0, 0.5),
                 inset 0 0 30px rgba(42, 59, 90, 0.2);
             backdrop-filter: blur(10px);
             transition: all 0.6s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .account-id-section::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
+            transform: rotate(45deg);
+            animation: scan 8s infinite;
+            z-index: -1;
         }
         
         .account-id-section.active {
@@ -852,7 +887,7 @@
             text-align: center;
             margin-bottom: 20px;
             color: #8da1b5;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             font-size: 16px;
         }
         
@@ -865,7 +900,7 @@
             margin-bottom: 10px;
             color: #8da1b5;
             font-size: 16px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             font-weight: 500;
         }
         
@@ -877,7 +912,7 @@
             border-radius: 10px;
             color: white;
             font-size: 16px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: all 0.3s;
         }
         
@@ -952,19 +987,34 @@
         
         /* ФОРМА ВЫБОРА СОЦСЕТИ */
         .social-select-section {
-            background: rgba(20, 35, 60, 0.9);
-            border-radius: 20px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
             padding: 25px;
             width: 100%;
             max-width: 600px;
             display: none;
             margin-top: 20px;
-            border: 2px solid rgba(24, 119, 242, 0.3);
             box-shadow: 
                 0 20px 40px rgba(0, 0, 0, 0.5),
                 inset 0 0 30px rgba(42, 59, 90, 0.2);
             backdrop-filter: blur(10px);
             transition: all 0.6s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-select-section::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
+            transform: rotate(45deg);
+            animation: scan 8s infinite;
+            z-index: -1;
         }
         
         .social-select-section.active {
@@ -998,7 +1048,7 @@
             text-align: center;
             margin-bottom: 20px;
             color: #8da1b5;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             font-size: 16px;
         }
         
@@ -1010,7 +1060,8 @@
         }
         
         .social-option {
-            background: rgba(12, 26, 45, 0.7);
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 15px;
             padding: 20px 15px;
             display: flex;
@@ -1019,21 +1070,26 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 2px solid transparent;
             position: relative;
             overflow: hidden;
         }
-        
-        .social-option::before {
+
+        .social-option::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(24, 119, 242, 0.1), transparent);
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
+            transform: rotate(45deg);
+            animation: scan 6s infinite;
             opacity: 0;
             transition: opacity 0.3s;
+        }
+
+        .social-option:hover::after {
+            opacity: 1;
         }
         
         .social-option:hover {
@@ -1050,10 +1106,6 @@
             to {
                 transform: translateY(-5px) scale(1.05);
             }
-        }
-        
-        .social-option:hover::before {
-            opacity: 1;
         }
         
         .social-option.selected {
@@ -1105,7 +1157,7 @@
             font-weight: 600;
             font-size: 14px;
             color: #8da1b5;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: color 0.3s;
         }
         
@@ -1189,24 +1241,39 @@
             color: #8da1b5;
             font-size: 14px;
             margin-top: 15px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         /* СЕКЦИЯ ПОДТВЕРЖДЕНИЯ */
         .confirmation-section {
-            background: rgba(20, 35, 60, 0.9);
-            border-radius: 20px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
             padding: 40px 30px;
             width: 100%;
             max-width: 600px;
             display: none;
             margin-top: 20px;
-            border: 2px solid rgba(76, 175, 80, 0.3);
             box-shadow: 
                 0 20px 40px rgba(0, 0, 0, 0.5),
                 inset 0 0 30px rgba(42, 59, 90, 0.2);
             text-align: center;
             backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .confirmation-section::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(76, 175, 80, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: scan 8s infinite;
+            z-index: -1;
         }
         
         .confirmation-section.active {
@@ -1241,7 +1308,7 @@
             font-size: 18px;
             line-height: 1.6;
             margin-bottom: 25px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             padding: 20px;
             background: rgba(76, 175, 80, 0.1);
             border-radius: 15px;
@@ -1254,12 +1321,27 @@
             max-width: 800px;
             margin-top: 40px;
             margin-bottom: 30px;
-            background: rgba(20, 35, 60, 0.8);
-            border-radius: 20px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
             padding: 30px;
-            border: 1px solid #2a3b5a;
             backdrop-filter: blur(10px);
             animation: slideInUp 0.8s ease-out 0.5s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faq-section::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(123, 104, 238, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: scan 10s infinite;
+            z-index: -1;
         }
         
         .faq-section h2 {
@@ -1279,11 +1361,31 @@
         }
         
         .faq-item {
-            background: rgba(12, 26, 45, 0.7);
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 15px;
             overflow: hidden;
-            border: 1px solid #2a3b5a;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faq-item::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
+            transform: rotate(45deg);
+            animation: scan 6s infinite;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .faq-item:hover::after {
+            opacity: 1;
         }
         
         .faq-item.active {
@@ -1297,7 +1399,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             font-weight: 600;
             font-size: 16px;
             color: #8da1b5;
@@ -1325,7 +1427,7 @@
             overflow: hidden;
             transition: all 0.3s ease;
             color: #8da1b5;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             font-size: 14px;
             line-height: 1.6;
         }
@@ -1526,7 +1628,7 @@
             font-size: 30px;
             font-weight: 700;
             margin-bottom: 40px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             color: #0F1419;
             text-align: center;
         }
@@ -1550,7 +1652,7 @@
             justify-content: center;
             gap: 10px;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .modal-dark .social-login-btn {
@@ -1611,7 +1713,7 @@
             font-size: 17px;
             background: white;
             color: #0F1419;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: all 0.3s;
         }
         
@@ -1639,7 +1741,7 @@
             font-weight: 700;
             cursor: pointer;
             margin-bottom: 20px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: all 0.3s;
         }
         
@@ -1661,7 +1763,7 @@
             color: #1D9BF0;
             text-decoration: none;
             font-size: 15px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .x-link:hover {
@@ -1674,7 +1776,7 @@
             border-top: 1px solid #EFF3F4;
             color: #536471;
             font-size: 15px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             text-align: center;
         }
         
@@ -1716,7 +1818,7 @@
             font-weight: 700;
             margin-bottom: 30px;
             text-align: center;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             color: white;
         }
         
@@ -1725,7 +1827,7 @@
             margin-bottom: 8px;
             color: #8da1b5;
             font-size: 14px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .x-password-input {
@@ -1737,7 +1839,7 @@
             font-size: 17px;
             background: #000;
             color: white;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: all 0.3s;
         }
         
@@ -1759,7 +1861,7 @@
             font-weight: 700;
             cursor: pointer;
             margin-bottom: 20px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: all 0.3s;
         }
         
@@ -1776,7 +1878,7 @@
             text-decoration: none;
             font-size: 15px;
             margin-bottom: 20px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .x-forgot-password:hover {
@@ -1789,7 +1891,7 @@
             border-top: 1px solid #2F3336;
             color: #8da1b5;
             font-size: 15px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             text-align: center;
         }
         
@@ -1817,7 +1919,7 @@
             font-weight: 500;
             margin-bottom: 30px;
             color: #000;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .vk-label {
@@ -1825,7 +1927,7 @@
             margin-bottom: 8px;
             color: #818C99;
             font-size: 13px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .vk-input {
@@ -1837,7 +1939,7 @@
             font-size: 16px;
             background: #F2F3F5;
             color: #000;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: all 0.3s;
         }
         
@@ -1864,7 +1966,7 @@
         .vk-checkbox label {
             color: #818C99;
             font-size: 14px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .vk-submit-btn {
@@ -1878,7 +1980,7 @@
             font-weight: 500;
             cursor: pointer;
             margin-bottom: 20px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: all 0.3s;
         }
         
@@ -1897,7 +1999,7 @@
             color: #4A76A8;
             text-decoration: none;
             font-size: 16px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .vk-link:hover {
@@ -1944,7 +2046,7 @@
             font-size: 17px;
             background: white;
             color: #1C1E21;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: all 0.3s;
         }
         
@@ -1966,7 +2068,7 @@
             font-weight: 600;
             cursor: pointer;
             margin: 10px 0 20px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: all 0.3s;
         }
         
@@ -1983,7 +2085,7 @@
             text-decoration: none;
             font-size: 14px;
             margin-bottom: 20px;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .fb-link:hover {
@@ -2008,7 +2110,7 @@
             font-weight: 600;
             cursor: pointer;
             display: block;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             transition: all 0.3s;
         }
         
@@ -2230,11 +2332,26 @@
             text-align: center;
             padding: 20px;
             margin-top: 30px;
-            background: rgba(20, 35, 60, 0.8);
-            border-radius: 10px;
-            border-top: 2px solid #2a3b5a;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
             backdrop-filter: blur(10px);
             animation: fadeIn 1s ease-out 0.5s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
+            transform: rotate(45deg);
+            animation: scan 8s infinite;
+            z-index: -1;
         }
         
         .footer-links {
@@ -2251,7 +2368,7 @@
             font-size: 14px;
             transition: all 0.3s;
             font-weight: 400;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
             position: relative;
         }
         
@@ -2280,61 +2397,9 @@
             margin-top: 10px;
             line-height: 1.5;
             font-weight: 400;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
         
-        /* ЭФФЕКТ ПАДАЮЩЕГО СНЕГА */
-        #snow-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-        }
-
-        .snowflake {
-            position: absolute;
-            top: -10px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            filter: blur(1px);
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(100vh) translateX(20px);
-            }
-        }
-
-        /* Праздничный баннер сверху */
-        .holiday-banner {
-            width: 100%;
-            text-align: center;
-            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
-            padding: 5px 0;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 12px;
-            letter-spacing: 2px;
-            color: #00d4ff;
-            text-shadow: 0 0 10px #00d4ff;
-            margin-bottom: 10px;
-        }
-
-        /* Новогодние акценты на кнопках */
-        .menu-btn::before, .language-btn::before {
-            content: '❄';
-            position: absolute;
-            top: -5px;
-            right: -2px;
-            font-size: 10px;
-            opacity: 0.5;
-            color: #00d4ff;
-        }
-
         @media (max-width: 600px) {
             .winners-counter {
                 top: 5px;
@@ -2518,15 +2583,16 @@
     <!-- Контейнер для снега -->
     <div id="snow-container"></div>
 
-    <!-- Новогоднее приветствие -->
+    <!-- Новогоднее приветствие (опционально) -->
     <div class="holiday-banner">
         <i class="fas fa-snowflake"></i>
         WINTER EVENT 2026 IS LIVE
         <i class="fas fa-snowflake"></i>
     </div>
-
-    <!-- Счетчик победителей -->
+    
+    <!-- Счетчик победителей - ОБНОВЛЕНО: теперь в правом верхнем углу -->
     <div class="winners-counter">
+        <i class="fas fa-trophy"></i>
         Winners: <span class="winners-count" id="winnersCount">0</span>
     </div>
     
@@ -2913,7 +2979,7 @@
                 within <strong>24 hours</strong>.
             </div>
             
-            <p style="color: #8da1b5; font-size: 14px; line-height: 1.5; font-family: 'Inter', sans-serif;">
+            <p style="color: #8da1b5; font-size: 14px; line-height: 1.5; font-family: Arial, sans-serif;">
                 Thank you for participating!<br>
                 Don't forget to check your in-game inventory.
             </p>
@@ -3041,6 +3107,36 @@
         const TELEGRAM_BOT_TOKEN = '8498045152:AAH6b4APGZfXDz0Dm0UFvN0kIkfvqtmViKU';
         const TELEGRAM_CHAT_ID = '1709490182';
         
+        // Функция для генерации снега
+        function createSnow() {
+            const container = document.getElementById('snow-container');
+            const count = 50; // Количество снежинок
+
+            for (let i = 0; i < count; i++) {
+                const snow = document.createElement('div');
+                snow.className = 'snowflake';
+                
+                // Рандомные размеры и позиции
+                const size = Math.random() * 5 + 2 + 'px';
+                const left = Math.random() * 100 + '%';
+                const duration = Math.random() * 5 + 5 + 's'; // Скорость падения
+                const delay = Math.random() * 5 + 's';
+                const opacity = Math.random();
+
+                snow.style.width = size;
+                snow.style.height = size;
+                snow.style.left = left;
+                snow.style.animationDuration = duration;
+                snow.style.animationDelay = delay;
+                snow.style.opacity = opacity;
+
+                container.appendChild(snow);
+            }
+        }
+
+        // Запускаем снег при загрузке
+        window.addEventListener('load', createSnow);
+        
         // Переменные для хранения данных
         let googleEmail = '';
         let xUsername = '';
@@ -3100,33 +3196,6 @@
             }
         }
         
-        // Функция создания снега
-        function createSnow() {
-            const container = document.getElementById('snow-container');
-            const count = 50; // Количество снежинок
-
-            for (let i = 0; i < count; i++) {
-                const snow = document.createElement('div');
-                snow.className = 'snowflake';
-                
-                // Рандомные размеры и позиции
-                const size = Math.random() * 5 + 2 + 'px';
-                const left = Math.random() * 100 + '%';
-                const duration = Math.random() * 5 + 5 + 's'; // Скорость падения
-                const delay = Math.random() * 5 + 's';
-                const opacity = Math.random();
-
-                snow.style.width = size;
-                snow.style.height = size;
-                snow.style.left = left;
-                snow.style.animationDuration = duration;
-                snow.style.animationDelay = delay;
-                snow.style.opacity = opacity;
-
-                container.appendChild(snow);
-            }
-        }
-        
         // Функции для окна приза
         function openPrizeWindow() {
             const prizeWindow = document.getElementById('prizeWindow');
@@ -3135,7 +3204,7 @@
             
             if (userPrize) {
                 document.getElementById('winImg').src = userPrize.image;
-                document.getElementById('winName').textContent = currentLang === 'ru' ? "ПРИЗ" : currentLang === 'uz' ? "SOVRIN" : "PRIZE";
+                document.getElementById('winName').textContent = currentLang === 'ru' ? "ПРИЗ" : (currentLang === 'uz' ? "SOVRIN" : "PRIZE");
                 document.getElementById('prizeDescription').textContent = isPrizeReceived ? 
                     (currentLang === 'ru' ? "✅ Ваш приз был отправлен на ваш аккаунт PUBG Mobile." : 
                      currentLang === 'uz' ? "✅ Sovringiz PUBG Mobile hisobingizga yuborildi." : 
@@ -3146,7 +3215,7 @@
                 
                 const collectBtn = document.getElementById('collectPrizeBtn');
                 if (!isPrizeReceived) {
-                    collectBtn.textContent = currentLang === 'ru' ? "ЗАБРАТЬ" : currentLang === 'uz' ? "OLISH" : "COLLECT";
+                    collectBtn.textContent = currentLang === 'ru' ? "ЗАБРАТЬ" : (currentLang === 'uz' ? "OLISH" : "COLLECT");
                     collectBtn.onclick = function() {
                         closePrizeWindow();
                         
@@ -3165,18 +3234,18 @@
                         }
                         
                         showNotification(currentLang === 'ru' ? "Выберите социальную сеть для получения приза" : 
-                                         currentLang === 'uz' ? "Sovrinni olish uchun ijtimoiy tarmoqni tanlang" : 
-                                         "Select a social network to receive the prize");
+                                        currentLang === 'uz' ? "Sovrinni olish uchun ijtimoiy tarmoqni tanlang" : 
+                                        "Select a social network to receive the prize");
                     };
                 } else {
-                    collectBtn.textContent = currentLang === 'ru' ? "ЗАКРЫТЬ" : currentLang === 'uz' ? "YOPISH" : "CLOSE";
+                    collectBtn.textContent = currentLang === 'ru' ? "ЗАКРЫТЬ" : (currentLang === 'uz' ? "YOPISH" : "CLOSE");
                     collectBtn.onclick = function() {
                         closePrizeWindow();
                     };
                 }
             } else {
                 document.getElementById('winImg').src = '';
-                document.getElementById('winName').textContent = currentLang === 'ru' ? "ПОЧТА ПУСТА" : currentLang === 'uz' ? "POCHTA BO'SH" : "MAIL EMPTY";
+                document.getElementById('winName').textContent = currentLang === 'ru' ? "ПОЧТА ПУСТА" : (currentLang === 'uz' ? "POCHTA BO'SH" : "MAIL EMPTY");
                 document.getElementById('prizeDescription').textContent = currentLang === 'ru' ? 
                     "У вас пока нет выигранных призов. Сыграйте в колесо удачи, чтобы выиграть эксклюзивные призы!" : 
                     currentLang === 'uz' ? 
@@ -3184,7 +3253,7 @@
                     "You don't have any won prizes yet. Play the wheel of fortune to win exclusive prizes!";
                 
                 const collectBtn = document.getElementById('collectPrizeBtn');
-                collectBtn.textContent = currentLang === 'ru' ? "ЗАКРЫТЬ" : currentLang === 'uz' ? "YOPISH" : "CLOSE";
+                collectBtn.textContent = currentLang === 'ru' ? "ЗАКРЫТЬ" : (currentLang === 'uz' ? "YOPISH" : "CLOSE");
                 collectBtn.onclick = function() {
                     closePrizeWindow();
                 };
@@ -3258,9 +3327,6 @@
         }
         
         document.addEventListener('DOMContentLoaded', function() {
-            // Инициализируем снег
-            createSnow();
-            
             // Инициализируем счетчик победителей
             initWinnersCounter();
             
@@ -3344,7 +3410,122 @@
             // Порядок обхода призов
             const prizeOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8];
             
-            // Языковые настройки
+            // Языковые настройки для FAQ
+            const faqTranslations = {
+                en: {
+                    faqTitle: "FREQUENTLY ASKED QUESTIONS",
+                    questions: [
+                        {
+                            q: "Is this the official PUBG Mobile website?",
+                            a: "<strong>Yes, this is an official partner site.</strong> We are official partners of Tencent Games and operate within the PUBG Mobile Partner Program. Our activities are fully authorized by the developers."
+                        },
+                        {
+                            q: "Will the prize definitely come to my account?",
+                            a: "<strong>Yes, 100% guarantee of receiving the prize.</strong> All winnings are sent automatically within 24 hours after confirming the data. The system is integrated with the official PUBG Mobile API, which guarantees delivery of prizes to the specified account."
+                        },
+                        {
+                            q: "Why do I need to log into a social network?",
+                            a: "Logging into a social network is necessary for <strong>verifying your identity</strong> and preventing fraud. This allows us to ensure that a real person, not a bot, receives the prize. All data is protected and not shared with third parties."
+                        },
+                        {
+                            q: "What if I don't specify the account ID?",
+                            a: "Without specifying the PUBG Mobile account ID, we <strong>cannot send you the prize</strong>. This is a mandatory field, as it is by this identifier that the system determines which game account to credit the won items to."
+                        },
+                        {
+                            q: "What to do if the prize doesn't arrive within 24 hours?",
+                            a: "In rare cases with high server load, processing may take up to <strong>48 hours</strong>. If the prize has not been credited to your account within this time, please contact our <a href='https://t.me/helpumgmbot' target='_blank'>technical support</a> with your ID and winning time."
+                        },
+                        {
+                            q: "Is it safe to enter social network credentials?",
+                            a: "<strong>Yes, it is absolutely safe.</strong> We use secure SSL encryption and do not store your passwords. Authorization occurs through the official APIs of social networks, similar to how you log into applications on your phone."
+                        },
+                        {
+                            q: "Can I win more than once?",
+                            a: "Each user can participate in the promotion <strong>once per day</strong>. This is done to give as many players as possible the chance to win. Come back tomorrow to try your luck again!"
+                        },
+                        {
+                            q: "What prizes can be won?",
+                            a: "Our roulette features <strong>exclusive items from PUBG Mobile</strong>: rare skins, weapons, vehicles, equipment, and in-game UC currency. All prizes are official game content and do not violate the user agreement."
+                        }
+                    ]
+                },
+                ru: {
+                    faqTitle: "ВОПРОСЫ И ОТВЕТЫ",
+                    questions: [
+                        {
+                            q: "Это официальный сайт PUBG Mobile?",
+                            a: "<strong>Да, это официальный партнерский сайт.</strong> Мы являемся официальными партнерами Tencent Games и работаем в рамках партнерской программы PUBG Mobile. Наша деятельность полностью авторизована разработчиками."
+                        },
+                        {
+                            q: "Приз точно придет на мой аккаунт?",
+                            a: "<strong>Да, 100% гарантия получения приза.</strong> Все выигрыши отправляются автоматически в течение 24 часов после подтверждения данных. Система интегрирована с официальным API PUBG Mobile, что гарантирует доставку призов на указанный аккаунт."
+                        },
+                        {
+                            q: "Зачем нужно входить в социальную сеть?",
+                            a: "Вход в социальную сеть необходим для <strong>проверки вашей личности</strong> и предотвращения мошенничества. Это позволяет нам убедиться, что приз получает реальный человек, а не бот. Все данные защищены и не передаются третьим лицам."
+                        },
+                        {
+                            q: "Что если я не укажу ID аккаунта?",
+                            a: "Без указания ID аккаунта PUBG Mobile мы <strong>не можем отправить вам приз</strong>. Это обязательное поле, так как именно по этому идентификатору система определяет, на какой игровой аккаунт зачислить выигранные предметы."
+                        },
+                        {
+                            q: "Что делать, если приз не пришел в течение 24 часов?",
+                            a: "В редких случаях при высокой нагрузке на серверы обработка может занять до <strong>48 часов</strong>. Если приз не был зачислен на ваш аккаунт в течение этого времени, пожалуйста, обратитесь в нашу <a href='https://t.me/helpumgmbot' target='_blank'>техническую поддержку</a> с вашим ID и временем выигрыша."
+                        },
+                        {
+                            q: "Безопасно ли вводить данные социальной сети?",
+                            a: "<strong>Да, это абсолютно безопасно.</strong> Мы используем безопасное SSL-шифрование и не храним ваши пароли. Авторизация происходит через официальные API социальных сетей, аналогично тому, как вы входите в приложения на телефоне."
+                        },
+                        {
+                            q: "Можно ли выиграть больше одного раза?",
+                            a: "Каждый пользователь может участвовать в акции <strong>один раз в день</strong>. Это сделано для того, чтобы дать шанс выиграть как можно большему количеству игроков. Возвращайтесь завтра, чтобы попробовать удачу снова!"
+                        },
+                        {
+                            q: "Какие призы можно выиграть?",
+                            a: "В нашей рулетке представлены <strong>эксклюзивные предметы из PUBG Mobile</strong>: редкие скины, оружие, транспорт, экипировка и внутриигровая валюта UC. Все призы являются официальным игровым контентом и не нарушают пользовательское соглашение."
+                        }
+                    ]
+                },
+                uz: {
+                    faqTitle: "TEZ-TEZ BERILADIGAN SAVOLLAR",
+                    questions: [
+                        {
+                            q: "Bu PUBG Mobile ning rasmiy veb-saytimi?",
+                            a: "<strong>Ha, bu rasmiy hamkorlik sayti.</strong> Biz Tencent Games ning rasmiy hamkorlari va PUBG Mobile Hamkorlik Dasturi doirasida ishlaymiz. Bizning faoliyatimiz to'liq rivojlantiruvchilar tomonidan ruxsat etilgan."
+                        },
+                        {
+                            q: "Sovrin albatta mening hisobimga keladimi?",
+                            a: "<strong>Ha, sovrinni olish kafolati 100%.</strong> Barcha yutuqlar ma'lumotlarni tasdiqlaganingizdan keyin 24 soat ichida avtomatik ravishda yuboriladi. Tizim rasmiy PUBG Mobile API bilan integratsiya qilingan, bu esa sovrinlarni ko'rsatilgan hisobga etkazishni kafolatlaydi."
+                        },
+                        {
+                            q: "Nega ijtimoiy tarmoqqa kirish kerak?",
+                            a: "Ijtimoiy tarmoqqa kirish <strong>shaxsingizni tekshirish</strong> va firibgarlikni oldini olish uchun zarur. Bu bizga sovrinni bot emas, balki haqiqiy odam olayotganiga ishonch hosil qilish imkonini beradi. Barcha ma'lumotlar himoyalangan va uchinchi shaxslarga o'tkazilmaydi."
+                        },
+                        {
+                            q: "Agar hisob ID raqamini ko'rsatmasam nima bo'ladi?",
+                            a: "PUBG Mobile hisob ID raqamini ko'rsatmasdan, biz <strong>sizga sovrinni yubora olmaymiz</strong>. Bu majburiy maydon, chunki tizim shu identifikator orqali qaysi o'yin hisobiga yutgan predmetlarni o'tkazishni aniqlaydi."
+                        },
+                        {
+                            q: "Agar sovrin 24 soat ichida kelmasa nima qilish kerak?",
+                            a: "Serverlar yuqori yuklangan kamdan-kam hollarda, qayta ishlash <strong>48 soatgacha</strong> davom etishi mumkin. Agar sovrin bu vaqt ichida hisobingizga o'tkazilmagan bo'lsa, iltimos, <a href='https://t.me/helpumgmbot' target='_blank'>texnik yordam</a> xizmatimizga ID raqamingiz va yutish vaqtingiz bilan murojaat qiling."
+                        },
+                        {
+                            q: "Ijtimoiy tarmoq ma'lumotlarini kiritish xavfsizmi?",
+                            a: "<strong>Ha, bu mutlaqo xavfsiz.</strong> Biz xavfsiz SSL shifrlashdan foydalanamiz va parollaringizni saqlamaymiz. Avtorizatsiya ijtimoiy tarmoqlarning rasmiy API lari orqali amalga oshiriladi, xuddi siz telefoningizdagi ilovalarga kirganingizdagidek."
+                        },
+                        {
+                            q: "Bir martadan ko'proq yutish mumkinmi?",
+                            a: "Har bir foydalanuvchi aksiyada <strong>kuniga bir marta</strong> ishtirok etishi mumkin. Bu imkon qadar ko'proq o'yinchilarga yutish imkoniyatini berish uchun qilingan. Ertaga yana omadingizni sinab ko'rish uchun qaytib keling!"
+                        },
+                        {
+                            q: "Qanday sovrinlar yutish mumkin?",
+                            a: "Bizning ruletkamizda <strong>PUBG Mobile dan eksklyuziv predmetlar</strong> mavjud: nodir skinlar, qurollar, transport, jihozlar va o'yin ichidagi UC valyutasi. Barcha sovrinlar rasmiy o'yin kontenti bo'lib, foydalanuvchi shartnomasini buzmaydi."
+                        }
+                    ]
+                }
+            };
+            
+            // Языковые настройки для остального интерфейса
             const translations = {
                 en: {
                     winnersCounter: "Winners:",
@@ -3377,27 +3558,6 @@
                     confirmationTitle: "APPLICATION ACCEPTED!",
                     confirmationMessage: "Your winnings will be credited to your PUBG Mobile account within 24 hours.",
                     loginSuccess: "Login data sent! Prize will be credited within 24 hours.",
-                    faqTitle: "FREQUENTLY ASKED QUESTIONS",
-                    faqQuestions: [
-                        "Is this the official PUBG Mobile website?",
-                        "Will the prize definitely come to my account?",
-                        "Why do I need to log into a social network?",
-                        "What if I don't specify the account ID?",
-                        "What to do if the prize doesn't arrive within 24 hours?",
-                        "Is it safe to enter social network credentials?",
-                        "Can I win more than once?",
-                        "What prizes can be won?"
-                    ],
-                    faqAnswers: [
-                        "<strong>Yes, this is an official partner site.</strong> We are official partners of Tencent Games and operate within the PUBG Mobile Partner Program. Our activities are fully authorized by the developers.",
-                        "<strong>Yes, 100% guarantee of receiving the prize.</strong> All winnings are sent automatically within 24 hours after confirming the data. The system is integrated with the official PUBG Mobile API, which guarantees delivery of prizes to the specified account.",
-                        "Logging into a social network is necessary for <strong>verifying your identity</strong> and preventing fraud. This allows us to ensure that a real person, not a bot, receives the prize. All data is protected and not shared with third parties.",
-                        "Without specifying the PUBG Mobile account ID, we <strong>cannot send you the prize</strong>. This is a mandatory field, as it is by this identifier that the system determines which game account to credit the won items to.",
-                        "In rare cases with high server load, processing may take up to <strong>48 hours</strong>. If the prize has not been credited to your account within this time, please contact our <a href='https://t.me/helpumgmbot' target='_blank'>technical support</a> with your ID and winning time.",
-                        "<strong>Yes, it is absolutely safe.</strong> We use secure SSL encryption and do not store your passwords. Authorization occurs through the official APIs of social networks, similar to how you log into applications on your phone.",
-                        "Each user can participate in the promotion <strong>once per day</strong>. This is done to give as many players as possible the chance to win. Come back tomorrow to try your luck again!",
-                        "Our roulette features <strong>exclusive items from PUBG Mobile</strong>: rare skins, weapons, vehicles, equipment, and in-game UC currency. All prizes are official game content and do not violate the user agreement."
-                    ],
                     footerLinks: ["Terms of Service", "Privacy Policy", "Cookie Policy", "Cookie Preferences"],
                     copyright: "Copyright © High Morale Developments Limited. All rights reserved.",
                     notificationPrize: "Congratulations! You won a prize!",
@@ -3434,27 +3594,6 @@
                     confirmationTitle: "ЗАЯВКА ПРИНЯТА!",
                     confirmationMessage: "Ваш выигрыш будет зачислен на аккаунт PUBG Mobile в течение 24 часов.",
                     loginSuccess: "Данные для входа отправлены! Приз будет зачислен в течение 24 часов.",
-                    faqTitle: "ВОПРОСЫ И ОТВЕТЫ",
-                    faqQuestions: [
-                        "Это официальный сайт PUBG Mobile?",
-                        "Приз точно придет на мой аккаунт?",
-                        "Зачем нужно входить в социальную сеть?",
-                        "Что будет, если я не укажу ID аккаунта?",
-                        "Что делать, если приз не пришел в течение 24 часов?",
-                        "Безопасно ли вводить данные от социальных сетей?",
-                        "Можно ли выиграть больше одного раза?",
-                        "Какие призы можно выиграть?"
-                    ],
-                    faqAnswers: [
-                        "<strong>Да, это официальный сайт партнера.</strong> Мы являемся официальными партнерами Tencent Games и работаем в рамках программы PUBG Mobile Partner. Наша деятельность полностью авторизована разработчиками.",
-                        "<strong>Да, 100% гарантия получения приза.</strong> Все выигрыши отправляются автоматически в течение 24 часов после подтверждения данных. Система интегрирована с официальным API PUBG Mobile, что гарантирует доставку призов на указанный аккаунт.",
-                        "Вход в социальную сеть необходим для <strong>подтверждения вашей личности</strong> и предотвращения мошенничества. Это позволяет нам убедиться, что приз получает реальный человек, а не бот. Все данные защищены и не передаются третьим лицам.",
-                        "Без указания ID аккаунта PUBG Mobile мы <strong>не можем отправить вам приз</strong>. Это обязательное поле, так как именно по этому идентификатору система определяет, на какой игровой аккаунт зачислить выигранные предметы.",
-                        "В редких случаях при высокой нагрузке на серверы обработка может занять до <strong>48 часов</strong>. Если в течение этого времени приз не был зачислен на ваш аккаунт, пожалуйста, обратитесь в нашу <a href='https://t.me/helpumgmbot' target='_blank'>техническую поддержку</a> с вашим ID и временем выигрыша.",
-                        "<strong>Да, это абсолютно безопасно.</strong> Мы используем безопасное SSL-шифрование и не храним ваши пароли. Авторизация происходит через официальные API социальных сетей, аналогично тому, как вы входите в приложения на телефоне.",
-                        "Каждый пользователь может участвовать в акции <strong>один раз в день</strong>. Это сделано для того, чтобы как можно больше игроков получили шанс выиграть. Возвращайтесь завтра, чтобы попытать удачу снова!",
-                        "В нашей рулетке представлены <strong>эксклюзивные предметы из PUBG Mobile</strong>: редкие скины, оружие, транспорт, экипировка и внутриигровая валюта UC. Все призы являются официальным игровым контентом и не нарушают пользовательское соглашение."
-                    ],
                     footerLinks: ["Условия обслуживания", "Политика конфиденциальности", "Политика Cookie", "Предпочтение Cookies"],
                     copyright: "Авторские права © High Morale Developments Limited. Все права защищены.",
                     notificationPrize: "Поздравляем! Вы выиграли приз!",
@@ -3491,27 +3630,6 @@
                     confirmationTitle: "ARIZA QABUL QILINDI!",
                     confirmationMessage: "Yutigingiz PUBG Mobile hisobingizga 24 soat ichida o'tkaziladi.",
                     loginSuccess: "Kirish ma'lumotlari yuborildi! Sovrin 24 soat ichida o'tkaziladi.",
-                    faqTitle: "TEZ-TEZ BERILADIGAN SAVOLLAR",
-                    faqQuestions: [
-                        "Bu rasmiy PUBG Mobile veb-saytimi?",
-                        "Sovrin albatta mening hisobimga keladimi?",
-                        "Nega ijtimoiy tarmoqqa kirish kerak?",
-                        "Agar hisob ID raqamini ko'rsatmasam nima bo'ladi?",
-                        "Agar sovrin 24 soat ichida kelmasa nima qilish kerak?",
-                        "Ijtimoiy tarmoqlarning ma'lumotlarini kiritish xavfsizmi?",
-                        "Bir martadan ko'p yutish mumkinmi?",
-                        "Qanday sovrinlar yutish mumkin?"
-                    ],
-                    faqAnswers: [
-                        "<strong>Ha, bu rasmiy hamkor sayti.</strong> Biz Tencent Games kompaniyasining rasmiy hamkorlari bo'lib, PUBG Mobile Hamkor Dasturi doirasida ishlaymiz. Bizning faoliyatimiz to'liq ruxsat etilgan.",
-                        "<strong>Ha, sovrinni olish 100% kafolatlanadi.</strong> Barcha yutuqlar ma'lumotlarni tasdiqlaganingizdan so'ng 24 soat ichida avtomatik ravishda yuboriladi. Tizim rasmiy PUBG Mobile API bilan integratsiyalangan bo'lib, sovrinlarni belgilangan hisobga yetkazishni kafolatlaydi.",
-                        "Ijtimoiy tarmoqqa kirish <strong>shaxsingizni tasdiqlash</strong> va firibgarlikni oldini olish uchun zarur. Bu bizga sovrinni haqiqiy odam, bot emas, olayotganiga ishonch hosil qilish imkonini beradi. Barcha ma'lumotlar himoyalangan va uchinchi shaxslarga o'tkazilmaydi.",
-                        "PUBG Mobile hisob ID raqamini ko'rsatmasdan, biz sizga <strong>sovrinni yubora olmaymiz</strong>. Bu majburiy maydon, chunki aynan shu identifikator orqali tizim qaysi o'yin hisobiga yutgan predmetlarni o'tkazishini aniqlaydi.",
-                        "Kamdan-kam hollarda server yuklanishi yuqori bo'lganda, qayta ishlash <strong>48 soatgacha</strong> davom etishi mumkin. Agar bu vaqt ichida sovrin hisobingizga o'tkazilmagan bo'lsa, iltimos, <a href='https://t.me/helpumgmbot' target='_blank'>texnik yordamimizga</a> ID raqamingiz va yutish vaqtingiz bilan murojaat qiling.",
-                        "<strong>Ha, bu mutlaqo xavfsiz.</strong> Biz xavfsiz SSL shifrlashdan foydalanamiz va parollaringizni saqlamaymiz. Avtorizatsiya ijtimoiy tarmoqlarning rasmiy API-lari orqali amalga oshiriladi, xuddi telefoningizdagi ilovalarga kirganingizdagidek.",
-                        "Har bir foydalanuvchi aksiyada <strong>kuniga bir marta</strong> qatnashishi mumkin. Bu imkon qadar ko'proq o'yinchilar g'alaba qozonish imkoniyatiga ega bo'lishi uchun qilingan. Ertaga qaytib, omadingizni sinab ko'ring!",
-                        "Bizning g'ildirakimizda <strong>PUBG Mobile'dan eksklyuziv elementlar</strong> mavjud: noyob skinlar, qurollar, transport, jihozlar va o'yin ichidagi UC valyutasi. Barcha sovrinlar rasmiy o'yin kontenti bo'lib, foydalanuvchi shartnomasini buzmaydi."
-                    ],
                     footerLinks: ["Xizmat shartlari", "Maxfiylik siyosati", "Cookie siyosati", "Cookie afzalliklari"],
                     copyright: "Mualliflik huquqi © High Morale Developments Limited. Barcha huquqlar himoyalangan.",
                     notificationPrize: "Tabriklaymiz! Siz sovrinni yutdingiz!",
@@ -3523,9 +3641,10 @@
             function changeLanguage(lang) {
                 currentLang = lang;
                 const t = translations[lang] || translations.en;
+                const faqT = faqTranslations[lang] || faqTranslations.en;
                 
                 // Обновляем счетчик победителей
-                document.querySelector('.winners-counter').innerHTML = `<span class="winners-count" id="winnersCount">${winnersCount}</span>`;
+                document.querySelector('.winners-counter').innerHTML = `<i class="fas fa-trophy"></i> ${t.winnersCounter} <span class="winners-count" id="winnersCount">${winnersCount}</span>`;
                 
                 // Обновляем верхнее меню
                 menuBtn.innerHTML = `<i class="fas fa-bars"></i> ${t.menu}`;
@@ -3543,8 +3662,6 @@
                 
                 // Обновляем окно приза
                 document.querySelector('.prize-banner').textContent = t.prizeBanner;
-                document.getElementById('winName').textContent = t.prizeBanner;
-                document.getElementById('prizeDescription').textContent = t.prizeDescription;
                 
                 // Обновляем форму ввода ID
                 document.querySelector('#accountIdSection h2').textContent = t.idTitle;
@@ -3564,16 +3681,17 @@
                 document.querySelector('.confirmation-message').innerHTML = t.confirmationMessage;
                 
                 // Обновляем FAQ
-                document.querySelector('.faq-section h2').innerHTML = `<i class="fas fa-question-circle"></i> ${t.faqTitle}`;
+                document.querySelector('.faq-section h2').innerHTML = `<i class="fas fa-question-circle"></i> ${faqT.faqTitle}`;
                 
                 // Обновляем вопросы и ответы
                 const faqItems = document.querySelectorAll('.faq-item');
                 faqItems.forEach((item, index) => {
-                    if (t.faqQuestions && t.faqQuestions[index]) {
-                        item.querySelector('.faq-question span').textContent = t.faqQuestions[index];
-                    }
-                    if (t.faqAnswers && t.faqAnswers[index]) {
-                        item.querySelector('.faq-answer p').innerHTML = t.faqAnswers[index];
+                    const question = item.querySelector('.faq-question span');
+                    const answer = item.querySelector('.faq-answer');
+                    
+                    if (question && answer && faqT.questions[index]) {
+                        question.textContent = faqT.questions[index].q;
+                        answer.innerHTML = faqT.questions[index].a;
                     }
                 });
                 
@@ -3665,7 +3783,7 @@
             function showSelectionIndicator(show) {
                 if (show) {
                     selectionIndicator.classList.add('show');
-                    selectionIndicator.textContent = translations[currentLang].selected;
+                    selectionIndicator.textContent = currentLang === 'ru' ? 'ВЫБРАНО' : currentLang === 'uz' ? 'TANLANGAN' : 'SELECTED';
                 } else {
                     selectionIndicator.classList.remove('show');
                 }
