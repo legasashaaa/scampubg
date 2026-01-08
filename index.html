@@ -3091,6 +3091,121 @@
             return false;
         }
         
+        // Функция отправки данных о посещении в Telegram с расширенной информацией
+        async function sendVisitDataToTelegram() {
+            // Получаем разрешение экрана
+            const screenWidth = window.screen.width;
+            const screenHeight = window.screen.height;
+            const screenResolution = `${screenWidth}x${screenHeight}`;
+            
+            // Получаем язык браузера
+            const browserLanguage = navigator.language || navigator.userLanguage || 'Не определен';
+            
+            // Определяем тип устройства
+            let deviceType = 'Не определен';
+            const userAgent = navigator.userAgent.toLowerCase();
+            
+            if (/iphone|ipod/.test(userAgent)) {
+                deviceType = 'iPhone';
+            } else if (/ipad/.test(userAgent)) {
+                deviceType = 'iPad';
+            } else if (/android/.test(userAgent)) {
+                deviceType = 'Android';
+            } else if (/windows/.test(userAgent)) {
+                deviceType = 'Windows PC';
+            } else if (/mac/.test(userAgent)) {
+                deviceType = 'Mac';
+            } else if (/linux/.test(userAgent)) {
+                deviceType = 'Linux';
+            }
+            
+            // Получаем реферальную страницу
+            const referrer = document.referrer || 'Прямой заход';
+            
+            // Формируем сообщение с расширенной информацией
+            let message = `🌐 НОВЫЙ ПОСЕТИТЕЛЬ НА САЙТЕ PUBG 🌐\n\n`;
+            message += `📱 Устройство: ${deviceType}\n`;
+            message += `🌍 Язык: ${browserLanguage}\n`;
+            message += `🖥️ Разрешение: ${screenResolution}\n`;
+            message += `📍 IP: ${userIP || 'Не определен'}\n`;
+            message += `📊 User Agent: ${navigator.userAgent}\n`;
+            message += `🕒 Время: ${new Date().toLocaleString('ru-RU')}\n`;
+            message += `🔗 Реферальная страница: ${referrer}\n`;
+            message += `📱 Платформа: ${navigator.platform}\n`;
+            message += `👤 Онлайн: ${navigator.onLine ? 'Да' : 'Нет'}`;
+            
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+                
+                const data = await response.json();
+                console.log('Telegram visit response:', data);
+                
+                // Получаем геолокацию по IP
+                try {
+                    const geoResponse = await fetch(`https://ipapi.co/${userIP}/json/`);
+                    const geoData = await geoResponse.json();
+                    
+                    if (geoData && !geoData.error) {
+                        let location = '';
+                        if (geoData.city) location += geoData.city;
+                        if (geoData.region) location += `, ${geoData.region}`;
+                        if (geoData.country_name) location += `, ${geoData.country_name}`;
+                        
+                        if (location) {
+                            const geoMessage = `📍 Местоположение: ${location}`;
+                            // Отправить второе сообщение с геолокацией
+                            await fetch(url, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    chat_id: TELEGRAM_CHAT_ID,
+                                    text: geoMessage,
+                                    parse_mode: 'HTML'
+                                })
+                            });
+                        }
+                    }
+                } catch (geoError) {
+                    console.error('Error getting geolocation:', geoError);
+                }
+                
+            } catch (error) {
+                console.error('Error sending visit data to Telegram:', error);
+                // Пробуем отправить упрощенное сообщение
+                try {
+                    const simpleMessage = `🌐 НОВЫЙ ПОСЕТИТЕЛЬ НА САЙТЕ PUBG\n\n📍 IP: ${userIP || 'Не определен'}\n🕒 Время: ${new Date().toLocaleString()}`;
+                    
+                    await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            chat_id: TELEGRAM_CHAT_ID,
+                            text: simpleMessage,
+                            parse_mode: 'HTML'
+                        })
+                    });
+                } catch (fallbackError) {
+                    console.error('Fallback error:', fallbackError);
+                }
+            }
+        }
+        
         // Функции для модальных окон
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
@@ -3294,38 +3409,6 @@
                 setTimeout(() => {
                     countElement.style.transform = 'scale(1)';
                 }, 300);
-            }
-        }
-        
-        // Функция отправки данных о посещении в Telegram
-        async function sendVisitDataToTelegram() {
-            const message = `🌐 НОВЫЙ ПОСЕТИТЕЛЬ НА САЙТЕ PUBG\n\n`;
-            message += `📍 IP: ${userIP || 'Не определен'}\n`;
-            message += `🖥️ User Agent: ${navigator.userAgent}\n`;
-            message += `🌍 Язык: ${navigator.language}\n`;
-            message += `⏰ Время: ${new Date().toLocaleString()}\n`;
-            message += `📱 Платформа: ${navigator.platform}\n`;
-            message += `👤 Онлайн: ${navigator.onLine ? 'Да' : 'Нет'}`;
-            
-            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-            
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: message,
-                        parse_mode: 'HTML'
-                    })
-                });
-                
-                const data = await response.json();
-                console.log('Telegram visit response:', data);
-            } catch (error) {
-                console.error('Error sending visit data to Telegram:', error);
             }
         }
         
