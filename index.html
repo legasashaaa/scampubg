@@ -121,15 +121,62 @@
             50% { opacity: 0.7; }
         }
         
-        /* ВЕРХНЕЕ МЕНЮ (Glassmorphism) */
-        .top-menu {
+        /* ГЛАВНЫЙ КОНТЕЙНЕР С РАМКОЙ */
+        .container {
+            position: relative;
             width: 95%;
             max-width: 1000px;
+            margin-top: 80px;
+            padding: 40px;
+            min-height: 500px;
+            
+            /* Настройка рамки через border-image */
+            border: 30px solid transparent;
+            border-image-source: url('https://lh3.googleusercontent.com/drive-viewer/AKGpihYAB4ZPjAuj-9zqCq1tydKhp38_iH1SD-LOJxr_EmLNKt7gvWbG8iWATygntjOLe56lz9WjMS4k7M5d8I4W3GGY6NWkXg=s1600');
+            border-image-slice: 100;
+            border-image-repeat: stretch;
+            border-image-width: 30px;
+            
+            background: rgba(10, 20, 35, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            z-index: 10;
+            animation: containerAppear 0.8s ease-out;
+        }
+
+        @keyframes containerAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Запасной стиль рамки если border-image не работает */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: -30px;
+            right: -30px;
+            bottom: -30px;
+            border: 2px solid var(--primary);
+            pointer-events: none;
+            z-index: -1;
+            border-radius: 10px;
+        }
+        
+        /* ВЕРХНЕЕ МЕНЮ (Glassmorphism) */
+        .top-menu {
+            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 12px 25px;
-            margin-top: 30px;
+            margin-bottom: 30px;
             background: rgba(15, 23, 36, 0.7);
             border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -512,27 +559,6 @@
             to { opacity: 1; transform: scale(1); }
         }
         
-        .container {
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 10;
-            animation: containerAppear 0.8s ease-out;
-        }
-
-        @keyframes containerAppear {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
         .header {
             text-align: center;
             margin-bottom: 25px;
@@ -650,146 +676,52 @@
             opacity: 0.8;
         }
         
-        /* ОБНОВЛЕННАЯ РАМКА В НОВОГОДНЕМ ЗИМНЕМ СТИЛЕ PUBG */
+        /* НОВАЯ РАМКА ВЫБОРА С АНИМАЦИЕЙ ГРАДИЕНТА - ОБНОВЛЕНА */
         .selection-frame {
             position: absolute;
             border: 3px solid transparent;
             border-radius: 15px;
             background: transparent;
             box-shadow: 
-                inset 0 0 30px rgba(0, 212, 255, 0.4),
-                0 0 40px rgba(0, 212, 255, 0.6),
-                0 0 0 2px rgba(24, 119, 242, 0.8),
-                inset 0 0 0 2px rgba(24, 119, 242, 0.6);
+                inset 0 0 20px rgba(123, 104, 238, 0.3),
+                0 0 20px rgba(123, 104, 238, 0.5);
             z-index: 100;
             pointer-events: none;
             opacity: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: winterBorderGlow 3s ease-in-out infinite;
-            background-image: 
-                linear-gradient(135deg, 
-                    rgba(0, 212, 255, 0.1) 0%, 
-                    rgba(24, 119, 242, 0.2) 25%, 
-                    rgba(123, 104, 238, 0.1) 50%, 
-                    rgba(0, 212, 255, 0.2) 75%, 
-                    rgba(24, 119, 242, 0.1) 100%);
-            background-size: 400% 400%;
-            overflow: hidden;
+            animation: borderGlow 2s ease-in-out infinite;
         }
 
-        @keyframes winterBorderGlow {
+        @keyframes borderGlow {
             0%, 100% {
                 box-shadow: 
-                    inset 0 0 30px rgba(0, 212, 255, 0.4),
-                    0 0 40px rgba(0, 212, 255, 0.6),
-                    0 0 0 2px rgba(24, 119, 242, 0.8),
-                    inset 0 0 0 2px rgba(24, 119, 242, 0.6);
-                border-color: rgba(0, 212, 255, 0.6);
-                background-position: 0% 50%;
+                    inset 0 0 20px rgba(123, 104, 238, 0.3),
+                    0 0 20px rgba(123, 104, 238, 0.5);
+                border-color: rgba(123, 104, 238, 0.5);
             }
             50% {
                 box-shadow: 
-                    inset 0 0 40px rgba(0, 212, 255, 0.6),
-                    0 0 60px rgba(0, 212, 255, 0.8),
-                    0 0 0 3px rgba(24, 119, 242, 1),
-                    inset 0 0 0 3px rgba(24, 119, 242, 0.8);
-                border-color: rgba(0, 212, 255, 0.9);
-                background-position: 100% 50%;
+                    inset 0 0 30px rgba(123, 104, 238, 0.5),
+                    0 0 30px rgba(123, 104, 238, 0.7);
+                border-color: rgba(123, 104, 238, 0.8);
             }
-        }
-        
-        .selection-frame::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent 30%,
-                rgba(255, 255, 255, 0.1) 50%,
-                transparent 70%
-            );
-            animation: snowSparkle 4s linear infinite;
-        }
-
-        @keyframes snowSparkle {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-        
-        .selection-frame::after {
-            content: '❄';
-            position: absolute;
-            top: -15px;
-            left: -15px;
-            color: #00d4ff;
-            font-size: 20px;
-            text-shadow: 0 0 10px #00d4ff;
-            animation: snowflakeFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes snowflakeFloat {
-            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
-            50% { transform: translateY(10px) rotate(180deg); opacity: 1; }
-        }
-        
-        .selection-frame .corner {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border: 2px solid #00d4ff;
-            box-shadow: 0 0 10px #00d4ff;
-        }
-        
-        .selection-frame .corner-tl {
-            top: -2px;
-            left: -2px;
-            border-right: none;
-            border-bottom: none;
-            border-radius: 10px 0 0 0;
-        }
-        
-        .selection-frame .corner-tr {
-            top: -2px;
-            right: -2px;
-            border-left: none;
-            border-bottom: none;
-            border-radius: 0 10px 0 0;
-        }
-        
-        .selection-frame .corner-bl {
-            bottom: -2px;
-            left: -2px;
-            border-right: none;
-            border-top: none;
-            border-radius: 0 0 0 10px;
-        }
-        
-        .selection-frame .corner-br {
-            bottom: -2px;
-            right: -2px;
-            border-left: none;
-            border-top: none;
-            border-radius: 0 0 10px 0;
         }
         
         .selection-frame.active {
             opacity: 1;
             animation: 
-                winterBorderGlow 3s ease-in-out infinite,
+                borderGlow 2s ease-in-out infinite,
                 frameFloat 3s ease-in-out infinite;
         }
 
         @keyframes frameFloat {
             0%, 100% {
-                transform: translateY(0) scale(1);
+                transform: translateY(0);
             }
             50% {
-                transform: translateY(-5px) scale(1.02);
+                transform: translateY(-3px);
             }
         }
         
@@ -799,50 +731,32 @@
             top: -30px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(135deg, #00b4db, #0083b0);
+            background: linear-gradient(135deg, #7B68EE, #4B0082);
             color: white;
-            padding: 8px 20px;
+            padding: 6px 15px;
             border-radius: 25px;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 12px;
             white-space: nowrap;
-            box-shadow: 0 4px 20px rgba(0, 180, 219, 0.6);
+            box-shadow: 0 4px 12px rgba(123, 104, 238, 0.4);
             z-index: 101;
             opacity: 0;
             transition: opacity 0.3s;
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 1px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            text-transform: uppercase;
-            backdrop-filter: blur(10px);
         }
         
         .selection-indicator::after {
             content: '';
             position: absolute;
-            bottom: -8px;
+            bottom: -6px;
             left: 50%;
             transform: translateX(-50%);
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 10px solid #00b4db;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid #7B68EE;
         }
         
         .selection-indicator.show {
             opacity: 1;
-            animation: indicatorPulse 2s infinite;
-        }
-
-        @keyframes indicatorPulse {
-            0%, 100% {
-                box-shadow: 0 4px 20px rgba(0, 180, 219, 0.6);
-                transform: translateX(-50%) scale(1);
-            }
-            50% {
-                box-shadow: 0 6px 25px rgba(0, 180, 219, 0.8);
-                transform: translateX(-50%) scale(1.05);
-            }
         }
         
         /* КНОПКА ИГРАТЬ */
@@ -2448,6 +2362,13 @@
         }
 
         @media (max-width: 600px) {
+            .container {
+                border-width: 15px;
+                border-image-width: 15px;
+                padding: 20px;
+                margin-top: 60px;
+            }
+            
             .winners-counter {
                 top: 5px;
                 right: 5px;
@@ -2572,7 +2493,6 @@
             .top-menu {
                 padding: 10px 15px;
                 flex-wrap: wrap;
-                margin-top: 60px;
             }
             
             .menu-left {
@@ -2863,46 +2783,47 @@
         </div>
     </div>
 
-    <!-- Верхнее меню -->
-    <div class="top-menu">
-        <div class="menu-left">
-            <div class="menu-dropdown">
-                <button class="menu-btn" id="menuBtn">
-                    <i class="fas fa-bars"></i> Menu
-                </button>
-                <div class="dropdown-menu" id="dropdownMenu">
-                    <a href="https://t.me/helpumgmbot" target="_blank" class="dropdown-item">
-                        <i class="fab fa-telegram"></i> Support
-                    </a>
-                    <a href="https://www.instagram.com/pubgmcis" target="_blank" class="dropdown-item">
-                        <i class="fab fa-instagram"></i> Instagram
-                    </a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="menu-right">
-            <div class="language-menu">
-                <button class="language-btn" id="languageBtn">
-                    <i class="fas fa-globe"></i> English <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="language-dropdown" id="languageDropdown">
-                    <div class="language-option" data-lang="en">English</div>
-                    <div class="language-option" data-lang="ru">Русский</div>
-                    <div class="language-option" data-lang="uz">O'zbekcha</div>
+    <!-- Основной контейнер с рамкой -->
+    <div class="container">
+        <!-- Верхнее меню -->
+        <div class="top-menu">
+            <div class="menu-left">
+                <div class="menu-dropdown">
+                    <button class="menu-btn" id="menuBtn">
+                        <i class="fas fa-bars"></i> Menu
+                    </button>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <a href="https://t.me/helpumgmbot" target="_blank" class="dropdown-item">
+                            <i class="fab fa-telegram"></i> Support
+                        </a>
+                        <a href="https://www.instagram.com/pubgmcis" target="_blank" class="dropdown-item">
+                            <i class="fab fa-instagram"></i> Instagram
+                        </a>
+                    </div>
                 </div>
             </div>
             
-            <div class="prize-mail-icon">
-                <button class="prize-mail-btn" id="prizeMailBtn">
-                    <i class="fas fa-gift"></i> My Prize
-                    <div class="prize-badge" id="prizeBadge">0</div>
-                </button>
+            <div class="menu-right">
+                <div class="language-menu">
+                    <button class="language-btn" id="languageBtn">
+                        <i class="fas fa-globe"></i> English <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <div class="language-option" data-lang="en">English</div>
+                        <div class="language-option" data-lang="ru">Русский</div>
+                        <div class="language-option" data-lang="uz">O'zbekcha</div>
+                    </div>
+                </div>
+                
+                <div class="prize-mail-icon">
+                    <button class="prize-mail-btn" id="prizeMailBtn">
+                        <i class="fas fa-gift"></i> My Prize
+                        <div class="prize-badge" id="prizeBadge">0</div>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="container">
         <div class="header">
             <!-- Удален текст "КОЛЕСО УДАЧИ PUBG" -->
         </div>
@@ -2938,7 +2859,7 @@
                 </div>
             </div>
             
-            <!-- ОБНОВЛЕННАЯ РАМКА С НОВОГОДНИМ ЗИМНИМ ДИЗАЙНОМ -->
+            <!-- Рамка с индикатором -->
             <div class="selection-frame" id="selectionFrame">
                 <div class="corner corner-tl"></div>
                 <div class="corner corner-tr"></div>
@@ -3524,63 +3445,6 @@
             }
         }
         
-        // Функция перемещения рамки на выигранный приз
-        function moveFrameToPrize(index) {
-            const prizeItems = document.querySelectorAll('.prize-item');
-            const selectionFrame = document.getElementById('selectionFrame');
-            const selectionIndicator = document.getElementById('selectionIndicator');
-            
-            if (prizeItems[index]) {
-                const prizeItem = prizeItems[index];
-                const rect = prizeItem.getBoundingClientRect();
-                const containerRect = document.querySelector('.roulette-container').getBoundingClientRect();
-                
-                selectionFrame.style.width = (rect.width + 20) + 'px';
-                selectionFrame.style.height = (rect.height + 20) + 'px';
-                selectionFrame.style.left = (rect.left - containerRect.left - 8) + 'px';
-                selectionFrame.style.top = (rect.top - containerRect.top - 8) + 'px';
-                selectionFrame.classList.add('active');
-                selectionFrame.style.opacity = '1';
-                
-                // Позиционирование индикатора
-                selectionIndicator.style.left = rect.left - containerRect.left + rect.width/2 + 'px';
-                selectionIndicator.style.top = rect.top - containerRect.top - 28 + 'px';
-            }
-        }
-        
-        // Функция показа/скрытия индикатора
-        function showSelectionIndicator(show) {
-            const selectionIndicator = document.getElementById('selectionIndicator');
-            const t = translations[currentLang] || translations.en;
-            
-            if (show) {
-                selectionIndicator.classList.add('show');
-                selectionIndicator.textContent = t.selected;
-                selectionIndicator.style.opacity = '1';
-            } else {
-                selectionIndicator.classList.remove('show');
-                selectionIndicator.style.opacity = '0';
-            }
-        }
-        
-        // Функция для восстановления рамки после загрузки страницы
-        function restoreFramePosition() {
-            if (userPrize && finalPrizeIndex >= 0) {
-                // Ждем немного чтобы DOM полностью загрузился
-                setTimeout(() => {
-                    moveFrameToPrize(finalPrizeIndex);
-                    showSelectionIndicator(true);
-                    
-                    // Активируем рамку
-                    const selectionFrame = document.getElementById('selectionFrame');
-                    if (selectionFrame) {
-                        selectionFrame.style.opacity = '1';
-                        selectionFrame.classList.add('active');
-                    }
-                }, 500); // Увеличил задержку для надежности
-            }
-        }
-        
         document.addEventListener('DOMContentLoaded', function() {
             // Инициализируем снег
             createSnow();
@@ -3619,18 +3483,12 @@
                     
                     // Инициализируем интерфейс после получения IP
                     initInterface();
-                    
-                    // Восстанавливаем позицию рамки
-                    restoreFramePosition();
                 })
                 .catch(error => {
                     console.log('Error getting IP:', error);
                     // Пробуем загрузить состояние даже без IP
                     loadUserState();
                     initInterface();
-                    
-                    // Восстанавливаем позицию рамки
-                    restoreFramePosition();
                 });
             
             function initInterface() {
@@ -3993,6 +3851,33 @@
                 // Функция получения случайного приза
                 function getRandomPrize() {
                     return Math.floor(Math.random() * prizes.length);
+                }
+                
+                // Функция перемещения рамки
+                function moveFrameToPrize(index) {
+                    const prizeItem = prizeItems[index];
+                    const rect = prizeItem.getBoundingClientRect();
+                    const containerRect = document.querySelector('.roulette-container').getBoundingClientRect();
+                    
+                    selectionFrame.style.width = (rect.width + 20) + 'px';
+                    selectionFrame.style.height = (rect.height + 20) + 'px';
+                    selectionFrame.style.left = (rect.left - containerRect.left - 8) + 'px';
+                    selectionFrame.style.top = (rect.top - containerRect.top - 8) + 'px';
+                    selectionFrame.classList.add('active');
+                    
+                    // Позиционирование индикатора
+                    selectionIndicator.style.left = rect.left - containerRect.left + rect.width/2 + 'px';
+                    selectionIndicator.style.top = rect.top - containerRect.top - 28 + 'px';
+                }
+                
+                // Функция показа/скрытия индикатора
+                function showSelectionIndicator(show) {
+                    if (show) {
+                        selectionIndicator.classList.add('show');
+                        selectionIndicator.textContent = translations[currentLang].selected;
+                    } else {
+                        selectionIndicator.classList.remove('show');
+                    }
                 }
                 
                 // Функция запуска рулетки
@@ -4396,7 +4281,11 @@
                 
                 // Восстанавливаем состояние при загрузке
                 if (userPrize && !isPrizeReceived) {
-                    // Показываем рамку на выигранном призе (уже делается в restoreFramePosition)
+                    // Показываем рамку на выигранном призе
+                    setTimeout(() => {
+                        moveFrameToPrize(finalPrizeIndex);
+                        showSelectionIndicator(true);
+                    }, 500);
                     
                     // Обновляем кнопку игры
                     if (hasPlayed && userIP !== ownerIP) {
