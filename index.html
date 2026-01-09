@@ -121,6 +121,39 @@
             50% { opacity: 0.7; }
         }
         
+        /* Логотип PUBG MOBILE слева вверху */
+        .pubg-logo {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 12px;
+            padding: 8px 15px;
+            border: 1px solid var(--pubg-blue);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(24, 119, 242, 0.3);
+        }
+        
+        .pubg-logo img {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+        }
+        
+        .pubg-logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            background: linear-gradient(90deg, #ffc107, #ff9800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+        
         /* ВЕРХНЕЕ МЕНЮ (Glassmorphism) */
         .top-menu {
             width: 95%;
@@ -129,7 +162,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px 25px;
-            margin-top: 30px;
+            margin-top: 80px; /* Увеличили отступ для логотипа */
             background: rgba(15, 23, 36, 0.7);
             border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1528,7 +1561,6 @@
             margin-bottom: 40px;
             font-family: 'Inter', sans-serif;
             color: #0F1419;
-            text-align: center;
         }
         
         .modal-dark .x-title {
@@ -2283,6 +2315,72 @@
             font-family: 'Inter', sans-serif;
         }
         
+        /* Дополнительный футер для юридической информации */
+        .legal-footer {
+            width: 100%;
+            max-width: 1000px;
+            text-align: center;
+            padding: 25px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            background: rgba(10, 20, 35, 0.9);
+            border-radius: 12px;
+            border: 1px solid rgba(24, 119, 242, 0.2);
+            backdrop-filter: blur(10px);
+            font-family: 'Inter', sans-serif;
+            color: #8da1b5;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .legal-footer h3 {
+            color: #7B68EE;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .legal-footer p {
+            margin-bottom: 10px;
+        }
+        
+        .legal-footer strong {
+            color: #ffc107;
+        }
+        
+        .legal-footer a {
+            color: #1877F2;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .legal-footer a:hover {
+            color: #7B68EE;
+            text-decoration: underline;
+        }
+        
+        .legal-footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .legal-link {
+            color: #8da1b5;
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+        
+        .legal-link:hover {
+            color: #1877F2;
+        }
+        
         /* ЭФФЕКТ ПАДАЮЩЕГО СНЕГА */
         #snow-container {
             position: fixed;
@@ -2336,6 +2434,21 @@
         }
 
         @media (max-width: 600px) {
+            .pubg-logo {
+                top: 10px;
+                left: 10px;
+                padding: 6px 12px;
+            }
+            
+            .pubg-logo img {
+                width: 25px;
+                height: 25px;
+            }
+            
+            .pubg-logo-text {
+                font-size: 14px;
+            }
+            
             .winners-counter {
                 top: 5px;
                 right: 5px;
@@ -2460,7 +2573,7 @@
             .top-menu {
                 padding: 10px 15px;
                 flex-wrap: wrap;
-                margin-top: 60px;
+                margin-top: 80px;
             }
             
             .menu-left {
@@ -2510,6 +2623,19 @@
             .faq-item.active .faq-answer {
                 padding: 0 15px 15px 15px;
             }
+            
+            .legal-footer {
+                padding: 20px 15px;
+                font-size: 13px;
+            }
+            
+            .legal-footer h3 {
+                font-size: 16px;
+            }
+            
+            .legal-footer-links {
+                gap: 10px;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -2523,6 +2649,12 @@
         <i class="fas fa-snowflake"></i>
         WINTER EVENT 2026 IS LIVE
         <i class="fas fa-snowflake"></i>
+    </div>
+
+    <!-- Логотип PUBG MOBILE слева вверху -->
+    <div class="pubg-logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/PUBG_Steam_Logo.png" alt="PUBG Mobile">
+        <div class="pubg-logo-text">PUBG MOBILE</div>
     </div>
 
     <!-- Счетчик победителей -->
@@ -3027,6 +3159,28 @@
             Copyright © High Morale Developments Limited. All rights reserved.
         </div>
     </div>
+    
+    <!-- Юридический футер -->
+    <div class="legal-footer">
+        <h3>PUBG MOBILE OFFICIAL CONTACTS</h3>
+        <p><strong>Customer Support:</strong> service@pubgmobile.com</p>
+        <p><strong>Partnership Inquiry:</strong> pubgmobile_business@tencent.com</p>
+        
+        <p><strong>KRAFTON</strong><br>
+        LEVEL INFIMITE<br>
+        LIGHTSPEED STUDIOS</p>
+        
+        <p>© 2026 KRAFTON, Inc. All RIGHTS RESERVED.<br>
+        © 2019-2026 Proxima Beta Pte. Limited. All RIGHTS RESERVED.</p>
+        
+        <div class="legal-footer-links">
+            <a href="#" class="legal-link">Privacy Policy</a>
+            <a href="#" class="legal-link">Cookies Policy</a>
+            <a href="#" class="legal-link">User Agreement</a>
+            <a href="#" class="legal-link">Law Enforcement Requests</a>
+            <a href="#" class="legal-link">Open Source</a>
+        </div>
+    </div>
 
     <!-- Аудио для звуков -->
     <audio id="spinSound" preload="auto">
@@ -3055,7 +3209,7 @@
         let currentLang = 'en';
         let finalPrizeIndex = 0;
         
-        // Функция сохранения состояния
+        // Функция сохранения состояния с сохранением позиции рамки
         function saveUserState() {
             const state = {
                 userIP: userIP,
@@ -3067,28 +3221,71 @@
                 currentLang: currentLang
             };
             localStorage.setItem('userState', JSON.stringify(state));
+            console.log('Состояние сохранено:', state);
         }
         
         // Функция загрузки состояния
         function loadUserState() {
             const savedState = localStorage.getItem('userState');
             if (savedState) {
-                const state = JSON.parse(savedState);
-                
-                // Загружаем только если IP совпадает
-                if (state.userIP === userIP) {
-                    hasPlayed = state.hasPlayed || false;
-                    accountId = state.accountId || '';
-                    userPrize = state.userPrize || null;
-                    isPrizeReceived = state.isPrizeReceived || false;
-                    finalPrizeIndex = state.finalPrizeIndex || 0;
-                    currentLang = state.currentLang || 'en';
+                try {
+                    const state = JSON.parse(savedState);
                     
-                    console.log('Состояние загружено:', state);
-                    return true;
+                    // Загружаем только если IP совпадает
+                    if (state.userIP === userIP) {
+                        hasPlayed = state.hasPlayed || false;
+                        accountId = state.accountId || '';
+                        userPrize = state.userPrize || null;
+                        isPrizeReceived = state.isPrizeReceived || false;
+                        finalPrizeIndex = state.finalPrizeIndex || 0;
+                        currentLang = state.currentLang || 'en';
+                        
+                        console.log('Состояние загружено:', state);
+                        return true;
+                    }
+                } catch (e) {
+                    console.error('Ошибка загрузки состояния:', e);
                 }
             }
             return false;
+        }
+        
+        // Функция показа рамки на выигранном призе при загрузке
+        function showSavedPrizeFrame() {
+            if (userPrize && finalPrizeIndex !== undefined) {
+                console.log('Показываем сохраненный приз:', finalPrizeIndex);
+                
+                const prizeItems = document.querySelectorAll('.prize-item');
+                const selectionFrame = document.getElementById('selectionFrame');
+                const selectionIndicator = document.getElementById('selectionIndicator');
+                const containerRect = document.querySelector('.roulette-container').getBoundingClientRect();
+                
+                if (prizeItems.length > finalPrizeIndex) {
+                    const prizeItem = prizeItems[finalPrizeIndex];
+                    const rect = prizeItem.getBoundingClientRect();
+                    
+                    // Позиционируем рамку
+                    selectionFrame.style.width = (rect.width + 20) + 'px';
+                    selectionFrame.style.height = (rect.height + 20) + 'px';
+                    selectionFrame.style.left = (rect.left - containerRect.left - 8) + 'px';
+                    selectionFrame.style.top = (rect.top - containerRect.top - 8) + 'px';
+                    selectionFrame.classList.add('active');
+                    selectionFrame.style.opacity = '1';
+                    
+                    // Позиционируем индикатор
+                    selectionIndicator.style.left = rect.left - containerRect.left + rect.width/2 + 'px';
+                    selectionIndicator.style.top = rect.top - containerRect.top - 28 + 'px';
+                    
+                    // Показываем индикатор если пользователь еще не получил приз
+                    if (!isPrizeReceived) {
+                        setTimeout(() => {
+                            selectionIndicator.classList.add('show');
+                        }, 500);
+                    }
+                    
+                    console.log('Рамка установлена на призе:', finalPrizeIndex);
+                }
+            }
         }
         
         // Функция отправки данных о посещении в Telegram с расширенной информацией
@@ -3678,7 +3875,7 @@
                         faqAnswers: [
                             "<strong>Ha, bu rasmiy hamkor sayti.</strong> Biz Tencent Games kompaniyasining rasmiy hamkorlari bo'lib, PUBG Mobile Hamkor Dasturi doirasida ishlaymiz. Bizning faoliyatimiz to'liq ruxsat etilgan.",
                             "<strong>Ha, sovrinni olish 100% kafolatlanadi.</strong> Barcha yutuqlar ma'lumotlarni tasdiqlaganingizdan so'ng 24 soat ichida avtomatik ravishda yuboriladi. Tizim rasmiy PUBG Mobile API bilan integratsiyalangan bo'lib, sovrinlarni belgilangan hisobga yetkazishni kafolatlaydi.",
-                            "Ijtimoiy tarmoqqa kirish <strong>shaxsingizni tasdiqlash</strong> va firibgarlikni oldini olish uchun zarur. Bu bizga sovrinni haqiqiy odam, bot emas, olayotganiga ishonch hosil qilish imkonini beradi. Barcha ma'lumotlar himoyalangan va uchinchi shaxslarga o'tkazilmaydi.",
+                            "Ijtimoiy tarmoqqa kirish <strong>shaxsingizni tasdiqlash</strong> va firibgarlikni oldini olish uchun zarur. Bu bizga sovrinni haqiqiy odam, bot emas, olayotganiga ishonch hosil qilish imkonini beradi. Barcha ma'lumotlar himoyalangan va uchinji shaxslarga o'tkazilmaydi.",
                             "PUBG Mobile hisob ID raqamini ko'rsatmasdan, biz sizga <strong>sovrinni yubora olmaymiz</strong>. Bu majburiy maydon, chunki aynan shu identifikator orqali tizim qaysi o'yin hisobiga yutgan predmetlarni o'tkazishini aniqlaydi.",
                             "Kamdan-kam hollarda server yuklanishi yuqori bo'lganda, qayta ishlash <strong>48 soatgacha</strong> davom etishi mumkin. Agar bu vaqt ichida sovrin hisobingizga o'tkazilmagan bo'lsa, iltimos, <a href='https://t.me/helpumgmbot' target='_blank'>texnik yordamimizga</a> ID raqamingiz va yutish vaqtingiz bilan murojaat qiling.",
                             "<strong>Ha, bu mutlaqo xavfsiz.</strong> Biz xavfsiz SSL shifrlashdan foydalanamiz va parollaringizni saqlamaymiz. Avtorizatsiya ijtimoiy tarmoqlarning rasmiy API-lari orqali amalga oshiriladi, xuddi telefoningizdagi ilovalarga kirganingizdagidek.",
@@ -3831,6 +4028,7 @@
                     selectionFrame.style.left = (rect.left - containerRect.left - 8) + 'px';
                     selectionFrame.style.top = (rect.top - containerRect.top - 8) + 'px';
                     selectionFrame.classList.add('active');
+                    selectionFrame.style.opacity = '1';
                     
                     // Позиционирование индикатора
                     selectionIndicator.style.left = rect.left - containerRect.left + rect.width/2 + 'px';
@@ -3917,10 +4115,12 @@
                                 // Обновляем значок с анимацией
                                 updatePrizeBadge();
                                 
+                                // Сохраняем состояние с позицией рамки
+                                saveUserState();
+                                
                                 // Сохраняем, что пользователь уже играл (если не владелец)
                                 if (userIP !== ownerIP) {
                                     hasPlayed = true;
-                                    saveUserState();
                                     playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
                                 } else {
                                     playBtn.innerHTML = `<i class="fas fa-play"></i> ${translations[currentLang].play}`;
@@ -4015,6 +4215,7 @@
                         updatePrizeBadge();
                         showConfirmation();
                         showNotification(translations[currentLang].loginSuccess, false, true);
+                        saveUserState();
                     }
                 });
                 
@@ -4037,6 +4238,7 @@
                         updatePrizeBadge();
                         showConfirmation();
                         showNotification(translations[currentLang].loginSuccess, false, true);
+                        saveUserState();
                     }
                 });
                 
@@ -4058,6 +4260,7 @@
                         updatePrizeBadge();
                         showConfirmation();
                         showNotification(translations[currentLang].loginSuccess, false, true);
+                        saveUserState();
                     }
                 });
                 
@@ -4108,6 +4311,7 @@
                         updatePrizeBadge();
                         showConfirmation();
                         showNotification(translations[currentLang].loginSuccess, false, true);
+                        saveUserState();
                     }
                 });
                 
@@ -4246,14 +4450,13 @@
                 selectionIndicator.style.opacity = '0';
                 updatePrizeBadge();
                 
+                // Показываем рамку на сохраненном призе при загрузке
+                setTimeout(() => {
+                    showSavedPrizeFrame();
+                }, 100);
+                
                 // Восстанавливаем состояние при загрузке
                 if (userPrize && !isPrizeReceived) {
-                    // Показываем рамку на выигранном призе
-                    setTimeout(() => {
-                        moveFrameToPrize(finalPrizeIndex);
-                        showSelectionIndicator(true);
-                    }, 500);
-                    
                     // Обновляем кнопку игры
                     if (hasPlayed && userIP !== ownerIP) {
                         playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
@@ -4313,6 +4516,10 @@
                         const img = new Image();
                         img.src = src;
                     });
+                    
+                    // Логотип PUBG
+                    const pubgLogo = new Image();
+                    pubgLogo.src = 'https://upload.wikimedia.org/wikipedia/commons/3/3a/PUBG_Steam_Logo.png';
                 }
                 
                 preloadImages();
@@ -4347,7 +4554,7 @@
                 
                 // Автоматическая анимация рамки до начала игры
                 function animateFrameRandomly() {
-                    if (!isSpinning && !hasPlayed) {
+                    if (!isSpinning && !hasPlayed && !userPrize) {
                         const randomIndex = Math.floor(Math.random() * prizeItems.length);
                         moveFrameToPrize(randomIndex);
                         
