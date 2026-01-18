@@ -1,0 +1,185 @@
+from telethon import TelegramClient
+from telethon.sessions import StringSession
+import asyncio
+import os
+
+async def create_and_save_session():
+    """Создание сессии и сохранение в файл"""
+    
+    # Получите эти данные на https://my.telegram.org
+    API_ID = 1234567  # Ваш API ID
+    API_HASH = 'ваш_api_hash'  # Ваш API Hash
+    
+    # Имя для файла сессии
+    session_name = input("Введите имя для файла сессии (без расширения): ").strip()
+    if not session_name:
+        session_name = "my_session"
+    
+    # Создаем файл .session
+    session_file = f"{session_name}.session"
+    
+    print(f"\nСоздание сессии в файле: {session_file}")
+    
+    # Создаем клиента с файловой сессией
+    client = TelegramClient(session_file, API_ID, API_HASH)
+    
+    await client.connect()
+    
+    # Проверяем, авторизован ли уже пользователь
+    if not await client.is_user_authorized():
+        print("Требуется авторизация...")
+        
+        # Запрашиваем номер телефона
+        phone = input("Введите номер телефона (с кодом страны, например +79991234567): ").strip()
+        
+        # Отправляем запрос на код
+        await client.send_code_request(phone)
+        print("Код отправлен в Telegram!")
+        
+        # Запрашиваем код
+        code = input("Введите полученный код: ").strip()
+        
+        try:
+            # Пытаемся войти с кодом
+            await client.sign_in(phone=phone, code=code)
+        except Exception as e:
+            # Если требуется пароль (2FA)
+            if "password" in str(e).lower():
+                print("Требуется пароль двухфакторной аутентификации.")
+                password = input("Введите пароль 2FA: ")
+                await client.sign_in(password=password)
+            else:
+                raise e
+    
+    # Получаем информацию о себе
+    me = await client.get_me()
+    print(f"\n✅ Авторизация успешна!")
+    print(f"Имя: {me.first_name}")
+    print(f"Фамилия: {me.last_name or 'Не указана'}")
+    print(f"Username: @{me.username or 'Не указан'}")
+    print(f"ID: {me.id}")
+    
+    # Сохраняем строку сессии в отдельный файл для резервной копии
+    session_string = client.session.save()
+    
+    # Сохраняем строку сессии в текстовый файл
+    with open(f"{session_name}_string.txt", "w", encoding="utf-8") as f:
+        f.write(session_string)
+    
+    print(f"\n📁 Сессия сохранена в файлы:")
+    print(f"1. {session_file} (бинарный файл сессии)")
+    print(f"2. {session_name}_string.txt (строковое представление)")
+    
+    # Тестируем подключение
+    print("\n🔍 Тестирование подключения...")
+    async for dialog in client.iter_dialogs(limit=3):
+        print(f"  - {dialog.name} ({dialog.id})")
+    
+    await client.disconnect()
+    print("\n✅ Готово! Сессия создана и сохранена.")
+
+async def load_session_from_file():
+    """Загрузка сессии из файла"""
+    
+    API_ID = 1234567
+    API_HASH = 'ваш_api_hash'
+    
+    # Ищем файлы .session
+    session_files = [f for f in os.listdir('.') if f.endswith('.session')]
+    
+    if not session_files:
+        print("Файлы сессий не найдены!")
+        return None
+    
+    print("\nНайдены файлы сессий:")
+    for i, file in enumerate(session_files, 1):
+        print(f"{i}. {file}")
+    
+    choice = input(f"\nВыберите файл (1-{len(session_files)}): ").strip()
+    
+    try:
+        idx = int(choice) - 1
+        session_file = session_files[idx]
+    except (ValueError, IndexError):
+        session_file = input("Введите имя файла сессии: ").strip()
+        if not session_file.endswith('.session'):
+            session_file += '.session'
+    
+    # Загружаем сессию
+    client = TelegramClient(session_file, API_ID, API_HASH)
+    await client.connect()
+    
+    # Проверяем авторизацию
+    if await client.is_user_authorized():
+        me = await client.get_me()
+        print(f"\n✅ Сессия загружена успешно!")
+        print(f"Аккаунт: {me.first_name} (@{me.username})")
+        return client
+    else:
+        print("❌ Сессия не авторизована!")
+        await client.disconnect()
+        return None
+
+async def main():
+    """Основная функция"""
+    print("=" * 50)
+    print("TELEGRAM SESSION MANAGER")
+    print("=" * 50)
+    
+    while True:
+        print("\nМеню:")
+        print("1. Создать новую сессию и сохранить в файл")
+        print("2. Загрузить существующую сессию из файла")
+        print("3. Выход")
+        
+        choice = input("\nВыберите действие (1-3): ").strip()
+        
+        if choice == '1':
+            await create_and_save_session()
+        elif choice == '2':
+            client = await load_session_from_file()
+            if client:
+                # Пример использования загруженной сессии
+                print("\nЧто вы хотите сделать?")
+                print("1. Получить информацию о себе")
+                print("2. Посмотреть последние диалоги")
+                print("3. Отправить тестовое сообщение")
+                
+                action = input("Выберите действие: ").strip()
+                
+                if action == '1':
+                    me = await client.get_me()
+                    print(f"\nИнформация об аккаунте:")
+                    print(f"ID: {me.id}")
+                    print(f"Имя: {me.first_name}")
+                    print(f"Фамилия: {me.last_name or 'Не указана'}")
+                    print(f"Username: @{me.username or 'Не указан'}")
+                    print(f"Телефон: {me.phone or 'Не указан'}")
+                
+                elif action == '2':
+                    limit = input("Сколько диалогов показать? (по умолчанию 10): ").strip()
+                    limit = int(limit) if limit.isdigit() else 10
+                    
+                    print(f"\nПоследние {limit} диалогов:")
+                    async for dialog in client.iter_dialogs(limit=limit):
+                        print(f"  - {dialog.name} (ID: {dialog.id})")
+                
+                elif action == '3':
+                    phone_or_username = input("Введите номер телефона или username получателя: ").strip()
+                    message = input("Введите сообщение: ").strip()
+                    
+                    try:
+                        await client.send_message(phone_or_username, message)
+                        print("✅ Сообщение отправлено!")
+                    except Exception as e:
+                        print(f"❌ Ошибка отправки: {e}")
+                
+                await client.disconnect()
+        elif choice == '3':
+            print("Выход...")
+            break
+        else:
+            print("Неверный выбор!")
+
+if __name__ == "__main__":
+    asyncio.run(main())
