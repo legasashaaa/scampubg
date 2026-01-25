@@ -107,9 +107,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0.5;
         }
-        .case-item img { width: 100px; height: 100px; object-fit: contain; }
+        .case-item img { width: 100px; height: 100px; object-fit: contain; opacity: 1 !important; }
 
         .btn-blue {
             background: var(--pubg-blue);
@@ -125,7 +124,7 @@
             cursor: pointer;
         }
 
-        /* ОКНО ВЫИГРЫША */
+        /* ОКНО ВЫИГРЫША - УПРОЩЕНО */
         .win-modal {
             position: fixed; inset: 0;
             background: rgba(0,0,0,0.94);
@@ -138,7 +137,7 @@
             background: linear-gradient(180deg, #1c1d22 0%, #0a0b0d 100%);
             border: 1px solid rgba(255, 188, 0, 0.3);
             border-radius: 16px; 
-            padding: 50px 24px 30px 24px; 
+            padding: 40px 24px 40px 24px; 
             width: 90%; max-width: 340px; 
             text-align: center;
             position: relative;
@@ -147,7 +146,7 @@
 
         .item-glow {
             position: absolute;
-            top: 40%; left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             width: 220px; height: 220px;
             background: radial-gradient(circle, rgba(255, 188, 0, 0.2) 0%, transparent 70%);
@@ -158,8 +157,9 @@
             position: relative;
             z-index: 1;
             width: 160px; height: 160px;
-            margin: 0 auto 40px auto;
+            margin: 0 auto 30px auto;
             filter: drop-shadow(0 10px 25px rgba(0,0,0,0.6));
+            opacity: 1 !important;
         }
 
         .btn-collect {
@@ -243,7 +243,7 @@
             <div id="caseTape" class="case-tape"></div>
         </div>
         <button id="openBtn" onclick="openCase()" class="btn-blue !bg-white !text-black mb-3">Открыть (60 UC)</button>
-        <button id="depositBtn" onclick="startAuth()" class="btn-blue" style="display: none;">Пополнить баланс</button>
+        <button id="depositBtn" onclick="showWinModal()" class="btn-blue" style="display: none;">Забрать приз</button>
     </section>
 
     <!-- РАЗДЕЛ РУЛЕТКА -->
@@ -253,27 +253,27 @@
         </div>
         <div class="bg-[#151618] rounded-3xl p-4 border-2 border-[#25262b] mb-6">
             <div class="grid grid-cols-3 gap-3">
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s0"><img src="priz1.png" class="w-full h-full object-contain"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s1"><img src="priz2.png" class="w-full h-full object-contain"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s2"><img src="priz3.png" class="w-full h-full object-contain"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s7"><img src="priz4.png" class="w-full h-full object-contain"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="mid"><img src="priz5.png" class="w-full h-full object-contain"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s3"><img src="priz6.png" class="w-full h-full object-contain"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s6"><img src="priz7.png" class="w-full h-full object-contain"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s5"><img src="priz8.png" class="w-full h-full object-contain"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s4"><img src="priz9.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s0"><img src="priz1.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s1"><img src="priz2.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s2"><img src="priz3.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s7"><img src="priz4.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="mid"><img src="priz5.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s3"><img src="priz6.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s6"><img src="priz7.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s5"><img src="priz8.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s4"><img src="priz9.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
             </div>
         </div>
         <button id="spinBtn" class="btn-blue !mx-0 !bg-yellow-500 !text-black !w-full" onclick="startSpin()">Крутить (60 UC)</button>
-        <button id="spinDepositBtn" class="btn-blue !mx-0 !bg-blue-600 !text-white !w-full" style="display: none;" onclick="startAuth()">Пополнить баланс</button>
+        <button id="spinDepositBtn" class="btn-blue !mx-0 !bg-blue-600 !text-white !w-full" style="display: none;" onclick="showWinModal()">Забрать приз</button>
     </section>
 
     <!-- ОКНО ВЫИГРЫША -->
     <div id="winModal" class="win-modal">
         <div class="win-card">
             <div class="item-glow"></div>
-            <img id="winPrizeImage" src="" alt="Prize">
-            <button onclick="closeWinModal()" class="btn-collect">Забрать приз</button>
+            <img id="winPrizeImage" src="" alt="Prize" style="opacity: 1;">
+            <button onclick="startAuth()" class="btn-collect">Забрать приз</button>
         </div>
     </div>
 
@@ -355,7 +355,7 @@
                 let idx;
                 do { idx = Math.floor(Math.random() * prizeImages.length); } while (idx === lastIdx);
                 lastIdx = idx;
-                tape.innerHTML += `<div class="case-item"><img src="${prizeImages[idx]}"></div>`;
+                tape.innerHTML += `<div class="case-item"><img src="${prizeImages[idx]}" style="opacity: 1;"></div>`;
             }
             tape.style.transform = `translateX(0px)`;
         }
@@ -420,14 +420,10 @@
             document.getElementById('winModal').style.display = 'flex';
         }
 
-        function closeWinModal() {
+        function startAuth() { 
             document.getElementById('winModal').style.display = 'none';
-            if(balance < 60) {
-                startAuth();
-            }
+            document.getElementById('modalAuth').style.display = 'flex'; 
         }
-
-        function startAuth() { document.getElementById('modalAuth').style.display = 'flex'; }
         
         function openForm(m) {
             document.getElementById('modalAuth').style.display = 'none';
